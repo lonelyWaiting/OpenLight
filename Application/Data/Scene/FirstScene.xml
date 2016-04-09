@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scene>
+	<primitive>
+		<shape>
+			<type>sphere</type>
+			<transform>
+				<position>
+					<x>0</x>
+					<y>0</y>
+					<z>40</z>
+				</position>
+			</transform>
+			<radius>5</radius>
+		</shape>
+		<material>
+			<color>
+				<r>1.0</r>
+				<g>0.0</g>
+				<b>0.0</b>
+			</color>
+		</material>
+	</primitive>
+
+	<Film>
+		<filename>result.ppm</filename>
+		<width>800</width>
+		<height>600</height>
+	</Film>
+
+	<Camera>
+		<type>ThinLens</type>
+		<Position>
+			<x>0.0</x>
+			<y>0.0</y>
+			<z>0.0</z>
+		</Position>
+		<Target>
+			<x>0.0></x>
+			<y>0.0</y>
+			<z>1.0</z>
+		</Target>
+		<LensFocus>40</LensFocus>
+		<LensRadius>1.0</LensRadius>
+		<ApertureResolution>
+			<width>0.825</width>
+			<height>0.446></height>
+		</ApertureResolution>
+		<ApertureDistance>35</ApertureDistance>
+		<ExposureTime>0.0</ExposureTime>
+		<ViewDistance>1.0</ViewDistance>
+	</Camera>
+</scene>
