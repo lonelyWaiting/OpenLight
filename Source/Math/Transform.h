@@ -19,6 +19,8 @@ public:
 
 	Transform( const Matrix4f& m , const Matrix4f& invm );
 
+	Transform& operator = ( const Transform& rhs );
+
 	friend Transform Inverse( const Transform& t );
 
 	friend Transform Transpose( const Transform& t );

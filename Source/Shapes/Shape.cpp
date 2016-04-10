@@ -7,6 +7,13 @@
 #include "Math/Vector3.h"
 #include "Shape.h"
 
+Shape::Shape()
+{
+	ObjectToWorld = new Transform;
+
+	WorldToObject = new Transform;
+}
+
 Shape::Shape( const Transform* _ObjectToWorld , const Transform* _WorldToObject )
 {
 	// 这里使用memcpy的原因是
@@ -16,10 +23,9 @@ Shape::Shape( const Transform* _ObjectToWorld , const Transform* _WorldToObject 
 	// 但是出了作用域之后，该内存会被销毁，当然如果是new出来的，则不会
 	// 但最好还是直接将数据拷贝过来
 	// 然后在析构函数中释放一下
-	ObjectToWorld = new Transform;
+	// 好吧，就是深拷贝啦~
 	memcpy( ObjectToWorld , _ObjectToWorld , sizeof( Transform ) );
 
-	WorldToObject = new Transform;
 	memcpy( WorldToObject , _WorldToObject , sizeof( Transform ) );
 }
 

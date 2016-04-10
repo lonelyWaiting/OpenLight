@@ -23,6 +23,9 @@ public:
 
 	void SetDiffuseColor( const Spectrum& _color );
 
+public:
+	void ParsePrimitive( XMLElement* PrimitiveRootElment );
+
 protected:
 	Shape* shape;
 

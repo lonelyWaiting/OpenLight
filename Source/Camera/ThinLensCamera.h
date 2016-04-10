@@ -22,6 +22,9 @@ public:
 public:
 	Ray GenerateRay( float RasterX , float RasterY , const CameraSample& SamplePoint );
 
+public:
+	void ParseCamera( XMLElement* CameraRootElement );
+
 private:
 	float LensRadius;			// Í¸¾µ°ë¾¶
 	float LensFocus;			// ½¹¾à

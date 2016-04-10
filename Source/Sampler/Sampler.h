@@ -6,8 +6,6 @@
 #include "Math/Point3.h"
 #include "CameraSample.h"
 
-class Sample;
-
 class Sampler
 {
 public:
@@ -34,6 +32,10 @@ public:
 
 protected:
 	void SetupShuffledIndices();
+
+	void ShuffleXCoordinate();
+
+	void ShuffleYCoordinate();
 
 public:
 	CameraSample GetSamplePoint();

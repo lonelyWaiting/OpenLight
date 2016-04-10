@@ -9,4 +9,6 @@ public:
 
 public:
 	Ray GenerateRay( float RasterX , float RasterY , const CameraSample& SamplePoint );
+
+	void ParseCamera( XMLElement* CameraRootElement );
 };

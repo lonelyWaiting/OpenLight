@@ -27,11 +27,16 @@ void SamplerRenderer::Render( const Scene* scene )
 		{
 			Spectrum L( 0 );
 
-			CameraSample SamplePoint = sampler->GetSamplePoint();
+			for( int i = 0; i < 64; i++ )
+			{
+				CameraSample SamplePoint = sampler->GetSamplePoint();
 
-			Ray ray = camera->GenerateRay( iCol , iRow , SamplePoint );
+				Ray ray = camera->GenerateRay( iCol , iRow , SamplePoint );
 
-			L += scene->Trace( ray );
+				L += scene->Trace( ray );
+			}
+			
+			L /= 64.f;
 
 			camera->GetFilm()->SetColor( iRow , iCol , L );
 		}

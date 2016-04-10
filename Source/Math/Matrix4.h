@@ -23,6 +23,8 @@ public:
 
 	inline Matrix4f( const Matrix4f& matrix );
 
+	Matrix4f& operator = ( const Matrix4f& rhs );
+
 public:
 	bool operator == ( const Matrix4f& rhs ) const;
 

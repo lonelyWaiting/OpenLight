@@ -11,6 +11,8 @@ struct IntersectRecord;
 class Shape
 {
 public:
+	Shape();
+
 	Shape( const Transform* ObjectToWorld , const Transform* WorldToObject );
 
 	virtual ~Shape();
@@ -22,6 +24,8 @@ public:
 	virtual bool Intersect( const Ray& ray , IntersectRecord* record ) const;
 
 	virtual bool IntersectP( const Ray& ray ) const;
+
+	virtual void ParseShape( XMLElement* ShapeRootElement ) = 0;
 
 public:
 	Transform*	ObjectToWorld;

@@ -375,6 +375,18 @@ public:
 		return s;
 	}
 
+	static RGBSpectrum FromRGB( float r , float g , float b , SpectrumType = SpectrumType::Reflectance )
+	{
+		RGBSpectrum s;
+		s.c[0] = r;
+		s.c[1] = g;
+		s.c[2] = b;
+
+		Assert( !s.HasNAN() );
+
+		return s;
+	}
+
 	void ToRGB( float* rgb ) const
 	{
 		rgb[0] = c[0];

@@ -30,3 +30,25 @@ Ray PinholeCamera::GenerateRay( float RasterX , float RasterY , const CameraSamp
 
 	return Ray( Eye , Normalize( dir ) , 1e-3f );
 }
+
+void PinholeCamera::ParseCamera( XMLElement* CameraRootElement )
+{
+	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "x" )->QueryFloatText( &( Eye.x ) );
+	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "y" )->QueryFloatText( &( Eye.y ) );
+	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "z" )->QueryFloatText( &( Eye.z ) );
+
+	CameraRootElement->FirstChildElement( "Target" )->FirstChildElement( "x" )->QueryFloatText( &( Target.x ) );
+	CameraRootElement->FirstChildElement( "Target" )->FirstChildElement( "y" )->QueryFloatText( &( Target.y ) );
+	CameraRootElement->FirstChildElement( "Target" )->FirstChildElement( "z" )->QueryFloatText( &( Target.z ) );
+
+	CameraRootElement->FirstChildElement( "ApertureResolution" )->FirstChildElement( "width" )->QueryFloatText( &( ApertureResolution.x ) );
+	CameraRootElement->FirstChildElement( "ApertureResolution" )->FirstChildElement( "height" )->QueryFloatText( &( ApertureResolution.y ) );
+
+	CameraRootElement->FirstChildElement( "ApertureDistance" )->QueryFloatText( &ApertureDistance );
+
+	CameraRootElement->FirstChildElement( "ExposureTime" )->QueryFloatText( &ExposureTime );
+
+	CameraRootElement->FirstChildElement( "ViewDistance" )->QueryFloatText( &ViewDistance );
+
+	UpdateProperty();
+}

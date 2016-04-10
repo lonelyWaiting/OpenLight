@@ -22,16 +22,6 @@ public:
 
 	Camera( const Camera& orig );
 
-	void SetCameraPositionAndLookAt( const Point3f& eye , const Point3f& TargetPoint );
-
-	void SetApertureDistance( float d );
-
-	void SetViewDistance( float d );
-
-	void SetApertureResolution( const Vector2f& resolution );
-	
-	void SetExposureTime( float ExposureTime );
-
 	void SetFitMode( FitMode _Mode );
 
 	void SetFilm( Film* _film );
@@ -54,6 +44,9 @@ public:
 
 	virtual void UpdateProperty();
 
+public:
+	virtual void ParseCamera( XMLElement* CameraRootElement ) = 0;
+
 protected:
 	Point3f		Eye;						// 相机中心
 	Point3f		Target;						// 视线方向
@@ -64,7 +57,6 @@ protected:
 	FitMode		Mode;
 
 protected:
-	bool		NeedUpdateParams;
 	float		Top;
 	float		Bottom;
 	float		Left;

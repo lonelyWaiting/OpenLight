@@ -9,6 +9,8 @@
 #include "IO/Log.h"
 
 Transform::Transform()
+	:matrix()
+	,matrix_inv()
 {
 
 }
@@ -35,6 +37,15 @@ Transform::Transform( const Matrix4f& m , const Matrix4f& invm )
 	, matrix_inv( invm )
 {
 
+}
+
+Transform& Transform::operator = ( const Transform& rhs )
+{
+	matrix = rhs.matrix;
+
+	matrix_inv = rhs.matrix_inv;
+
+	return ( *this );
 }
 
 Transform Inverse( const Transform& t )

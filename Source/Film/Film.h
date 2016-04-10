@@ -14,7 +14,7 @@ public:
 
 	void SetGamma( float gamma );
 
-	void SetResolution( float xResolution , float yResolution );
+	void SetResolution( int xResolution , int yResolution );
 
 	void SetColor( int row , int col , Spectrum color );
 
@@ -25,9 +25,12 @@ public:
 
 	float GetAspectio() const;
 
+public:
+	void ParseFilm( const XMLElement* FilmRootElement );
+
 private:
-	float Width;
-	float Height;
+	int Width;
+	int Height;
 
 	float Gamma;
 	float InvGamma;

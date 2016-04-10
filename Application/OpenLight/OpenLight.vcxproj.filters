@@ -168,6 +168,9 @@
     <ClCompile Include="..\..\Source\Math\Bound3.cpp">
       <Filter>Math</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Sampler\NRooksSampler.cpp">
+      <Filter>Sampler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Math\Matrix3.h">
@@ -283,6 +286,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Math\Bound3.h">
       <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Sampler\NRooksSampler.h">
+      <Filter>Sampler</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

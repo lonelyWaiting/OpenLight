@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scene>
+	<samplenumber>16</samplenumber>
 	<primitive>
 		<shape>
 			<type>sphere</type>

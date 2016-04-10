@@ -19,8 +19,6 @@ void ThinLensCamera::SetLensRadius( float _LensRadius )
 	if( LensRadius != _LensRadius )
 	{
 		LensRadius = _LensRadius;
-
-		NeedUpdateParams = true;
 	}
 }
 
@@ -29,8 +27,6 @@ void ThinLensCamera::SetLensFocus( float _LensFocus )
 	if( LensFocus != _LensFocus )
 	{
 		LensFocus = _LensFocus;
-
-		NeedUpdateParams = true;
 	}
 }
 
@@ -53,4 +49,30 @@ Ray ThinLensCamera::GenerateRay( float RasterX , float RasterY , const CameraSam
 	Vector3f dir = ( x - LensRadius * LensSamples.x ) * uvw.U + ( y - LensRadius * LensSamples.y ) * uvw.V + LensFocus * uvw.W;
 
 	return Ray( Orig , Normalize( dir ) , 1e-3f );
+}
+
+void ThinLensCamera::ParseCamera( XMLElement* CameraRootElement )
+{
+	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "x" )->QueryFloatText( &( Eye.x ) );
+	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "y" )->QueryFloatText( &( Eye.y ) );
+	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "z" )->QueryFloatText( &( Eye.z ) );
+
+	CameraRootElement->FirstChildElement( "Target" )->FirstChildElement( "x" )->QueryFloatText( &( Target.x ) );
+	CameraRootElement->FirstChildElement( "Target" )->FirstChildElement( "y" )->QueryFloatText( &( Target.y ) );
+	CameraRootElement->FirstChildElement( "Target" )->FirstChildElement( "z" )->QueryFloatText( &( Target.z ) );
+
+	CameraRootElement->FirstChildElement( "LensFocus" )->QueryFloatText( &LensFocus );
+
+	CameraRootElement->FirstChildElement( "LensRadius" )->QueryFloatText( &LensRadius );
+
+	CameraRootElement->FirstChildElement( "ApertureResolution" )->FirstChildElement( "width" )->QueryFloatText( &( ApertureResolution.x) );
+	CameraRootElement->FirstChildElement( "ApertureResolution" )->FirstChildElement( "height" )->QueryFloatText( &( ApertureResolution.y ) );
+
+	CameraRootElement->FirstChildElement( "ApertureDistance" )->QueryFloatText( &ApertureDistance );
+
+	CameraRootElement->FirstChildElement( "ExposureTime" )->QueryFloatText( &ExposureTime );
+
+	CameraRootElement->FirstChildElement( "ViewDistance" )->QueryFloatText( &ViewDistance );
+
+	UpdateProperty();
 }

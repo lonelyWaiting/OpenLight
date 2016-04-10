@@ -5,6 +5,11 @@
 #include "Sampler/Sampling.h"
 #include "Sphere.h"
 
+Sphere::Sphere()
+{
+	m_Radius = 0;
+}
+
 Sphere::Sphere( const Transform* ObjectToWorld , const Transform* WorldToObject , float radius )
 	: Shape( ObjectToWorld , WorldToObject )
 	, m_Radius( radius )
@@ -93,4 +98,19 @@ bool Sphere::IntersectP( const Ray& r ) const
 	}
 
 	return true;
+}
+
+void Sphere::ParseShape( XMLElement* ShapeRootElement )
+{
+	XMLElement* PrimitivePosiitonElement = ShapeRootElement->FirstChildElement( "transform" )->FirstChildElement( "position" );
+
+	float PrimitivePosX , PrimitivePosY , PrimitivePosZ;
+	PrimitivePosiitonElement->FirstChildElement( "x" )->QueryFloatText( &PrimitivePosX );
+	PrimitivePosiitonElement->FirstChildElement( "y" )->QueryFloatText( &PrimitivePosY );
+	PrimitivePosiitonElement->FirstChildElement( "z" )->QueryFloatText( &PrimitivePosZ );
+
+	ShapeRootElement->FirstChildElement( "radius" )->QueryFloatText( &m_Radius );
+
+	*ObjectToWorld = Translate( Vector3f( PrimitivePosX , PrimitivePosY , PrimitivePosZ ) );
+	*WorldToObject = Inverse( *ObjectToWorld );
 }

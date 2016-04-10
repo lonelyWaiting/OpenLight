@@ -42,6 +42,13 @@ inline Matrix4f::Matrix4f( const Matrix4f& matrix )
 	memcpy( m , matrix.m , 16 * sizeof( float ) );
 }
 
+Matrix4f& Matrix4f::operator = ( const Matrix4f& rhs )
+{
+	memcpy( &m[0] , &( rhs.m[0] ) , 16 * sizeof( float ) );
+
+	return ( *this );
+}
+
 bool Matrix4f::operator == ( const Matrix4f& rhs ) const
 {
 	return ( ( m00 == rhs.m00 ) && ( m01 == rhs.m01 ) && ( m02 == rhs.m02 ) && ( m03 == rhs.m03 ) &&

@@ -15,7 +15,7 @@ Film::Film()
 	image = new PPMImage( Filename , Width , Height );
 }
 
-void Film::SetResolution( float xResolution , float yResolution )
+void Film::SetResolution( int xResolution , int yResolution )
 {
 	Width = xResolution;
 	Height = yResolution;
@@ -57,7 +57,7 @@ void Film::SetColor( int row , int col , Spectrum color )
 
 float Film::GetAspectio() const
 {
-	return Width / Height;
+	return float( Width ) / float( Height );
 }
 
 void Film::Display()
@@ -68,4 +68,14 @@ void Film::Display()
 Vector2f Film::GetResolution() const
 {
 	return Vector2f( Width , Height );
+}
+
+void Film::ParseFilm( const XMLElement* FilmRootElement )
+{
+	// ---------------------------------Film---------------------------------------------
+	Filename = new char[20];
+	strcpy_s( Filename , 20 , FilmRootElement->FirstChildElement( "filename" )->GetText() );
+
+	FilmRootElement->FirstChildElement( "width" )->QueryIntText( &Width );
+	FilmRootElement->FirstChildElement( "height" )->QueryIntText( &Height );
 }
