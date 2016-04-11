@@ -21,14 +21,16 @@ Spectrum Scene::Trace( const Ray& ray ) const
 
 	bool bHit = false;
 
+	Ray r( ray.Origin , ray.Direction , ray.MinT , ray.MaxT , ray.time , ray.depth );
+
 	for( int i = 0; i < size; i++ )
 	{
 		// 对每个物体进行相交测试
-		if( Objects[i].Intersect( ray , &record ) )
+		if( Objects[i].Intersect( r , &record ) )
 		{
-			if( record.HitT < MaxT )
+			if( record.HitT < r.MaxT )
 			{
-				ray.MaxT = record.HitT;
+				r.MaxT = record.HitT;
 				bHit = true;
 			}
 		}

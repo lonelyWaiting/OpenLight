@@ -19,20 +19,6 @@
 
 using namespace tinyxml2;
 
-bool ParseModel( const std::string& pModelFilename )
-{
-	Assimp::Importer importer;
-
-	const aiScene* scene = importer.ReadFile( pModelFilename , aiProcess_SortByPType | aiProcess_Triangulate );
-
-	if( !scene )
-	{
-		return false;
-	}
-
-	return true;
-}
-
 void ParseScene( Scene* scene , Camera*& camera )
 {
 	FileSystem fs;
@@ -90,7 +76,6 @@ int main( void )
 
 	ParseScene( scene , camera );
 
-	ParseModel( std::string( "../Data/Model/cbox_smallbox.obj" ) );
 	/*PureRandomSampler* RandomSampler = new PureRandomSampler;*/
 	
 	NRooksSampler* nRooksSampler = new NRooksSampler;

@@ -13,9 +13,7 @@ public:
 
 	virtual ~Primitive();
 
-	//virtual Bound3f WorldBound() const = 0;
-
-	virtual bool Intersect( const Ray& r , IntersectRecord* record ) const;
+	virtual bool Intersect( Ray& r , IntersectRecord* record ) const;
 
 	virtual bool IntersectP( const Ray& r ) const;
 
@@ -27,7 +25,7 @@ public:
 	void ParsePrimitive( XMLElement* PrimitiveRootElment );
 
 protected:
-	Shape* shape;
-
 	Spectrum color;
+
+	std::vector<Shape*> shapes;
 };

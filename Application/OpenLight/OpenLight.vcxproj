@@ -52,8 +52,11 @@
     <ClCompile Include="..\..\Source\Sampler\PureRandomSampler.cpp" />
     <ClCompile Include="..\..\Source\Sampler\Sampler.cpp" />
     <ClCompile Include="..\..\Source\Sampler\Sampling.cpp" />
+    <ClCompile Include="..\..\Source\Shapes\ModelParser.cpp" />
     <ClCompile Include="..\..\Source\Shapes\Shape.cpp" />
     <ClCompile Include="..\..\Source\Shapes\Sphere.cpp" />
+    <ClCompile Include="..\..\Source\Shapes\Triangle.cpp" />
+    <ClCompile Include="..\..\Source\Shapes\TriangleMesh.cpp" />
     <ClCompile Include="..\..\Source\Spectrum\Spectrum.cpp" />
     <ClCompile Include="..\..\Source\Utilities\PCH.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -98,8 +101,11 @@
     <ClInclude Include="..\..\Source\Sampler\PureRandomSampler.h" />
     <ClInclude Include="..\..\Source\Sampler\Sampler.h" />
     <ClInclude Include="..\..\Source\Sampler\Sampling.h" />
+    <ClInclude Include="..\..\Source\Shapes\ModelParser.h" />
     <ClInclude Include="..\..\Source\Shapes\Shape.h" />
     <ClInclude Include="..\..\Source\Shapes\Sphere.h" />
+    <ClInclude Include="..\..\Source\Shapes\Triangle.h" />
+    <ClInclude Include="..\..\Source\Shapes\TriangleMesh.h" />
     <ClInclude Include="..\..\Source\Spectrum\Spectrum.h" />
     <ClInclude Include="..\..\Source\Utilities\PCH.h" />
     <ClInclude Include="..\..\Source\Utilities\RandomNumberGenerator.h" />
@@ -235,6 +241,9 @@
       <AdditionalLibraryDirectories>$(SolutionDir)Library\FreeImage\Lib;$(SolutionDir)Library\TinyXML2\Lib\Win32-Release-Lib;$(SolutionDir)Library\assimp\Lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>FreeImage.lib;tinyxml2.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)\Library\assimp\Lib\Release\assimp-vc140-mt.dll ..\Bin\Release\</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>

@@ -171,6 +171,15 @@
     <ClCompile Include="..\..\Source\Sampler\NRooksSampler.cpp">
       <Filter>Sampler</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Shapes\Triangle.cpp">
+      <Filter>Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Shapes\TriangleMesh.cpp">
+      <Filter>Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Shapes\ModelParser.cpp">
+      <Filter>Shapes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Math\Matrix3.h">
@@ -289,6 +298,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Sampler\NRooksSampler.h">
       <Filter>Sampler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Shapes\Triangle.h">
+      <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Shapes\TriangleMesh.h">
+      <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Shapes\ModelParser.h">
+      <Filter>Shapes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

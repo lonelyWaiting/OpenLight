@@ -36,7 +36,7 @@ void SamplerRenderer::Render( const Scene* scene )
 				L += scene->Trace( ray );
 			}
 			
-			L /= 64.f;
+			L /= 64;
 
 			camera->GetFilm()->SetColor( iRow , iCol , L );
 		}
