@@ -5,11 +5,14 @@
 #include "Math/Vector2.h"
 #include "Camera/Camera.h"
 #include "Sampler/Sampler.h"
+#include "Core/Scene.h"
+#include "Integrator/SurfaceIntegrator.h"
 #include "SamplerRenderer.h"
 
-SamplerRenderer::SamplerRenderer( Sampler* _sampler , Camera* _camera )
+SamplerRenderer::SamplerRenderer( Sampler* _sampler , Camera* _camera , SurfaceIntegrator* _surfaceIntegrator )
 	: sampler( _sampler )
 	, camera( _camera )
+	, surfaceIntegrator( _surfaceIntegrator )
 {
 
 }
@@ -18,9 +21,10 @@ void SamplerRenderer::Render( const Scene* scene )
 {
 	Vector2f Resolution = camera->GetFilm()->GetResolution();
 	
-	float Width  = Resolution.x;
-	float Height = Resolution.y;
+	int Width  = Resolution.x;
+	int Height = Resolution.y;
 
+#pragma omp parallel for schedule(dynamic)
 	for( int iRow = 0; iRow < Height; iRow++ )
 	{
 		for( int iCol = 0; iCol < Width; iCol++ )
@@ -33,7 +37,11 @@ void SamplerRenderer::Render( const Scene* scene )
 
 				Ray ray = camera->GenerateRay( iCol , iRow , SamplePoint );
 
-				L += scene->Trace( ray );
+				IntersectRecord record;
+
+				Spectrum T( 1.0f );
+
+				L += Li( scene , &ray , &record , &T );
 			}
 			
 			L /= 64;
@@ -45,42 +53,38 @@ void SamplerRenderer::Render( const Scene* scene )
 	camera->GetFilm()->Display();
 }
 
-Spectrum SamplerRenderer::Li( const Scene* scene , const Sampler* sample , RandomNumberGenerator& rng , IntersectRecord* record /* = nullptr  */ , Spectrum* T /* = nullptr */ ) const
+Spectrum SamplerRenderer::Li( const Scene* scene , Ray* ray , IntersectRecord* record /* = nullptr  */ , Spectrum* T /* = nullptr */ ) const
 {
-	//Spectrum LocalT;
+	Spectrum LocalT;
 
-	//if( T == nullptr )
-	//{
-	//	T = &LocalT;
-	//}
+	if( T == nullptr )
+	{
+		T = &LocalT;
+	}
 
-	//IntersectRecord LocalIntersectRecord;
+	IntersectRecord LocalIntersectRecord;
 
-	//if( record == nullptr )
-	//{
-	//	record = &LocalIntersectRecord;
-	//}
+	if( record == nullptr )
+	{
+		record = &LocalIntersectRecord;
+	}
 
-	//Spectrum Li = 0.0f;
+	Spectrum Li = 0.0f;
 
-	//// 检测是否有图元与之相交
-	//if( scene->Intersect( ray , record ) )
-	//{
-	//	Li = surfaceIntegrator->Li( scene , this , ray , *record , sample , rng );
-	//}
-	//else
-	//{
-	//	for( uint32_t i = 0; i < scene->Lights.size(); i++ )
-	//	{
-	//		Li += scene->Lights[i]->Le( ray );
-	//	}
-	//}
+	// 检测是否有图元与之相交
+	if( scene->Intersect( *ray , record ) )
+	{
+		Li = surfaceIntegrator->Li( scene , this , record , ray );
+	}
+	else
+	{
+		for( uint32_t i = 0; i < scene->GetLights().size(); i++ )
+		{
+			Li += ( scene->GetLights() )[i]->Le( *ray );
+		}
+	}
 
-	//return ( ( *T ) * Li );
-	
-	Spectrum L = 0.0f;
-
-	return ( ( *T ) * L );
+	return ( ( *T ) * Li );
 }
 
 Spectrum SamplerRenderer::Transmittance( const Scene* scene , const Sampler* sample , RandomNumberGenerator& rng ) const

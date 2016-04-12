@@ -6,6 +6,7 @@ class Scene;
 class Sampler;
 class RandomNumberGenerator;
 class IntersectRecord;
+class Ray;
 
 class Renderer
 {
@@ -15,8 +16,7 @@ public:
 	virtual void Render( const Scene* scene ) = 0;
 
 	virtual Spectrum Li( const Scene* scene ,
-						 const Sampler* sampler ,
-						 RandomNumberGenerator& rng ,
+						 Ray* ray ,
 						 IntersectRecord* record = nullptr ,
 						 Spectrum* T = nullptr ) const = 0;
 

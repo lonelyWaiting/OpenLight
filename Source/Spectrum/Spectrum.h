@@ -271,7 +271,7 @@ public:
 			}
 		}
 
-		return true;s
+		return true;
 	}
 
 	template< int N>

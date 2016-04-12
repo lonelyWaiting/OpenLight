@@ -12,6 +12,9 @@
 #include "Utilities/srString.h"
 #include "IO/FileSystem.h"
 #include "Sampler/NRooksSampler.h"
+#include "Integrator/WhittedIntegrator.h"
+#include "BRDF/Lambertian.h"
+#include "Light/PointLight.h"
 #include "tinyxml2.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -32,8 +35,12 @@ void ParseScene( Scene* scene , Camera*& camera )
 	XMLElement* PrimitiveElement = doc.FirstChildElement()->FirstChildElement( "primitive" );
 	primitive->ParsePrimitive( PrimitiveElement );
 
+	Lambertian* lambertian = new Lambertian( Spectrum( 0.7 ) );
+	primitive->
 	scene->AddObject( *primitive );
 
+	PointLight* pLight = new PointLight( Translate( Vector3f( 10 , 2 , 5 ) ) , Spectrum( 0.5f ) );
+	scene->AddLight( pLight );
 	// ---------------------------------Film---------------------------------------------
 	Film* film = new Film();
 	XMLElement* FilmElement = doc.FirstChildElement()->FirstChildElement( "Film" );
@@ -80,7 +87,9 @@ int main( void )
 	
 	NRooksSampler* nRooksSampler = new NRooksSampler;
 
-	SamplerRenderer* renderer = new SamplerRenderer( nRooksSampler , camera );
+	WhittedIntegrator* integrator = new WhittedIntegrator;
+	integrator->SetMaxRecusiveDepth( 5 );
+	SamplerRenderer* renderer = new SamplerRenderer( nRooksSampler , camera , integrator );
 
 	renderer->Render( scene );
 

@@ -5,6 +5,7 @@
 #include "IntersectRecord.h"
 #include "Shapes/Shape.h"
 #include "Spectrum/Spectrum.h"
+#include "Material/Material.h"
 
 class Primitive
 {
@@ -21,6 +22,8 @@ public:
 
 	void SetDiffuseColor( const Spectrum& _color );
 
+	BxDF* GetBxDF( const Point3f& point , const Normal& normal ) const;
+
 public:
 	void ParsePrimitive( XMLElement* PrimitiveRootElment );
 
@@ -28,4 +31,6 @@ protected:
 	Spectrum color;
 
 	std::vector<Shape*> shapes;
+
+	Material* pMaterial;
 };

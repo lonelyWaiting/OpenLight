@@ -3,12 +3,12 @@
 	<samplenumber>16</samplenumber>
 	<primitive>
 		<shape type="obj">
-			<filename>box.obj</filename>
+			<filename>sphere.obj</filename>
 			<transform>
 				<position>
-					<x>6</x>
-					<y>-17</y>
-					<z>0</z>
+					<x>0</x>
+					<y>0</y>
+					<z>18</z>
 				</position>
 			</transform>
 		</shape>

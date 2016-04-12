@@ -30,7 +30,7 @@ bool Primitive::Intersect( Ray& r , IntersectRecord* record ) const
 		if( shapes[i]->Intersect( r , record ) )
 		{
 			record->HitPointColor = color;
-
+			record->HitPoint = r( record->HitT );
 			bHit = true;
 		}
 	}
@@ -91,4 +91,9 @@ void Primitive::ParsePrimitive( XMLElement* PrimitiveRootElment )
 	MaterialSurfaceColorElement->FirstChildElement( "b" )->QueryFloatText( &b );
 
 	color = Spectrum::FromRGB( r , g , b );
+}
+
+BxDF* Primitive::GetBxDF( const Point3f& point , const Normal& normal ) const
+{
+	return pMaterial->GetBxDF( point , normal );
 }

@@ -37,22 +37,22 @@ bool TriangleMesh::Intersect( const Ray& ray , IntersectRecord* record ) const
 	// ´ÓWorld Space±ä»»µ½Object Space
 	Ray r = ( *WorldToObject )( ray );
 
-	bool bHit = false;
+	int bHitIndex = -1;
 
 	for( int i = 0; i < TriangleCount; i++ )
 	{
 		if( triangles[i].Intersect( r , points , record ) )
 		{
 			r.MaxT = record->HitT;
-			bHit = true;
+			bHitIndex = i;
 		}
 	}
 
-	if( bHit )
+	if( bHitIndex != -1 )
 	{
 		record->ObjectToWorld = *ObjectToWorld;
 		record->WorldToObject = *WorldToObject;
-
+		record->normal = normals[3 * bHitIndex];
 		return true;
 	}
 

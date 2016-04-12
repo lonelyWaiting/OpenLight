@@ -52,6 +52,9 @@
     <Filter Include="Core">
       <UniqueIdentifier>{f0ebbff1-4410-4e42-868c-ee3563287c2d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Material">
+      <UniqueIdentifier>{2ab87d2f-588a-4523-9c50-f7932e700b5e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\Math\Matrix3.cpp">
@@ -180,6 +183,30 @@
     <ClCompile Include="..\..\Source\Shapes\ModelParser.cpp">
       <Filter>Shapes</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Integrator\WhittedIntegrator.cpp">
+      <Filter>Integrator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Light\Light.cpp">
+      <Filter>Light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Light\PonitLight.cpp">
+      <Filter>Light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\BRDF\BxDF.cpp">
+      <Filter>BRDF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\BRDF\Lambertian.cpp">
+      <Filter>BRDF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Material\Material.cpp">
+      <Filter>Material</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Light\VisibilityTester.cpp">
+      <Filter>Light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Integrator\SurfaceIntegrator.cpp">
+      <Filter>Integrator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Math\Matrix3.h">
@@ -307,6 +334,33 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Shapes\ModelParser.h">
       <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Integrator\SurfaceIntegrator.h">
+      <Filter>Integrator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Integrator\WhittedIntegrator.h">
+      <Filter>Integrator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Light\Light.h">
+      <Filter>Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Light\PointLight.h">
+      <Filter>Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\BRDF\BxDF.h">
+      <Filter>BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\BRDF\Lambertian.h">
+      <Filter>BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Material\Material.h">
+      <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Light\VisibilityTester.h">
+      <Filter>Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Math\UtilitiesFunction.h">
+      <Filter>Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
