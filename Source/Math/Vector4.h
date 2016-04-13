@@ -8,9 +8,9 @@ class Vector4f
 public:
 	Vector4f();
 
-	Vector4f( float a );
+	Vector4f( double a );
 
-	Vector4f( float x , float y , float z , float w );
+	Vector4f( double x , double y , double z , double w );
 
 	Vector4f( const Vector4f& v );
 
@@ -35,31 +35,31 @@ public:
 
 	const Vector4f& operator *= ( const Vector4f& v );
 
-	const Vector4f& operator *= ( float a );
+	const Vector4f& operator *= ( double a );
 
 	const Vector4f& operator /= ( const Vector4f& v );
 
-	const Vector4f& operator /= ( float a );
+	const Vector4f& operator /= ( double a );
 
 	Vector4f operator / ( const Vector4f& v ) const;
 
-	Vector4f operator / ( float a ) const;
+	Vector4f operator / ( double a ) const;
 
 	friend std::ostream& operator << ( std::ostream os , const Vector4f& rhs );
 
 public:
-	float length() const;
+	double length() const;
 
-	float lengthSq() const;
+	double lengthSq() const;
 
 	const Vector4f& normalize();
 
 	static unsigned int dimension();
 
 public:
-	friend inline float Dot( const Vector4f&v1 , const Vector4f &v2 );
+	friend inline double Dot( const Vector4f&v1 , const Vector4f &v2 );
 
-	friend inline float AbsDot( const Vector4f& v1 , const Vector4f& v2 );
+	friend inline double AbsDot( const Vector4f& v1 , const Vector4f& v2 );
 
 	friend Vector4f Abs( const Vector4f& v );
 
@@ -73,12 +73,12 @@ public:
 	{
 		struct
 		{
-			float x , y , z , w;
+			double x , y , z , w;
 		};
 
 		struct
 		{
-			float r , g , b , a;
+			double r , g , b , a;
 		};
 	};
 };

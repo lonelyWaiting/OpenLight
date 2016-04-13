@@ -20,7 +20,7 @@ public:
 	Ray();
 
 	/**
-	 \fn	Ray::Ray( const Point3f &Origin , const Vector3f &Direction , Float tMax = Infinity , Float time = 0.0f )
+	 \fn	Ray::Ray( const Point3f &Origin , const Vector3f &Direction , double tMax = Infinity , double time = 0.0f )
 	
 	 \brief	Constructor.
 	
@@ -33,10 +33,10 @@ public:
 	 \param	time	 	The time.
 	 */
 
-	Ray( const Point3f &Origin , const Vector3f &Direction , float tMin , float tMax = Infinity , float time = 0.0f , int depth = 0 );
+	Ray( const Point3f &Origin , const Vector3f &Direction , double tMin = 1e-3 , double tMax = Infinity , double time = 0.0f , int depth = 0 );
 
 	/**
-	 \fn	Point3f Ray::operator()( Float t ) const
+	 \fn	Point3f Ray::operator()( double t ) const
 	
 	 \brief	Function call operator.
 	
@@ -48,10 +48,10 @@ public:
 	 \return	沿着Direction与Origin的距离为t的点.
 	 */
 
-	Point3f operator()( float t ) const;
+	Point3f operator()( double t ) const;
 
 	/**
-	 \fn	Ray::Ray( const Point3f& Origin , const Vector3f& Direction , const Ray& parent , float tmin , float tmax = Infinity );
+	 \fn	Ray::Ray( const Point3f& Origin , const Vector3f& Direction , const Ray& parent , double tmin , double tmax = Infinity );
 	
 	 \brief	Constructor.
 	
@@ -65,7 +65,7 @@ public:
 	 \param	tmax	 	The tmax.
 	 */
 
-	Ray( const Point3f& Origin , const Vector3f& Direction , const Ray& parent , float tmin , float tmax = Infinity );
+	Ray( const Point3f& Origin , const Vector3f& Direction , const Ray& parent , double tmin , double tmax = Infinity );
 
 	/**
 	 \fn	friend std::ostream& Ray::operator<< (std::ostream &os, const Ray &ray)
@@ -99,8 +99,8 @@ public:
 public:
 	Point3f Origin;
 	Vector3f Direction;
-	float time;
-	mutable float MinT , MaxT;
+	double time;
+	mutable double MinT , MaxT;
 	int depth;
 };
 

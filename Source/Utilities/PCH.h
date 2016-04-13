@@ -38,10 +38,10 @@ using std::endl;
 #define INV_PI	0.3183098861837906715
 #define INV_TWO_PI	0.1591549430918953358
 
-#define EPSILON 1e-6
+#define EPSILON 1e-3
 #define EPSILON_04	1e-4
 
-#define Infinity std::numeric_limits<float>::infinity()
+#define Infinity std::numeric_limits<double>::infinity()
 
 #define Clamp(x , _min , _max)	x = (x) < _min ? _min : ((x) > _max ? _max : (x))
 
@@ -52,7 +52,7 @@ using std::endl;
 #define SAFE_DELETE(p)	if((p)){delete (p); p = nullptr;}
 #define SAFE_DELETE_ARRAY(p)	if((p)){delete[] p; p = nullptr;}
 
-static const float inchToMm = 25.4f;
+static const double inchToMm = 25.4f;
 
 template<typename T>
 inline bool isNanN( const T x )
@@ -66,17 +66,17 @@ inline bool isNanN( const int x )
 	return false;
 }
 
-inline float Lerp( const float& t , const float& p1 , const float& p2 )
+inline double Lerp( const double& t , const double& p1 , const double& p2 )
 {
 	return ( 1 - t ) * p1 + p2 * t;
 }
 
-inline float ToRadians( float degree )
+inline double ToRadians( double degree )
 {
 	return ( ( degree / 180.0f ) * PI );
 }
 
-inline float ToDegree( float radian )
+inline double ToDegree( double radian )
 {
 	return ( ( 180.0f / PI ) * radian );
 }
@@ -89,9 +89,9 @@ void Swap( T& A , T& B )
 	B = C;
 }
 
-inline bool Quadtratic( float A , float B , float C , float* t0 , float* t1 )
+inline bool Quadtratic( double A , double B , double C , double* t0 , double* t1 )
 {
-	float delta = B * B - 4 * A * C;
+	double delta = B * B - 4 * A * C;
 
 	if( delta < 0 )
 	{
@@ -99,9 +99,9 @@ inline bool Quadtratic( float A , float B , float C , float* t0 , float* t1 )
 		return false;
 	}
 
-	float sqrtDelta = sqrtf( delta );
+	double sqrtDelta = sqrtf( delta );
 
-	float InvA = 1.0f / A;
+	double InvA = 1.0f / A;
 
 	*t0 = ( -1.0f * B - 1.0f * sqrtDelta ) * 0.5f * InvA;
 	*t1 = ( -1.0f * B + sqrtDelta ) * 0.5f * InvA;

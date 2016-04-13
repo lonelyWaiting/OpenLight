@@ -9,7 +9,7 @@ class Sphere : public Shape
 public:
 	Sphere();
 
-	Sphere( const Transform* ObjectToWorld , const Transform* WorldToObject , float radius );
+	Sphere( const Transform* ObjectToWorld , const Transform* WorldToObject , double radius );
 
 	~Sphere();
 
@@ -23,7 +23,7 @@ public:
 	void ParseShape( XMLElement* ShapeRootElement );
 
 private:
-	float m_Radius;
+	double m_Radius;
 };
 
 #endif

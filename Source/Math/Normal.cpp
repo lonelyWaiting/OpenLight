@@ -11,7 +11,7 @@ Normal::Normal()
 
 }
 
-Normal::Normal( float x , float y , float z )
+Normal::Normal( double x , double y , double z )
 	: x( x )
 	, y( y )
 	, z( z )
@@ -59,12 +59,12 @@ Normal& Normal::operator -= ( const Normal& n )
 	return ( *this );
 }
 
-Normal Normal::operator *( float f ) const
+Normal Normal::operator *( double f ) const
 {
 	return Normal( x * f , y * f , z * f );
 }
 
-Normal& Normal::operator *= ( float f )
+Normal& Normal::operator *= ( double f )
 {
 	x *= f;
 	y *= f;
@@ -73,19 +73,19 @@ Normal& Normal::operator *= ( float f )
 	return ( *this );
 }
 
-Normal Normal::operator / ( float f ) const
+Normal Normal::operator / ( double f ) const
 {
 	Assert( f != 0 );
-	float Inv = 1.0f / f;
+	double Inv = 1.0f / f;
 
 	return Normal( x * Inv , y * Inv , z * Inv );
 }
 
-Normal& Normal::operator /= ( float f )
+Normal& Normal::operator /= ( double f )
 {
 	Assert( f != 0 );
 
-	float Inv = 1.0f / f;
+	double Inv = 1.0f / f;
 
 	x *= Inv;
 	y *= Inv;
@@ -94,14 +94,14 @@ Normal& Normal::operator /= ( float f )
 	return ( *this );
 }
 
-float Normal::operator[](int i) const
+double Normal::operator[](int i) const
 { 
 	Assert( i >= 0 && i <= 2 );
 
 	return i == 0 ? x : ( i == 1 ? y : z );
 }
 
-float& Normal::operator[](int i)
+double& Normal::operator[](int i)
 { 
 	Assert( i >= 0 && i <= 2 );
 
@@ -118,17 +118,17 @@ bool Normal::operator != ( const Normal& rhs ) const
 	return !( *this == rhs );
 }
 
-float Normal::operator * ( const Vector3f& v )
+double Normal::operator * ( const Vector3f& v )
 {
 	return ( x * v.x + y * v.y + z * v.z );
 }
 
-float Normal::LengthSquared() const
+double Normal::LengthSquared() const
 {
 	return ( x * x + y * y + z * z );
 }
 
-float Normal::Length() const
+double Normal::Length() const
 {
 	return sqrtf( x * x + y * y + z * z );
 }
@@ -138,17 +138,17 @@ bool Normal::HasNAN() const
 	return std::isnan( x ) || std::isnan( y ) || std::isnan( z );
 }
 
-float Dot( const Vector3f& v , const Normal& n )
+double Dot( const Vector3f& v , const Normal& n )
 {
 	return ( v.x * n.x + v.y * n.y + v.z * n.z );
 }
 
-float Dot( const Normal& n , const Vector3f& v )
+double Dot( const Normal& n , const Vector3f& v )
 {
 	return ( v.x * n.x + v.y * n.y + v.z * n.z );
 }
 
-float AbsDot( const Normal& n , const Vector3f& v )
+double AbsDot( const Normal& n , const Vector3f& v )
 {
 	return fabs( n.x * v.x + n.y * v.y + n.z * v.z );
 }

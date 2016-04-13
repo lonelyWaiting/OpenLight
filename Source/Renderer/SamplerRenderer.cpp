@@ -9,10 +9,16 @@
 #include "Integrator/SurfaceIntegrator.h"
 #include "SamplerRenderer.h"
 
-SamplerRenderer::SamplerRenderer( Sampler* _sampler , Camera* _camera , SurfaceIntegrator* _surfaceIntegrator )
+SamplerRenderer::SamplerRenderer(Sampler* _sampler, Camera* _camera, SurfaceIntegrator* _surfaceIntegrator, int _spp/*=8*/)
 	: sampler( _sampler )
 	, camera( _camera )
 	, surfaceIntegrator( _surfaceIntegrator )
+	, spp( _spp )
+{
+
+}
+
+SamplerRenderer::~SamplerRenderer()
 {
 
 }
@@ -31,7 +37,7 @@ void SamplerRenderer::Render( const Scene* scene )
 		{
 			Spectrum L( 0 );
 
-			for( int i = 0; i < 64; i++ )
+			for( int i = 0; i < spp; i++ )
 			{
 				CameraSample SamplePoint = sampler->GetSamplePoint();
 
@@ -39,55 +45,26 @@ void SamplerRenderer::Render( const Scene* scene )
 
 				IntersectRecord record;
 
-				Spectrum T( 1.0f );
-
-				L += Li( scene , &ray , &record , &T );
+				L += Li( scene , &ray , &record );
 			}
 			
-			L /= 64;
+			L /= (double)spp;
 
 			camera->GetFilm()->SetColor( iRow , iCol , L );
 		}
+
+		std::cout << (double)(iRow + 1) / (double)Height << std::endl;
 	}
 
 	camera->GetFilm()->Display();
 }
 
-Spectrum SamplerRenderer::Li( const Scene* scene , Ray* ray , IntersectRecord* record /* = nullptr  */ , Spectrum* T /* = nullptr */ ) const
+Spectrum SamplerRenderer::Li( const Scene* scene , Ray* ray , IntersectRecord* record /* = nullptr  */ ) const
 {
-	Spectrum LocalT;
-
-	if( T == nullptr )
+	if (scene->Intersect(*ray, record))
 	{
-		T = &LocalT;
+		return surfaceIntegrator->Li(scene, this, record, ray);
 	}
 
-	IntersectRecord LocalIntersectRecord;
-
-	if( record == nullptr )
-	{
-		record = &LocalIntersectRecord;
-	}
-
-	Spectrum Li = 0.0f;
-
-	// 检测是否有图元与之相交
-	if( scene->Intersect( *ray , record ) )
-	{
-		Li = surfaceIntegrator->Li( scene , this , record , ray );
-	}
-	else
-	{
-		for( uint32_t i = 0; i < scene->GetLights().size(); i++ )
-		{
-			Li += ( scene->GetLights() )[i]->Le( *ray );
-		}
-	}
-
-	return ( ( *T ) * Li );
-}
-
-Spectrum SamplerRenderer::Transmittance( const Scene* scene , const Sampler* sample , RandomNumberGenerator& rng ) const
-{
-	return Spectrum( 0 );
+	return Spectrum(0.0f);
 }

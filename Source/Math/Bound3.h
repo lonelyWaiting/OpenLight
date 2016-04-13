@@ -27,15 +27,15 @@ public:
 	Vector3f Diagonal() const;
 
 	// 包围盒的表面积
-	float SurfaceArea() const;
+	double SurfaceArea() const;
 
 	Vector3f Offset( const Point3f& p ) const;
 
-	void BoundingSphere( Point3f* center , float* radius ) const;
+	void BoundingSphere( Point3f* center , double* radius ) const;
 
 	void ExpendToInclude( const Point3f& p );
 
-	bool IntersectP( const Ray& ray , float* hitt0 = nullptr , float* hitt1 = nullptr ) const;
+	bool IntersectP( const Ray& ray , double* hitt0 = nullptr , double* hitt1 = nullptr ) const;
 
 	inline bool IntersectP( const Ray& ray , const Vector3f& invDir , const int DirectionIsNegative[3] );
 

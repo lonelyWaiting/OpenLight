@@ -49,7 +49,7 @@ void PPMImage::Display()
 	unsigned int ired , igreen , iblue;
 	unsigned char red , green , blue;
 
-	float RGB[3];
+	double RGB[3];
 
 	for( int row = 0; row < Height; row++ )
 	{

@@ -8,55 +8,60 @@
 #include "Light/VisibilityTester.h"
 #include "Math/UtilitiesFunction.h"
 #include "Renderer/Renderer.h"
+#include "Sampler\Sampling.h"
 #include "WhittedIntegrator.h"
 
 Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Ray* ray ) const
 {
 	Spectrum L( 0.0 );
 
-	// 计算Hit Point处的BRDF
-	BxDF* brdf = record->GetBxDF();
-
-	// 着色点位置，着色点法线
-	const Point3f& p = record->HitPoint;
-
-	const Normal& normal = record->normal;
-
-	// 光线方向的反方向为出射方向
-	Vector3f wo = -1.0f * ray->Direction;
-
-	// 添加每个光源的贡献
-	for( uint32_t i = 0; i < scene->GetLights().size(); i++ )
+	if (ray->depth < MaxDepth)
 	{
-		Vector3f wi;
+		// 计算Hit Point处的BRDF
+		BxDF* brdf = record->GetBxDF();
 
-		float pdf;
+		// 着色点位置，着色点法线
+		const Point3f& p = record->HitPoint;
 
-		VisibilityTester visibility;
+		const Normal& normal = record->normal;
 
-		Spectrum Li = ( scene->GetLights() )[i]->Sample_L( p , &wi , &pdf );
+		// 光线方向的反方向为出射方向
+		Vector3f wo = -1.0f * ray->Direction;
 
-		if( Li.IsBlack() || pdf == 0.0f )
+		for (int i = 0; i < 22; i++)
 		{
-			continue;
+			double u0 = (double)rand() / (double)RAND_MAX;
+			double u1 = (double)rand() / (double)RAND_MAX;
+
+			// 采样半球
+			Vector3f& wi = CosineSampleHemisphere(Point2f(u0, u1));
+
+			if (Dot(normal, wi) <= 0)
+			{
+				/*Vector3f n = Vector3f(normal.x, normal.y, normal.z);
+
+				wi = Normalize(wi + n * 2 * AbsDot(n, wi));*/
+				wi *= -1;
+			}
+
+			// 沿着法线方向的偏移量
+			Vector3f bias = Vector3f(normal.x * EPSILON, normal.y * EPSILON, normal.z * EPSILON);
+
+			// 将光线沿着法线方向偏移
+			Ray r(record->HitPoint + bias , wi, *ray, 1e-3f , Infinity);
+
+			// 若该入射方向与场景图元存在交点
+			if (scene->Intersect(r, record))
+			{
+				// pdf强行使用INV_PI
+				L += Li(scene, renderer, record, &r) * brdf->f(wo, wi) * AbsDot(normal, wi) / INV_PI;
+			}
 		}
 
-		Spectrum f = brdf->f( wo , wi );
-
-		if( !f.IsBlack() && visibility.Unoccluded( scene ) )
-		{
-			L += f * Li * AbsDot( wi , normal ) / pdf;
-		}
+		L /= 22.0f;
 	}
-
-	if( ray->depth + 1 < MaxDepth )
-	{
-		// 反射 ， 透射
-		Ray reflectRay = Reflect( *ray , normal , record->HitPoint , 1e-3f );
-
-		Spectrum Temp( 1.0f );
-		L += renderer->Li( scene , &reflectRay , record , &Temp );
-	}
+	
+	L += record->Emmisive;
 
 	return L;
 }
@@ -64,4 +69,10 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 void WhittedIntegrator::SetMaxRecusiveDepth( int maxdepth )
 {
 	MaxDepth = maxdepth;
+}
+
+void WhittedIntegrator::ParseIntegrator(XMLElement* IntegratorRootElement)
+{
+	XMLElement* MaxDepthElement = IntegratorRootElement->FirstChildElement("MaxDepth");
+	MaxDepthElement->QueryIntText(&MaxDepth);
 }

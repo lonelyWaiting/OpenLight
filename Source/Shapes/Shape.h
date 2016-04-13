@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Math/Bound3.h"
+#include "Spectrum\Spectrum.h"
 
 class Transform;
 
@@ -11,7 +12,7 @@ struct IntersectRecord;
 class Shape
 {
 public:
-	Shape();
+	Shape(Spectrum _emmisive = Spectrum(0));
 
 	Shape( const Transform* ObjectToWorld , const Transform* WorldToObject );
 
@@ -30,4 +31,5 @@ public:
 public:
 	Transform*	ObjectToWorld;
 	Transform*	WorldToObject;
+	Spectrum	emmisive;
 };

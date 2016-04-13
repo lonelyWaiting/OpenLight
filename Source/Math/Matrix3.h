@@ -10,16 +10,16 @@ public:
 
 	Matrix3f( const Matrix3f& Matrix );
 
-	Matrix3f( float fM00 , float fM01 , float fM02 ,
-			  float fM10 , float fM11 , float fM12 ,
-			  float fM20 , float fM21 , float fM22 );
+	Matrix3f( double fM00 , double fM01 , double fM02 ,
+			  double fM10 , double fM11 , double fM12 ,
+			  double fM20 , double fM21 , double fM22 );
 
 public:
 	Matrix3f& operator = ( const Matrix3f& Matrix );
 
-	float operator[] ( int iPos ) const;
+	double operator[] ( int iPos ) const;
 
-	float& operator[] ( int iPos );
+	double& operator[] ( int iPos );
 
 	bool operator == ( const Matrix3f& Matrix ) const;
 
@@ -43,12 +43,12 @@ public:
 	void Orthonormalize();
 
 public:
-	static Matrix3f RotationX( float fTheta );
-	static Matrix3f RotationY( float fTheta );
-	static Matrix3f RotationZ( float fTheta );
+	static Matrix3f RotationX( double fTheta );
+	static Matrix3f RotationY( double fTheta );
+	static Matrix3f RotationZ( double fTheta );
 
-	static Matrix3f Rotation( float ThetaX , float ThetaY , float ThetaZ );
-	static Matrix3f RotateAxis( Vector3f& Axis , float fTheta );
+	static Matrix3f Rotation( double ThetaX , double ThetaY , double ThetaZ );
+	static Matrix3f RotateAxis( Vector3f& Axis , double fTheta );
 
 	static Matrix3f Identity();
 	static Matrix3f Tranpose( const Matrix3f& matrix );
@@ -58,12 +58,12 @@ public:
 	{
 		struct
 		{
-			float m00 , m01 , m02;
-			float m10 , m11 , m12;
-			float m20 , m21 , m22;
+			double m00 , m01 , m02;
+			double m10 , m11 , m12;
+			double m20 , m21 , m22;
 		};
 
-		float m[9];
+		double m[9];
 	};
 };
 

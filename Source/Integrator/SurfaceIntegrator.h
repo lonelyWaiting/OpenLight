@@ -11,6 +11,8 @@ class SurfaceIntegrator
 {
 public:
 	virtual Spectrum Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Ray* ray ) const = 0;
+
+	virtual void ParseIntegrator(XMLElement* IntegratorRootElement)= 0;
 };
 
 void SpecularReflect( const Ray& ray , const Scene* scene , const Renderer* renderer , IntersectRecord* record );

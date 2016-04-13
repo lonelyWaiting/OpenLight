@@ -8,7 +8,7 @@ public:
 	PinholeCamera( const PinholeCamera& rhs );
 
 public:
-	Ray GenerateRay( float RasterX , float RasterY , const CameraSample& SamplePoint );
+	Ray GenerateRay( double RasterX , double RasterY , const CameraSample& SamplePoint );
 
 	void ParseCamera( XMLElement* CameraRootElement );
 };

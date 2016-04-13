@@ -2,17 +2,17 @@
 #include "Vector3.h"
 #include "Vector4.h"
 
-Vector4f::Vector4f() :x( float( 0 ) ) , y( float( 0 ) ) , z( float( 0 ) ) , w( float( 0 ) )
+Vector4f::Vector4f() :x( double( 0 ) ) , y( double( 0 ) ) , z( double( 0 ) ) , w( double( 0 ) )
 {
 
 }
 
-Vector4f::Vector4f( float a ) : x( a ) , y( a ) , z( a ) , w( a )
+Vector4f::Vector4f( double a ) : x( a ) , y( a ) , z( a ) , w( a )
 {
 
 }
 
-Vector4f::Vector4f( float x , float y , float z , float w ) :x( x ) , y( y ) , z( z ) , w( w )
+Vector4f::Vector4f( double x , double y , double z , double w ) :x( x ) , y( y ) , z( z ) , w( w )
 {
 
 }
@@ -95,7 +95,7 @@ const Vector4f& Vector4f::operator *= ( const Vector4f& v )
 	return ( *this );
 }
 
-const Vector4f& Vector4f::operator *= ( float a )
+const Vector4f& Vector4f::operator *= ( double a )
 {
 	x *= a;
 	y *= a;
@@ -115,7 +115,7 @@ const Vector4f& Vector4f::operator /= ( const Vector4f& v )
 	return ( *this );
 }
 
-const Vector4f& Vector4f::operator /= ( float a )
+const Vector4f& Vector4f::operator /= ( double a )
 {
 	x /= a;
 	y /= a;
@@ -130,7 +130,7 @@ Vector4f Vector4f::operator / ( const Vector4f& v ) const
 	return Vector4f( x / v.x , y / v.y , z / v.z , w / v.w );
 }
 
-Vector4f Vector4f::operator / ( float a ) const
+Vector4f Vector4f::operator / ( double a ) const
 {
 	return Vector4f( x / a , y / a , z / a , w / a );
 }
@@ -142,21 +142,21 @@ std::ostream& operator << ( std::ostream os , const Vector4f& rhs )
 	return os;
 }
 
-float Vector4f::length() const
+double Vector4f::length() const
 {
 	return sqrtf( x * x + y * y + z * z + w * w );
 }
 
-float Vector4f::lengthSq() const
+double Vector4f::lengthSq() const
 {
 	return x * x + y * y + z * z + w * w;
 }
 
 const Vector4f& Vector4f::normalize()
 {
-	float l = length();
+	double l = length();
 
-	if( l != float( 0 ) )
+	if( l != double( 0 ) )
 	{
 		x /= l;
 		y /= l;
@@ -172,12 +172,12 @@ unsigned int Vector4f::dimension()
 	return 4;
 }
 
-inline float Dot( const Vector4f &v1 , const Vector4f &v2 )
+inline double Dot( const Vector4f &v1 , const Vector4f &v2 )
 {
 	return ( v1.x * v2.x + v1.y * v2.y + v1.z * v2.z + v1.w * v2.w );
 }
 
-inline float AbsDot( const Vector4f& v1 , const Vector4f& v2 )
+inline double AbsDot( const Vector4f& v1 , const Vector4f& v2 )
 {
 	return std::abs( Dot( v1 , v2 ) );
 }

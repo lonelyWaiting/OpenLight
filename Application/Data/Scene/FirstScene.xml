@@ -12,12 +12,89 @@
 				</position>
 			</transform>
 		</shape>
-		<material>
-			<color>
+		<shape type="sphere">
+			<transform>
+				<position>
+					<x></x>
+					<y></y>
+					<z></z>
+				</position>
+			</transform>
+			<radius></radius>
+			<emmisive></emmisive>
+		</shape>
+		<shape type="sphere">
+			<transform>
+				<position>
+					<x></x>
+					<y></y>
+					<z></z>
+				</position>
+			</transform>
+			<radius></radius>
+			<emmisive></emmisive>
+		</shape>
+		<shape type="sphere">
+			<transform>
+				<position>
+					<x></x>
+					<y></y>
+					<z></z>
+				</position>
+			</transform>
+			<radius></radius>
+			<emmisive></emmisive>
+		</shape>
+		<shape type="sphere">
+			<transform>
+				<position>
+					<x></x>
+					<y></y>
+					<z></z>
+				</position>
+			</transform>
+			<radius></radius>
+			<emmisive></emmisive>
+		</shape>
+		<shape type="sphere">
+			<transform>
+				<position>
+					<x></x>
+					<y></y>
+					<z></z>
+				</position>
+			</transform>
+			<radius></radius>
+			<emmisive></emmisive>
+		</shape>
+		<shape type="sphere">
+			<transform>
+				<position>
+					<x></x>
+					<y></y>
+					<z></z>
+				</position>
+			</transform>
+			<radius></radius>
+			<emmisive></emmisive>
+		</shape>
+		<shape type="sphere">
+			<transform>
+				<position>
+					<x></x>
+					<y></y>
+					<z></z>
+				</position>
+			</transform>
+			<radius></radius>
+			<emmisive></emmisive>
+		</shape>
+		<material type="diffuse">
+			<Reflection>
 				<r>1.0</r>
-				<g>0.0</g>
-				<b>0.0</b>
-			</color>
+				<g>1.0</g>
+				<b>1.0</b>
+			</Reflection>
 		</material>
 	</primitive>
 

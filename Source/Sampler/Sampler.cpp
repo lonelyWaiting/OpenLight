@@ -104,7 +104,7 @@ void Sampler::ShuffleXCoordinate()
 		{
 			int target = i * NumSamples + rand() % NumSamples;
 
-			float temp = SamplePoints[i * NumSamples + j + 1]->ImageSamples.x;
+			double temp = SamplePoints[i * NumSamples + j + 1]->ImageSamples.x;
 			SamplePoints[i * NumSamples + j + 1]->ImageSamples.x = SamplePoints[target]->ImageSamples.x;
 			SamplePoints[target]->ImageSamples.x = temp;
 		}
@@ -116,7 +116,7 @@ void Sampler::ShuffleXCoordinate()
 		{
 			int target = i * NumSamples + rand() % NumSamples;
 
-			float temp = SamplePoints[i * NumSamples + j + 1]->LensSamples.x;
+			double temp = SamplePoints[i * NumSamples + j + 1]->LensSamples.x;
 			SamplePoints[i * NumSamples + j + 1]->LensSamples.x = SamplePoints[target]->LensSamples.x;
 			SamplePoints[target]->LensSamples.x = temp;
 		}
@@ -130,7 +130,7 @@ void Sampler::ShuffleYCoordinate()
 		for( int j = 0; j < NumSamples - 1; j++ )
 		{
 			int target = i * NumSamples + rand() % NumSamples;
-			float temp = SamplePoints[i * NumSamples + j + 1]->ImageSamples.y;
+			double temp = SamplePoints[i * NumSamples + j + 1]->ImageSamples.y;
 			SamplePoints[i * NumSamples + j + 1]->ImageSamples.y = SamplePoints[target]->ImageSamples.y;
 			SamplePoints[target]->ImageSamples.y = temp;
 		}
@@ -142,7 +142,7 @@ void Sampler::ShuffleYCoordinate()
 		{
 			int target = i * NumSamples + rand() % NumSamples;
 
-			float temp = SamplePoints[i * NumSamples + j + 1]->LensSamples.y;
+			double temp = SamplePoints[i * NumSamples + j + 1]->LensSamples.y;
 			SamplePoints[i * NumSamples + j + 1]->LensSamples.y = SamplePoints[target]->LensSamples.y;
 			SamplePoints[target]->LensSamples.y = temp;
 		}

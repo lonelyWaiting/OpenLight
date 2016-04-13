@@ -38,6 +38,7 @@
     <ClCompile Include="..\..\Source\Light\Light.cpp" />
     <ClCompile Include="..\..\Source\Light\PonitLight.cpp" />
     <ClCompile Include="..\..\Source\Light\VisibilityTester.cpp" />
+    <ClCompile Include="..\..\Source\Material\DiffuseMaterial.cpp" />
     <ClCompile Include="..\..\Source\Material\Material.cpp" />
     <ClCompile Include="..\..\Source\Math\Bounds2.cpp" />
     <ClCompile Include="..\..\Source\Math\Bound3.cpp" />
@@ -94,6 +95,7 @@
     <ClInclude Include="..\..\Source\Light\Light.h" />
     <ClInclude Include="..\..\Source\Light\PointLight.h" />
     <ClInclude Include="..\..\Source\Light\VisibilityTester.h" />
+    <ClInclude Include="..\..\Source\Material\DiffuseMaterial.h" />
     <ClInclude Include="..\..\Source\Material\Material.h" />
     <ClInclude Include="..\..\Source\Math\Bounds2.h" />
     <ClInclude Include="..\..\Source\Math\Bound3.h" />

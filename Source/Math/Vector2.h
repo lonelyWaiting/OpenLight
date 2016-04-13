@@ -10,7 +10,7 @@ class Vector2f
 public:
 	Vector2f();
 
-	Vector2f( float _x , float _y );
+	Vector2f( double _x , double _y );
 
 	explicit Vector2f( const Point2f &p );
 
@@ -34,34 +34,34 @@ public:
 
 	bool operator != ( const Vector2f & v ) const;
 
-	Vector2f operator* ( float f ) const;
+	Vector2f operator* ( double f ) const;
 
-	Vector2f& operator *= ( float f );
+	Vector2f& operator *= ( double f );
 
-	Vector2f operator / ( float f ) const;
+	Vector2f operator / ( double f ) const;
 
-	Vector2f& operator /= ( float f );
+	Vector2f& operator /= ( double f );
 
 	Vector2f operator - () const;
 
-	float& operator [] ( int index );
+	double& operator [] ( int index );
 
-	float LengthSq() const;
+	double LengthSq() const;
 
-	float Length() const;
+	double Length() const;
 
 public:
-	friend inline Vector2f operator* ( float f , const Vector2f &v );
+	friend inline Vector2f operator* ( double f , const Vector2f &v );
 
-	friend inline float Dot( const Vector2f &v1 , const Vector2f &v2 );
+	friend inline double Dot( const Vector2f &v1 , const Vector2f &v2 );
 
-	friend inline float AbsDot( const Vector2f &v1 , const Vector2f &v2 );
+	friend inline double AbsDot( const Vector2f &v1 , const Vector2f &v2 );
 
 	friend inline Vector2f Normalize( const Vector2f &v );
 
 	friend Vector2f Abs( const Vector2f &v );
 
 public:
-	float x , y;
+	double x , y;
 };
 #endif

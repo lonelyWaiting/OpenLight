@@ -1,7 +1,7 @@
 #include "PCH.h"
 #include "Spectrum.h"
 
-bool IsOrdered( const float* lambda , int n )
+bool IsOrdered( const double* lambda , int n )
 {
 	for( int i = 0; i < n - 1; i++ )
 	{
@@ -14,9 +14,9 @@ bool IsOrdered( const float* lambda , int n )
 	return true;
 }
 
-bool SortSpectrumSamplePoint( float* lambda , float* values , int n )
+bool SortSpectrumSamplePoint( double* lambda , double* values , int n )
 {
-	std::vector<std::pair<float , float>> sortVec;
+	std::vector<std::pair<double , double>> sortVec;
 
 	// 设置大小
 	sortVec.reserve( n );
@@ -38,7 +38,7 @@ bool SortSpectrumSamplePoint( float* lambda , float* values , int n )
 	return true;
 }
 
-float InterpolateSpectrumSamples( const float* lambda , const float* values , int n , float l )
+double InterpolateSpectrumSamples( const double* lambda , const double* values , int n , double l )
 {
 	// 确信是按照波长排序的
 	for( int i = 0; i < n - 1; i++ )
@@ -60,14 +60,14 @@ float InterpolateSpectrumSamples( const float* lambda , const float* values , in
 	{
 		if( l >= lambda[i] && l <= lambda[i + 1] )
 		{
-			float t = ( l - lambda[i] ) / ( lambda[i + 1] - lambda[i] );
+			double t = ( l - lambda[i] ) / ( lambda[i + 1] - lambda[i] );
 
 			return Lerp( t , values[i] , values[i + 1] );
 		}
 	}
 }
 
-const float CIE_X[CIESamplesNum] = 
+const double CIE_X[CIESamplesNum] = 
 {
 	// CIE X function values
 	0.0001299000f,   0.0001458470f,   0.0001638021f,   0.0001840037f,
@@ -190,7 +190,7 @@ const float CIE_X[CIESamplesNum] =
 	0.000001439440f, 0.000001341977f, 0.000001251141f
 };
 
-const float CIE_Y[CIESamplesNum]=
+const double CIE_Y[CIESamplesNum]=
 {
 	// CIE Y function values
 	0.000003917000f,  0.000004393581f,  0.000004929604f,  0.000005532136f,
@@ -313,7 +313,7 @@ const float CIE_Y[CIESamplesNum]=
 	0.0000005198080f, 0.0000004846123f, 0.0000004518100f
 };
 
-const float CIE_Z[CIESamplesNum] =
+const double CIE_Z[CIESamplesNum] =
 {
 	// CIE Z function values
 	0.0006061000f,
@@ -789,7 +789,7 @@ const float CIE_Z[CIESamplesNum] =
 	0.0f
 };
 
-const float CIE_lambda[CIESamplesNum] =
+const double CIE_lambda[CIESamplesNum] =
 {
 	360, 361, 362, 363, 364, 365, 366, 367, 368, 369, 370, 371, 372, 373, 374,
 	375, 376, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 387, 388, 389,
@@ -826,7 +826,7 @@ const float CIE_lambda[CIESamplesNum] =
 };
 
 template<int NSpectrumSamples>
-inline CoefficientSpectrum<NSpectrumSamples> Pow( const CoefficientSpectrum<NSpectrumSamples>& rhs , float e )
+inline CoefficientSpectrum<NSpectrumSamples> Pow( const CoefficientSpectrum<NSpectrumSamples>& rhs , double e )
 {
 	CoefficientSpectrum<NSpectrumSamples> result;
 

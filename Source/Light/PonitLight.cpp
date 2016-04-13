@@ -13,7 +13,7 @@ PointLight::PointLight( const Transform& LightToWorld , const Spectrum & _intens
 	intensity = _intensity;
 }
 
-Spectrum PointLight::Sample_L( const Scene* scene , LightSample& lightSample , Ray* ray , Normal* NormalShading , float* pdf ) const
+Spectrum PointLight::Sample_L( const Scene* scene , LightSample& lightSample , Ray* ray , Normal* NormalShading , double* pdf ) const
 {
 	*ray = Ray( LightPosWorld , UniformSampleSphere( lightSample.value[0] , lightSample.value[1] ) , 0.0f , Infinity );
 
@@ -24,7 +24,7 @@ Spectrum PointLight::Sample_L( const Scene* scene , LightSample& lightSample , R
 	return intensity;
 }
 
-Spectrum PointLight::Sample_L( const Point3f& p , Vector3f* wi , float* pdf ) const
+Spectrum PointLight::Sample_L( const Point3f& p , Vector3f* wi , double* pdf ) const
 {
 	// 计算入射光线
 	*wi = Normalize( LightPosWorld - p );
@@ -40,7 +40,7 @@ Spectrum PointLight::Power( const Scene* scene ) const
 	return 4.0f * PI * intensity;
 }
 
-float PointLight::PDF( const Point3f& p , const Vector3f& wi ) const
+double PointLight::PDF( const Point3f& p , const Vector3f& wi ) const
 {
 	return 0;
 }

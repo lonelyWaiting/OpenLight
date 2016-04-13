@@ -22,25 +22,24 @@
 
 using namespace tinyxml2;
 
-void ParseScene( Scene* scene , Camera*& camera )
+void ParseScene( Scene* scene , Camera*& camera , int& spp )
 {
 	FileSystem fs;
-	std::wstring SceneFilename = fs.GetSceneFolder() + L"FirstScene.xml";
+	std::wstring SceneFilename = fs.GetSceneFolder() + L"secondScene.xml";
 
 	XMLDocument doc;
 	doc.LoadFile( srString::ToAscii( SceneFilename ).c_str() );
+
+	// --------------------------------------spp----------------------------------------------
+	XMLElement* sppElement = doc.FirstChildElement()->FirstChildElement("spp");
+	sppElement->QueryIntText(&spp);
 
 	// ----------------------------------Primitive---------------------------------------------
 	Primitive* primitive = new Primitive;
 	XMLElement* PrimitiveElement = doc.FirstChildElement()->FirstChildElement( "primitive" );
 	primitive->ParsePrimitive( PrimitiveElement );
-
-	Lambertian* lambertian = new Lambertian( Spectrum( 0.7 ) );
-	primitive->
 	scene->AddObject( *primitive );
 
-	PointLight* pLight = new PointLight( Translate( Vector3f( 10 , 2 , 5 ) ) , Spectrum( 0.5f ) );
-	scene->AddLight( pLight );
 	// ---------------------------------Film---------------------------------------------
 	Film* film = new Film();
 	XMLElement* FilmElement = doc.FirstChildElement()->FirstChildElement( "Film" );
@@ -77,19 +76,25 @@ void ParseScene( Scene* scene , Camera*& camera )
 
 int main( void )
 {	
+	srand(13);
+
 	Scene* scene = new Scene;
 
 	Camera* camera = nullptr;
 
-	ParseScene( scene , camera );
+	int spp = 8;
+
+	/*WhittedIntegrator* pIntegrator = nullptr;*/
+
+	ParseScene( scene , camera , spp );
 
 	/*PureRandomSampler* RandomSampler = new PureRandomSampler;*/
 	
 	NRooksSampler* nRooksSampler = new NRooksSampler;
 
-	WhittedIntegrator* integrator = new WhittedIntegrator;
-	integrator->SetMaxRecusiveDepth( 5 );
-	SamplerRenderer* renderer = new SamplerRenderer( nRooksSampler , camera , integrator );
+	WhittedIntegrator* pIntegrator = new WhittedIntegrator;
+	pIntegrator->SetMaxRecusiveDepth( 5 );
+	SamplerRenderer* renderer = new SamplerRenderer(nRooksSampler, camera, pIntegrator, spp);
 
 	renderer->Render( scene );
 

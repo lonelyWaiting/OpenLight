@@ -14,7 +14,7 @@ ThinLensCamera::ThinLensCamera( const ThinLensCamera& rhs )
 	LensFocus = rhs.LensFocus;
 }
 
-void ThinLensCamera::SetLensRadius( float _LensRadius )
+void ThinLensCamera::SetLensRadius( double _LensRadius )
 {
 	if( LensRadius != _LensRadius )
 	{
@@ -22,7 +22,7 @@ void ThinLensCamera::SetLensRadius( float _LensRadius )
 	}
 }
 
-void ThinLensCamera::SetLensFocus( float _LensFocus )
+void ThinLensCamera::SetLensFocus( double _LensFocus )
 {
 	if( LensFocus != _LensFocus )
 	{
@@ -30,7 +30,7 @@ void ThinLensCamera::SetLensFocus( float _LensFocus )
 	}
 }
 
-Ray ThinLensCamera::GenerateRay( float RasterX , float RasterY , const CameraSample& SamplePoint )
+Ray ThinLensCamera::GenerateRay( double RasterX , double RasterY , const CameraSample& SamplePoint )
 {
 	Vector2f RasterResolution = GetFilm()->GetResolution();
 
@@ -39,8 +39,8 @@ Ray ThinLensCamera::GenerateRay( float RasterX , float RasterY , const CameraSam
 	ImageSamples.x = ( RasterX + SamplePoint.ImageSamples.x ) / RasterResolution.x * ( Right - Left ) + Left;
 	ImageSamples.y = ( RasterY + SamplePoint.ImageSamples.y ) / RasterResolution.y  * ( Top - Bottom ) + Bottom;
 
-	float x = ImageSamples.x / ViewDistance * LensFocus;
-	float y = ImageSamples.y / ViewDistance * LensFocus;
+	double x = ImageSamples.x / ViewDistance * LensFocus;
+	double y = ImageSamples.y / ViewDistance * LensFocus;
 
 	Point2f LensSamples = MapUnitSquareToUnitDisk( SamplePoint.LensSamples );
 
@@ -53,26 +53,26 @@ Ray ThinLensCamera::GenerateRay( float RasterX , float RasterY , const CameraSam
 
 void ThinLensCamera::ParseCamera( XMLElement* CameraRootElement )
 {
-	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "x" )->QueryFloatText( &( Eye.x ) );
-	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "y" )->QueryFloatText( &( Eye.y ) );
-	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "z" )->QueryFloatText( &( Eye.z ) );
+	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "x" )->QueryDoubleText( &( Eye.x ) );
+	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "y" )->QueryDoubleText( &( Eye.y ) );
+	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "z" )->QueryDoubleText( &( Eye.z ) );
 
-	CameraRootElement->FirstChildElement( "Target" )->FirstChildElement( "x" )->QueryFloatText( &( Target.x ) );
-	CameraRootElement->FirstChildElement( "Target" )->FirstChildElement( "y" )->QueryFloatText( &( Target.y ) );
-	CameraRootElement->FirstChildElement( "Target" )->FirstChildElement( "z" )->QueryFloatText( &( Target.z ) );
+	CameraRootElement->FirstChildElement( "Target" )->FirstChildElement( "x" )->QueryDoubleText( &( Target.x ) );
+	CameraRootElement->FirstChildElement( "Target" )->FirstChildElement( "y" )->QueryDoubleText( &( Target.y ) );
+	CameraRootElement->FirstChildElement( "Target" )->FirstChildElement( "z" )->QueryDoubleText( &( Target.z ) );
 
-	CameraRootElement->FirstChildElement( "LensFocus" )->QueryFloatText( &LensFocus );
+	CameraRootElement->FirstChildElement( "LensFocus" )->QueryDoubleText( &LensFocus );
 
-	CameraRootElement->FirstChildElement( "LensRadius" )->QueryFloatText( &LensRadius );
+	CameraRootElement->FirstChildElement( "LensRadius" )->QueryDoubleText( &LensRadius );
 
-	CameraRootElement->FirstChildElement( "ApertureResolution" )->FirstChildElement( "width" )->QueryFloatText( &( ApertureResolution.x) );
-	CameraRootElement->FirstChildElement( "ApertureResolution" )->FirstChildElement( "height" )->QueryFloatText( &( ApertureResolution.y ) );
+	CameraRootElement->FirstChildElement( "ApertureResolution" )->FirstChildElement( "width" )->QueryDoubleText( &( ApertureResolution.x) );
+	CameraRootElement->FirstChildElement( "ApertureResolution" )->FirstChildElement( "height" )->QueryDoubleText( &( ApertureResolution.y ) );
 
-	CameraRootElement->FirstChildElement( "ApertureDistance" )->QueryFloatText( &ApertureDistance );
+	CameraRootElement->FirstChildElement( "ApertureDistance" )->QueryDoubleText( &ApertureDistance );
 
-	CameraRootElement->FirstChildElement( "ExposureTime" )->QueryFloatText( &ExposureTime );
+	CameraRootElement->FirstChildElement( "ExposureTime" )->QueryDoubleText( &ExposureTime );
 
-	CameraRootElement->FirstChildElement( "ViewDistance" )->QueryFloatText( &ViewDistance );
+	CameraRootElement->FirstChildElement( "ViewDistance" )->QueryDoubleText( &ViewDistance );
 
 	UpdateProperty();
 }

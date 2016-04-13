@@ -34,9 +34,6 @@
     <Filter Include="Shapes">
       <UniqueIdentifier>{d90170d1-d25b-4e19-8854-661b96151a4a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Geometry">
-      <UniqueIdentifier>{a6ec08e7-9e11-4a31-92f2-630832967b2b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Primitive">
       <UniqueIdentifier>{43e6e9fe-e3ab-4077-a532-3c25dd5d7a1b}</UniqueIdentifier>
     </Filter>
@@ -207,6 +204,9 @@
     <ClCompile Include="..\..\Source\Integrator\SurfaceIntegrator.cpp">
       <Filter>Integrator</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Material\DiffuseMaterial.cpp">
+      <Filter>Material</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Math\Matrix3.h">
@@ -361,6 +361,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Math\UtilitiesFunction.h">
       <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Material\DiffuseMaterial.h">
+      <Filter>Material</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

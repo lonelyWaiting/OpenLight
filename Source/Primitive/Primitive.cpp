@@ -2,6 +2,7 @@
 #include "Shapes/Sphere.h"
 #include "Shapes/TriangleMesh.h"
 #include "Math/Ray.h"
+#include "Material/DiffuseMaterial.h"
 #include "Primitive.h"
 
 Primitive::Primitive()
@@ -29,8 +30,8 @@ bool Primitive::Intersect( Ray& r , IntersectRecord* record ) const
 	{
 		if( shapes[i]->Intersect( r , record ) )
 		{
-			record->HitPointColor = color;
 			record->HitPoint = r( record->HitT );
+			record->Emmisive = shapes[i]->emmisive;
 			bHit = true;
 		}
 	}
@@ -55,9 +56,9 @@ bool Primitive::IntersectP( const Ray& r ) const
 	return bHit;
 }
 
-void Primitive::SetDiffuseColor( const Spectrum& _color )
+void Primitive::SetMaterial(Material* material)
 {
-	color = _color;
+	pMaterial = material;
 }
 
 void Primitive::ParsePrimitive( XMLElement* PrimitiveRootElment )
@@ -83,14 +84,43 @@ void Primitive::ParsePrimitive( XMLElement* PrimitiveRootElment )
 		Assert( "don't support \'%s\' shape object" , ShapeType );
 	}
 
-	float r , g , b;
-	XMLElement* MaterialElement = PrimitiveRootElment->FirstChildElement( "material" );
-	XMLElement* MaterialSurfaceColorElement = MaterialElement->FirstChildElement( "color" );
-	MaterialSurfaceColorElement->FirstChildElement( "r" )->QueryFloatText( &r );
-	MaterialSurfaceColorElement->FirstChildElement( "g" )->QueryFloatText( &g );
-	MaterialSurfaceColorElement->FirstChildElement( "b" )->QueryFloatText( &b );
+	while (PrimitiveShapeElement = PrimitiveShapeElement->NextSiblingElement("shape"))
+	{
+		ShapeType = PrimitiveShapeElement->FirstAttribute()->Value();
 
-	color = Spectrum::FromRGB( r , g , b );
+		if (!std::strcmp("sphere", ShapeType))
+		{
+			Sphere* shape = new Sphere;
+			shapes.push_back(shape);
+			shape->ParseShape(PrimitiveShapeElement);
+		}
+		else if (!std::strcmp("obj", ShapeType))
+		{
+			TriangleMesh* mesh = new TriangleMesh;
+			shapes.push_back(mesh);
+			mesh->ParseShape(PrimitiveShapeElement);
+		}
+		else
+		{
+			Assert("don't support \'%s\' shape object", ShapeType);
+		}
+	}
+
+	
+	XMLElement* MaterialElement = PrimitiveRootElment->FirstChildElement( "material" );
+	const char* MaterialType = MaterialElement->FirstAttribute()->Value();
+
+	if (!std::strcmp("diffuse", MaterialType))
+	{
+		XMLElement* MaterialReflectElement = MaterialElement->FirstChildElement("Reflection");
+		
+		double r, g, b;
+		MaterialReflectElement->FirstChildElement("r")->QueryDoubleText(&r);
+		MaterialReflectElement->FirstChildElement("g")->QueryDoubleText(&g);
+		MaterialReflectElement->FirstChildElement("b")->QueryDoubleText(&b);
+
+		pMaterial = new DiffuseMaterial(Spectrum::FromRGB(r, g, b));
+	}
 }
 
 BxDF* Primitive::GetBxDF( const Point3f& point , const Normal& normal ) const

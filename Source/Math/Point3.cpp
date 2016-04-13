@@ -7,7 +7,7 @@ Point3f::Point3f()
 	x = y = z = 0;
 }
 
-Point3f::Point3f( float _x , float _y , float _z )
+Point3f::Point3f( double _x , double _y , double _z )
 {
 	x = _x;
 	y = _y;
@@ -68,12 +68,12 @@ Point3f Point3f::operator + ( const Point3f &p ) const
 	return Point3f( x + p.x , y + p.y , z + p.z );
 }
 
-Point3f Point3f::operator* ( float f ) const
+Point3f Point3f::operator* ( double f ) const
 {
 	return Point3f( f * x , f * y , f * z );
 }
 
-Point3f& Point3f::operator *= ( float f )
+Point3f& Point3f::operator *= ( double f )
 {
 	x *= f;
 	y *= f;
@@ -82,20 +82,20 @@ Point3f& Point3f::operator *= ( float f )
 	return *this;
 }
 
-Point3f Point3f::operator / ( float f ) const
+Point3f Point3f::operator / ( double f ) const
 {
 	assert( f != 0 );
 
-	float inv = ( float )1 / f;
+	double inv = ( double )1 / f;
 
 	return Point3f( x * inv , y * inv , z * inv );
 }
 
-Point3f& Point3f::operator /= ( float f )
+Point3f& Point3f::operator /= ( double f )
 {
 	assert( f != 0 );
 
-	float inv = 1.0f / f;
+	double inv = 1.0f / f;
 
 	x *= inv;
 	y *= inv;
@@ -104,7 +104,7 @@ Point3f& Point3f::operator /= ( float f )
 	return ( *this );
 }
 
-float Point3f::operator[] ( int index ) const
+double Point3f::operator[] ( int index ) const
 {
 	assert( index >= 1 && index <= 2 );
 
@@ -115,7 +115,7 @@ float Point3f::operator[] ( int index ) const
 	return z;
 }
 
-float& Point3f::operator [] ( int i )
+double& Point3f::operator [] ( int i )
 {
 	assert( i >= 0 && i <= 2 );
 
@@ -143,22 +143,22 @@ std::ostream & operator<< ( std::ostream & os , const Point3f& p )
 	return os;
 }
 
-inline float Distance( const Point3f &p1 , const Point3f &p2 )
+inline double Distance( const Point3f &p1 , const Point3f &p2 )
 {
 	return ( p1 - p2 ).Length();
 }
 
-inline float DistanceSq( const Point3f &p1 , const Point3f &p2 )
+inline double DistanceSq( const Point3f &p1 , const Point3f &p2 )
 {
 	return ( p1 - p2 ).LengthSq();
 }
 
-inline Point3f operator*( float f , const Point3f &p )
+inline Point3f operator*( double f , const Point3f &p )
 {
 	return p * f;
 }
 
-Point3f Lerp( float t , const Point3f &p0 , const Point3f& p1 )
+Point3f Lerp( double t , const Point3f &p0 , const Point3f& p1 )
 {
 	return ( 1 - t ) * p0 + t * p1;
 }

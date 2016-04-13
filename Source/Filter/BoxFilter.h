@@ -5,13 +5,13 @@
 class BoxFilter : public Filter
 {
 public:
-	BoxFilter( float xw , float yw )
+	BoxFilter( double xw , double yw )
 		:Filter( xw , yw )
 	{
 
 	}
 
-	float Evalute( float x , float y ) const;
+	double Evalute( double x , double y ) const;
 };
 
 BoxFilter* CreateBoxFilter()

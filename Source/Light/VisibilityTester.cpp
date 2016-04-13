@@ -2,9 +2,9 @@
 #include "Core/Scene.h"
 #include "VisibilityTester.h"
 
-void VisibilityTester::SetSegment( const Point3f& p1 , float eps1 , const Point3f& p2 , float eps2 )
+void VisibilityTester::SetSegment( const Point3f& p1 , double eps1 , const Point3f& p2 , double eps2 )
 {
-	float dist = ( p2 - p1 ).Length();
+	double dist = ( p2 - p1 ).Length();
 
 	r = Ray( p1 , ( p2 - p1 ) / dist , eps1 , dist + ( 1 - eps2 ) );
 }

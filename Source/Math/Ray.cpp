@@ -10,7 +10,7 @@ Ray::Ray()
 
 }
 
-Ray::Ray( const Point3f &Origin , const Vector3f &Direction , float tMin , float tMax /*= Infinity*/ , float time /*= 0.0f*/ , int depth /*= 0 */ )
+Ray::Ray( const Point3f &Origin , const Vector3f &Direction , double tMin , double tMax /*= Infinity*/ , double time /*= 0.0f*/ , int depth /*= 0 */ )
 	: Origin( Origin )
 	, Direction( Direction )
 	, MinT( tMin )
@@ -21,12 +21,12 @@ Ray::Ray( const Point3f &Origin , const Vector3f &Direction , float tMin , float
 
 }
 
-Point3f Ray::operator()( float t ) const
+Point3f Ray::operator()( double t ) const
 {
 	return Origin + Direction * t;
 }
 
-Ray::Ray( const Point3f& Origin , const Vector3f& Direction , const Ray& parent , float tmin , float tmax /*= Infinity*/ )
+Ray::Ray( const Point3f& Origin , const Vector3f& Direction , const Ray& parent , double tmin , double tmax /*= Infinity*/ )
 	: Origin( Origin )
 	, Direction( Direction )
 	, MinT( tmin )

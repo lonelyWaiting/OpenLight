@@ -82,11 +82,11 @@ void TriangleMesh::ParseShape( XMLElement* ShapeRootElement )
 
 	XMLElement* ShapeTransformElement = ShapeRootElement->FirstChildElement( "transform" );
 
-	float x , y , z;
+	double x , y , z;
 
-	ShapeTransformElement->FirstChildElement( "position" )->FirstChildElement( "x" )->QueryFloatText( &x );
-	ShapeTransformElement->FirstChildElement( "position" )->FirstChildElement( "y" )->QueryFloatText( &y );
-	ShapeTransformElement->FirstChildElement( "position" )->FirstChildElement( "z" )->QueryFloatText( &z );
+	ShapeTransformElement->FirstChildElement( "position" )->FirstChildElement( "x" )->QueryDoubleText( &x );
+	ShapeTransformElement->FirstChildElement( "position" )->FirstChildElement( "y" )->QueryDoubleText( &y );
+	ShapeTransformElement->FirstChildElement( "position" )->FirstChildElement( "z" )->QueryDoubleText( &z );
 
 	*ObjectToWorld = Translate( Vector3f( x , y , z ) );
 	*WorldToObject = Inverse( *ObjectToWorld );

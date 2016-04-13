@@ -7,7 +7,7 @@ class Normal
 public:
 	Normal();
 
-	Normal( float x , float y , float z );
+	Normal( double x , double y , double z );
 
 	explicit Normal( const Vector3f& v );
 
@@ -21,36 +21,36 @@ public:
 
 	Normal& operator -= ( const Normal& n );
 
-	Normal operator * ( float f ) const;
+	Normal operator * ( double f ) const;
 
-	Normal& operator *= ( float f );
+	Normal& operator *= ( double f );
 
-	Normal operator / ( float f ) const;
+	Normal operator / ( double f ) const;
 
-	Normal& operator /= ( float f );
+	Normal& operator /= ( double f );
 
-	float operator[]( int i ) const;
+	double operator[]( int i ) const;
 
-	float& operator[] ( int i );
+	double& operator[] ( int i );
 
 	bool operator == ( const Normal& n ) const;
 
 	bool operator != ( const Normal& n ) const;
 
-	float operator * ( const Vector3f& v );
+	double operator * ( const Vector3f& v );
 
-	float LengthSquared() const;
+	double LengthSquared() const;
 
-	float Length() const;
+	double Length() const;
 
 	bool HasNAN() const;
 
-	friend float Dot( const Vector3f& v , const Normal& n );
+	friend double Dot( const Vector3f& v , const Normal& n );
 
-	friend float Dot( const Normal& n , const Vector3f& v );
+	friend double Dot( const Normal& n , const Vector3f& v );
 
-	friend float AbsDot( const Normal& n , const Vector3f& v );
+	friend double AbsDot( const Normal& n , const Vector3f& v );
 
 public:
-	float x , y , z;
+	double x , y , z;
 };

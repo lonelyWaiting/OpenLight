@@ -7,7 +7,7 @@ Point2f::Point2f()
 	x = y = 0;
 }
 
-Point2f::Point2f( float _x , float _y )
+Point2f::Point2f( double _x , double _y )
 {
 	x = _x;
 	y = _y;
@@ -81,12 +81,12 @@ Point2f& Point2f::operator -= ( const Vector2f &v )
 	return ( *this );
 }
 
-Point2f Point2f::operator * ( float f ) const
+Point2f Point2f::operator * ( double f ) const
 {
 	return Point2f( f * x , f * y );
 }
 
-Point2f& Point2f::operator *= ( float f )
+Point2f& Point2f::operator *= ( double f )
 {
 	x *= f;
 	y *= f;
@@ -94,18 +94,18 @@ Point2f& Point2f::operator *= ( float f )
 	return ( *this );
 }
 
-Point2f Point2f::operator / ( float f ) const
+Point2f Point2f::operator / ( double f ) const
 {
 	assert( f != 0 );
 
-	float inv = ( float )1 / f;
+	double inv = ( double )1 / f;
 
 	return Point2f( inv * x , inv * y );
 }
 
-Point2f Point2f::operator /= ( float f )
+Point2f Point2f::operator /= ( double f )
 {
-	float inv = ( float )1 / f;
+	double inv = ( double )1 / f;
 
 	x *= inv;
 	y *= inv;
@@ -113,7 +113,7 @@ Point2f Point2f::operator /= ( float f )
 	return *this;
 }
 
-float Point2f::operator[] ( int index ) const
+double Point2f::operator[] ( int index ) const
 {
 	assert( index >= 0 && index <= 1 );
 
@@ -121,7 +121,7 @@ float Point2f::operator[] ( int index ) const
 	return y;
 }
 
-float& Point2f::operator[] ( int index )
+double& Point2f::operator[] ( int index )
 {
 	assert( index >= 0 && index <= 1 );
 
@@ -139,17 +139,17 @@ bool Point2f::operator != ( const Point2f &p ) const
 	return ( x != p.x || y != p.y );
 }
 
-inline float Distance( const Point2f& p1 , const Point2f &p2 )
+inline double Distance( const Point2f& p1 , const Point2f &p2 )
 {
 	return ( p1 - p2 ).Length();
 }
 
-inline float DistanceSq( const Point2f &p1 , const Point2f &p2 )
+inline double DistanceSq( const Point2f &p1 , const Point2f &p2 )
 {
 	return ( p1 - p2 ).LengthSq();
 }
 
-inline Point2f operator* ( float f , const Point2f &p )
+inline Point2f operator* ( double f , const Point2f &p )
 {
 	return p * f;
 }
@@ -164,7 +164,7 @@ Point2f Ceil( const Point2f &p )
 	return Point2f( std::ceil( p.x ) , std::ceil( p.y ) );
 }
 
-Point2f Lerp( float t , const Point2f &p0 , const Point2f &p1 )
+Point2f Lerp( double t , const Point2f &p0 , const Point2f &p1 )
 {
 	return ( 1 - t ) * p0 + t * p1;
 }

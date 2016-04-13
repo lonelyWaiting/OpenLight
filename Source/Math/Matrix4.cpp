@@ -13,20 +13,20 @@ inline Matrix4f::Matrix4f()
 
 }
 
-inline Matrix4f::Matrix4f( const float arr[4][4] )
+inline Matrix4f::Matrix4f( const double arr[4][4] )
 {
-	memcpy( m , arr , 16 * sizeof( float ) );
+	memcpy( m , arr , 16 * sizeof( double ) );
 }
 
-inline Matrix4f::Matrix4f( const float arr[16] )
+inline Matrix4f::Matrix4f( const double arr[16] )
 {
-	memcpy( m , arr , 16 * sizeof( float ) );
+	memcpy( m , arr , 16 * sizeof( double ) );
 }
 
-inline Matrix4f::Matrix4f( float _m00 , float _m01 , float _m02 , float _m03 ,
-				 float _m10 , float _m11 , float _m12 , float _m13 ,
-				 float _m20 , float _m21 , float _m22 , float _m23 ,
-				 float _m30 , float _m31 , float _m32 , float _m33 )
+inline Matrix4f::Matrix4f( double _m00 , double _m01 , double _m02 , double _m03 ,
+				 double _m10 , double _m11 , double _m12 , double _m13 ,
+				 double _m20 , double _m21 , double _m22 , double _m23 ,
+				 double _m30 , double _m31 , double _m32 , double _m33 )
 {
 	m00 = _m00;	m01 = _m01;	m02 = _m02;	m03 = _m03;
 
@@ -39,12 +39,12 @@ inline Matrix4f::Matrix4f( float _m00 , float _m01 , float _m02 , float _m03 ,
 
 inline Matrix4f::Matrix4f( const Matrix4f& matrix )
 {
-	memcpy( m , matrix.m , 16 * sizeof( float ) );
+	memcpy( m , matrix.m , 16 * sizeof( double ) );
 }
 
 Matrix4f& Matrix4f::operator = ( const Matrix4f& rhs )
 {
-	memcpy( &m[0] , &( rhs.m[0] ) , 16 * sizeof( float ) );
+	memcpy( &m[0] , &( rhs.m[0] ) , 16 * sizeof( double ) );
 
 	return ( *this );
 }
@@ -113,18 +113,18 @@ Matrix4f Matrix4f::Mul( const Matrix4f& lhs , const Matrix4f& rhs )
 
 Matrix4f Inverse( const Matrix4f& matrix )
 {
-	float fA0 = matrix.m[0] * matrix.m[5] - matrix.m[1] * matrix.m[4];
-	float fA1 = matrix.m[0] * matrix.m[6] - matrix.m[2] * matrix.m[4];
-	float fA2 = matrix.m[0] * matrix.m[7] - matrix.m[3] * matrix.m[4];
-	float fA3 = matrix.m[1] * matrix.m[6] - matrix.m[2] * matrix.m[5];
-	float fA4 = matrix.m[1] * matrix.m[7] - matrix.m[3] * matrix.m[5];
-	float fA5 = matrix.m[2] * matrix.m[7] - matrix.m[3] * matrix.m[6];
-	float fB0 = matrix.m[8] * matrix.m[13] - matrix.m[9] * matrix.m[12];
-	float fB1 = matrix.m[8] * matrix.m[14] - matrix.m[10] * matrix.m[12];
-	float fB2 = matrix.m[8] * matrix.m[15] - matrix.m[11] * matrix.m[12];
-	float fB3 = matrix.m[9] * matrix.m[14] - matrix.m[10] * matrix.m[13];
-	float fB4 = matrix.m[9] * matrix.m[15] - matrix.m[11] * matrix.m[13];
-	float fB5 = matrix.m[10] * matrix.m[15] - matrix.m[14] * matrix.m[11];
+	double fA0 = matrix.m[0] * matrix.m[5] - matrix.m[1] * matrix.m[4];
+	double fA1 = matrix.m[0] * matrix.m[6] - matrix.m[2] * matrix.m[4];
+	double fA2 = matrix.m[0] * matrix.m[7] - matrix.m[3] * matrix.m[4];
+	double fA3 = matrix.m[1] * matrix.m[6] - matrix.m[2] * matrix.m[5];
+	double fA4 = matrix.m[1] * matrix.m[7] - matrix.m[3] * matrix.m[5];
+	double fA5 = matrix.m[2] * matrix.m[7] - matrix.m[3] * matrix.m[6];
+	double fB0 = matrix.m[8] * matrix.m[13] - matrix.m[9] * matrix.m[12];
+	double fB1 = matrix.m[8] * matrix.m[14] - matrix.m[10] * matrix.m[12];
+	double fB2 = matrix.m[8] * matrix.m[15] - matrix.m[11] * matrix.m[12];
+	double fB3 = matrix.m[9] * matrix.m[14] - matrix.m[10] * matrix.m[13];
+	double fB4 = matrix.m[9] * matrix.m[15] - matrix.m[11] * matrix.m[13];
+	double fB5 = matrix.m[10] * matrix.m[15] - matrix.m[14] * matrix.m[11];
 
 	Matrix4f kInv;
 	kInv.m00 = +matrix.m[5] * fB5 - matrix.m[6] * fB4 + matrix.m[7] * fB3;
@@ -147,9 +147,9 @@ Matrix4f Inverse( const Matrix4f& matrix )
 	kInv.m23 = -matrix.m[8] * fA4 + matrix.m[9] * fA2 - matrix.m[11] * fA0;
 	kInv.m33 = +matrix.m[8] * fA3 - matrix.m[9] * fA1 + matrix.m[10] * fA0;
 
-	float fDet = fA0 * fB5 - fA1 * fB4 + fA2 * fB3 + fA3 * fB2 - fA4 * fB1 + fA5 * fB0;
+	double fDet = fA0 * fB5 - fA1 * fB4 + fA2 * fB3 + fA3 * fB2 - fA4 * fB1 + fA5 * fB0;
 
-	float fInvDet = ( ( float )1.0f ) / fDet;
+	double fInvDet = ( ( double )1.0f ) / fDet;
 	for( int i = 0; i < 16; i++ )
 	{
 		kInv.m[i] *= fInvDet;
@@ -185,22 +185,22 @@ void MakeTranspose( Matrix4f& rhs )
 		}
 	}
 
-	memcpy( &( rhs.m[0] ) , &( Trans.m[0] ) , 16 * sizeof( float ) );
+	memcpy( &( rhs.m[0] ) , &( Trans.m[0] ) , 16 * sizeof( double ) );
 }
 
-Matrix4f Matrix4f::Rotate( float fThetaX , float fThetaY , float fThetaZ )
+Matrix4f Matrix4f::Rotate( double fThetaX , double fThetaY , double fThetaZ )
 {
-	float sinThetaX = sinf( ToRadians( fThetaX ) );
-	float cosThetaX = cosf( ToRadians( fThetaX ) );
-	float sinThetaY = sinf( ToRadians( fThetaY ) );
-	float cosThetaY = cosf( ToRadians( fThetaY ) );
-	float sinThetaZ = sinf( ToRadians( fThetaZ ) );
-	float cosThetaZ = cosf( ToRadians( fThetaZ ) );
+	double sinThetaX = sinf( ToRadians( fThetaX ) );
+	double cosThetaX = cosf( ToRadians( fThetaX ) );
+	double sinThetaY = sinf( ToRadians( fThetaY ) );
+	double cosThetaY = cosf( ToRadians( fThetaY ) );
+	double sinThetaZ = sinf( ToRadians( fThetaZ ) );
+	double cosThetaZ = cosf( ToRadians( fThetaZ ) );
 	
-	float cosYMulCosZ = cosThetaY * cosThetaZ;
-	float sinYMulCosZ = sinThetaY * cosThetaZ;
-	float sinXMulCosZ = sinThetaX * cosThetaZ;
-	float sinXMulSinZ = sinThetaX * sinThetaZ;
+	double cosYMulCosZ = cosThetaY * cosThetaZ;
+	double sinYMulCosZ = sinThetaY * cosThetaZ;
+	double sinXMulCosZ = sinThetaX * cosThetaZ;
+	double sinXMulSinZ = sinThetaX * sinThetaZ;
 
 	return Matrix4f(	cosYMulCosZ + sinXMulSinZ * sinThetaY				, cosThetaX * sinThetaZ		, -sinYMulCosZ + sinXMulSinZ * cosThetaY			, 0.0f ,
 						-cosThetaY * sinThetaZ + sinThetaX * sinYMulCosZ	, cosThetaX *cosThetaZ		, sinThetaY * sinThetaZ + cosYMulCosZ * sinThetaX	, 0.0f ,
@@ -208,16 +208,16 @@ Matrix4f Matrix4f::Rotate( float fThetaX , float fThetaY , float fThetaZ )
 						0.0f												, 0.0f						, 0.0f												, 1.0f );
 }
 
-Matrix4f Matrix4f::RotateAxis( const Vector3f& axis , float fTheta )
+Matrix4f Matrix4f::RotateAxis( const Vector3f& axis , double fTheta )
 {
 	Vector3f a = Normalize( axis );
-	float x = a.x;
-	float y = a.y;
-	float z = a.z;
+	double x = a.x;
+	double y = a.y;
+	double z = a.z;
 
-	float cosTheta = std::cos( ToRadians( fTheta ) );
-	float OneSubCos = 1.0f - cosTheta;
-	float sinTheta = std::sin( ToRadians( fTheta ) );
+	double cosTheta = std::cos( ToRadians( fTheta ) );
+	double OneSubCos = 1.0f - cosTheta;
+	double sinTheta = std::sin( ToRadians( fTheta ) );
 
 	return Matrix4f(	x * x * OneSubCos + cosTheta		, x * y * OneSubCos + z * sinTheta	, x * z * OneSubCos - y * sinTheta	, 0.0f ,
 						x * y * OneSubCos - z * sinTheta	, y * y * OneSubCos + cosTheta		, y * z * OneSubCos + x * sinTheta	, 0.0f ,
@@ -225,10 +225,10 @@ Matrix4f Matrix4f::RotateAxis( const Vector3f& axis , float fTheta )
 						0.0f								, 0.0f								, 0.0f								, 1.0f );
 }
 
-Matrix4f Matrix4f::RotateX( float fTheta )
+Matrix4f Matrix4f::RotateX( double fTheta )
 {
-	float fSin = sinf( ToRadians( fTheta ) );
-	float fCos = cosf( ToRadians( fTheta ) );
+	double fSin = sinf( ToRadians( fTheta ) );
+	double fCos = cosf( ToRadians( fTheta ) );
 
 	return Matrix4f( 1.0f , 0.0f , 0.0f , 0.0f ,
 					 0.0f , fCos , fSin , 0.0f ,
@@ -236,10 +236,10 @@ Matrix4f Matrix4f::RotateX( float fTheta )
 					 0.0f , 0.0f , 0.0f , 1.0f );
 }
 
-Matrix4f Matrix4f::RotateY( float fTheta )
+Matrix4f Matrix4f::RotateY( double fTheta )
 {
-	float fSin = sinf( ToRadians( fTheta ) );
-	float fCos = cosf( ToRadians( fTheta ) );
+	double fSin = sinf( ToRadians( fTheta ) );
+	double fCos = cosf( ToRadians( fTheta ) );
 
 	return Matrix4f( fCos , 0.0f , -fSin , 0.0f ,
 					 0.0f , 1.0f , 0.0f , 0.0f ,
@@ -247,10 +247,10 @@ Matrix4f Matrix4f::RotateY( float fTheta )
 					 0.0f , 0.0f , 0.0f , 1.0f );
 }
 
-Matrix4f Matrix4f::RotateZ( float fTheta )
+Matrix4f Matrix4f::RotateZ( double fTheta )
 {
-	float fSin = sinf( ToRadians(fTheta) );
-	float fCos = cosf( ToRadians( fTheta ) );
+	double fSin = sinf( ToRadians(fTheta) );
+	double fCos = cosf( ToRadians( fTheta ) );
 
 	return Matrix4f( fCos , fSin , 0.0f , 0.0f ,
 					 -fSin , fCos , 0.0f , 0.0f ,
@@ -258,7 +258,7 @@ Matrix4f Matrix4f::RotateZ( float fTheta )
 					 0.0f , 0.0f , 0.0f , 1.0f );
 }
 
-Matrix4f Matrix4f::Scale( float fScaleX , float fScaleY , float fScaleZ )
+Matrix4f Matrix4f::Scale( double fScaleX , double fScaleY , double fScaleZ )
 {
 	return Matrix4f( fScaleX , 0.0f , 0.0f , 0.0f ,
 					 0.0f , fScaleY , 0.0f , 0.0f ,
@@ -266,7 +266,7 @@ Matrix4f Matrix4f::Scale( float fScaleX , float fScaleY , float fScaleZ )
 					 0.0f , 0.0f , 0.0f , 1.0f );
 }
 
-Matrix4f Matrix4f::Translate( float fx , float fy , float fz )
+Matrix4f Matrix4f::Translate( double fx , double fy , double fz )
 {
 	return Matrix4f( 1.0f , 0.0f , 0.0f , 0.0f ,
 					 0.0f , 1.0f , 0.0f , 0.0f ,
@@ -284,7 +284,7 @@ inline Vector4f operator * ( const Vector4f& v , const Matrix4f& matrix )
 
 Point3f operator * ( const Point3f& p , const Matrix4f& matrix )
 {
-	float w = p.x * matrix.m03 + p.y * matrix.m13 + p.z * matrix.m23 + matrix.m33;
+	double w = p.x * matrix.m03 + p.y * matrix.m13 + p.z * matrix.m23 + matrix.m33;
 
 	if( w == 1 )
 	{
@@ -295,7 +295,7 @@ Point3f operator * ( const Point3f& p , const Matrix4f& matrix )
 
 	assert( w != 0.0f );
 
-	float inv = 1.0f / w;
+	double inv = 1.0f / w;
 
 	return Point3f( ( p.x * matrix.m00 + p.y * matrix.m10 + p.z * matrix.m20 + matrix.m30 ) * inv ,
 					  ( p.x * matrix.m01 + p.y * matrix.m11 + p.z * matrix.m21 + matrix.m31 ) * inv ,
@@ -304,7 +304,7 @@ Point3f operator * ( const Point3f& p , const Matrix4f& matrix )
 
 Vector3f operator* ( const Vector3f& v , const Matrix4f& matrix )
 {
-	float x = v.x , y = v.y , z = v.z;
+	double x = v.x , y = v.y , z = v.z;
 
 	// 向量没有位移
 	return Vector3f( x * matrix.m00 + y * matrix.m10 + z * matrix.m20 ,

@@ -12,7 +12,7 @@ public:
 public:
 	void SetFilename( char* filename );
 
-	void SetGamma( float gamma );
+	void SetGamma( double gamma );
 
 	void SetResolution( int xResolution , int yResolution );
 
@@ -23,7 +23,7 @@ public:
 public:
 	Vector2f GetResolution() const;
 
-	float GetAspectio() const;
+	double GetAspectio() const;
 
 public:
 	void ParseFilm( const XMLElement* FilmRootElement );
@@ -32,8 +32,8 @@ private:
 	int Width;
 	int Height;
 
-	float Gamma;
-	float InvGamma;
+	double Gamma;
+	double InvGamma;
 
 	char* Filename;
 

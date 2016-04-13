@@ -10,7 +10,7 @@ Sphere::Sphere()
 	m_Radius = 0;
 }
 
-Sphere::Sphere( const Transform* ObjectToWorld , const Transform* WorldToObject , float radius )
+Sphere::Sphere( const Transform* ObjectToWorld , const Transform* WorldToObject , double radius )
 	: Shape( ObjectToWorld , WorldToObject )
 	, m_Radius( radius )
 {
@@ -31,11 +31,11 @@ bool Sphere::Intersect( const Ray& r , IntersectRecord* record ) const
 	Ray ray = ( *WorldToObject )( r );
 
 	// 计算二次方程的参数
-	float A = ray.Direction.x * ray.Direction.x + ray.Direction.y * ray.Direction.y + ray.Direction.z * ray.Direction.z;
-	float B = 2 * ray.Origin.x * ray.Direction.x + 2 * ray.Origin.y * ray.Direction.y + 2 * ray.Origin.z * ray.Direction.z;
-	float C = ray.Origin.x * ray.Origin.x + ray.Origin.y * ray.Origin.y + ray.Origin.z * ray.Origin.z - m_Radius * m_Radius;
+	double A = ray.Direction.x * ray.Direction.x + ray.Direction.y * ray.Direction.y + ray.Direction.z * ray.Direction.z;
+	double B = 2 * ray.Origin.x * ray.Direction.x + 2 * ray.Origin.y * ray.Direction.y + 2 * ray.Origin.z * ray.Direction.z;
+	double C = ray.Origin.x * ray.Origin.x + ray.Origin.y * ray.Origin.y + ray.Origin.z * ray.Origin.z - m_Radius * m_Radius;
 
-	float t0 , t1;
+	double t0 , t1;
 	if( !Quadtratic( A , B , C , &t0 , &t1 ) )
 	{
 		// 没有实数根
@@ -48,7 +48,7 @@ bool Sphere::Intersect( const Ray& r , IntersectRecord* record ) const
 		return false;
 	}
 
-	float t = t0;
+	double t = t0;
 	if( t0 < ray.MinT )
 	{
 		t = t1;
@@ -58,9 +58,19 @@ bool Sphere::Intersect( const Ray& r , IntersectRecord* record ) const
 		}
 	}
 
+	Vector3f v = r( t ) - Point3f( ObjectToWorld->matrix.m30 , ObjectToWorld->matrix.m31 , ObjectToWorld->matrix.m32 );
+
+	if( v.Length() < m_Radius )
+	{
+		return false;
+	}
+	
+
 	record->HitT = t;
 	record->ObjectToWorld = *ObjectToWorld;
 	record->WorldToObject = *WorldToObject;
+	Vector3f normal = Normalize(r(t) - Point3f(ObjectToWorld->matrix.m30, ObjectToWorld->matrix.m31, ObjectToWorld->matrix.m32));
+	record->normal = Normal(normal.x, normal.y, normal.z);
 
 	return true;
 }
@@ -70,11 +80,11 @@ bool Sphere::IntersectP( const Ray& r ) const
 	Ray ray = ( *WorldToObject )( r );
 
 	// 计算二次方程的参数
-	float A = ray.Direction.x * ray.Direction.x + ray.Direction.y * ray.Direction.y + ray.Direction.z * ray.Direction.z;
-	float B = 2 * ray.Origin.x * ray.Direction.x + 2 * ray.Origin.y * ray.Direction.y + 2 * ray.Origin.z * ray.Direction.z;
-	float C = ray.Origin.x * ray.Origin.x + ray.Origin.y * ray.Origin.y + ray.Origin.z * ray.Origin.z - m_Radius * m_Radius;
+	double A = ray.Direction.x * ray.Direction.x + ray.Direction.y * ray.Direction.y + ray.Direction.z * ray.Direction.z;
+	double B = 2 * ray.Origin.x * ray.Direction.x + 2 * ray.Origin.y * ray.Direction.y + 2 * ray.Origin.z * ray.Direction.z;
+	double C = ray.Origin.x * ray.Origin.x + ray.Origin.y * ray.Origin.y + ray.Origin.z * ray.Origin.z - m_Radius * m_Radius;
 
-	float t0 , t1;
+	double t0 , t1;
 	if( !Quadtratic( A , B , C , &t0 , &t1 ) )
 	{
 		// 没有实数根
@@ -87,7 +97,7 @@ bool Sphere::IntersectP( const Ray& r ) const
 		return false;
 	}
 
-	float t = t0;
+	double t = t0;
 	if( t0 < ray.MinT )
 	{
 		t = t1;
@@ -104,12 +114,19 @@ void Sphere::ParseShape( XMLElement* ShapeRootElement )
 {
 	XMLElement* PrimitivePosiitonElement = ShapeRootElement->FirstChildElement( "transform" )->FirstChildElement( "position" );
 
-	float PrimitivePosX , PrimitivePosY , PrimitivePosZ;
-	PrimitivePosiitonElement->FirstChildElement( "x" )->QueryFloatText( &PrimitivePosX );
-	PrimitivePosiitonElement->FirstChildElement( "y" )->QueryFloatText( &PrimitivePosY );
-	PrimitivePosiitonElement->FirstChildElement( "z" )->QueryFloatText( &PrimitivePosZ );
+	double PrimitivePosX , PrimitivePosY , PrimitivePosZ;
+	PrimitivePosiitonElement->FirstChildElement( "x" )->QueryDoubleText( &PrimitivePosX );
+	PrimitivePosiitonElement->FirstChildElement( "y" )->QueryDoubleText( &PrimitivePosY );
+	PrimitivePosiitonElement->FirstChildElement( "z" )->QueryDoubleText( &PrimitivePosZ );
 
-	ShapeRootElement->FirstChildElement( "radius" )->QueryFloatText( &m_Radius );
+	ShapeRootElement->FirstChildElement( "radius" )->QueryDoubleText( &m_Radius );
+
+	double r, g, b;
+	ShapeRootElement->FirstChildElement("emmisive")->FirstChildElement("r")->QueryDoubleText(&r);
+	ShapeRootElement->FirstChildElement("emmisive")->FirstChildElement("g")->QueryDoubleText(&g);
+	ShapeRootElement->FirstChildElement("emmisive")->FirstChildElement("b")->QueryDoubleText(&b);
+
+	emmisive = Spectrum::FromRGB(r, g, b);
 
 	*ObjectToWorld = Translate( Vector3f( PrimitivePosX , PrimitivePosY , PrimitivePosZ ) );
 	*WorldToObject = Inverse( *ObjectToWorld );

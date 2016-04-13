@@ -6,8 +6,8 @@
 
 Bound3f::Bound3f()
 {
-	float MinNumber = std::numeric_limits<float>::lowest();
-	float MaxNumber = std::numeric_limits<float>::max();
+	double MinNumber = std::numeric_limits<double>::lowest();
+	double MaxNumber = std::numeric_limits<double>::max();
 
 	pMin = Point3f( MaxNumber , MaxNumber , MaxNumber );
 	pMax = Point3f( MinNumber , MinNumber , MinNumber );
@@ -53,7 +53,7 @@ Vector3f Bound3f::Diagonal() const
 	return pMax - pMin;
 }
 
-float Bound3f::SurfaceArea() const
+double Bound3f::SurfaceArea() const
 {
 	Vector3f d = Diagonal();
 
@@ -70,7 +70,7 @@ Vector3f Bound3f::Offset( const Point3f& p ) const
 	return o;
 }
 
-void Bound3f::BoundingSphere( Point3f* center , float* radius ) const
+void Bound3f::BoundingSphere( Point3f* center , double* radius ) const
 {
 	*center = ( pMin + pMax ) * 0.5;
 	*radius = Inside( *center , *this ) ? ( pMax - pMin ).Length() / 2 : 0;
@@ -92,16 +92,16 @@ bool Inside( const Point3f& pt , const Bound3f& b )
 	return ( pt.x >= b.pMin.x && pt.x <= b.pMax.x && pt.y >= b.pMin.y && pt.y <= b.pMax.y && pt.z >= b.pMin.z && pt.z <= b.pMax.z );
 }
 
-bool Bound3f::IntersectP( const Ray& ray , float* hitt0 /* = nullptr  */ , float* hitt1 /* = nullptr */ ) const
+bool Bound3f::IntersectP( const Ray& ray , double* hitt0 /* = nullptr  */ , double* hitt1 /* = nullptr */ ) const
 {
-	float t0 = 0 , t1 = ray.MaxT;
+	double t0 = 0 , t1 = ray.MaxT;
 
 	for( int i = 0; i < 3; i++ )
 	{
-		float invRayDir = 1 / ray.Direction[i];
+		double invRayDir = 1 / ray.Direction[i];
 
-		float tNear = ( pMin[i] - ray.Origin[i] ) * invRayDir;
-		float tFar = ( pMax[i] - ray.Origin[i] ) * invRayDir;
+		double tNear = ( pMin[i] - ray.Origin[i] ) * invRayDir;
+		double tFar = ( pMax[i] - ray.Origin[i] ) * invRayDir;
 
 		if( tNear > tFar )
 		{

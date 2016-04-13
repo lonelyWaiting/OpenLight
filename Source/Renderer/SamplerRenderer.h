@@ -8,20 +8,18 @@ class SurfaceIntegrator;
 class SamplerRenderer : public Renderer
 {
 public:
-	SamplerRenderer( Sampler* sampler , Camera* camera , SurfaceIntegrator* _surfaceIntegrator );
+	SamplerRenderer(Sampler* sampler, Camera* camera, SurfaceIntegrator* _surfaceIntegrator, int _spp = 8);
+
+	virtual ~SamplerRenderer();
 
 	void Render( const Scene* scene );
 
-	virtual Spectrum Li( const Scene* scene ,
-						 Ray* ray ,
-						 IntersectRecord* record = nullptr ,
-						 Spectrum* T = nullptr ) const;
-
-	virtual Spectrum Transmittance( const Scene* scene ,
-									const Sampler* sample ,
-									RandomNumberGenerator& rng ) const;
+	virtual Spectrum Li(const Scene* scene,
+						Ray* ray ,
+						IntersectRecord* record = nullptr ) const;
 private:
 	Sampler* sampler;
 	Camera* camera;
 	SurfaceIntegrator* surfaceIntegrator;
+	int spp;		// sample per pixel
 };

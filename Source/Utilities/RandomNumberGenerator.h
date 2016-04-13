@@ -13,7 +13,7 @@ public:
 
 	void Seed( uint32_t seed ) const;
 
-	float RandomFloat() const;
+	double Randomdouble() const;
 
 	uint32_t RandomUInt() const;
 

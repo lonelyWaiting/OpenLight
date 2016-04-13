@@ -9,6 +9,8 @@ public:
 
 	void SetMaxRecusiveDepth( int maxdepth );
 
+	void ParseIntegrator(XMLElement* IntegratorRootElement);
+
 private:
 	int MaxDepth;
 };

@@ -22,9 +22,9 @@ void RandomNumberGenerator::Seed( uint32_t seed ) const
 	}
 }
 
-float RandomNumberGenerator::RandomFloat() const
+double RandomNumberGenerator::Randomdouble() const
 {
-	return ( RandomUInt() & 0xffffff ) / float( 1 << 24 );
+	return ( RandomUInt() & 0xffffff ) / double( 1 << 24 );
 }
 
 uint32_t RandomNumberGenerator::RandomUInt() const

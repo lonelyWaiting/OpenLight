@@ -19,7 +19,7 @@ public:
 
 
 	// Ãæ»ý
-	float Area() const
+	double Area() const
 	{
 		Vector2f d = pMax - pMin;
 		return ( d.x * d.y );
@@ -41,7 +41,7 @@ public:
 
 	Vector2f Offset( const Point2f& p ) const;
 
-	void BoundingSphere( Point2f* Center , float *Radius ) const;
+	void BoundingSphere( Point2f* Center , double *Radius ) const;
 	
 public:
 	friend bool Inside( const Point2f& pt , const Bound2f& b );

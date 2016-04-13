@@ -20,8 +20,8 @@ struct IntersectRecord
 	const Primitive* primitivePtr;
 	Transform WorldToObject;
 	Transform ObjectToWorld;
-	float HitT;
-	Spectrum HitPointColor;
+	double HitT;
 	Point3f HitPoint;
 	Normal normal;
+	Spectrum Emmisive;
 };

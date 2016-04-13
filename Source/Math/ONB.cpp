@@ -75,7 +75,7 @@ void ONB::InitFromW( const Vector3f& w )
 		V = Cross( W , U );
 	}
 	
-	Normalize( W );
+	Normalize( U );
 	Normalize( V );
 }
 

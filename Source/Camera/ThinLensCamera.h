@@ -15,19 +15,19 @@ public:
 
 	ThinLensCamera( const ThinLensCamera& rhs );
 
-	void SetLensRadius( float _LensRadius );
+	void SetLensRadius( double _LensRadius );
 
-	void SetLensFocus( float _LensFocus );
+	void SetLensFocus( double _LensFocus );
 
 public:
-	Ray GenerateRay( float RasterX , float RasterY , const CameraSample& SamplePoint );
+	Ray GenerateRay( double RasterX , double RasterY , const CameraSample& SamplePoint );
 
 public:
 	void ParseCamera( XMLElement* CameraRootElement );
 
 private:
-	float LensRadius;			// Í¸¾µ°ë¾¶
-	float LensFocus;			// ½¹¾à
+	double LensRadius;			// Í¸¾µ°ë¾¶
+	double LensFocus;			// ½¹¾à
 };
 
 typedef std::shared_ptr<ThinLensCamera> ThinLensPtr;

@@ -8,7 +8,7 @@ Vector2f::Vector2f()
 	x = y = 0;
 }
 
-Vector2f::Vector2f( float _x , float _y )
+Vector2f::Vector2f( double _x , double _y )
 	: x( _x )
 	, y( _y )
 {
@@ -83,14 +83,14 @@ bool Vector2f::operator != ( const Vector2f & v ) const
 	return ( x != v.x || y != v.y );
 }
 
-Vector2f Vector2f::operator* ( float f ) const
+Vector2f Vector2f::operator* ( double f ) const
 {
 	assert( !std::isnan( f ) );
 
 	return Vector2f( f * x , f * y );
 }
 
-Vector2f& Vector2f::operator *= ( float f )
+Vector2f& Vector2f::operator *= ( double f )
 {
 	x *= f;
 	y *= f;
@@ -98,16 +98,16 @@ Vector2f& Vector2f::operator *= ( float f )
 	return *this;
 }
 
-Vector2f Vector2f::operator / ( float f ) const
+Vector2f Vector2f::operator / ( double f ) const
 {
 	assert( f != 0 );
-	float inv = ( float )1 / f;
+	double inv = ( double )1 / f;
 	return Vector2f( x * inv , y * inv );
 }
 
-Vector2f& Vector2f::operator /= ( float f )
+Vector2f& Vector2f::operator /= ( double f )
 {
-	float inv = ( float )1 / f;
+	double inv = ( double )1 / f;
 
 	x *= inv;
 	y *= inv;
@@ -120,34 +120,34 @@ Vector2f Vector2f::operator - () const
 	return Vector2f( -x , -y );
 }
 
-float& Vector2f::operator[] ( int index )
+double& Vector2f::operator[] ( int index )
 {
 	assert( index >= 0 && index < 2 );
 
 	return ( &x )[index];
 }
 
-float Vector2f::LengthSq() const
+double Vector2f::LengthSq() const
 {
 	return x * x + y * y;
 }
 
-float Vector2f::Length() const
+double Vector2f::Length() const
 {
 	return std::sqrt( LengthSq() );
 }
 
-inline Vector2f operator* ( float f , const Vector2f &v )
+inline Vector2f operator* ( double f , const Vector2f &v )
 {
 	return v * f;
 }
 
-inline float Dot( const Vector2f &v1 , const Vector2f &v2 )
+inline double Dot( const Vector2f &v1 , const Vector2f &v2 )
 {
 	return ( v1.x * v2.x + v1.y * v2.y );
 }
 
-inline float AbsDot( const Vector2f &v1 , const Vector2f &v2 )
+inline double AbsDot( const Vector2f &v1 , const Vector2f &v2 )
 {
 	return std::abs( Dot( v1 , v2 ) );
 }

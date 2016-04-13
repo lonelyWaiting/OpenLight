@@ -17,10 +17,5 @@ public:
 
 	virtual Spectrum Li( const Scene* scene ,
 						 Ray* ray ,
-						 IntersectRecord* record = nullptr ,
-						 Spectrum* T = nullptr ) const = 0;
-
-	virtual Spectrum Transmittance( const Scene* scene ,
-									const Sampler* sampler ,
-									RandomNumberGenerator& rng ) const = 0;
+						 IntersectRecord* record = nullptr) const = 0;
 };

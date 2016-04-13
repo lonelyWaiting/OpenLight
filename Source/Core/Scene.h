@@ -15,7 +15,7 @@ public:
 	
 	void AddLight( Light* light );
 
-	Spectrum Trace( const Ray& ray ) const;
+	/*Spectrum Trace( const Ray& ray ) const;*/
 
 	// 相交计算，将相交信息保存在IntersectRecord中
 	bool Intersect( const Ray& ray , IntersectRecord* record ) const;

@@ -31,16 +31,16 @@ public:
 
 	Vector2f GetApertureResolution() const;
 
-	float GetViewDistance() const;
+	double GetViewDistance() const;
 
-	float GetApertureDistance() const;
+	double GetApertureDistance() const;
 
-	float GetExposureTime() const;
+	double GetExposureTime() const;
 
 	Film* GetFilm() const;
 
 public:
-	virtual Ray GenerateRay( float RasterX, float RasterY , const CameraSample& SamplePoint ) = 0;
+	virtual Ray GenerateRay( double RasterX, double RasterY , const CameraSample& SamplePoint ) = 0;
 
 	virtual void UpdateProperty();
 
@@ -50,18 +50,18 @@ public:
 protected:
 	Point3f		Eye;						// 相机中心
 	Point3f		Target;						// 视线方向
-	float		ViewDistance;				// 到视平面的距离
-	float		ApertureDistance;			// 到光圈的距离
+	double		ViewDistance;				// 到视平面的距离
+	double		ApertureDistance;			// 到光圈的距离
 	Vector2f	ApertureResolution;			// 光圈大小
-	float		ExposureTime;				// 曝光时间
+	double		ExposureTime;				// 曝光时间
 	FitMode		Mode;
 
 protected:
-	float		Top;
-	float		Bottom;
-	float		Left;
-	float		Right;
-	float		FilmAspectRatio;
+	double		Top;
+	double		Bottom;
+	double		Left;
+	double		Right;
+	double		FilmAspectRatio;
 	
 	ONB uvw;							// 坐标系
 

@@ -7,12 +7,12 @@ Vector3f::Vector3f() : x( 0 ) , y( 0 ) , z( 0 )
 
 }
 
-Vector3f::Vector3f( float value ) : x( value ) , y( value ) , z( value )
+Vector3f::Vector3f( double value ) : x( value ) , y( value ) , z( value )
 {
 
 }
 
-Vector3f::Vector3f( float _x , float _y , float _z ) : x( _x ) , y( _y ) , z( _z )
+Vector3f::Vector3f( double _x , double _y , double _z ) : x( _x ) , y( _y ) , z( _z )
 {
 
 }
@@ -73,12 +73,12 @@ Vector3f& Vector3f::operator -= ( const Vector3f& rhs )
 	return *this;
 }
 
-Vector3f Vector3f::operator * ( float scale ) const
+Vector3f Vector3f::operator * ( double scale ) const
 {
 	return Vector3f( x * scale , y * scale , z * scale );
 }
 
-Vector3f& Vector3f::operator *= ( float scale )
+Vector3f& Vector3f::operator *= ( double scale )
 {
 	x *= scale;
 	y *= scale;
@@ -87,7 +87,7 @@ Vector3f& Vector3f::operator *= ( float scale )
 	return *this;
 }
 
-float Vector3f::operator * ( const Vector3f &rhs ) const
+double Vector3f::operator * ( const Vector3f &rhs ) const
 {
 	return x * rhs.x + y * rhs.y + z * rhs.z;
 }
@@ -97,20 +97,20 @@ Vector3f Vector3f::operator -() const
 	return Vector3f( -x , -y , -z );
 }
 
-Vector3f Vector3f::operator / ( float f ) const
+Vector3f Vector3f::operator / ( double f ) const
 {
 	assert( f != 0 );
 
-	float inv = ( float )1 / f;
+	double inv = ( double )1 / f;
 
 	return Vector3f( x * inv , y * inv , z * inv );
 }
 
-Vector3f& Vector3f::operator /= ( float f )
+Vector3f& Vector3f::operator /= ( double f )
 {
 	assert( f != 0 );
 
-	float inv = ( float )1 / f;
+	double inv = ( double )1 / f;
 
 	x *= inv;
 	y *= inv;
@@ -119,7 +119,7 @@ Vector3f& Vector3f::operator /= ( float f )
 	return *this;
 }
 
-float& Vector3f::operator [] ( int index )
+double& Vector3f::operator [] ( int index )
 {
 	assert( index >= 0 && index < 3 );
 
@@ -130,7 +130,7 @@ float& Vector3f::operator [] ( int index )
 	return z;
 }
 
-float Vector3f::operator[] ( int index ) const
+double Vector3f::operator[] ( int index ) const
 {
 	assert( index >= 0 && index < 3 );
 
@@ -151,17 +151,17 @@ bool Vector3f::operator != ( const Vector3f& rhs ) const
 	return ( x != rhs.x || y != rhs.y || z != rhs.z );
 }
 
-float Vector3f::LengthSq() const
+double Vector3f::LengthSq() const
 {
 	return ( x * x + y * y + z * z );
 }
 
-float Vector3f::Length() const
+double Vector3f::Length() const
 {
 	return std::sqrt( LengthSq() );
 }
 
-Vector3f operator* ( float s , const Vector3f &v )
+Vector3f operator* ( double s , const Vector3f &v )
 {
 	return v * s;
 }
@@ -171,12 +171,12 @@ Vector3f Abs( const Vector3f &v )
 	return Vector3f( std::abs( v.x ) , std::abs( v.y ) , std::abs( v.z ) );
 }
 
-float Dot( const Vector3f &v1 , const Vector3f &v2 )
+double Dot( const Vector3f &v1 , const Vector3f &v2 )
 {
 	return ( v1.x * v2.x + v1.y * v2.y + v1.z * v2.z );
 }
 
-float AbsDot( const Vector3f & v1 , const Vector3f& v2 )
+double AbsDot( const Vector3f & v1 , const Vector3f& v2 )
 {
 	return std::abs( Dot( v1 , v2 ) );
 }
@@ -194,12 +194,12 @@ Vector3f Normalize( const Vector3f& v )
 	return v / v.Length();
 }
 
-float MinComponent( const Vector3f &v )
+double MinComponent( const Vector3f &v )
 {
 	return std::min( v.x , std::min( v.y , v.z ) );
 }
 
-float MaxCompoent( const Vector3f &v )
+double MaxCompoent( const Vector3f &v )
 {
 	return std::max( v.x , std::max( v.y , v.z ) );
 }
@@ -231,4 +231,24 @@ void CoordinateSystem( Vector3f &v1 , Vector3f *v2 , Vector3f *v3 )
 	}
 
 	*v3 = Cross( v1 , *v2 );
+}
+
+int MaxLengthComponent(const Vector3f& v)
+{
+	double absX = std::abs(v.x);
+	double absY = std::abs(v.y);
+	double absZ = std::abs(v.z);
+
+	if (absX > absY && absX > absZ)
+	{
+		return 0;
+	}
+	else if (absY > absZ)
+	{
+		return 1;
+	}
+	else
+	{
+		return 2;
+	}
 }

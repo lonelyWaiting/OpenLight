@@ -50,17 +50,17 @@ Vector2f Camera::GetApertureResolution() const
 	return ApertureResolution;
 }
 
-float Camera::GetViewDistance() const
+double Camera::GetViewDistance() const
 {
 	return ViewDistance;
 }
 
-float Camera::GetExposureTime() const
+double Camera::GetExposureTime() const
 {
 	return ExposureTime;
 }
 
-float Camera::GetApertureDistance() const
+double Camera::GetApertureDistance() const
 {
 	return ApertureDistance;
 }
@@ -72,16 +72,18 @@ Film* Camera::GetFilm() const
 
 void Camera::UpdateProperty()
 {
-	uvw.InitFromW( Vector3f( Target - Eye ) );
+	Vector3f look = Target - Eye;
 
-	float ApertureAspectRatio = ApertureResolution.x / ApertureResolution.y;
+	uvw.InitFromW(look);
+	
+	double ApertureAspectRatio = ApertureResolution.x / ApertureResolution.y;
 
 	Top = ( ApertureResolution.y * inchToMm * 0.5f ) * ViewDistance / ApertureDistance;
 
 	Right = ( ApertureResolution.x * inchToMm * 0.5f ) * ViewDistance / ApertureDistance;
 
-	float xScale = 1.0f;
-	float yScale = 1.0f;
+	double xScale = 1.0f;
+	double yScale = 1.0f;
 
 	switch( Mode )
 	{

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scene>
+	<spp>64</spp>
+	<primitive>
+		<shape type="sphere">
+			<transform>
+				<position>
+					<x>0</x>
+					<y>0</y>
+					<z>30</z>
+				</position>
+			</transform>
+			<radius>5</radius>
+			<emmisive>
+				<r>0.0</r>
+				<g>0.0</g>
+				<b>0.0</b>
+			</emmisive>
+		</shape>
+		<shape type="sphere">
+			<transform>
+				<position>
+					<x>12</x>
+					<y>0</y>
+					<z>30</z>
+				</position>
+			</transform>
+			<radius>4</radius>
+			<emmisive>
+				<r>1.0</r>
+				<g>0.0</g>
+				<b>0.0</b>
+			</emmisive>
+		</shape>
+		<shape type="sphere">
+			<transform>
+				<position>
+					<x>-12</x>
+					<y>0</y>
+					<z>30</z>
+				</position>
+			</transform>
+			<radius>5</radius>
+			<emmisive>
+				<r>0.0</r>
+				<g>1.0</g>
+				<b>0.0</b>
+			</emmisive>
+		</shape>
+		<material type="diffuse">
+			<Reflection>
+				<r>1.0</r>
+				<g>1.0</g>
+				<b>1.0</b>
+			</Reflection>
+		</material>
+	</primitive>
+
+	<Film>
+		<filename>result.ppm</filename>
+		<width>800</width>
+		<height>600</height>
+	</Film>
+
+	<Camera>
+		<type>Pinhole</type>
+		<Position>
+			<x>0.0</x>
+			<y>0.0</y>
+			<z>-5.0</z>
+		</Position>
+		<Target>
+			<x>0.0</x>
+			<y>0.0</y>
+			<z>1.0</z>
+		</Target>
+		<LensFocus>40</LensFocus>
+		<LensRadius>0.01</LensRadius>
+		<ApertureResolution>
+			<width>0.825</width>
+			<height>0.446></height>
+		</ApertureResolution>
+		<ApertureDistance>35</ApertureDistance>
+		<ExposureTime>0.0</ExposureTime>
+		<ViewDistance>1.0</ViewDistance>
+	</Camera>
+
+	<Integrator type="Whitted">
+		<MaxDepth>5</MaxDepth>
+	</Integrator>
+</scene>

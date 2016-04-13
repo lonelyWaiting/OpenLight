@@ -48,9 +48,9 @@ void PureRandomSampler::GenerateUnitSquareSamples()
 		for( int j = 0; j < NumSamples; j++ )
 		{
 			CameraSample* samples = new CameraSample;
-			samples->ImageSamples = Point2f( ( float )rand() / RAND_MAX , ( float )rand() / RAND_MAX );
-			samples->LensSamples  = Point2f( ( float )rand() / RAND_MAX , ( float )rand() / RAND_MAX );
-			samples->TimeSamples  = ( float )rand() / RAND_MAX;
+			samples->ImageSamples = Point2f( ( double )rand() / RAND_MAX , ( double )rand() / RAND_MAX );
+			samples->LensSamples  = Point2f( ( double )rand() / RAND_MAX , ( double )rand() / RAND_MAX );
+			samples->TimeSamples  = ( double )rand() / RAND_MAX;
 
 			SamplePoints.push_back( samples );
 		}

@@ -7,6 +7,8 @@
 class Material
 {
 public:
+	Material();
+
 	virtual BxDF* GetBxDF( const Point3f& point , const Normal& normal ) const = 0;
 
 	virtual ~Material();

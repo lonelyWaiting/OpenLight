@@ -32,7 +32,7 @@ public:
 	 \param	_y	The y coordinate.
 	 */
 
-	Point2f( float _x , float _y );
+	Point2f( double _x , double _y );
 	
 	/**
 	 \fn	explicit Point2::Point2( const Vector2<U> &p )
@@ -93,40 +93,40 @@ public:
 
 	Point2f operator - () const;
 
-	Point2f operator * ( float f ) const;
+	Point2f operator * ( double f ) const;
 
-	Point2f& operator *= ( float f );
+	Point2f& operator *= ( double f );
 
-	Point2f operator / ( float f ) const;
+	Point2f operator / ( double f ) const;
 
-	Point2f operator /= ( float f );
+	Point2f operator /= ( double f );
 
-	float operator[] ( int index ) const;
+	double operator[] ( int index ) const;
 
-	float& operator[] ( int index );
+	double& operator[] ( int index );
 
 	bool operator == ( const Point2f &p ) const;
 
 	bool operator != ( const Point2f &p ) const;
 
 public:
-	friend inline float Distance( const Point2f& p1 , const Point2f &p2 );
+	friend inline double Distance( const Point2f& p1 , const Point2f &p2 );
 
-	friend inline float DistanceSq( const Point2f &p1 , const Point2f &p2 );
+	friend inline double DistanceSq( const Point2f &p1 , const Point2f &p2 );
 
-	friend inline Point2f operator* ( float f , const Point2f &p );
+	friend inline Point2f operator* ( double f , const Point2f &p );
 
 	friend Point2f Floor( const Point2f &p );
 
 	friend Point2f Ceil( const Point2f &p );
 
-	friend Point2f Lerp( float t , const Point2f &p0 , const Point2f &p1 );
+	friend Point2f Lerp( double t , const Point2f &p0 , const Point2f &p1 );
 
 	friend Point2f Min( const Point2f &p0 , const Point2f &p1 );
 
 	friend Point2f Max( const Point2f &p0 , const Point2f &p1 );
 public:
-	float x , y;
+	double x , y;
 };
 
 #endif

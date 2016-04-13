@@ -20,16 +20,14 @@ public:
 
 	void SetShape( Shape* _shape );
 
-	void SetDiffuseColor( const Spectrum& _color );
-
 	BxDF* GetBxDF( const Point3f& point , const Normal& normal ) const;
+
+	void SetMaterial(Material* material);
 
 public:
 	void ParsePrimitive( XMLElement* PrimitiveRootElment );
 
 protected:
-	Spectrum color;
-
 	std::vector<Shape*> shapes;
 
 	Material* pMaterial;

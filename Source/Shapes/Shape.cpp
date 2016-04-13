@@ -7,11 +7,13 @@
 #include "Math/Vector3.h"
 #include "Shape.h"
 
-Shape::Shape()
+Shape::Shape(Spectrum _emmisive /*= Spectrum(0)*/)
 {
 	ObjectToWorld = new Transform;
 
 	WorldToObject = new Transform;
+
+	emmisive = _emmisive;
 }
 
 Shape::Shape( const Transform* _ObjectToWorld , const Transform* _WorldToObject )

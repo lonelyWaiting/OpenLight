@@ -54,9 +54,9 @@ void NRooksSampler::GenerateUnitSquareSamples()
 		for( int j = 0; j < NumSamples; j++ )
 		{
 			CameraSample* samples = new CameraSample;
-			samples->ImageSamples = Point2f( ( float )rand() / RAND_MAX , ( float )rand() / RAND_MAX );
-			samples->LensSamples = Point2f( ( float )rand() / RAND_MAX , ( float )rand() / RAND_MAX );
-			samples->TimeSamples = ( float )rand() / RAND_MAX;
+			samples->ImageSamples = Point2f( ( double )rand() / RAND_MAX , ( double )rand() / RAND_MAX );
+			samples->LensSamples = Point2f( ( double )rand() / RAND_MAX , ( double )rand() / RAND_MAX );
+			samples->TimeSamples = ( double )rand() / RAND_MAX;
 
 			SamplePoints.push_back( samples );
 		}
@@ -68,9 +68,9 @@ void NRooksSampler::GenerateUnitSquareSamples()
 		{
 			// 沿着对角线采样
 			CameraSample* samples = new CameraSample;
-			samples->ImageSamples = Point2f( ( j + ( float )rand() ) / ( float )NumSamples , ( j + ( float )rand() ) / ( float )NumSamples );
-			samples->LensSamples = Point2f( ( j + ( float )rand() ) / ( float )NumSamples , ( j + ( float )rand() ) / ( float )NumSamples );
-			samples->TimeSamples = ( j + ( float )rand() ) / ( float )NumSamples;
+			samples->ImageSamples = Point2f( ( j + ( double )rand() ) / ( double )NumSamples , ( j + ( double )rand() ) / ( double )NumSamples );
+			samples->LensSamples = Point2f( ( j + ( double )rand() ) / ( double )NumSamples , ( j + ( double )rand() ) / ( double )NumSamples );
+			samples->TimeSamples = ( j + ( double )rand() ) / ( double )NumSamples;
 
 			SamplePoints.push_back( samples );
 		}

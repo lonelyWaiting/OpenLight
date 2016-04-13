@@ -5,8 +5,8 @@
 
 Bound2f::Bound2f()
 {
-	float minNum = std::numeric_limits<float>::lowest();
-	float maxNum = std::numeric_limits<float>::max();
+	double minNum = std::numeric_limits<double>::lowest();
+	double maxNum = std::numeric_limits<double>::max();
 
 	pMin = Point2f( maxNum , maxNum );
 	pMax = Point2f( minNum , minNum );
@@ -88,7 +88,7 @@ Vector2f Bound2f::Offset( const Point2f& p ) const
 	return o;
 }
 
-void Bound2f::BoundingSphere( Point2f* Center , float *Radius ) const
+void Bound2f::BoundingSphere( Point2f* Center , double *Radius ) const
 {
 	*Center = ( pMin + pMax ) * 0.5f;
 	*Radius = Inside( *Center , *this ) ? ( pMax - pMin ).Length() * 0.5f : 0;
