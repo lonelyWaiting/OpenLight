@@ -22,7 +22,7 @@ public:
 	
 	virtual Bound3f WorldBound() const;
 
-	virtual bool Intersect( const Ray& ray , IntersectRecord* record ) const;
+	virtual bool Intersect( Ray& ray , IntersectRecord* record ) const;
 
 	virtual bool IntersectP( const Ray& ray ) const;
 

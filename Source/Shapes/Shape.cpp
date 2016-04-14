@@ -42,7 +42,7 @@ Bound3f Shape::WorldBound() const
 	return ( *ObjectToWorld )( ObjectBound() );
 }
 
-bool Shape::Intersect( const Ray& ray , IntersectRecord* record ) const
+bool Shape::Intersect( Ray& ray , IntersectRecord* record ) const
 {
 	Assert( "Called Unimplemented Shape::Intersect()" );
 

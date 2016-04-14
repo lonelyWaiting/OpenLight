@@ -214,6 +214,7 @@
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(SolutionDir)Source;$(SolutionDir)Library\FreeImage\Inc;$(SolutionDir)Library\TinyXML2\Inc;$(SolutionDir)Source\Utilities;$(SolutionDir)Library\assimp\Inc</AdditionalIncludeDirectories>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

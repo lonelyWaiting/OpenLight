@@ -8,7 +8,7 @@
 #include "Light/VisibilityTester.h"
 #include "Math/UtilitiesFunction.h"
 #include "Renderer/Renderer.h"
-#include "Sampler\Sampling.h"
+#include "Sampler/Sampling.h"
 #include "WhittedIntegrator.h"
 
 Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Ray* ray ) const
@@ -36,7 +36,7 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 			// 采样半球
 			Vector3f& wi = CosineSampleHemisphere(Point2f(u0, u1));
 
-			if (Dot(normal, wi) <= 0)
+			if (Dot(normal, wi) < 0)
 			{
 				/*Vector3f n = Vector3f(normal.x, normal.y, normal.z);
 
@@ -45,7 +45,7 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 			}
 
 			// 沿着法线方向的偏移量
-			Vector3f bias = Vector3f(normal.x * EPSILON, normal.y * EPSILON, normal.z * EPSILON);
+			Vector3f bias = Vector3f(normal.x * 1, normal.y * 1, normal.z * 1);
 
 			// 将光线沿着法线方向偏移
 			Ray r(record->HitPoint + bias , wi, *ray, 1e-3f , Infinity);

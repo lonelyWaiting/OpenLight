@@ -11,6 +11,8 @@ public:
 
 	explicit Normal( const Vector3f& v );
 
+	operator Vector3f();
+
 	Normal operator - () const;
 
 	Normal operator + ( const Normal& n ) const;

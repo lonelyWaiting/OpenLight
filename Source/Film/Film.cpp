@@ -78,4 +78,8 @@ void Film::ParseFilm( const XMLElement* FilmRootElement )
 
 	FilmRootElement->FirstChildElement( "width" )->QueryIntText( &Width );
 	FilmRootElement->FirstChildElement( "height" )->QueryIntText( &Height );
+
+	SAFE_DELETE( image );
+
+	image = new PPMImage( Filename , Width , Height );
 }

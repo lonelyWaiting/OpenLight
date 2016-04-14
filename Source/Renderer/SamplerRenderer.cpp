@@ -30,7 +30,10 @@ void SamplerRenderer::Render( const Scene* scene )
 	int Width  = Resolution.x;
 	int Height = Resolution.y;
 
+	#ifndef _DEBUG
 #pragma omp parallel for schedule(dynamic)
+	#endif
+
 	for( int iRow = 0; iRow < Height; iRow++ )
 	{
 		for( int iCol = 0; iCol < Width; iCol++ )

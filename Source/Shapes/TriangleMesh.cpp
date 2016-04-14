@@ -32,7 +32,7 @@ Bound3f TriangleMesh::ObjectBound() const
 	return bbox;
 }
 
-bool TriangleMesh::Intersect( const Ray& ray , IntersectRecord* record ) const
+bool TriangleMesh::Intersect( Ray& ray , IntersectRecord* record ) const
 {
 	// 从World Space变换到Object Space
 	Ray r = ( *WorldToObject )( ray );
@@ -90,6 +90,14 @@ void TriangleMesh::ParseShape( XMLElement* ShapeRootElement )
 
 	*ObjectToWorld = Translate( Vector3f( x , y , z ) );
 	*WorldToObject = Inverse( *ObjectToWorld );
+
+	double r , g , b;
+	XMLElement* ShapeEmmisiveElement = ShapeRootElement->FirstChildElement( "emmisive" );
+	ShapeTransformElement->FirstChildElement( "r" )->QueryDoubleText( &r );
+	ShapeTransformElement->FirstChildElement( "g" )->QueryDoubleText( &g );
+	ShapeTransformElement->FirstChildElement( "b" )->QueryDoubleText( &b );
+
+	emmisive = Spectrum::FromRGB( r , g , b );
 
 	// 解析OBJ模型
 	ModelParser( filename , points , normals , triangles , VertexNum , TriangleCount );

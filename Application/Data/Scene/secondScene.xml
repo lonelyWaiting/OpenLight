@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scene>
-	<spp>64</spp>
+	<spp>2000</spp>
 	<primitive>
 		<shape type="sphere">
 			<transform>
@@ -58,8 +58,8 @@
 
 	<Film>
 		<filename>result.ppm</filename>
-		<width>800</width>
-		<height>600</height>
+		<width>1920</width>
+		<height>1080</height>
 	</Film>
 
 	<Camera>

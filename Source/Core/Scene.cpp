@@ -52,8 +52,6 @@ bool Scene::Intersect( const Ray& ray , IntersectRecord* record ) const
 	{
 		if( Objects[i].Intersect( r , record ) )
 		{
-			r.MaxT = record->HitT;
-
 			bHit = true;
 		}
 	}

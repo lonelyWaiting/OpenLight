@@ -108,7 +108,10 @@ inline bool Quadtratic( double A , double B , double C , double* t0 , double* t1
 
 	if( *t0 > *t1 )
 	{
-		Swap( *t0 , *t1 );
+		//Swap( *t0 , *t1 );
+		double temp = *t0;
+		*t0 = *t1;
+		*t1 = temp;
 	}
 
 	return true;

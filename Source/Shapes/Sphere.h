@@ -9,13 +9,13 @@ class Sphere : public Shape
 public:
 	Sphere();
 
-	Sphere( const Transform* ObjectToWorld , const Transform* WorldToObject , double radius );
+	Sphere( Point3f Center , double radius );
 
 	~Sphere();
 
 	Bound3f ObjectBound() const;
 
-	bool Intersect( const Ray& ray , IntersectRecord* record ) const;
+	bool Intersect( Ray& ray , IntersectRecord* record ) const;
 
 	bool IntersectP( const Ray& ray ) const;
 
@@ -24,6 +24,7 @@ public:
 
 private:
 	double m_Radius;
+	Point3f m_Center;
 };
 
 #endif

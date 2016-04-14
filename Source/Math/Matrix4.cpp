@@ -307,7 +307,7 @@ Vector3f operator* ( const Vector3f& v , const Matrix4f& matrix )
 	double x = v.x , y = v.y , z = v.z;
 
 	// 向量没有位移
-	return Vector3f( x * matrix.m00 + y * matrix.m10 + z * matrix.m20 ,
-					   x * matrix.m01 + y * matrix.m11 + z * matrix.m21 ,
-					   x * matrix.m02 + y * matrix.m12 + z * matrix.m22 );
+	return Vector3f( ( x * matrix.m00 + y * matrix.m10 + z * matrix.m20 ) ,
+					 ( x * matrix.m01 + y * matrix.m11 + z * matrix.m21 ) ,
+					 ( x * matrix.m02 + y * matrix.m12 + z * matrix.m22 ) );
 }

@@ -10,10 +10,13 @@ Sphere::Sphere()
 	m_Radius = 0;
 }
 
-Sphere::Sphere( const Transform* ObjectToWorld , const Transform* WorldToObject , double radius )
-	: Shape( ObjectToWorld , WorldToObject )
-	, m_Radius( radius )
+Sphere::Sphere( Point3f Center , double radius )
+	: m_Radius( radius )
+	, m_Center( Center )
 {
+	*ObjectToWorld = Translate( Vector3f( Center ) );
+	
+	*WorldToObject = Inverse( *ObjectToWorld );
 }
 
 Sphere::~Sphere()
@@ -25,7 +28,7 @@ Bound3f Sphere::ObjectBound() const
 	return Bound3f( Point3f( -m_Radius , -m_Radius , -m_Radius ) , Point3f( m_Radius , m_Radius , m_Radius ) );
 }
 
-bool Sphere::Intersect( const Ray& r , IntersectRecord* record ) const
+bool Sphere::Intersect( Ray& r , IntersectRecord* record ) const
 {
 	// 将光线从世界空间变换到局部空间
 	Ray ray = ( *WorldToObject )( r );
@@ -58,19 +61,23 @@ bool Sphere::Intersect( const Ray& r , IntersectRecord* record ) const
 		}
 	}
 
-	Vector3f v = r( t ) - Point3f( ObjectToWorld->matrix.m30 , ObjectToWorld->matrix.m31 , ObjectToWorld->matrix.m32 );
+	/*Vector3f v = r( t ) - m_Center;
 
 	if( v.Length() < m_Radius )
 	{
+		double length = v.Length();
+
+		Point3f v1 = r( t );
+
 		return false;
-	}
+	}*/
 	
 
+	r.MaxT = t;
 	record->HitT = t;
 	record->ObjectToWorld = *ObjectToWorld;
 	record->WorldToObject = *WorldToObject;
-	Vector3f normal = Normalize(r(t) - Point3f(ObjectToWorld->matrix.m30, ObjectToWorld->matrix.m31, ObjectToWorld->matrix.m32));
-	record->normal = Normal(normal.x, normal.y, normal.z);
+	record->normal = Normal( Normalize( r( t ) - m_Center ) );
 
 	return true;
 }
@@ -114,10 +121,9 @@ void Sphere::ParseShape( XMLElement* ShapeRootElement )
 {
 	XMLElement* PrimitivePosiitonElement = ShapeRootElement->FirstChildElement( "transform" )->FirstChildElement( "position" );
 
-	double PrimitivePosX , PrimitivePosY , PrimitivePosZ;
-	PrimitivePosiitonElement->FirstChildElement( "x" )->QueryDoubleText( &PrimitivePosX );
-	PrimitivePosiitonElement->FirstChildElement( "y" )->QueryDoubleText( &PrimitivePosY );
-	PrimitivePosiitonElement->FirstChildElement( "z" )->QueryDoubleText( &PrimitivePosZ );
+	PrimitivePosiitonElement->FirstChildElement( "x" )->QueryDoubleText( &( m_Center.x ) );
+	PrimitivePosiitonElement->FirstChildElement( "y" )->QueryDoubleText( &( m_Center.y ) );
+	PrimitivePosiitonElement->FirstChildElement( "z" )->QueryDoubleText( &( m_Center.z ) );
 
 	ShapeRootElement->FirstChildElement( "radius" )->QueryDoubleText( &m_Radius );
 
@@ -128,6 +134,6 @@ void Sphere::ParseShape( XMLElement* ShapeRootElement )
 
 	emmisive = Spectrum::FromRGB(r, g, b);
 
-	*ObjectToWorld = Translate( Vector3f( PrimitivePosX , PrimitivePosY , PrimitivePosZ ) );
+	*ObjectToWorld = Translate( Vector3f( m_Center ) );
 	*WorldToObject = Inverse( *ObjectToWorld );
 }

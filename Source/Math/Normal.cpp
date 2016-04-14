@@ -26,6 +26,11 @@ Normal::Normal( const Vector3f& v )
 	z = v.z;
 }
 
+Normal::operator Vector3f()
+{
+	return Vector3f( x , y , z );
+}
+
 Normal Normal::operator - () const
 {
 	return Normal( -x , -y , -z );

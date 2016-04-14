@@ -1,5 +1,6 @@
 #include "PCH.h"
 #include "Point3.h"
+#include "Normal.h"
 #include "Vector3.h"
 
 Vector3f::Vector3f() : x( 0 ) , y( 0 ) , z( 0 )
@@ -34,6 +35,11 @@ std::ostream & operator << ( std::ostream & os , const Vector3f &v )
 	os << "[" << v.x << ", " << v.y << ", " << v.z << "]";
 
 	return os;
+}
+
+Vector3f::operator Normal()
+{
+	return Normal( x , y , z );
 }
 
 Vector3f& Vector3f::operator = ( const Vector3f& rhs )
