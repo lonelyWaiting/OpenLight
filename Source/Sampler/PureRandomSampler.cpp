@@ -4,13 +4,7 @@
 PureRandomSampler::PureRandomSampler()
 	:Sampler()
 {
-	GenerateUnitSquareSamples();
-}
 
-PureRandomSampler::PureRandomSampler( const int num )
-	: Sampler( num )
-{
-	GenerateUnitSquareSamples();
 }
 
 PureRandomSampler::PureRandomSampler( const PureRandomSampler& r )
@@ -31,21 +25,11 @@ PureRandomSampler& PureRandomSampler::operator= ( const PureRandomSampler& rhs )
 	return ( *this );
 }
 
-PureRandomSampler::~PureRandomSampler()
-{
-
-}
-
-PureRandomSampler* PureRandomSampler::clone() const
-{
-	return ( new PureRandomSampler( *this ) );
-}
-
 void PureRandomSampler::GenerateUnitSquareSamples()
 {
-	for( int i = 0; i < NumSets; i++ )
+	for( int i = 0; i < SampleGroupCount; i++ )
 	{
-		for( int j = 0; j < NumSamples; j++ )
+		for( int j = 0; j < SampleCount; j++ )
 		{
 			CameraSample* samples = new CameraSample;
 			samples->ImageSamples = Point2f( ( double )rand() / RAND_MAX , ( double )rand() / RAND_MAX );
@@ -55,4 +39,12 @@ void PureRandomSampler::GenerateUnitSquareSamples()
 			SamplePoints.push_back( samples );
 		}
 	}
+}
+
+void PureRandomSampler::ParseSampler( XMLElement* SamplerRootElement )
+{
+	SamplerRootElement->FirstChildElement( "SampleGroupCount" )->QueryIntText( &SampleGroupCount );
+	SamplerRootElement->FirstChildElement( "SampleCount" )->QueryIntText( &SampleCount );
+
+	SetProperty( SampleCount , SampleGroupCount );
 }

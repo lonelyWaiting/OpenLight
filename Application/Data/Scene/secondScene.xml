@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scene>
-	<spp>2000</spp>
+	<Renderer type="Sampler">
+		<spp>8</spp>
+	</Renderer>
+
 	<primitive>
-		<shape type="sphere">
+		<shape type="obj">
+			<filename>sphere.obj</filename>
 			<transform>
 				<position>
 					<x>0</x>
 					<y>0</y>
-					<z>30</z>
+					<z>10</z>
 				</position>
 			</transform>
 			<radius>5</radius>
 			<emmisive>
 				<r>0.0</r>
 				<g>0.0</g>
-				<b>0.0</b>
+				<b>1.0</b>
 			</emmisive>
 		</shape>
-		<shape type="sphere">
+		<shape type="obj">
+			<filename>sphere.obj</filename>
 			<transform>
 				<position>
-					<x>12</x>
+					<x>2</x>
 					<y>0</y>
-					<z>30</z>
+					<z>10</z>
 				</position>
 			</transform>
 			<radius>4</radius>
@@ -32,12 +37,13 @@
 				<b>0.0</b>
 			</emmisive>
 		</shape>
-		<shape type="sphere">
+		<shape type="obj">
+			<filename>sphere.obj</filename>
 			<transform>
 				<position>
-					<x>-12</x>
+					<x>-2</x>
 					<y>0</y>
-					<z>30</z>
+					<z>10</z>
 				</position>
 			</transform>
 			<radius>5</radius>
@@ -58,16 +64,15 @@
 
 	<Film>
 		<filename>result.ppm</filename>
-		<width>1920</width>
-		<height>1080</height>
+		<width>800</width>
+		<height>600</height>
 	</Film>
 
-	<Camera>
-		<type>Pinhole</type>
+	<Camera type="ThinLens">
 		<Position>
 			<x>0.0</x>
 			<y>0.0</y>
-			<z>-5.0</z>
+			<z>0.0</z>
 		</Position>
 		<Target>
 			<x>0.0</x>
@@ -84,8 +89,14 @@
 		<ExposureTime>0.0</ExposureTime>
 		<ViewDistance>1.0</ViewDistance>
 	</Camera>
+	
+	<Sampler type="PureRandom">
+		<SampleGroupCount>81</SampleGroupCount>
+		<SampleCount>60</SampleCount>
+	</Sampler>
 
 	<Integrator type="Whitted">
 		<MaxDepth>5</MaxDepth>
+		<SamplePathNumber>5</SamplePathNumber>
 	</Integrator>
 </scene>

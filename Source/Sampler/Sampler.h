@@ -11,24 +11,14 @@ class Sampler
 public:
 	Sampler();
 
-	Sampler( const int num );
-
-	Sampler( const int num , const int num_sets );
-
 	Sampler( const Sampler& s );
 
 	Sampler& operator = ( const Sampler& rhs );
 
-	virtual ~Sampler();
-
-	virtual Sampler* clone() const = 0;
-
 	virtual void GenerateUnitSquareSamples() = 0;
 
 public:
-	void SetNumSets( const int num );
-
-	int GetNumSamples();
+	void SetProperty( const int SampleCount , const int SampleGroupCount );
 
 protected:
 	void SetupShuffledIndices();
@@ -41,13 +31,16 @@ public:
 	CameraSample GetSamplePoint();
 
 public:
+	virtual void ParseSampler( XMLElement* SamplerRootElement ) = 0;
+
+public:
 	std::vector<int>			ShuffledIndices;					// 采样集的数目
 	unsigned long				SamplePos;							// 当前使用的采样点数目
 
 	std::vector<CameraSample*> SamplePoints;
 
-	int NumSamples;													// 每组采样点的采样点数目
-	int NumSets;													// 采样组数
+	int SampleCount;													// 每组采样点的采样点数目
+	int SampleGroupCount;													// 采样组数
 };
 
 typedef Sampler* SamplerPtr;

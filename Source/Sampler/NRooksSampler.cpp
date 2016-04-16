@@ -4,19 +4,7 @@
 NRooksSampler::NRooksSampler()
 	:Sampler()
 {
-	GenerateUnitSquareSamples();
-}
-
-NRooksSampler::NRooksSampler( const int num_samples )
-	: Sampler( num_samples )
-{
-	GenerateUnitSquareSamples();
-}
-
-NRooksSampler::NRooksSampler( const int num_samples , const int num_sets )
-	: Sampler( num_samples , num_sets )
-{
-	GenerateUnitSquareSamples();
+	
 }
 
 NRooksSampler::NRooksSampler( const NRooksSampler& rhs )
@@ -42,16 +30,11 @@ NRooksSampler::~NRooksSampler()
 
 }
 
-NRooksSampler* NRooksSampler::clone() const
-{
-	return ( new NRooksSampler( *this ) );
-}
-
 void NRooksSampler::GenerateUnitSquareSamples()
 {
-	for( int i = 0; i < NumSets; i++ )
+	for( int i = 0; i < SampleGroupCount; i++ )
 	{
-		for( int j = 0; j < NumSamples; j++ )
+		for( int j = 0; j < SampleCount; j++ )
 		{
 			CameraSample* samples = new CameraSample;
 			samples->ImageSamples = Point2f( ( double )rand() / RAND_MAX , ( double )rand() / RAND_MAX );
@@ -62,15 +45,15 @@ void NRooksSampler::GenerateUnitSquareSamples()
 		}
 	}
 
-	for( int i = 0; i < NumSets; i++ )
+	for( int i = 0; i < SampleGroupCount; i++ )
 	{
-		for( int j = 0; j < NumSamples; j++ )
+		for( int j = 0; j < SampleCount; j++ )
 		{
 			// 沿着对角线采样
 			CameraSample* samples = new CameraSample;
-			samples->ImageSamples = Point2f( ( j + ( double )rand() ) / ( double )NumSamples , ( j + ( double )rand() ) / ( double )NumSamples );
-			samples->LensSamples = Point2f( ( j + ( double )rand() ) / ( double )NumSamples , ( j + ( double )rand() ) / ( double )NumSamples );
-			samples->TimeSamples = ( j + ( double )rand() ) / ( double )NumSamples;
+			samples->ImageSamples = Point2f( ( j + ( double )rand() ) / ( double )SampleCount , ( j + ( double )rand() ) / ( double )SampleCount );
+			samples->LensSamples = Point2f( ( j + ( double )rand() ) / ( double )SampleCount , ( j + ( double )rand() ) / ( double )SampleCount );
+			samples->TimeSamples = ( j + ( double )rand() ) / ( double )SampleCount;
 
 			SamplePoints.push_back( samples );
 		}
@@ -81,4 +64,12 @@ void NRooksSampler::GenerateUnitSquareSamples()
 
 	// y方向随机排列
 	ShuffleYCoordinate();
+}
+
+void NRooksSampler::ParseSampler( XMLElement* SamplerRootElement )
+{
+	SamplerRootElement->FirstChildElement( "SampleGroupCount" )->QueryIntText( &SampleGroupCount );
+	SamplerRootElement->FirstChildElement( "SampleCount" )->QueryIntText( &SampleCount );
+
+	SetProperty( SampleCount , SampleGroupCount );
 }

@@ -28,7 +28,7 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 		// 光线方向的反方向为出射方向
 		Vector3f wo = -1.0f * ray->Direction;
 
-		for (int i = 0; i < 22; i++)
+		for (int i = 0; i < SamplePathNumber; i++)
 		{
 			double u0 = (double)rand() / (double)RAND_MAX;
 			double u1 = (double)rand() / (double)RAND_MAX;
@@ -38,14 +38,11 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 
 			if (Dot(normal, wi) < 0)
 			{
-				/*Vector3f n = Vector3f(normal.x, normal.y, normal.z);
-
-				wi = Normalize(wi + n * 2 * AbsDot(n, wi));*/
 				wi *= -1;
 			}
 
 			// 沿着法线方向的偏移量
-			Vector3f bias = Vector3f(normal.x * 1, normal.y * 1, normal.z * 1);
+			Vector3f bias = Vector3f(normal.x * EPSILON , normal.y * EPSILON , normal.z * EPSILON );
 
 			// 将光线沿着法线方向偏移
 			Ray r(record->HitPoint + bias , wi, *ray, 1e-3f , Infinity);
@@ -58,7 +55,7 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 			}
 		}
 
-		L /= 22.0f;
+		L /= 22.0;
 	}
 	
 	L += record->Emmisive;
@@ -73,6 +70,7 @@ void WhittedIntegrator::SetMaxRecusiveDepth( int maxdepth )
 
 void WhittedIntegrator::ParseIntegrator(XMLElement* IntegratorRootElement)
 {
-	XMLElement* MaxDepthElement = IntegratorRootElement->FirstChildElement("MaxDepth");
-	MaxDepthElement->QueryIntText(&MaxDepth);
+	IntegratorRootElement->FirstChildElement("MaxDepth")->QueryIntText( &MaxDepth );
+
+	IntegratorRootElement->FirstChildElement( "SamplePathNumber" )->QueryIntText( &SamplePathNumber );
 }

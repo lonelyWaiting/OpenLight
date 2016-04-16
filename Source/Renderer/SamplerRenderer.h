@@ -17,6 +17,10 @@ public:
 	virtual Spectrum Li(const Scene* scene,
 						Ray* ray ,
 						IntersectRecord* record = nullptr ) const;
+
+public:
+	void ParseRenderer( XMLElement* RendererRootElement );
+
 private:
 	Sampler* sampler;
 	Camera* camera;

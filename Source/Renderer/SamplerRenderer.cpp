@@ -30,15 +30,19 @@ void SamplerRenderer::Render( const Scene* scene )
 	int Width  = Resolution.x;
 	int Height = Resolution.y;
 
+	Spectrum L;
+
 	#ifndef _DEBUG
-#pragma omp parallel for schedule(dynamic)
+	#pragma omp parallel for schedule(dynamic , 1) private(L)
 	#endif
 
 	for( int iRow = 0; iRow < Height; iRow++ )
 	{
+		fprintf( stdout , "\rRendering: %1.0fspp %8.2f%%" , ( double )spp , ( double )iRow / ( double )Height * 100 );
+
 		for( int iCol = 0; iCol < Width; iCol++ )
 		{
-			Spectrum L( 0 );
+			L = Spectrum( 0 );
 
 			for( int i = 0; i < spp; i++ )
 			{
@@ -52,11 +56,15 @@ void SamplerRenderer::Render( const Scene* scene )
 			}
 			
 			L /= (double)spp;
+			double rgb[3];
+			L.ToRGB( rgb );
 
+			if( rgb[2] != 0 )
+			{
+				int a = 0;
+			}
 			camera->GetFilm()->SetColor( iRow , iCol , L );
 		}
-
-		std::cout << (double)(iRow + 1) / (double)Height << std::endl;
 	}
 
 	camera->GetFilm()->Display();
@@ -70,4 +78,9 @@ Spectrum SamplerRenderer::Li( const Scene* scene , Ray* ray , IntersectRecord* r
 	}
 
 	return Spectrum(0.0f);
+}
+
+void SamplerRenderer::ParseRenderer( XMLElement* RendererRootElement )
+{
+	RendererRootElement->FirstChildElement( "spp" )->QueryIntText( &spp );
 }

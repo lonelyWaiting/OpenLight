@@ -40,7 +40,7 @@ Spectrum PPMImage::GetColor( int row , int col ) const
 
 void PPMImage::Display()
 {
-	std::ofstream ofs( Filename );
+	std::ofstream ofs( Filename , std::ios::out | std::ios::binary );
 
 	ofs << "P6\n";
 	ofs << Width << ' ' << Height << '\n';
@@ -61,17 +61,17 @@ void PPMImage::Display()
 			igreen = ( unsigned int )( 255 * RGB[1] );
 			iblue  = ( unsigned int )( 255 * RGB[2] );
 
-			Clamp( ired   , 0 , 255 );
-			Clamp( igreen , 0 , 255 );
-			Clamp( iblue  , 0 , 255 );
+			Clamp( ired   , 1 , 255 );
+			Clamp( igreen , 1 , 255 );
+			Clamp( iblue  , 1 , 255 );
 
 			red   = ( unsigned char )( ired );
 			green = ( unsigned char )( igreen );
 			blue  = ( unsigned char )( iblue );
 
-			ofs.put( green );
-			ofs.put( blue );
-			ofs.put( red );
+			ofs << red << green << blue;
+
+			Log::Get().Info( "row : %d , col : %d , r : %d , g : %d , b : %d" , row , col , red , green , blue );
 		}
 	}
 }

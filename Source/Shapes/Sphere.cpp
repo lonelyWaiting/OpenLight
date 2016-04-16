@@ -60,19 +60,7 @@ bool Sphere::Intersect( Ray& r , IntersectRecord* record ) const
 			return false;
 		}
 	}
-
-	/*Vector3f v = r( t ) - m_Center;
-
-	if( v.Length() < m_Radius )
-	{
-		double length = v.Length();
-
-		Point3f v1 = r( t );
-
-		return false;
-	}*/
 	
-
 	r.MaxT = t;
 	record->HitT = t;
 	record->ObjectToWorld = *ObjectToWorld;

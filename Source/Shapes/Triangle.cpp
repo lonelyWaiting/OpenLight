@@ -31,7 +31,7 @@ void Triangle::Set( int _index0 , int _index1 , int _index2 )
 /*
 	传入的Ray位于Object Space
 */
-bool Triangle::Intersect( const Ray& ray , const Point3f* points , IntersectRecord* record ) const
+bool Triangle::Intersect( Ray& ray , const Point3f* points , IntersectRecord* record ) const
 {
 	Point3f p0 = points[index0];
 	Point3f p1 = points[index1];
@@ -71,6 +71,7 @@ bool Triangle::Intersect( const Ray& ray , const Point3f* points , IntersectReco
 
 	if( t >= ray.MinT && t <= ray.MaxT )
 	{
+		ray.MaxT = t;
 		record->HitT = t;
 		return true;
 	}

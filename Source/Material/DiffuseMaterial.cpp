@@ -5,10 +5,10 @@
 DiffuseMaterial::DiffuseMaterial(Spectrum Reflection)
 	:Material()
 {
-	R = Reflection;
+	brdf = new Lambertian( Reflection );
 }
 
 BxDF* DiffuseMaterial::GetBxDF(const Point3f& point, const Normal& normal) const
 {
-	return new Lambertian(R);
+	return brdf;
 }

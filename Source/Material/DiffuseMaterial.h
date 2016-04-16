@@ -10,5 +10,5 @@ public:
 	BxDF* GetBxDF(const Point3f& point, const Normal& normal) const;
 
 protected:
-	Spectrum R;
+	BxDF* brdf;
 };

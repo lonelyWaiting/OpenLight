@@ -22,17 +22,13 @@
 
 using namespace tinyxml2;
 
-void ParseScene( Scene* scene , Camera*& camera , int& spp )
+Renderer* ParseScene( Scene* scene , Camera*& camera , SurfaceIntegrator* pSurfaceIntegrator , Sampler* pSampler )
 {
 	FileSystem fs;
 	std::wstring SceneFilename = fs.GetSceneFolder() + L"secondScene.xml";
 
 	XMLDocument doc;
 	doc.LoadFile( srString::ToAscii( SceneFilename ).c_str() );
-
-	// --------------------------------------spp----------------------------------------------
-	XMLElement* sppElement = doc.FirstChildElement()->FirstChildElement("spp");
-	sppElement->QueryIntText(&spp);
 
 	// ----------------------------------Primitive---------------------------------------------
 	Primitive* primitive = new Primitive;
@@ -47,7 +43,7 @@ void ParseScene( Scene* scene , Camera*& camera , int& spp )
 
 	// ---------------------------------Camera---------------------------------------------
 	XMLElement* CameraElement = doc.FirstChildElement()->FirstChildElement( "Camera" );
-	const char* CameraType = CameraElement->FirstChildElement( "type" )->GetText();
+	const char* CameraType = CameraElement->FirstAttribute()->Value();
 	if( !std::strcmp( "ThinLens" , CameraType ) )
 	{
 		SAFE_DELETE( camera );
@@ -72,31 +68,75 @@ void ParseScene( Scene* scene , Camera*& camera , int& spp )
 	{
 		Assert( "don't support \'%s\' Camera" , CameraType );
 	}
+
+	// -----------------------------Integrator--------------------------------------
+	XMLElement* IntegratorRootElement = doc.FirstChildElement()->FirstChildElement( "Integrator" );
+	const char* IntegratorType = IntegratorRootElement->FirstAttribute()->Value();
+	if( !std::strcmp( "Whitted" , IntegratorType ) )
+	{
+		pSurfaceIntegrator = new WhittedIntegrator;
+		pSurfaceIntegrator->ParseIntegrator( IntegratorRootElement );
+	}
+	else
+	{
+		Assert( "don't support \'%s\' Integrator" , IntegratorType );
+	}
+
+	// --------------------------Sampler--------------------------------------------
+	XMLElement* SamplerRootElement = doc.FirstChildElement()->FirstChildElement( "Sampler" );
+	const char* SamplerType = SamplerRootElement->FirstAttribute()->Value();
+	if( !std::strcmp( "PureRandom" , SamplerType ) )
+	{
+		pSampler = new PureRandomSampler;
+		pSampler->ParseSampler( SamplerRootElement );
+	}
+	else if( !std::strcmp( "NRooks" , SamplerType ) )
+	{
+		pSampler = new NRooksSampler;
+		pSampler->ParseSampler( SamplerRootElement );
+	}
+	else
+	{
+		Assert( "don't support \'%s\' Sampler" , SamplerType );
+	}
+
+	// ----------------------Renderer----------------------------------------
+	XMLElement* RendererRootElement = doc.FirstChildElement()->FirstChildElement( "Renderer" );
+	const char* RendererType = RendererRootElement->FirstAttribute()->Value();
+	if( !std::strcmp( "Sampler" , RendererType ) )
+	{
+		Renderer* renderer = new SamplerRenderer( pSampler , camera , pSurfaceIntegrator );
+
+		renderer->ParseRenderer( RendererRootElement );
+
+		return renderer;
+	}
+	else
+	{
+		Assert( "don't support \'%s\' Renderer" , RendererType );
+	}
+
+	return nullptr;
 }
 
 int main( void )
 {	
-	srand(13);
+	srand( ( unsigned int )time( NULL ) );
 
 	Scene* scene = new Scene;
 
 	Camera* camera = nullptr;
 
-	int spp = 8;
+	SurfaceIntegrator* pSurfaceIntegrator = nullptr;
 
-	/*WhittedIntegrator* pIntegrator = nullptr;*/
+	Sampler* pSampler = nullptr;
 
-	ParseScene( scene , camera , spp );
+	Renderer* renderer = ParseScene( scene , camera , pSurfaceIntegrator , pSampler);
 
-	/*PureRandomSampler* RandomSampler = new PureRandomSampler;*/
-	
-	NRooksSampler* nRooksSampler = new NRooksSampler;
-
-	WhittedIntegrator* pIntegrator = new WhittedIntegrator;
-	pIntegrator->SetMaxRecusiveDepth( 5 );
-	SamplerRenderer* renderer = new SamplerRenderer(nRooksSampler, camera, pIntegrator, spp);
-
-	renderer->Render( scene );
+	if( renderer != nullptr )
+	{
+		renderer->Render( scene );
+	}
 
 	return 0;
 }

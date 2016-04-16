@@ -3,39 +3,14 @@
 
 Sampler::Sampler()
 {
-	NumSamples = 1;
-	NumSets = 83;
-	SamplePos = 0;
 
-	SetupShuffledIndices();
-}
-
-Sampler::Sampler( const int num )
-{
-	NumSamples = num;
-
-	NumSets = 83;
-
-	SamplePos = 0;
-
-	SetupShuffledIndices();
-}
-
-Sampler::Sampler( const int num , const int SetNum )
-{
-	NumSamples = num;
-	NumSets = SetNum;
-
-	SamplePos = 0;
-
-	SetupShuffledIndices();
 }
 
 Sampler::Sampler( const Sampler& s )
 {
-	NumSamples = s.NumSamples;
+	SampleCount = s.SampleCount;
 
-	NumSets = s.NumSets;
+	SampleGroupCount = s.SampleGroupCount;
 
 	SamplePoints = s.SamplePoints;
 
@@ -51,45 +26,40 @@ Sampler& Sampler::operator = ( const Sampler& rhs )
 		return *this;
 	}
 
-	NumSamples = rhs.NumSamples;
-	NumSets = rhs.NumSets;
+	SampleCount = rhs.SampleCount;
+	SampleGroupCount = rhs.SampleGroupCount;
 	SamplePoints = rhs.SamplePoints;
 	ShuffledIndices = rhs.ShuffledIndices;
 	SamplePos = rhs.SamplePos;
 }
 
-Sampler::~Sampler()
+void Sampler::SetProperty( const int _SampleCount , const int _SampleGroupCount )
 {
+	SampleCount = _SampleCount;
+	SampleGroupCount = _SampleGroupCount;
 
-}
+	SetupShuffledIndices();
 
-void Sampler::SetNumSets( const int Nums )
-{
-	NumSets = Nums;
-}
-
-int Sampler::GetNumSamples()
-{
-	return NumSamples;
+	GenerateUnitSquareSamples();
 }
 
 void Sampler::SetupShuffledIndices()
 {
-	ShuffledIndices.reserve( NumSets * NumSamples );
+	ShuffledIndices.reserve( SampleGroupCount * SampleCount );
 	std::vector<int> Indices;
 
-	for( int j = 0; j < NumSamples; j++ )
+	for( int j = 0; j < SampleCount; j++ )
 	{
 		Indices.push_back( j );
 	}
 
 	// ShuffledIndices中存放了NumSets组采样点集
 	// 每个采样点集中的值为0~NumSamples的一个随机排列
-	for( int i = 0; i < NumSets; i++ )
+	for( int i = 0; i < SampleGroupCount; i++ )
 	{
 		random_shuffle( Indices.begin() , Indices.end() );
 
-		for( int j = 0; j < NumSamples; j++ )
+		for( int j = 0; j < SampleCount; j++ )
 		{
 			ShuffledIndices.push_back( Indices[j] );
 		}
@@ -98,26 +68,26 @@ void Sampler::SetupShuffledIndices()
 
 void Sampler::ShuffleXCoordinate()
 {
-	for( int i = 0; i < NumSets; i++ )
+	for( int i = 0; i < SampleGroupCount; i++ )
 	{
-		for( int j = 0; j < NumSamples - 1; j++ )
+		for( int j = 0; j < SampleCount - 1; j++ )
 		{
-			int target = i * NumSamples + rand() % NumSamples;
+			int target = i * SampleCount + rand() % SampleCount;
 
-			double temp = SamplePoints[i * NumSamples + j + 1]->ImageSamples.x;
-			SamplePoints[i * NumSamples + j + 1]->ImageSamples.x = SamplePoints[target]->ImageSamples.x;
+			double temp = SamplePoints[i * SampleCount + j + 1]->ImageSamples.x;
+			SamplePoints[i * SampleCount + j + 1]->ImageSamples.x = SamplePoints[target]->ImageSamples.x;
 			SamplePoints[target]->ImageSamples.x = temp;
 		}
 	}
 
-	for( int i = 0; i < NumSets; i++ )
+	for( int i = 0; i < SampleGroupCount; i++ )
 	{
-		for( int j = 0; j < NumSamples - 1; j++ )
+		for( int j = 0; j < SampleCount - 1; j++ )
 		{
-			int target = i * NumSamples + rand() % NumSamples;
+			int target = i * SampleCount + rand() % SampleCount;
 
-			double temp = SamplePoints[i * NumSamples + j + 1]->LensSamples.x;
-			SamplePoints[i * NumSamples + j + 1]->LensSamples.x = SamplePoints[target]->LensSamples.x;
+			double temp = SamplePoints[i * SampleCount + j + 1]->LensSamples.x;
+			SamplePoints[i * SampleCount + j + 1]->LensSamples.x = SamplePoints[target]->LensSamples.x;
 			SamplePoints[target]->LensSamples.x = temp;
 		}
 	}
@@ -125,25 +95,25 @@ void Sampler::ShuffleXCoordinate()
 
 void Sampler::ShuffleYCoordinate()
 {
-	for( int i = 0; i < NumSets; i++ )
+	for( int i = 0; i < SampleGroupCount; i++ )
 	{
-		for( int j = 0; j < NumSamples - 1; j++ )
+		for( int j = 0; j < SampleCount - 1; j++ )
 		{
-			int target = i * NumSamples + rand() % NumSamples;
-			double temp = SamplePoints[i * NumSamples + j + 1]->ImageSamples.y;
-			SamplePoints[i * NumSamples + j + 1]->ImageSamples.y = SamplePoints[target]->ImageSamples.y;
+			int target = i * SampleCount + rand() % SampleCount;
+			double temp = SamplePoints[i * SampleCount + j + 1]->ImageSamples.y;
+			SamplePoints[i * SampleCount + j + 1]->ImageSamples.y = SamplePoints[target]->ImageSamples.y;
 			SamplePoints[target]->ImageSamples.y = temp;
 		}
 	}
 
-	for( int i = 0; i < NumSets; i++ )
+	for( int i = 0; i < SampleGroupCount; i++ )
 	{
-		for( int j = 0; j < NumSamples - 1; j++ )
+		for( int j = 0; j < SampleCount - 1; j++ )
 		{
-			int target = i * NumSamples + rand() % NumSamples;
+			int target = i * SampleCount + rand() % SampleCount;
 
-			double temp = SamplePoints[i * NumSamples + j + 1]->LensSamples.y;
-			SamplePoints[i * NumSamples + j + 1]->LensSamples.y = SamplePoints[target]->LensSamples.y;
+			double temp = SamplePoints[i * SampleCount + j + 1]->LensSamples.y;
+			SamplePoints[i * SampleCount + j + 1]->LensSamples.y = SamplePoints[target]->LensSamples.y;
 			SamplePoints[target]->LensSamples.y = temp;
 		}
 	}
@@ -154,10 +124,12 @@ CameraSample Sampler::GetSamplePoint()
 {
 	int Jump = 0;
 
-	if( SamplePos % NumSamples == 0 )
+	if( SamplePos % SampleCount == 0 )
 	{
-		Jump = ( rand() % NumSets ) * NumSamples;
+		Jump = ( rand() % SampleGroupCount ) * SampleCount;
 	}
 
-	return *SamplePoints[Jump + ShuffledIndices[Jump + ( SamplePos++ % NumSamples )]];
+	SamplePos = ( SamplePos + 1 ) % SampleCount;
+
+	return *SamplePoints[Jump + ShuffledIndices[Jump + SamplePos]];
 }

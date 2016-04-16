@@ -43,13 +43,13 @@ bool TriangleMesh::Intersect( Ray& ray , IntersectRecord* record ) const
 	{
 		if( triangles[i].Intersect( r , points , record ) )
 		{
-			r.MaxT = record->HitT;
 			bHitIndex = i;
 		}
 	}
 
 	if( bHitIndex != -1 )
 	{
+		ray.MaxT = r.MaxT;
 		record->ObjectToWorld = *ObjectToWorld;
 		record->WorldToObject = *WorldToObject;
 		record->normal = normals[3 * bHitIndex];
@@ -93,9 +93,9 @@ void TriangleMesh::ParseShape( XMLElement* ShapeRootElement )
 
 	double r , g , b;
 	XMLElement* ShapeEmmisiveElement = ShapeRootElement->FirstChildElement( "emmisive" );
-	ShapeTransformElement->FirstChildElement( "r" )->QueryDoubleText( &r );
-	ShapeTransformElement->FirstChildElement( "g" )->QueryDoubleText( &g );
-	ShapeTransformElement->FirstChildElement( "b" )->QueryDoubleText( &b );
+	ShapeEmmisiveElement->FirstChildElement( "r" )->QueryDoubleText( &r );
+	ShapeEmmisiveElement->FirstChildElement( "g" )->QueryDoubleText( &g );
+	ShapeEmmisiveElement->FirstChildElement( "b" )->QueryDoubleText( &b );
 
 	emmisive = Spectrum::FromRGB( r , g , b );
 
