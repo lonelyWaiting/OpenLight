@@ -15,6 +15,7 @@
 #include "Integrator/WhittedIntegrator.h"
 #include "BRDF/Lambertian.h"
 #include "Light/PointLight.h"
+#include "Accelerator/Grid.h"
 #include "tinyxml2.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -33,13 +34,13 @@ Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrat
 	// ----------------------------------Primitive---------------------------------------------
 	Primitive* primitive = new Primitive;
 	XMLElement* PrimitiveElement = doc.FirstChildElement()->FirstChildElement( "primitive" );
-	primitive->DeserializationPrimitive( PrimitiveElement );
+	primitive->Deserialization( PrimitiveElement );
 	scene->AddObject( *primitive );
 
 	// ---------------------------------Film---------------------------------------------
 	Film* film = new Film();
 	XMLElement* FilmElement = doc.FirstChildElement()->FirstChildElement( "Film" );
-	film->DeserializationFilm( FilmElement );
+	film->Deserialization( FilmElement );
 
 	// ---------------------------------Camera---------------------------------------------
 	XMLElement* CameraElement = doc.FirstChildElement()->FirstChildElement( "Camera" );
@@ -52,7 +53,7 @@ Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrat
 
 		camera->SetFilm( film );
 
-		camera->DeserializationCamera( CameraElement );	
+		camera->Deserialization( CameraElement );	
 	}
 	else if( !std::strcmp( "Pinhole" , CameraType ) )
 	{
@@ -62,7 +63,7 @@ Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrat
 
 		camera->SetFilm( film );
 
-		camera->DeserializationCamera( CameraElement );
+		camera->Deserialization( CameraElement );
 	}
 	else
 	{
@@ -75,7 +76,7 @@ Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrat
 	if( !std::strcmp( "Whitted" , IntegratorType ) )
 	{
 		pSurfaceIntegrator = new WhittedIntegrator;
-		pSurfaceIntegrator->DeserializationIntegrator( IntegratorRootElement );
+		pSurfaceIntegrator->Deserialization( IntegratorRootElement );
 	}
 	else
 	{
@@ -88,12 +89,12 @@ Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrat
 	if( !std::strcmp( "PureRandom" , SamplerType ) )
 	{
 		pSampler = new PureRandomSampler;
-		pSampler->DeserializationSampler( SamplerRootElement );
+		pSampler->Deserialization( SamplerRootElement );
 	}
 	else if( !std::strcmp( "NRooks" , SamplerType ) )
 	{
 		pSampler = new NRooksSampler;
-		pSampler->DeserializationSampler( SamplerRootElement );
+		pSampler->Deserialization( SamplerRootElement );
 	}
 	else
 	{
@@ -107,7 +108,7 @@ Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrat
 	{
 		Renderer* renderer = new SamplerRenderer( pSampler , camera , pSurfaceIntegrator );
 
-		renderer->DeserializationRenderer( RendererRootElement );
+		renderer->Deserialization( RendererRootElement );
 
 		return renderer;
 	}
@@ -132,6 +133,9 @@ int main( void )
 	Sampler* pSampler = nullptr;
 
 	Renderer* renderer = DeserializationScene( scene , camera , pSurfaceIntegrator , pSampler);
+
+	Grid* pGrid = new Grid;
+	pGrid->Setup( scene );
 
 	if( renderer != nullptr )
 	{

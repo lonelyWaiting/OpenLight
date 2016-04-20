@@ -11,10 +11,10 @@ void VisibilityTester::SetSegment( const Point3f& p1 , double eps1 , const Point
 
 bool VisibilityTester::Unoccluded( const Scene* scene ) const
 {
-	if( !scene->IntersectP( r ) )
+	/*if( !scene->IntersectP( r ) )
 	{
 		return true;
-	}
+	}*/
 
 	return false;
 }

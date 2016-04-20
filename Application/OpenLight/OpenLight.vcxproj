@@ -64,6 +64,7 @@
     <ClCompile Include="..\..\Source\Sampler\PureRandomSampler.cpp" />
     <ClCompile Include="..\..\Source\Sampler\Sampler.cpp" />
     <ClCompile Include="..\..\Source\Sampler\Sampling.cpp" />
+    <ClCompile Include="..\..\Source\Shapes\AggregateShape.cpp" />
     <ClCompile Include="..\..\Source\Shapes\ModelParser.cpp" />
     <ClCompile Include="..\..\Source\Shapes\Shape.cpp" />
     <ClCompile Include="..\..\Source\Shapes\Sphere.cpp" />
@@ -127,6 +128,7 @@
     <ClInclude Include="..\..\Source\Sampler\PureRandomSampler.h" />
     <ClInclude Include="..\..\Source\Sampler\Sampler.h" />
     <ClInclude Include="..\..\Source\Sampler\Sampling.h" />
+    <ClInclude Include="..\..\Source\Shapes\AggregateShape.h" />
     <ClInclude Include="..\..\Source\Shapes\ModelParser.h" />
     <ClInclude Include="..\..\Source\Shapes\Shape.h" />
     <ClInclude Include="..\..\Source\Shapes\Sphere.h" />

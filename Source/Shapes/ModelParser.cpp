@@ -10,9 +10,9 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-#include "ModelDeserializationr.h"
+#include "ModelParser.h"
 
-void ModelDeserializationr( const std::string& filename , Point3f*& points , Normal*& normals , Triangle*& triangles , int& VertexCount , int& FaceCount )
+void ModelParse( const std::string& filename , Point3f*& points , Normal*& normals , Triangle*& triangles , int& VertexCount , int& FaceCount )
 {
 	FileSystem fs;
 	std::wstring name = fs.GetModelFolder() + srString::ToUnicode( filename );

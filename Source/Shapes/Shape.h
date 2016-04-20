@@ -30,7 +30,5 @@ public:
 	Transform*	ObjectToWorld;
 	Transform*	WorldToObject;
 	Spectrum	emmisive;
-	Bound3f		BBoxLocal;
-	Bound3f		BBoxWorld;
 	bool		bCombination;			// 是否由其它shape组成
 };

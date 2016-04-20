@@ -219,6 +219,9 @@
     <ClCompile Include="..\..\Source\Core\VIntersectable.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Shapes\AggregateShape.cpp">
+      <Filter>Shapes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Math\Matrix3.h">
@@ -388,6 +391,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Core\VIntersectable.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Shapes\AggregateShape.h">
+      <Filter>Shapes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

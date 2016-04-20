@@ -80,7 +80,7 @@ Spectrum SamplerRenderer::Li( const Scene* scene , Ray* ray , IntersectRecord* r
 	return Spectrum(0.0f);
 }
 
-void SamplerRenderer::DeserializationRenderer( XMLElement* RendererRootElement )
+void SamplerRenderer::Deserialization( XMLElement* RendererRootElement )
 {
 	RendererRootElement->FirstChildElement( "spp" )->QueryIntText( &spp );
 }

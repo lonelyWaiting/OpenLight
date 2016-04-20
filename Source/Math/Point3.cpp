@@ -106,7 +106,7 @@ Point3f& Point3f::operator /= ( double f )
 
 double Point3f::operator[] ( int index ) const
 {
-	assert( index >= 1 && index <= 2 );
+	assert( index >= 0 && index <= 2 );
 
 	if( index == 0 )	return x;
 

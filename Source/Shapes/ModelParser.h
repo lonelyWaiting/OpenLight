@@ -7,4 +7,4 @@ class Normal;
 class Point2f;
 class Triangle;
 
-void ModelDeserializationr( const std::string& filename , Point3f*& points , Normal*& normals , Triangle*& traingles , int& VertexCount , int& FaceCount );
+void ModelParse( const std::string& filename , Point3f*& points , Normal*& normals , Triangle*& traingles , int& VertexCount , int& FaceCount );

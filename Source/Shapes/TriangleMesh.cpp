@@ -87,7 +87,7 @@ void TriangleMesh::Deserialization( XMLElement* ShapeRootElement )
 	emmisive = Spectrum::FromRGB( r , g , b );
 
 	// ½âÎöOBJÄ£ÐÍ
-	ModelDeserializationr( filename , points , normals , triangles , VertexNum , TriangleCount );
+	ModelParse( filename , points , normals , triangles , VertexNum , TriangleCount );
 
 	for( int i = 0; i < TriangleCount; i++ )
 	{

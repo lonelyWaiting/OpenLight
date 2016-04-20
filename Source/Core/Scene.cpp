@@ -53,5 +53,5 @@ int Scene::GetObjectCount() const
 
 const Primitive& Scene::GetPrimitive( int index ) const
 {
-	return Objects[i];
+	return Objects[index];
 }
