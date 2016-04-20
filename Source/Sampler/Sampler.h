@@ -31,7 +31,7 @@ public:
 	CameraSample GetSamplePoint();
 
 public:
-	virtual void ParseSampler( XMLElement* SamplerRootElement ) = 0;
+	virtual void Deserialization( XMLElement* SamplerRootElement ) = 0;
 
 public:
 	std::vector<int>			ShuffledIndices;					// 采样集的数目

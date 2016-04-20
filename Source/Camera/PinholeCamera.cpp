@@ -31,7 +31,7 @@ Ray PinholeCamera::GenerateRay( double RasterX , double RasterY , const CameraSa
 	return Ray( Eye , Normalize( dir ) , 1e-3f );
 }
 
-void PinholeCamera::ParseCamera( XMLElement* CameraRootElement )
+void PinholeCamera::Deserialization( XMLElement* CameraRootElement )
 {
 	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "x" )->QueryDoubleText( &( Eye.x ) );
 	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "y" )->QueryDoubleText( &( Eye.y ) );

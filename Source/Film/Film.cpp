@@ -70,7 +70,7 @@ Vector2f Film::GetResolution() const
 	return Vector2f( Width , Height );
 }
 
-void Film::ParseFilm( const XMLElement* FilmRootElement )
+void Film::Deserialization( const XMLElement* FilmRootElement )
 {
 	// ---------------------------------Film---------------------------------------------
 	Filename = new char[20];

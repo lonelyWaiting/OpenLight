@@ -5,8 +5,9 @@
 #include "Math/Ray.h"
 #include "Light/Light.h"
 #include "Spectrum/Spectrum.h"
+#include "VObject.h"
 
-class Scene
+class Scene : public VObject , public VIntersectable
 {
 public:
 	Scene();
@@ -15,15 +16,17 @@ public:
 	
 	void AddLight( Light* light );
 
-	/*Spectrum Trace( const Ray& ray ) const;*/
-
-	// 相交计算，将相交信息保存在IntersectRecord中
-	bool Intersect( const Ray& ray , IntersectRecord* record ) const;
-
-	// 相交测试，只判断是否相交，并不保存相交信息
-	bool IntersectP( const Ray& ray ) const;
+	const Primitive& GetPrimitive( int index ) const;
 
 	const std::vector<Light*>& GetLights() const;
+
+	bool Intersect( const Ray& ray , IntersectRecord* record ) const;
+
+public:
+	virtual void Deserialization( XMLElement* RootElement );
+
+public:
+	int GetObjectCount() const;
 
 protected:
 	std::vector<Primitive> Objects;

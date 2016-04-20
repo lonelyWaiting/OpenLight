@@ -10,18 +10,19 @@ class TriangleMesh : public Shape
 public:
 	TriangleMesh();
 
-	TriangleMesh( const Transform* ObjectToWorld , const Transform* WorldToObject , Point3f* _points , Normal* _normals , int _TriangleCount );
+	TriangleMesh( const Transform* ObjectToWorld ,  Point3f* _points , Normal* _normals , Triangle* _triangles , int _VertexNum , int _TriangleCount );
 
 	~TriangleMesh();
 
-	Bound3f ObjectBound() const;
-
 	bool Intersect( Ray& ray , IntersectRecord* record ) const;
 
-	bool IntersectP( const Ray& ray ) const;
+public:
+	void Deserialization( XMLElement* ShapeRootElement );
 
 public:
-	void ParseShape( XMLElement* ShapeRootElement );
+	int GetSubShapeCount() const;
+
+	Shape* GetSubShape( int index ) const;
 
 private:
 	Point3f * points;
@@ -29,4 +30,6 @@ private:
 	Triangle* triangles;
 	int		  VertexNum;
 	int		  TriangleCount;
+
+	friend class Triangle;
 };

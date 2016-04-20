@@ -23,7 +23,7 @@ public:
 	Ray GenerateRay( double RasterX , double RasterY , const CameraSample& SamplePoint );
 
 public:
-	void ParseCamera( XMLElement* CameraRootElement );
+	void Deserialization( XMLElement* CameraRootElement );
 
 private:
 	double LensRadius;			// Í¸¾µ°ë¾¶

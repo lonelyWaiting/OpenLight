@@ -22,7 +22,7 @@
 
 using namespace tinyxml2;
 
-Renderer* ParseScene( Scene* scene , Camera*& camera , SurfaceIntegrator* pSurfaceIntegrator , Sampler* pSampler )
+Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrator* pSurfaceIntegrator , Sampler* pSampler )
 {
 	FileSystem fs;
 	std::wstring SceneFilename = fs.GetSceneFolder() + L"secondScene.xml";
@@ -33,13 +33,13 @@ Renderer* ParseScene( Scene* scene , Camera*& camera , SurfaceIntegrator* pSurfa
 	// ----------------------------------Primitive---------------------------------------------
 	Primitive* primitive = new Primitive;
 	XMLElement* PrimitiveElement = doc.FirstChildElement()->FirstChildElement( "primitive" );
-	primitive->ParsePrimitive( PrimitiveElement );
+	primitive->DeserializationPrimitive( PrimitiveElement );
 	scene->AddObject( *primitive );
 
 	// ---------------------------------Film---------------------------------------------
 	Film* film = new Film();
 	XMLElement* FilmElement = doc.FirstChildElement()->FirstChildElement( "Film" );
-	film->ParseFilm( FilmElement );
+	film->DeserializationFilm( FilmElement );
 
 	// ---------------------------------Camera---------------------------------------------
 	XMLElement* CameraElement = doc.FirstChildElement()->FirstChildElement( "Camera" );
@@ -52,7 +52,7 @@ Renderer* ParseScene( Scene* scene , Camera*& camera , SurfaceIntegrator* pSurfa
 
 		camera->SetFilm( film );
 
-		camera->ParseCamera( CameraElement );	
+		camera->DeserializationCamera( CameraElement );	
 	}
 	else if( !std::strcmp( "Pinhole" , CameraType ) )
 	{
@@ -62,7 +62,7 @@ Renderer* ParseScene( Scene* scene , Camera*& camera , SurfaceIntegrator* pSurfa
 
 		camera->SetFilm( film );
 
-		camera->ParseCamera( CameraElement );
+		camera->DeserializationCamera( CameraElement );
 	}
 	else
 	{
@@ -75,7 +75,7 @@ Renderer* ParseScene( Scene* scene , Camera*& camera , SurfaceIntegrator* pSurfa
 	if( !std::strcmp( "Whitted" , IntegratorType ) )
 	{
 		pSurfaceIntegrator = new WhittedIntegrator;
-		pSurfaceIntegrator->ParseIntegrator( IntegratorRootElement );
+		pSurfaceIntegrator->DeserializationIntegrator( IntegratorRootElement );
 	}
 	else
 	{
@@ -88,12 +88,12 @@ Renderer* ParseScene( Scene* scene , Camera*& camera , SurfaceIntegrator* pSurfa
 	if( !std::strcmp( "PureRandom" , SamplerType ) )
 	{
 		pSampler = new PureRandomSampler;
-		pSampler->ParseSampler( SamplerRootElement );
+		pSampler->DeserializationSampler( SamplerRootElement );
 	}
 	else if( !std::strcmp( "NRooks" , SamplerType ) )
 	{
 		pSampler = new NRooksSampler;
-		pSampler->ParseSampler( SamplerRootElement );
+		pSampler->DeserializationSampler( SamplerRootElement );
 	}
 	else
 	{
@@ -107,7 +107,7 @@ Renderer* ParseScene( Scene* scene , Camera*& camera , SurfaceIntegrator* pSurfa
 	{
 		Renderer* renderer = new SamplerRenderer( pSampler , camera , pSurfaceIntegrator );
 
-		renderer->ParseRenderer( RendererRootElement );
+		renderer->DeserializationRenderer( RendererRootElement );
 
 		return renderer;
 	}
@@ -131,7 +131,7 @@ int main( void )
 
 	Sampler* pSampler = nullptr;
 
-	Renderer* renderer = ParseScene( scene , camera , pSurfaceIntegrator , pSampler);
+	Renderer* renderer = DeserializationScene( scene , camera , pSurfaceIntegrator , pSampler);
 
 	if( renderer != nullptr )
 	{

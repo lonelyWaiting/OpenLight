@@ -45,7 +45,7 @@ public:
 	virtual void UpdateProperty();
 
 public:
-	virtual void ParseCamera( XMLElement* CameraRootElement ) = 0;
+	virtual void Deserialization( XMLElement* CameraRootElement ) = 0;
 
 protected:
 	Point3f		Eye;						// 相机中心

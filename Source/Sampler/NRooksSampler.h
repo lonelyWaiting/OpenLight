@@ -14,7 +14,7 @@ public:
 	virtual ~NRooksSampler();
 
 public:
-	virtual void ParseSampler( XMLElement* SamplerRootElement );
+	virtual void Deserialization( XMLElement* SamplerRootElement );
 
 private:
 	virtual void GenerateUnitSquareSamples();

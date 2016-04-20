@@ -66,7 +66,7 @@ void NRooksSampler::GenerateUnitSquareSamples()
 	ShuffleYCoordinate();
 }
 
-void NRooksSampler::ParseSampler( XMLElement* SamplerRootElement )
+void NRooksSampler::Deserialization( XMLElement* SamplerRootElement )
 {
 	SamplerRootElement->FirstChildElement( "SampleGroupCount" )->QueryIntText( &SampleGroupCount );
 	SamplerRootElement->FirstChildElement( "SampleCount" )->QueryIntText( &SampleCount );

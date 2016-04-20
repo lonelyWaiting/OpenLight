@@ -9,38 +9,15 @@ Scene::Scene()
 void Scene::AddObject( Primitive& prim )
 {
 	Objects.push_back( prim );
+
+	BBoxLocal.ExpendToInclude( prim.GetObjectBoundingBox() );
+	BBoxWorld.ExpendToInclude( prim.GetWorldBoundingBox() );
 }
 
 void Scene::AddLight( Light* light )
 {
 	lights.push_back( light );
 }
-
-//Spectrum Scene::Trace( const Ray& ray ) const
-//{
-//	int size = Objects.size();
-//
-//	IntersectRecord record;
-//
-//	double MaxT = ray.MaxT;
-//
-//	bool bHit = false;
-//
-//	Ray r( ray.Origin , ray.Direction , ray.MinT , ray.MaxT , ray.time , ray.depth );
-//
-//	for( int i = 0; i < size; i++ )
-//	{
-//		// 对每个物体进行相交测试
-//		if( Objects[i].Intersect( r , &record ) )
-//		{
-//			if( record.HitT < r.MaxT )
-//			{
-//				r.MaxT = record.HitT;
-//				bHit = true;
-//			}
-//		}
-//	}
-//}
 
 bool Scene::Intersect( const Ray& ray , IntersectRecord* record ) const
 {
@@ -59,25 +36,22 @@ bool Scene::Intersect( const Ray& ray , IntersectRecord* record ) const
 	return bHit;
 }
 
-bool Scene::IntersectP( const Ray& ray ) const
-{
-	bool bHit = false;
-
-	Ray r( ray.Origin , ray.Direction , ray.MinT , ray.MaxT , ray.time , ray.depth );
-
-	for( int i = 0; i < Objects.size(); i++ )
-	{
-		if( Objects[i].IntersectP( r ) )
-		{
-			bHit = true;
-			break;
-		}
-	}
-
-	return bHit;
-}
-
 const std::vector<Light*>& Scene::GetLights() const
 {
 	return lights;
+}
+
+void Scene::Deserialization( XMLElement* RootElement )
+{
+
+}
+
+int Scene::GetObjectCount() const
+{
+	return Objects.size();
+}
+
+const Primitive& Scene::GetPrimitive( int index ) const
+{
+	return Objects[i];
 }

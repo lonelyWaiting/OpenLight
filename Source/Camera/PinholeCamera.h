@@ -10,5 +10,5 @@ public:
 public:
 	Ray GenerateRay( double RasterX , double RasterY , const CameraSample& SamplePoint );
 
-	void ParseCamera( XMLElement* CameraRootElement );
+	void Deserialization( XMLElement* CameraRootElement );
 };

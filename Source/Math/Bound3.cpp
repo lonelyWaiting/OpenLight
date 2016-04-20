@@ -87,6 +87,17 @@ void Bound3f::ExpendToInclude( const Point3f& p )
 	pMax.z = std::max( pMax.z , p.z );
 }
 
+void Bound3f::ExpendToInclude( const Bound3f& bbox )
+{
+	pMin.x = std::min( pMin.x , bbox.pMin.x );
+	pMin.y = std::min( pMin.y , bbox.pMin.y );
+	pMin.z = std::min( pMin.z , bbox.pMin.z );
+
+	pMax.x = std::max( pMax.x , bbox.pMax.x );
+	pMax.y = std::max( pMax.y , bbox.pMax.y );
+	pMax.z = std::max( pMax.z , bbox.pMax.z );
+}
+
 bool Inside( const Point3f& pt , const Bound3f& b )
 {
 	return ( pt.x >= b.pMin.x && pt.x <= b.pMax.x && pt.y >= b.pMin.y && pt.y <= b.pMax.y && pt.z >= b.pMin.z && pt.z <= b.pMax.z );

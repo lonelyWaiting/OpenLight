@@ -6,8 +6,10 @@
 #include "Shapes/Shape.h"
 #include "Spectrum/Spectrum.h"
 #include "Material/Material.h"
+#include "Core/VObject.h"
+#include "Core/VIntersectable.h"
 
-class Primitive
+class Primitive : public VObject , public VIntersectable
 {
 public:
 	Primitive();
@@ -16,16 +18,18 @@ public:
 
 	virtual bool Intersect( Ray& r , IntersectRecord* record ) const;
 
-	virtual bool IntersectP( const Ray& r ) const;
-
 	void SetShape( Shape* _shape );
+
+	Shape* GetShape( int index );
+
+	int GetShapeCount() const;
 
 	BxDF* GetBxDF( const Point3f& point , const Normal& normal ) const;
 
 	void SetMaterial(Material* material);
 
 public:
-	void ParsePrimitive( XMLElement* PrimitiveRootElment );
+	void Deserialization( XMLElement* PrimitiveRootElment );
 
 protected:
 	std::vector<Shape*> shapes;

@@ -7,29 +7,33 @@
 
 TriangleMesh::TriangleMesh()
 {
-
+	points        = nullptr;
+	normals       = nullptr;
+	triangles     = nullptr;
+	TriangleCount = 0;
+	VertexNum     = 0;
+	bCombination  = true;
 }
 
-TriangleMesh::TriangleMesh( const Transform* ObjectToWorld , const Transform* WorldToObject , Point3f* _points , Normal* _normals , int _TriangleCount )
+TriangleMesh::TriangleMesh( const Transform* ObjectToWorld , Point3f* _points , Normal* _normals , Triangle* _triangles , int _VertexNum , int _TriangleCount )
+	: Shape( ObjectToWorld )
+	, points( _points )
+	, normals( _normals )
+	, triangles( _triangles )
+	, VertexNum( _VertexNum )
+	, TriangleCount( _TriangleCount )
 {
+	for( int i = 0; i < VertexNum; i++ )
+	{
+		BBoxLocal.ExpendToInclude( points[i] );
+	}
 
+	BBoxWorld = ( *ObjectToWorld )( BBoxLocal );
 }
 
 TriangleMesh::~TriangleMesh()
 {
 
-}
-
-Bound3f TriangleMesh::ObjectBound() const
-{
-	Bound3f bbox;
-
-	for( int i = 0; i < VertexNum; i++ )
-	{
-		bbox.ExpendToInclude( points[i] );
-	}
-
-	return bbox;
 }
 
 bool TriangleMesh::Intersect( Ray& ray , IntersectRecord* record ) const
@@ -41,7 +45,7 @@ bool TriangleMesh::Intersect( Ray& ray , IntersectRecord* record ) const
 
 	for( int i = 0; i < TriangleCount; i++ )
 	{
-		if( triangles[i].Intersect( r , points , record ) )
+		if( triangles[i].Intersect( r , record ) )
 		{
 			bHitIndex = i;
 		}
@@ -59,24 +63,7 @@ bool TriangleMesh::Intersect( Ray& ray , IntersectRecord* record ) const
 	return false;
 }
 
-bool TriangleMesh::IntersectP( const Ray& ray ) const
-{
-	Ray r = ( *WorldToObject )( ray );
-
-	bool bHit = false;
-
-	for( int i = 0; i < TriangleCount; i++ )
-	{
-		if( triangles[i].IntersectP( r , points ) )
-		{
-			return true;
-		}
-	}
-
-	return false;
-}
-
-void TriangleMesh::ParseShape( XMLElement* ShapeRootElement )
+void TriangleMesh::Deserialization( XMLElement* ShapeRootElement )
 {
 	const char* filename = ShapeRootElement->FirstChildElement( "filename" )->GetText();
 
@@ -100,5 +87,27 @@ void TriangleMesh::ParseShape( XMLElement* ShapeRootElement )
 	emmisive = Spectrum::FromRGB( r , g , b );
 
 	// ½âÎöOBJÄ£ÐÍ
-	ModelParser( filename , points , normals , triangles , VertexNum , TriangleCount );
+	ModelDeserializationr( filename , points , normals , triangles , VertexNum , TriangleCount );
+
+	for( int i = 0; i < TriangleCount; i++ )
+	{
+		triangles[i].SetTriangleMesh( this );
+	}
+
+	for( int i = 0; i < VertexNum; i++ )
+	{
+		BBoxLocal.ExpendToInclude( points[i] );
+	}
+
+	BBoxWorld = ( *ObjectToWorld )( BBoxLocal );
+}
+
+int TriangleMesh::GetSubShapeCount() const
+{
+	return TriangleCount;
+}
+
+Shape* TriangleMesh::GetSubShape( int index ) const
+{
+	return &triangles[index];
 }

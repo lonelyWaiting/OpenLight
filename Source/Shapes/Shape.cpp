@@ -14,32 +14,22 @@ Shape::Shape(Spectrum _emmisive /*= Spectrum(0)*/)
 	WorldToObject = new Transform;
 
 	emmisive = _emmisive;
+
+	bCombination = false;
 }
 
-Shape::Shape( const Transform* _ObjectToWorld , const Transform* _WorldToObject )
+Shape::Shape( const Transform* _ObjectToWorld )
 {
-	// 这里使用memcpy的原因是
-	// 传入的Transform有可能是在某个函数中创建的，然后出了作用域之后就被销毁了
-	// 如在某个Paser函数解析场景，然后创建了Transform对象
-	// 然后传入Shape(&_ObjectToWorld , &_WorldToObject)
-	// 但是出了作用域之后，该内存会被销毁，当然如果是new出来的，则不会
-	// 但最好还是直接将数据拷贝过来
-	// 然后在析构函数中释放一下
-	// 好吧，就是深拷贝啦~
+	// 深拷贝
 	memcpy( ObjectToWorld , _ObjectToWorld , sizeof( Transform ) );
 
-	memcpy( WorldToObject , _WorldToObject , sizeof( Transform ) );
+	*WorldToObject = Inverse( *ObjectToWorld );
 }
 
 Shape::~Shape()
 {
 	SAFE_DELETE( ObjectToWorld );
 	SAFE_DELETE( WorldToObject );
-}
-
-Bound3f Shape::WorldBound() const
-{
-	return ( *ObjectToWorld )( ObjectBound() );
 }
 
 bool Shape::Intersect( Ray& ray , IntersectRecord* record ) const
@@ -49,9 +39,17 @@ bool Shape::Intersect( Ray& ray , IntersectRecord* record ) const
 	return false;
 }
 
-bool Shape::IntersectP( const Ray& ray ) const
+bool Shape::IsCombinationShape()
 {
-	Assert( "Called Unimplemented Shape::IntersectP()" );
+	return bCombination;
+}
 
-	return false;
+int Shape::GetSubShapeCount() const
+{
+	return 0;
+}
+
+Shape* Shape::GetSubShape( int index ) const
+{
+	return nullptr;
 }

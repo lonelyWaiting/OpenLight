@@ -35,6 +35,8 @@ public:
 
 	void ExpendToInclude( const Point3f& p );
 
+	void ExpendToInclude( const Bound3f& bbox );
+
 	bool IntersectP( const Ray& ray , double* hitt0 = nullptr , double* hitt1 = nullptr ) const;
 
 	inline bool IntersectP( const Ray& ray , const Vector3f& invDir , const int DirectionIsNegative[3] );

@@ -51,7 +51,7 @@ Ray ThinLensCamera::GenerateRay( double RasterX , double RasterY , const CameraS
 	return Ray( Orig , Normalize( dir ) , 1e-3f );
 }
 
-void ThinLensCamera::ParseCamera( XMLElement* CameraRootElement )
+void ThinLensCamera::Deserialization( XMLElement* CameraRootElement )
 {
 	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "x" )->QueryDoubleText( &( Eye.x ) );
 	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "y" )->QueryDoubleText( &( Eye.y ) );

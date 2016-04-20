@@ -17,95 +17,64 @@ Sphere::Sphere( Point3f Center , double radius )
 	*ObjectToWorld = Translate( Vector3f( Center ) );
 	
 	*WorldToObject = Inverse( *ObjectToWorld );
+
+	BBoxLocal = Bound3f( Point3f( -m_Radius , -m_Radius , -m_Radius ) , Point3f( m_Radius , m_Radius , m_Radius ) );
+
+	BBoxWorld = ( *ObjectToWorld )( BBoxLocal );
 }
 
 Sphere::~Sphere()
 {
 }
 
-Bound3f Sphere::ObjectBound() const
-{
-	return Bound3f( Point3f( -m_Radius , -m_Radius , -m_Radius ) , Point3f( m_Radius , m_Radius , m_Radius ) );
-}
-
 bool Sphere::Intersect( Ray& r , IntersectRecord* record ) const
 {
-	// 将光线从世界空间变换到局部空间
-	Ray ray = ( *WorldToObject )( r );
-
-	// 计算二次方程的参数
-	double A = ray.Direction.x * ray.Direction.x + ray.Direction.y * ray.Direction.y + ray.Direction.z * ray.Direction.z;
-	double B = 2 * ray.Origin.x * ray.Direction.x + 2 * ray.Origin.y * ray.Direction.y + 2 * ray.Origin.z * ray.Direction.z;
-	double C = ray.Origin.x * ray.Origin.x + ray.Origin.y * ray.Origin.y + ray.Origin.z * ray.Origin.z - m_Radius * m_Radius;
-
-	double t0 , t1;
-	if( !Quadtratic( A , B , C , &t0 , &t1 ) )
+	if( BBoxWorld.IntersectP( r ) )
 	{
-		// 没有实数根
-		return false;
-	}
+		// 将光线从世界空间变换到局部空间
+		Ray ray = ( *WorldToObject )( r );
 
-	// 判断相交点，位于光线的合理位置
-	if( t0 > ray.MaxT || t1 < ray.MinT )
-	{
-		return false;
-	}
+		// 计算二次方程的参数
+		double A = ray.Direction.x * ray.Direction.x + ray.Direction.y * ray.Direction.y + ray.Direction.z * ray.Direction.z;
+		double B = 2 * ray.Origin.x * ray.Direction.x + 2 * ray.Origin.y * ray.Direction.y + 2 * ray.Origin.z * ray.Direction.z;
+		double C = ray.Origin.x * ray.Origin.x + ray.Origin.y * ray.Origin.y + ray.Origin.z * ray.Origin.z - m_Radius * m_Radius;
 
-	double t = t0;
-	if( t0 < ray.MinT )
-	{
-		t = t1;
-		if( t > ray.MaxT )
+		double t0 , t1;
+		if( !Quadtratic( A , B , C , &t0 , &t1 ) )
+		{
+			// 没有实数根
+			return false;
+		}
+
+		// 判断相交点，位于光线的合理位置
+		if( t0 > ray.MaxT || t1 < ray.MinT )
 		{
 			return false;
 		}
+
+		double t = t0;
+		if( t0 < ray.MinT )
+		{
+			t = t1;
+			if( t > ray.MaxT )
+			{
+				return false;
+			}
+		}
+
+		r.MaxT = t;
+		record->HitT = t;
+		record->ObjectToWorld = *ObjectToWorld;
+		record->WorldToObject = *WorldToObject;
+		record->normal = Normal( Normalize( r( t ) - m_Center ) );
+
+		return true;
 	}
 	
-	r.MaxT = t;
-	record->HitT = t;
-	record->ObjectToWorld = *ObjectToWorld;
-	record->WorldToObject = *WorldToObject;
-	record->normal = Normal( Normalize( r( t ) - m_Center ) );
-
-	return true;
+	return false;
 }
 
-bool Sphere::IntersectP( const Ray& r ) const
-{
-	Ray ray = ( *WorldToObject )( r );
-
-	// 计算二次方程的参数
-	double A = ray.Direction.x * ray.Direction.x + ray.Direction.y * ray.Direction.y + ray.Direction.z * ray.Direction.z;
-	double B = 2 * ray.Origin.x * ray.Direction.x + 2 * ray.Origin.y * ray.Direction.y + 2 * ray.Origin.z * ray.Direction.z;
-	double C = ray.Origin.x * ray.Origin.x + ray.Origin.y * ray.Origin.y + ray.Origin.z * ray.Origin.z - m_Radius * m_Radius;
-
-	double t0 , t1;
-	if( !Quadtratic( A , B , C , &t0 , &t1 ) )
-	{
-		// 没有实数根
-		return false;
-	}
-
-	// 判断相交点，位于光线的合理位置
-	if( t0 > ray.MaxT || t1 < ray.MinT )
-	{
-		return false;
-	}
-
-	double t = t0;
-	if( t0 < ray.MinT )
-	{
-		t = t1;
-		if( t > ray.MaxT )
-		{
-			return false;
-		}
-	}
-
-	return true;
-}
-
-void Sphere::ParseShape( XMLElement* ShapeRootElement )
+void Sphere::Deserialization( XMLElement* ShapeRootElement )
 {
 	XMLElement* PrimitivePosiitonElement = ShapeRootElement->FirstChildElement( "transform" )->FirstChildElement( "position" );
 
@@ -124,4 +93,8 @@ void Sphere::ParseShape( XMLElement* ShapeRootElement )
 
 	*ObjectToWorld = Translate( Vector3f( m_Center ) );
 	*WorldToObject = Inverse( *ObjectToWorld );
+
+	BBoxLocal = Bound3f( Point3f( -m_Radius , -m_Radius , -m_Radius ) , Point3f( m_Radius , m_Radius , m_Radius ) );
+
+	BBoxWorld = ( *ObjectToWorld )( BBoxLocal );
 }

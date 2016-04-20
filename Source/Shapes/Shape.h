@@ -1,35 +1,36 @@
 #pragma once
 
 #include "Math/Bound3.h"
-#include "Spectrum\Spectrum.h"
-
-class Transform;
-
-class Ray;
+#include "Spectrum/Spectrum.h"
+#include "Core/VObject.h"
+#include "Core/VIntersectable.h"
 
 struct IntersectRecord;
+class  Transform;
+class  Ray;
 
-class Shape
+class Shape : public VObject , public VIntersectable
 {
 public:
-	Shape(Spectrum _emmisive = Spectrum(0));
+	Shape( Spectrum _emmisive = Spectrum( 0 ) );
 
-	Shape( const Transform* ObjectToWorld , const Transform* WorldToObject );
+	Shape( const Transform* ObjectToWorld );
 
 	virtual ~Shape();
 
-	virtual Bound3f ObjectBound() const = 0;
-	
-	virtual Bound3f WorldBound() const;
-
 	virtual bool Intersect( Ray& ray , IntersectRecord* record ) const;
 
-	virtual bool IntersectP( const Ray& ray ) const;
+	bool IsCombinationShape();
 
-	virtual void ParseShape( XMLElement* ShapeRootElement ) = 0;
+	virtual int GetSubShapeCount() const;
+
+	virtual Shape* GetSubShape( int index ) const;
 
 public:
 	Transform*	ObjectToWorld;
 	Transform*	WorldToObject;
 	Spectrum	emmisive;
+	Bound3f		BBoxLocal;
+	Bound3f		BBoxWorld;
+	bool		bCombination;			// 是否由其它shape组成
 };

@@ -52,6 +52,9 @@
     <Filter Include="Material">
       <UniqueIdentifier>{2ab87d2f-588a-4523-9c50-f7932e700b5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Accelerator">
+      <UniqueIdentifier>{0dcdcfcb-95a2-4826-a32c-e174472d2ff3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\Math\Matrix3.cpp">
@@ -206,6 +209,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Material\DiffuseMaterial.cpp">
       <Filter>Material</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Accelerator\Grid.cpp">
+      <Filter>Accelerator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Core\VObject.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Core\VIntersectable.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -364,6 +376,18 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Material\DiffuseMaterial.h">
       <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Accelerator\Grid.h">
+      <Filter>Accelerator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Accelerator\Accelerator.h">
+      <Filter>Accelerator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Core\VObject.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Core\VIntersectable.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

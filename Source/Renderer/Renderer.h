@@ -20,5 +20,5 @@ public:
 						 IntersectRecord* record = nullptr) const = 0;
 
 public:
-	virtual void ParseRenderer( XMLElement* RendererRootElement ) = 0;
+	virtual void DeserializationRenderer( XMLElement* RendererRootElement ) = 0;
 };

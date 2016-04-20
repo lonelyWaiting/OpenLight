@@ -4,21 +4,26 @@
 #include "Math/Point3.h"
 #include "Shape.h"
 
-class Triangle
+class TriangleMesh;
+
+class Triangle : public Shape
 {
 public:
 	Triangle();
 
-	Triangle( int _index0 , int _index1 , int _index2 );
-
 	~Triangle();
 
+public:
 	void Set( int _index0 , int _index1 , int _index2 );
 
-	bool Intersect( Ray& ray , const Point3f* points , IntersectRecord* record ) const;
+	void SetTriangleMesh( TriangleMesh* _pMesh );
 
-	bool IntersectP( const Ray& ray , const Point3f* points ) const;
+	bool Intersect( Ray& ray , IntersectRecord* record ) const;
+
+public:
+	void Deserialization( XMLElement* RootElement );
 
 private:
 	int index0 , index1 , index2;
+	TriangleMesh* pMesh;
 };

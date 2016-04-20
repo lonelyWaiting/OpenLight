@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scene>
+	<!-- 渲染器 --> 
 	<Renderer type="Sampler">
-		<spp>8</spp>
+		<spp>64</spp>
 	</Renderer>
 
+	<!-- 图元 --> 
 	<primitive>
-		<shape type="obj">
+		<shape type="sphere">
 			<filename>sphere.obj</filename>
 			<transform>
 				<position>
@@ -14,39 +16,39 @@
 					<z>10</z>
 				</position>
 			</transform>
-			<radius>5</radius>
+			<radius>1</radius>
 			<emmisive>
 				<r>0.0</r>
 				<g>0.0</g>
 				<b>1.0</b>
 			</emmisive>
 		</shape>
-		<shape type="obj">
+		<shape type="sphere">
 			<filename>sphere.obj</filename>
 			<transform>
 				<position>
 					<x>2</x>
 					<y>0</y>
-					<z>10</z>
+					<z>12</z>
 				</position>
 			</transform>
-			<radius>4</radius>
+			<radius>1</radius>
 			<emmisive>
 				<r>1.0</r>
 				<g>0.0</g>
 				<b>0.0</b>
 			</emmisive>
 		</shape>
-		<shape type="obj">
+		<shape type="sphere">
 			<filename>sphere.obj</filename>
 			<transform>
 				<position>
 					<x>-2</x>
 					<y>0</y>
-					<z>10</z>
+					<z>12</z>
 				</position>
 			</transform>
-			<radius>5</radius>
+			<radius>1</radius>
 			<emmisive>
 				<r>0.0</r>
 				<g>1.0</g>
@@ -62,12 +64,14 @@
 		</material>
 	</primitive>
 
+	<!-- Film --> 
 	<Film>
 		<filename>result.ppm</filename>
 		<width>800</width>
 		<height>600</height>
 	</Film>
 
+	<!-- Camera --> 
 	<Camera type="ThinLens">
 		<Position>
 			<x>0.0</x>
@@ -79,7 +83,7 @@
 			<y>0.0</y>
 			<z>1.0</z>
 		</Target>
-		<LensFocus>40</LensFocus>
+		<LensFocus>12</LensFocus>
 		<LensRadius>0.01</LensRadius>
 		<ApertureResolution>
 			<width>0.825</width>
@@ -90,13 +94,15 @@
 		<ViewDistance>1.0</ViewDistance>
 	</Camera>
 	
+	<!-- 采样器 --> 
 	<Sampler type="PureRandom">
 		<SampleGroupCount>81</SampleGroupCount>
 		<SampleCount>60</SampleCount>
 	</Sampler>
 
+	<!-- 积分器 --> 
 	<Integrator type="Whitted">
 		<MaxDepth>5</MaxDepth>
-		<SamplePathNumber>5</SamplePathNumber>
+		<SamplePathNumber>16</SamplePathNumber>
 	</Integrator>
 </scene>

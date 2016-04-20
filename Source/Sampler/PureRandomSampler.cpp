@@ -41,7 +41,7 @@ void PureRandomSampler::GenerateUnitSquareSamples()
 	}
 }
 
-void PureRandomSampler::ParseSampler( XMLElement* SamplerRootElement )
+void PureRandomSampler::Deserialization( XMLElement* SamplerRootElement )
 {
 	SamplerRootElement->FirstChildElement( "SampleGroupCount" )->QueryIntText( &SampleGroupCount );
 	SamplerRootElement->FirstChildElement( "SampleCount" )->QueryIntText( &SampleCount );

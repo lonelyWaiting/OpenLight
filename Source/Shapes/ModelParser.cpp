@@ -6,12 +6,13 @@
 #include "IO/FileSystem.h"
 #include "IO/Log.h"
 #include "srString.h"
+#include "Shapes/Triangle.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-#include "ModelParser.h"
+#include "ModelDeserializationr.h"
 
-void ModelParser( const std::string& filename , Point3f*& points , Normal*& normals , Triangle*& triangles , int& VertexCount , int& FaceCount )
+void ModelDeserializationr( const std::string& filename , Point3f*& points , Normal*& normals , Triangle*& triangles , int& VertexCount , int& FaceCount )
 {
 	FileSystem fs;
 	std::wstring name = fs.GetModelFolder() + srString::ToUnicode( filename );

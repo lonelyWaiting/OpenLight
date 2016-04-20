@@ -13,14 +13,10 @@ public:
 
 	~Sphere();
 
-	Bound3f ObjectBound() const;
-
 	bool Intersect( Ray& ray , IntersectRecord* record ) const;
 
-	bool IntersectP( const Ray& ray ) const;
-
 public:
-	void ParseShape( XMLElement* ShapeRootElement );
+	void Deserialization( XMLElement* ShapeRootElement );
 
 private:
 	double m_Radius;

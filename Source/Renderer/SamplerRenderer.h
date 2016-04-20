@@ -19,7 +19,7 @@ public:
 						IntersectRecord* record = nullptr ) const;
 
 public:
-	void ParseRenderer( XMLElement* RendererRootElement );
+	void DeserializationRenderer( XMLElement* RendererRootElement );
 
 private:
 	Sampler* sampler;

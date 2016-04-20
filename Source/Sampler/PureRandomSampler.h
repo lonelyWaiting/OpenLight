@@ -11,7 +11,7 @@ public:
 	PureRandomSampler& operator = ( const PureRandomSampler& rhs );
 
 public:
-	void ParseSampler( XMLElement* SamplerRootElement );
+	void Deserialization( XMLElement* SamplerRootElement );
 
 private:
 	virtual void GenerateUnitSquareSamples();

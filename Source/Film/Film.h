@@ -26,7 +26,7 @@ public:
 	double GetAspectio() const;
 
 public:
-	void ParseFilm( const XMLElement* FilmRootElement );
+	void Deserialization( const XMLElement* FilmRootElement );
 
 private:
 	int Width;

@@ -18,42 +18,33 @@ Primitive::~Primitive()
 void Primitive::SetShape( Shape* _shape )
 {
 	shapes.push_back( _shape );
+
+	BBoxLocal.ExpendToInclude( _shape->GetObjectBoundingBox() );
+	BBoxWorld.ExpendToInclude( _shape->GetWorldBoundingBox() );
 }
 
 bool Primitive::Intersect( Ray& r , IntersectRecord* record ) const
 {
-	record->primitivePtr = this;
-
-	bool bHit = false;
-
-	for( int i = 0; i < shapes.size(); i++ )
+	if( BBoxWorld.IntersectP( r ) )
 	{
-		if( shapes[i]->Intersect( r , record ) )
+		record->primitivePtr = this;
+
+		bool bHit = false;
+
+		for( int i = 0; i < shapes.size(); i++ )
 		{
-			record->HitPoint = r( record->HitT );
-			record->Emmisive = shapes[i]->emmisive;
-			bHit = true;
+			if( shapes[i]->Intersect( r , record ) )
+			{
+				record->HitPoint = r( record->HitT );
+				record->Emmisive = shapes[i]->emmisive;
+				bHit = true;
+			}
 		}
-	}
-	
-	return bHit;
-}
 
-bool Primitive::IntersectP( const Ray& r ) const
-{
-	bool bHit = false;
-
-	for( int i = 0; i < shapes.size(); i++ )
-	{
-		if( shapes[i]->IntersectP( r ) )
-		{
-			bHit = true;
-
-			break;					// 因为只需要判断是否有相交，所以出现相交直接退出即可，无需找到最近点
-		}
+		return bHit;
 	}
 
-	return bHit;
+	return false;
 }
 
 void Primitive::SetMaterial(Material* material)
@@ -61,7 +52,7 @@ void Primitive::SetMaterial(Material* material)
 	pMaterial = material;
 }
 
-void Primitive::ParsePrimitive( XMLElement* PrimitiveRootElment )
+void Primitive::Deserialization( XMLElement* PrimitiveRootElment )
 {
 	XMLElement* PrimitiveShapeElement = PrimitiveRootElment->FirstChildElement( "shape" );
 
@@ -71,13 +62,13 @@ void Primitive::ParsePrimitive( XMLElement* PrimitiveRootElment )
 	{
 		Sphere* shape = new Sphere;
 		shapes.push_back( shape );
-		shape->ParseShape( PrimitiveShapeElement );
+		shape->Deserialization( PrimitiveShapeElement );
 	}
 	else if( !std::strcmp( "obj" , ShapeType ) )
 	{
 		TriangleMesh* mesh = new TriangleMesh;
 		shapes.push_back( mesh );
-		mesh->ParseShape( PrimitiveShapeElement );
+		mesh->Deserialization( PrimitiveShapeElement );
 	}
 	else
 	{
@@ -92,13 +83,13 @@ void Primitive::ParsePrimitive( XMLElement* PrimitiveRootElment )
 		{
 			Sphere* shape = new Sphere;
 			shapes.push_back(shape);
-			shape->ParseShape(PrimitiveShapeElement);
+			shape->Deserialization(PrimitiveShapeElement);
 		}
 		else if (!std::strcmp("obj", ShapeType))
 		{
 			TriangleMesh* mesh = new TriangleMesh;
 			shapes.push_back(mesh);
-			mesh->ParseShape(PrimitiveShapeElement);
+			mesh->Deserialization(PrimitiveShapeElement);
 		}
 		else
 		{
@@ -121,9 +112,25 @@ void Primitive::ParsePrimitive( XMLElement* PrimitiveRootElment )
 
 		pMaterial = new DiffuseMaterial(Spectrum::FromRGB(r, g, b));
 	}
+
+	for( int i = 0; i < shapes.size(); i++ )
+	{
+		BBoxLocal.ExpendToInclude( shapes[i]->GetObjectBoundingBox() );
+		BBoxWorld.ExpendToInclude( shapes[i]->GetWorldBoundingBox() );
+	}
 }
 
 BxDF* Primitive::GetBxDF( const Point3f& point , const Normal& normal ) const
 {
 	return pMaterial->GetBxDF( point , normal );
+}
+
+int Primitive::GetShapeCount() const
+{
+	return shapes.size();
+}
+
+Shape* Primitive::GetShape( int index )
+{
+	return shapes[index];
 }

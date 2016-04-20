@@ -55,7 +55,7 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 			}
 		}
 
-		L /= 22.0;
+		L /= SamplePathNumber;
 	}
 	
 	L += record->Emmisive;
@@ -68,7 +68,7 @@ void WhittedIntegrator::SetMaxRecusiveDepth( int maxdepth )
 	MaxDepth = maxdepth;
 }
 
-void WhittedIntegrator::ParseIntegrator(XMLElement* IntegratorRootElement)
+void WhittedIntegrator::Deserialization(XMLElement* IntegratorRootElement)
 {
 	IntegratorRootElement->FirstChildElement("MaxDepth")->QueryIntText( &MaxDepth );
 

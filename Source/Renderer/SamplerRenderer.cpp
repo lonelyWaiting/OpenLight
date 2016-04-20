@@ -32,6 +32,8 @@ void SamplerRenderer::Render( const Scene* scene )
 
 	Spectrum L;
 
+	clock_t start = clock();
+
 	#ifndef _DEBUG
 	#pragma omp parallel for schedule(dynamic , 1) private(L)
 	#endif
@@ -56,16 +58,14 @@ void SamplerRenderer::Render( const Scene* scene )
 			}
 			
 			L /= (double)spp;
-			double rgb[3];
-			L.ToRGB( rgb );
 
-			if( rgb[2] != 0 )
-			{
-				int a = 0;
-			}
 			camera->GetFilm()->SetColor( iRow , iCol , L );
 		}
 	}
+
+	clock_t end = clock();
+	double t = ( double )( end - start ) / CLOCKS_PER_SEC;
+	printf( "\nRender time: %fs.\n" , t );
 
 	camera->GetFilm()->Display();
 }
@@ -80,7 +80,7 @@ Spectrum SamplerRenderer::Li( const Scene* scene , Ray* ray , IntersectRecord* r
 	return Spectrum(0.0f);
 }
 
-void SamplerRenderer::ParseRenderer( XMLElement* RendererRootElement )
+void SamplerRenderer::DeserializationRenderer( XMLElement* RendererRootElement )
 {
 	RendererRootElement->FirstChildElement( "spp" )->QueryIntText( &spp );
 }
