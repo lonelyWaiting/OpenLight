@@ -98,11 +98,11 @@ void Grid::Setup( const Scene* scene )
 					Clamp( iMaxY , 0 , ny - 1 );
 					Clamp( iMaxZ , 0 , nz - 1 );
 
-					for( int iz = iMinZ; iz < iMaxZ; iz++ )
+					for( int iz = iMinZ; iz <= iMaxZ; iz++ )
 					{
-						for( int iy = iMinY; iy < iMaxY; iy++ )
+						for( int iy = iMinY; iy <= iMaxY; iy++ )
 						{
-							for( int ix = iMinX; ix < iMaxX; ix++ )
+							for( int ix = iMinX; ix <= iMaxX; ix++ )
 							{
 								index = ix + nx * iy + iz * ny * nx;
 
@@ -186,7 +186,7 @@ void Grid::Setup( const Scene* scene )
 	Counts.erase( Counts.begin() , Counts.end() );
 }
 
-bool Grid::Intersect( Ray& ray , Scene* scene , IntersectRecord* record )
+bool Grid::Intersect( Ray& ray , const Scene* scene , IntersectRecord* record )
 {
 	double ox = ray.Origin.x;
 	double oy = ray.Origin.y;
@@ -375,6 +375,7 @@ bool Grid::Intersect( Ray& ray , Scene* scene , IntersectRecord* record )
 		{
 			tzNext = tzMin + ( iz + 1 ) * dtz;
 			izStep = 1;
+			izStop = nz;
 		}
 		else
 		{
@@ -388,11 +389,16 @@ bool Grid::Intersect( Ray& ray , Scene* scene , IntersectRecord* record )
 	{
 		Shape* shape = cells[ix + nx * iy + nx * ny * iz];
 
+		bool bHit = false;
+
 		if( txNext < tyNext && txNext < tzNext )
 		{
 			Ray r( ray.Origin , ray.Direction , ray.MinT , txNext , ray.time , ray.depth );
 
-			bool bHit = shape->Intersect( r , record );
+			if( shape )
+			{
+				bHit = shape->Intersect( r , record );
+			}
 
 			if( bHit )
 			{
@@ -411,7 +417,10 @@ bool Grid::Intersect( Ray& ray , Scene* scene , IntersectRecord* record )
 		{
 			Ray r( ray.Origin , ray.Direction , ray.MinT , tyNext , ray.time , ray.depth );
 
-			bool bHit = shape->Intersect( r , record );
+			if( shape )
+			{
+				bHit = shape->Intersect( r , record );
+			}
 
 			if( bHit )
 			{
@@ -430,7 +439,10 @@ bool Grid::Intersect( Ray& ray , Scene* scene , IntersectRecord* record )
 		{
 			Ray r( ray.Origin , ray.Direction , ray.MinT , tzNext , ray.time , ray.depth );
 
-			bool bHit = shape->Intersect( r , record );
+			if( shape )
+			{
+				bHit = shape->Intersect( r , record );
+			}
 
 			if( bHit )
 			{

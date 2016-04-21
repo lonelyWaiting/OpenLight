@@ -91,6 +91,7 @@ void TriangleMesh::Deserialization( XMLElement* ShapeRootElement )
 
 	for( int i = 0; i < TriangleCount; i++ )
 	{
+		triangles[i].SetPrimitive( pPrimitive );
 		triangles[i].SetTriangleMesh( this );
 	}
 

@@ -5,7 +5,7 @@
 class WhittedIntegrator : public SurfaceIntegrator
 {
 public:
-	Spectrum Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Ray* ray ) const;
+	Spectrum Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Ray* ray , Accelerator* pAccelerator ) const;
 
 	void SetMaxRecusiveDepth( int maxdepth );
 

@@ -5,9 +5,9 @@
 #include "Math/Ray.h"
 #include "Light/Light.h"
 #include "Spectrum/Spectrum.h"
-#include "VObject.h"
+#include "VSerializableObject.h"
 
-class Scene : public VObject , public VIntersectable
+class Scene : public VSerializableObject , public VIntersectable
 {
 public:
 	Scene();

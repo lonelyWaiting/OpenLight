@@ -28,7 +28,7 @@
     <ClCompile Include="..\..\Source\Camera\ThinLensCamera.cpp" />
     <ClCompile Include="..\..\Source\Core\Scene.cpp" />
     <ClCompile Include="..\..\Source\Core\VIntersectable.cpp" />
-    <ClCompile Include="..\..\Source\Core\VObject.cpp" />
+    <ClCompile Include="..\..\Source\Core\VSerializableObject.cpp" />
     <ClCompile Include="..\..\Source\Film\Film.cpp" />
     <ClCompile Include="..\..\Source\Film\Image.cpp" />
     <ClCompile Include="..\..\Source\Film\PPMImage.cpp" />
@@ -90,7 +90,7 @@
     <ClInclude Include="..\..\Source\Camera\ThinLensCamera.h" />
     <ClInclude Include="..\..\Source\Core\Scene.h" />
     <ClInclude Include="..\..\Source\Core\VIntersectable.h" />
-    <ClInclude Include="..\..\Source\Core\VObject.h" />
+    <ClInclude Include="..\..\Source\Core\VSerializableObject.h" />
     <ClInclude Include="..\..\Source\Film\Film.h" />
     <ClInclude Include="..\..\Source\Film\Image.h" />
     <ClInclude Include="..\..\Source\Film\PPMImage.h" />

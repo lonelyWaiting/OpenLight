@@ -63,11 +63,13 @@ bool Sphere::Intersect( Ray& r , IntersectRecord* record ) const
 		}
 
 		r.MaxT = t;
+		record->primitivePtr = pPrimitive;
 		record->HitT = t;
 		record->ObjectToWorld = *ObjectToWorld;
 		record->WorldToObject = *WorldToObject;
 		record->normal = Normal( Normalize( r( t ) - m_Center ) );
-
+		record->Emmisive = emmisive;
+		record->HitPoint = r( t );
 		return true;
 	}
 	

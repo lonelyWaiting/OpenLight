@@ -23,6 +23,11 @@ void Triangle::Set( int _index0 , int _index1 , int _index2 )
 	index0 = _index0;
 	index1 = _index1;
 	index2 = _index2;
+}
+
+void Triangle::SetTriangleMesh( TriangleMesh* _pMesh )
+{
+	pMesh = _pMesh;
 
 	const Point3f* points = pMesh->points;
 
@@ -30,29 +35,27 @@ void Triangle::Set( int _index0 , int _index1 , int _index2 )
 	BBoxLocal.ExpendToInclude( points[index1] );
 	BBoxLocal.ExpendToInclude( points[index2] );
 
-	BBoxWorld = ( *ObjectToWorld )( BBoxLocal );
+	BBoxWorld = ( *( pMesh->ObjectToWorld ) )( BBoxLocal );
 }
 
-void Triangle::SetTriangleMesh( TriangleMesh* _pMesh )
+bool Triangle::Intersect( Ray& rayWorld , IntersectRecord* record ) const
 {
-	pMesh = _pMesh;
-}
+	// transform ray to local space
+	Ray rayLocal = ( *( pMesh->WorldToObject ) )( rayWorld );
 
-bool Triangle::Intersect( Ray& ray , IntersectRecord* record ) const
-{
 	const Point3f* points = pMesh->points;
 
 	Point3f p0 = points[index0];
 	Point3f p1 = points[index1];
 	Point3f p2 = points[index2];
 
-	double ei_minus_hf = ( p0.y - p2.y ) * ray.Direction.z - ( p0.z - p2.z ) * ray.Direction.y;
-	double gf_minus_di = ( p0.z - p2.z ) * ray.Direction.x - ( p0.x - p2.x ) * ray.Direction.z;
-	double dh_minus_eg = ( p0.x - p2.x ) * ray.Direction.y - ( p0.y - p2.y ) * ray.Direction.x;
+	double ei_minus_hf = ( p0.y - p2.y ) * rayLocal.Direction.z - ( p0.z - p2.z ) * rayLocal.Direction.y;
+	double gf_minus_di = ( p0.z - p2.z ) * rayLocal.Direction.x - ( p0.x - p2.x ) * rayLocal.Direction.z;
+	double dh_minus_eg = ( p0.x - p2.x ) * rayLocal.Direction.y - ( p0.y - p2.y ) * rayLocal.Direction.x;
 
 	double Determinant = ( p0.x - p1.x ) * ei_minus_hf + ( p0.y - p1.y ) * gf_minus_di + ( p0.z - p1.z ) * dh_minus_eg;
 
-	double beta = ( p0.x - ray.Origin.x ) * ei_minus_hf + ( p0.y - ray.Origin.y ) * gf_minus_di + ( p0.z - ray.Origin.z ) * dh_minus_eg;
+	double beta = ( p0.x - rayLocal.Origin.x ) * ei_minus_hf + ( p0.y - rayLocal.Origin.y ) * gf_minus_di + ( p0.z - rayLocal.Origin.z ) * dh_minus_eg;
 
 	beta /= Determinant;
 
@@ -61,11 +64,11 @@ bool Triangle::Intersect( Ray& ray , IntersectRecord* record ) const
 		return false;
 	}
 
-	double ak_minus_jb = ( p0.x - p1.x ) * ( p0.y - ray.Origin.y ) - ( p0.y - p1.y ) * ( p0.x - ray.Origin.x );
-	double jc_minus_al = ( p0.z - p1.z ) * ( p0.x - ray.Origin.x ) - ( p0.x - p1.x ) * ( p0.z - ray.Origin.z );
-	double bl_minus_kc = ( p0.y - p1.y ) * ( p0.z - ray.Origin.z ) - ( p0.z - p1.z ) * ( p0.y - ray.Origin.y );
+	double ak_minus_jb = ( p0.x - p1.x ) * ( p0.y - rayLocal.Origin.y ) - ( p0.y - p1.y ) * ( p0.x - rayLocal.Origin.x );
+	double jc_minus_al = ( p0.z - p1.z ) * ( p0.x - rayLocal.Origin.x ) - ( p0.x - p1.x ) * ( p0.z - rayLocal.Origin.z );
+	double bl_minus_kc = ( p0.y - p1.y ) * ( p0.z - rayLocal.Origin.z ) - ( p0.z - p1.z ) * ( p0.y - rayLocal.Origin.y );
 
-	double gamma = ray.Direction.z * ak_minus_jb + ray.Direction.y * jc_minus_al + ray.Direction.x * bl_minus_kc;
+	double gamma = rayLocal.Direction.z * ak_minus_jb + rayLocal.Direction.y * jc_minus_al + rayLocal.Direction.x * bl_minus_kc;
 
 	gamma /= Determinant;
 
@@ -78,12 +81,19 @@ bool Triangle::Intersect( Ray& ray , IntersectRecord* record ) const
 
 	t /= Determinant;
 
-	if( t >= ray.MinT && t <= ray.MaxT )
+	if( t >= rayLocal.MinT && t <= rayLocal.MaxT )
 	{
-		ray.MaxT = t;
-		record->HitT = t;
+		rayWorld.MaxT         = t;
+		record->HitT          = t;
+		record->ObjectToWorld = *( pMesh->ObjectToWorld );
+		record->WorldToObject = *( pMesh->WorldToObject );
+		record->normal        = pMesh->normals[index0];			// 该triangle上的三个顶点
+		record->Emmisive      = pMesh->emmisive;
+		record->HitPoint      = rayWorld( t );
+		record->primitivePtr  = pMesh->pPrimitive;
 		return true;
 	}
+
 
 	return false;
 }

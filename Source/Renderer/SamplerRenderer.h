@@ -4,11 +4,12 @@
 
 class Camera;
 class SurfaceIntegrator;
+class Accelerator;
 
 class SamplerRenderer : public Renderer
 {
 public:
-	SamplerRenderer(Sampler* sampler, Camera* camera, SurfaceIntegrator* _surfaceIntegrator, int _spp = 8);
+	SamplerRenderer(Sampler* sampler, Camera* camera, SurfaceIntegrator* _surfaceIntegrator, Accelerator* _pAccelerator , int _spp = 8);
 
 	virtual ~SamplerRenderer();
 
@@ -26,4 +27,5 @@ private:
 	Camera* camera;
 	SurfaceIntegrator* surfaceIntegrator;
 	int spp;		// sample per pixel
+	Accelerator* pAccelerator;
 };

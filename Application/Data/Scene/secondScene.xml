@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scene>
-	<!-- 渲染器 --> 
+	<!-- 渲染器 -->
 	<Renderer type="Sampler">
 		<spp>64</spp>
 	</Renderer>
 
-	<!-- 图元 --> 
+	<!-- 图元 -->
 	<primitive>
-		<shape type="sphere">
+		<shape type="obj">
 			<filename>sphere.obj</filename>
 			<transform>
 				<position>
@@ -23,7 +23,7 @@
 				<b>1.0</b>
 			</emmisive>
 		</shape>
-		<shape type="sphere">
+		<shape type="obj">
 			<filename>sphere.obj</filename>
 			<transform>
 				<position>
@@ -39,7 +39,7 @@
 				<b>0.0</b>
 			</emmisive>
 		</shape>
-		<shape type="sphere">
+		<shape type="obj">
 			<filename>sphere.obj</filename>
 			<transform>
 				<position>
@@ -64,14 +64,14 @@
 		</material>
 	</primitive>
 
-	<!-- Film --> 
+	<!-- Film -->
 	<Film>
 		<filename>result.ppm</filename>
 		<width>800</width>
 		<height>600</height>
 	</Film>
 
-	<!-- Camera --> 
+	<!-- Camera -->
 	<Camera type="ThinLens">
 		<Position>
 			<x>0.0</x>
@@ -93,14 +93,14 @@
 		<ExposureTime>0.0</ExposureTime>
 		<ViewDistance>1.0</ViewDistance>
 	</Camera>
-	
-	<!-- 采样器 --> 
+
+	<!-- 采样器 -->
 	<Sampler type="PureRandom">
 		<SampleGroupCount>81</SampleGroupCount>
 		<SampleCount>60</SampleCount>
 	</Sampler>
 
-	<!-- 积分器 --> 
+	<!-- 积分器 -->
 	<Integrator type="Whitted">
 		<MaxDepth>5</MaxDepth>
 		<SamplePathNumber>16</SamplePathNumber>

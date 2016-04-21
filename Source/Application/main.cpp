@@ -101,12 +101,15 @@ Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrat
 		Assert( "don't support \'%s\' Sampler" , SamplerType );
 	}
 
+	Grid* pGrid = new Grid;
+	pGrid->Setup( scene );
+
 	// ----------------------Renderer----------------------------------------
 	XMLElement* RendererRootElement = doc.FirstChildElement()->FirstChildElement( "Renderer" );
 	const char* RendererType = RendererRootElement->FirstAttribute()->Value();
 	if( !std::strcmp( "Sampler" , RendererType ) )
 	{
-		Renderer* renderer = new SamplerRenderer( pSampler , camera , pSurfaceIntegrator );
+		Renderer* renderer = new SamplerRenderer( pSampler , camera , pSurfaceIntegrator , pGrid );
 
 		renderer->Deserialization( RendererRootElement );
 
@@ -133,9 +136,6 @@ int main( void )
 	Sampler* pSampler = nullptr;
 
 	Renderer* renderer = DeserializationScene( scene , camera , pSurfaceIntegrator , pSampler);
-
-	Grid* pGrid = new Grid;
-	pGrid->Setup( scene );
 
 	if( renderer != nullptr )
 	{

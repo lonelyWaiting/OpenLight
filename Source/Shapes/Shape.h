@@ -2,14 +2,15 @@
 
 #include "Math/Bound3.h"
 #include "Spectrum/Spectrum.h"
-#include "Core/VObject.h"
+#include "Core/VSerializableObject.h"
 #include "Core/VIntersectable.h"
 
 struct IntersectRecord;
 class  Transform;
+class  Primitive;
 class  Ray;
 
-class Shape : public VObject , public VIntersectable
+class Shape : public VSerializableObject , public VIntersectable
 {
 public:
 	Shape( Spectrum _emmisive = Spectrum( 0 ) );
@@ -26,9 +27,12 @@ public:
 
 	virtual Shape* GetSubShape( int index ) const;
 
+	virtual void SetPrimitive( Primitive* _pPrimitive );
+
 public:
 	Transform*	ObjectToWorld;
 	Transform*	WorldToObject;
 	Spectrum	emmisive;
 	bool		bCombination;			// 是否由其它shape组成
+	Primitive*  pPrimitive;				// 所属图元
 };

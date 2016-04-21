@@ -62,12 +62,14 @@ void Primitive::Deserialization( XMLElement* PrimitiveRootElment )
 	{
 		Sphere* shape = new Sphere;
 		shapes.push_back( shape );
+		shape->SetPrimitive( this );
 		shape->Deserialization( PrimitiveShapeElement );
 	}
 	else if( !std::strcmp( "obj" , ShapeType ) )
 	{
 		TriangleMesh* mesh = new TriangleMesh;
 		shapes.push_back( mesh );
+		mesh->SetPrimitive( this );
 		mesh->Deserialization( PrimitiveShapeElement );
 	}
 	else
@@ -83,12 +85,14 @@ void Primitive::Deserialization( XMLElement* PrimitiveRootElment )
 		{
 			Sphere* shape = new Sphere;
 			shapes.push_back(shape);
+			shape->SetPrimitive( this );
 			shape->Deserialization(PrimitiveShapeElement);
 		}
 		else if (!std::strcmp("obj", ShapeType))
 		{
 			TriangleMesh* mesh = new TriangleMesh;
 			shapes.push_back(mesh);
+			mesh->SetPrimitive( this );
 			mesh->Deserialization(PrimitiveShapeElement);
 		}
 		else

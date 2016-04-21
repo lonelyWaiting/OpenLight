@@ -213,14 +213,14 @@
     <ClCompile Include="..\..\Source\Accelerator\Grid.cpp">
       <Filter>Accelerator</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Core\VObject.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Core\VIntersectable.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Shapes\AggregateShape.cpp">
       <Filter>Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Core\VSerializableObject.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -386,14 +386,14 @@
     <ClInclude Include="..\..\Source\Accelerator\Accelerator.h">
       <Filter>Accelerator</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Core\VObject.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Core\VIntersectable.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Shapes\AggregateShape.h">
       <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Core\VSerializableObject.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -7,13 +7,15 @@
 #include "Sampler/Sampler.h"
 #include "Core/Scene.h"
 #include "Integrator/SurfaceIntegrator.h"
+#include "Accelerator/Grid.h"
 #include "SamplerRenderer.h"
 
-SamplerRenderer::SamplerRenderer(Sampler* _sampler, Camera* _camera, SurfaceIntegrator* _surfaceIntegrator, int _spp/*=8*/)
+SamplerRenderer::SamplerRenderer( Sampler* _sampler , Camera* _camera , SurfaceIntegrator* _surfaceIntegrator , Accelerator* _pAccelerator , int _spp/*=8*/ )
 	: sampler( _sampler )
 	, camera( _camera )
 	, surfaceIntegrator( _surfaceIntegrator )
 	, spp( _spp )
+	, pAccelerator( _pAccelerator )
 {
 
 }
@@ -72,10 +74,14 @@ void SamplerRenderer::Render( const Scene* scene )
 
 Spectrum SamplerRenderer::Li( const Scene* scene , Ray* ray , IntersectRecord* record /* = nullptr  */ ) const
 {
-	if (scene->Intersect(*ray, record))
+	if( pAccelerator->Intersect( *ray , scene , record ) )
+	{
+		return surfaceIntegrator->Li( scene , this , record , ray , pAccelerator );
+	}
+	/*if (scene->Intersect(*ray, record))
 	{
 		return surfaceIntegrator->Li(scene, this, record, ray);
-	}
+	}*/
 
 	return Spectrum(0.0f);
 }

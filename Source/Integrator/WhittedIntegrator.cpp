@@ -9,9 +9,10 @@
 #include "Math/UtilitiesFunction.h"
 #include "Renderer/Renderer.h"
 #include "Sampler/Sampling.h"
+#include "Accelerator/Grid.h"
 #include "WhittedIntegrator.h"
 
-Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Ray* ray ) const
+Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Ray* ray , Accelerator* pAccelerator ) const
 {
 	Spectrum L( 0.0 );
 
@@ -48,10 +49,10 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 			Ray r(record->HitPoint + bias , wi, *ray, 1e-3f , Infinity);
 
 			// 若该入射方向与场景图元存在交点
-			if (scene->Intersect(r, record))
+			if( pAccelerator->Intersect( r , scene , record ) )
 			{
 				// pdf强行使用INV_PI
-				L += Li(scene, renderer, record, &r) * brdf->f(wo, wi) * AbsDot(normal, wi) / INV_PI;
+				L += Li( scene , renderer , record , &r , pAccelerator ) * brdf->f( wo , wi ) * AbsDot( normal , wi ) / INV_PI;
 			}
 		}
 

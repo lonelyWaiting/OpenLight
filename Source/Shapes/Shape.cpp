@@ -53,3 +53,8 @@ Shape* Shape::GetSubShape( int index ) const
 {
 	return nullptr;
 }
+
+void Shape::SetPrimitive( Primitive* _pPrimitive )
+{
+	pPrimitive = _pPrimitive;
+}

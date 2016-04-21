@@ -6,10 +6,10 @@
 #include "Shapes/Shape.h"
 #include "Spectrum/Spectrum.h"
 #include "Material/Material.h"
-#include "Core/VObject.h"
+#include "Core/VSerializableObject.h"
 #include "Core/VIntersectable.h"
 
-class Primitive : public VObject , public VIntersectable
+class Primitive : public VSerializableObject , public VIntersectable
 {
 public:
 	Primitive();
