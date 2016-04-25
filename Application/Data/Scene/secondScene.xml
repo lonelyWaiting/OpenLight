@@ -2,7 +2,7 @@
 <scene>
 	<!-- 渲染器 -->
 	<Renderer type="Sampler">
-		<spp>64</spp>
+		<spp>196</spp>
 	</Renderer>
 
 	<!-- 图元 -->
@@ -55,12 +55,18 @@
 				<b>0.0</b>
 			</emmisive>
 		</shape>
-		<material type="diffuse">
+		<material type="Glass">
 			<Reflection>
 				<r>1.0</r>
 				<g>1.0</g>
 				<b>1.0</b>
 			</Reflection>
+			<Transmission>
+				<r>1.0</r>
+				<g>1.0</g>
+				<b>1.0</b>
+			</Transmission>
+			<ior>1.33</ior>
 		</material>
 	</primitive>
 

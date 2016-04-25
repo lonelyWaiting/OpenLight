@@ -13,6 +13,8 @@ public:
 
 	operator Vector3f();
 
+	operator Vector3f() const;
+
 	Normal operator - () const;
 
 	Normal operator + ( const Normal& n ) const;
@@ -52,6 +54,8 @@ public:
 	friend double Dot( const Normal& n , const Vector3f& v );
 
 	friend double AbsDot( const Normal& n , const Vector3f& v );
+
+	friend double AbsDot( const Vector3f& v , const Normal& n );
 
 public:
 	double x , y , z;

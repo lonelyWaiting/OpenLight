@@ -183,9 +183,6 @@
     <ClCompile Include="..\..\Source\Shapes\ModelParser.cpp">
       <Filter>Shapes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Integrator\WhittedIntegrator.cpp">
-      <Filter>Integrator</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Light\Light.cpp">
       <Filter>Light</Filter>
     </ClCompile>
@@ -207,9 +204,6 @@
     <ClCompile Include="..\..\Source\Integrator\SurfaceIntegrator.cpp">
       <Filter>Integrator</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Material\DiffuseMaterial.cpp">
-      <Filter>Material</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Accelerator\Grid.cpp">
       <Filter>Accelerator</Filter>
     </ClCompile>
@@ -221,6 +215,36 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Core\VSerializableObject.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Integrator\SimpleIntegrator.cpp">
+      <Filter>Integrator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Integrator\WhittedIntegrator.cpp">
+      <Filter>Integrator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Integrator\IntegratorPCH.cpp">
+      <Filter>Integrator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\BRDF\SpecularReflection.cpp">
+      <Filter>BRDF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\BRDF\Fresnel.cpp">
+      <Filter>BRDF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\BRDF\FresnelConductor.cpp">
+      <Filter>BRDF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\BRDF\FresnelDielectric.cpp">
+      <Filter>BRDF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\BRDF\SpecularTransmissioncpp.cpp">
+      <Filter>BRDF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\BRDF\BSDF.cpp">
+      <Filter>BRDF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Material\GlassMaterial.cpp">
+      <Filter>Material</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -353,9 +377,6 @@
     <ClInclude Include="..\..\Source\Integrator\SurfaceIntegrator.h">
       <Filter>Integrator</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Integrator\WhittedIntegrator.h">
-      <Filter>Integrator</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Light\Light.h">
       <Filter>Light</Filter>
     </ClInclude>
@@ -377,9 +398,6 @@
     <ClInclude Include="..\..\Source\Math\UtilitiesFunction.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Material\DiffuseMaterial.h">
-      <Filter>Material</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Accelerator\Grid.h">
       <Filter>Accelerator</Filter>
     </ClInclude>
@@ -394,6 +412,42 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Core\VSerializableObject.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Integrator\SimpleIntegrator.h">
+      <Filter>Integrator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Integrator\WhittedIntegrator.h">
+      <Filter>Integrator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Integrator\IntegratorPCH.h">
+      <Filter>Integrator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\BRDF\SpecularReflection.h">
+      <Filter>BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\BRDF\Fresnel.h">
+      <Filter>BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\BRDF\FresnelConductor.h">
+      <Filter>BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\BRDF\FresnelDielectric.h">
+      <Filter>BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\BRDF\SpecularTransmission.h">
+      <Filter>BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\BRDF\BxDFHelper.h">
+      <Filter>BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\BRDF\BxDFType.h">
+      <Filter>BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\BRDF\BSDF.h">
+      <Filter>BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Material\GlassMaterial.h">
+      <Filter>Material</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

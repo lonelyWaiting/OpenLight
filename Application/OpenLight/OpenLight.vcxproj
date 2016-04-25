@@ -21,8 +21,14 @@
   <ItemGroup>
     <ClCompile Include="..\..\Source\Accelerator\Grid.cpp" />
     <ClCompile Include="..\..\Source\Application\main.cpp" />
+    <ClCompile Include="..\..\Source\BRDF\BSDF.cpp" />
     <ClCompile Include="..\..\Source\BRDF\BxDF.cpp" />
+    <ClCompile Include="..\..\Source\BRDF\Fresnel.cpp" />
+    <ClCompile Include="..\..\Source\BRDF\FresnelConductor.cpp" />
+    <ClCompile Include="..\..\Source\BRDF\FresnelDielectric.cpp" />
     <ClCompile Include="..\..\Source\BRDF\Lambertian.cpp" />
+    <ClCompile Include="..\..\Source\BRDF\SpecularReflection.cpp" />
+    <ClCompile Include="..\..\Source\BRDF\SpecularTransmissioncpp.cpp" />
     <ClCompile Include="..\..\Source\Camera\Camera.cpp" />
     <ClCompile Include="..\..\Source\Camera\PinholeCamera.cpp" />
     <ClCompile Include="..\..\Source\Camera\ThinLensCamera.cpp" />
@@ -34,14 +40,16 @@
     <ClCompile Include="..\..\Source\Film\PPMImage.cpp" />
     <ClCompile Include="..\..\Source\Filter\BoxFilter.cpp" />
     <ClCompile Include="..\..\Source\Filter\Filter.cpp" />
+    <ClCompile Include="..\..\Source\Integrator\IntegratorPCH.cpp" />
     <ClCompile Include="..\..\Source\Integrator\SurfaceIntegrator.cpp" />
+    <ClCompile Include="..\..\Source\Integrator\SimpleIntegrator.cpp" />
     <ClCompile Include="..\..\Source\Integrator\WhittedIntegrator.cpp" />
     <ClCompile Include="..\..\Source\IO\FileSystsem.cpp" />
     <ClCompile Include="..\..\Source\IO\Log.cpp" />
     <ClCompile Include="..\..\Source\Light\Light.cpp" />
     <ClCompile Include="..\..\Source\Light\PonitLight.cpp" />
     <ClCompile Include="..\..\Source\Light\VisibilityTester.cpp" />
-    <ClCompile Include="..\..\Source\Material\DiffuseMaterial.cpp" />
+    <ClCompile Include="..\..\Source\Material\GlassMaterial.cpp" />
     <ClCompile Include="..\..\Source\Material\Material.cpp" />
     <ClCompile Include="..\..\Source\Math\Bounds2.cpp" />
     <ClCompile Include="..\..\Source\Math\Bound3.cpp" />
@@ -83,8 +91,16 @@
   <ItemGroup>
     <ClInclude Include="..\..\Source\Accelerator\Accelerator.h" />
     <ClInclude Include="..\..\Source\Accelerator\Grid.h" />
+    <ClInclude Include="..\..\Source\BRDF\BSDF.h" />
     <ClInclude Include="..\..\Source\BRDF\BxDF.h" />
+    <ClInclude Include="..\..\Source\BRDF\BxDFHelper.h" />
+    <ClInclude Include="..\..\Source\BRDF\BxDFType.h" />
+    <ClInclude Include="..\..\Source\BRDF\Fresnel.h" />
+    <ClInclude Include="..\..\Source\BRDF\FresnelConductor.h" />
+    <ClInclude Include="..\..\Source\BRDF\FresnelDielectric.h" />
     <ClInclude Include="..\..\Source\BRDF\Lambertian.h" />
+    <ClInclude Include="..\..\Source\BRDF\SpecularReflection.h" />
+    <ClInclude Include="..\..\Source\BRDF\SpecularTransmission.h" />
     <ClInclude Include="..\..\Source\Camera\Camera.h" />
     <ClInclude Include="..\..\Source\Camera\PinholeCamera.h" />
     <ClInclude Include="..\..\Source\Camera\ThinLensCamera.h" />
@@ -96,14 +112,16 @@
     <ClInclude Include="..\..\Source\Film\PPMImage.h" />
     <ClInclude Include="..\..\Source\Filter\BoxFilter.h" />
     <ClInclude Include="..\..\Source\Filter\Filter.h" />
+    <ClInclude Include="..\..\Source\Integrator\IntegratorPCH.h" />
     <ClInclude Include="..\..\Source\Integrator\SurfaceIntegrator.h" />
+    <ClInclude Include="..\..\Source\Integrator\SimpleIntegrator.h" />
     <ClInclude Include="..\..\Source\Integrator\WhittedIntegrator.h" />
     <ClInclude Include="..\..\Source\IO\FileSystem.h" />
     <ClInclude Include="..\..\Source\IO\Log.h" />
     <ClInclude Include="..\..\Source\Light\Light.h" />
     <ClInclude Include="..\..\Source\Light\PointLight.h" />
     <ClInclude Include="..\..\Source\Light\VisibilityTester.h" />
-    <ClInclude Include="..\..\Source\Material\DiffuseMaterial.h" />
+    <ClInclude Include="..\..\Source\Material\GlassMaterial.h" />
     <ClInclude Include="..\..\Source\Material\Material.h" />
     <ClInclude Include="..\..\Source\Math\Bounds2.h" />
     <ClInclude Include="..\..\Source\Math\Bound3.h" />

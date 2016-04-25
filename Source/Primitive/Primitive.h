@@ -18,18 +18,22 @@ public:
 
 	virtual bool Intersect( Ray& r , IntersectRecord* record ) const;
 
-	void SetShape( Shape* _shape );
+	void AddShape( Shape* _shape );
 
 	Shape* GetShape( int index );
 
 	int GetShapeCount() const;
 
-	BxDF* GetBxDF( const Point3f& point , const Normal& normal ) const;
+	BSDF* GetBSDF( const Point3f& point , const Normal& normal ) const;
 
 	void SetMaterial(Material* material);
 
 public:
 	void Deserialization( XMLElement* PrimitiveRootElment );
+
+	void DeserializationShape( XMLElement* ShapeRootElement );
+
+	void DeserializationMaterial( XMLElement* MaterialRootElement );
 
 protected:
 	std::vector<Shape*> shapes;

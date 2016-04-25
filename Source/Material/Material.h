@@ -3,13 +3,15 @@
 #include "Math/Point3.h"
 #include "Math/Normal.h"
 #include "BRDF/BxDF.h"
+#include "BRDF/BSDF.h"
+#include "Core/VSerializableObject.h"
 
-class Material
+class Material : public VSerializableObject
 {
 public:
 	Material();
 
-	virtual BxDF* GetBxDF( const Point3f& point , const Normal& normal ) const = 0;
+	virtual BSDF* GetBSDF( const Point3f& point , const Normal& normal ) const = 0;
 
 	virtual ~Material();
 };

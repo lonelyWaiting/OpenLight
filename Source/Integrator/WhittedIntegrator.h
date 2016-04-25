@@ -9,9 +9,8 @@ public:
 
 	void SetMaxRecusiveDepth( int maxdepth );
 
-	void Deserialization(XMLElement* IntegratorRootElement);
+	void Deserialization( XMLElement* IntegratorRootElement );
 
 private:
-	int MaxDepth;
-	int SamplePathNumber;
+	int mMaxDepth;
 };

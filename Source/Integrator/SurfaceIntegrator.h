@@ -16,5 +16,3 @@ public:
 
 	virtual void Deserialization(XMLElement* IntegratorRootElement)= 0;
 };
-
-void SpecularReflect( const Ray& ray , const Scene* scene , const Renderer* renderer , IntersectRecord* record );

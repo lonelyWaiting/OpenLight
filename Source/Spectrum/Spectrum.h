@@ -274,6 +274,18 @@ public:
 		return true;
 	}
 
+	friend CoefficientSpectrum Sqrt( const CoefficientSpectrum& s )
+	{
+		CoefficientSpectrum result;
+		for( int i = 0; i < NSpectrumSamples; i++ )
+		{
+			result.c[i] = std::sqrt( s.c[i] );
+		}
+
+		Assert( !result.HasNAN() );
+		return result;
+	}
+
 	template< int N>
 	friend inline CoefficientSpectrum<N> Pow( const CoefficientSpectrum<N>& rhs , double e );
 

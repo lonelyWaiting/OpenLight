@@ -12,7 +12,7 @@
 #include "Utilities/srString.h"
 #include "IO/FileSystem.h"
 #include "Sampler/NRooksSampler.h"
-#include "Integrator/WhittedIntegrator.h"
+#include "Integrator/SimpleIntegrator.h"
 #include "BRDF/Lambertian.h"
 #include "Light/PointLight.h"
 #include "Accelerator/Grid.h"
@@ -75,7 +75,7 @@ Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrat
 	const char* IntegratorType = IntegratorRootElement->FirstAttribute()->Value();
 	if( !std::strcmp( "Whitted" , IntegratorType ) )
 	{
-		pSurfaceIntegrator = new WhittedIntegrator;
+		pSurfaceIntegrator = new SimpleIntegrator;
 		pSurfaceIntegrator->Deserialization( IntegratorRootElement );
 	}
 	else

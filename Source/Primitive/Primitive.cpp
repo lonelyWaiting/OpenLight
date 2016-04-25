@@ -2,7 +2,7 @@
 #include "Shapes/Sphere.h"
 #include "Shapes/TriangleMesh.h"
 #include "Math/Ray.h"
-#include "Material/DiffuseMaterial.h"
+#include "Material/GlassMaterial.h"
 #include "Primitive.h"
 
 Primitive::Primitive()
@@ -15,7 +15,7 @@ Primitive::~Primitive()
 
 }
 
-void Primitive::SetShape( Shape* _shape )
+void Primitive::AddShape( Shape* _shape )
 {
 	shapes.push_back( _shape );
 
@@ -54,69 +54,19 @@ void Primitive::SetMaterial(Material* material)
 
 void Primitive::Deserialization( XMLElement* PrimitiveRootElment )
 {
-	XMLElement* PrimitiveShapeElement = PrimitiveRootElment->FirstChildElement( "shape" );
+	XMLElement* ShapeRootElement = PrimitiveRootElment->FirstChildElement( "shape" );
 
-	const char* ShapeType = PrimitiveShapeElement->FirstAttribute()->Value();
-
-	if( !std::strcmp( "sphere" , ShapeType ) )
+	while( ShapeRootElement )
 	{
-		Sphere* shape = new Sphere;
-		shapes.push_back( shape );
-		shape->SetPrimitive( this );
-		shape->Deserialization( PrimitiveShapeElement );
-	}
-	else if( !std::strcmp( "obj" , ShapeType ) )
-	{
-		TriangleMesh* mesh = new TriangleMesh;
-		shapes.push_back( mesh );
-		mesh->SetPrimitive( this );
-		mesh->Deserialization( PrimitiveShapeElement );
-	}
-	else
-	{
-		Assert( "don't support \'%s\' shape object" , ShapeType );
-	}
+		DeserializationShape( ShapeRootElement );
 
-	while (PrimitiveShapeElement = PrimitiveShapeElement->NextSiblingElement("shape"))
-	{
-		ShapeType = PrimitiveShapeElement->FirstAttribute()->Value();
-
-		if (!std::strcmp("sphere", ShapeType))
-		{
-			Sphere* shape = new Sphere;
-			shapes.push_back(shape);
-			shape->SetPrimitive( this );
-			shape->Deserialization(PrimitiveShapeElement);
-		}
-		else if (!std::strcmp("obj", ShapeType))
-		{
-			TriangleMesh* mesh = new TriangleMesh;
-			shapes.push_back(mesh);
-			mesh->SetPrimitive( this );
-			mesh->Deserialization(PrimitiveShapeElement);
-		}
-		else
-		{
-			Assert("don't support \'%s\' shape object", ShapeType);
-		}
+		ShapeRootElement = ShapeRootElement->NextSiblingElement( "shape" );
 	}
-
 	
-	XMLElement* MaterialElement = PrimitiveRootElment->FirstChildElement( "material" );
-	const char* MaterialType = MaterialElement->FirstAttribute()->Value();
+	XMLElement* MaterialRootElement = PrimitiveRootElment->FirstChildElement( "material" );
+	DeserializationMaterial( MaterialRootElement );
 
-	if (!std::strcmp("diffuse", MaterialType))
-	{
-		XMLElement* MaterialReflectElement = MaterialElement->FirstChildElement("Reflection");
-		
-		double r, g, b;
-		MaterialReflectElement->FirstChildElement("r")->QueryDoubleText(&r);
-		MaterialReflectElement->FirstChildElement("g")->QueryDoubleText(&g);
-		MaterialReflectElement->FirstChildElement("b")->QueryDoubleText(&b);
-
-		pMaterial = new DiffuseMaterial(Spectrum::FromRGB(r, g, b));
-	}
-
+	// Update Bounding Box
 	for( int i = 0; i < shapes.size(); i++ )
 	{
 		BBoxLocal.ExpendToInclude( shapes[i]->GetObjectBoundingBox() );
@@ -124,9 +74,46 @@ void Primitive::Deserialization( XMLElement* PrimitiveRootElment )
 	}
 }
 
-BxDF* Primitive::GetBxDF( const Point3f& point , const Normal& normal ) const
+void Primitive::DeserializationShape( XMLElement* ShapeRootElement )
 {
-	return pMaterial->GetBxDF( point , normal );
+	const char* ShapeType = ShapeRootElement->FirstAttribute()->Value();
+
+	if( !std::strcmp( "sphere" , ShapeType ) )
+	{
+		Sphere* shape = new Sphere;
+		shapes.push_back( shape );
+		shape->SetPrimitive( this );
+		shape->Deserialization( ShapeRootElement );
+	}
+	else if( !std::strcmp( "obj" , ShapeType ) )
+	{
+		TriangleMesh* mesh = new TriangleMesh;
+		shapes.push_back( mesh );
+		mesh->SetPrimitive( this );
+		mesh->Deserialization( ShapeRootElement );
+	}
+	else
+	{
+		Assert( "don't support \'%s\' shape object" , ShapeType );
+	}
+}
+
+void Primitive::DeserializationMaterial( XMLElement* MaterialRootElement )
+{
+	Assert( MaterialRootElement != nullptr );
+
+	const char* MaterialType = MaterialRootElement->FirstAttribute()->Value();
+
+	if( !std::strcmp( "Glass" , MaterialType ) )
+	{
+		pMaterial = new GlassMaterial;
+		pMaterial->Deserialization( MaterialRootElement );
+	}
+}
+
+BSDF* Primitive::GetBSDF( const Point3f& point , const Normal& normal ) const
+{
+	return pMaterial->GetBSDF( point , normal );
 }
 
 int Primitive::GetShapeCount() const

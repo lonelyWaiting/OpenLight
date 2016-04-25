@@ -15,7 +15,7 @@ struct IntersectRecord
 		primitivePtr = nullptr;
 	}
 
-	BxDF* GetBxDF();
+	BSDF* GetBSDF();
 
 	const Primitive* primitivePtr;
 	Transform WorldToObject;

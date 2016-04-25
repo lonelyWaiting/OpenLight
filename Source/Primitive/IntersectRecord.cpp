@@ -2,7 +2,7 @@
 #include "Primitive/Primitive.h"
 #include "IntersectRecord.h"
 
-BxDF* IntersectRecord::GetBxDF()
+BSDF* IntersectRecord::GetBSDF()
 {
-	return primitivePtr->GetBxDF( HitPoint , normal );
+	return primitivePtr->GetBSDF( HitPoint , normal );
 }

@@ -68,6 +68,7 @@ void SamplerRenderer::Render( const Scene* scene )
 	clock_t end = clock();
 	double t = ( double )( end - start ) / CLOCKS_PER_SEC;
 	printf( "\nRender time: %fs.\n" , t );
+	Log::Get().Info( "\nRender time: %fs.\n" , t );
 
 	camera->GetFilm()->Display();
 }
@@ -78,10 +79,6 @@ Spectrum SamplerRenderer::Li( const Scene* scene , Ray* ray , IntersectRecord* r
 	{
 		return surfaceIntegrator->Li( scene , this , record , ray , pAccelerator );
 	}
-	/*if (scene->Intersect(*ray, record))
-	{
-		return surfaceIntegrator->Li(scene, this, record, ray);
-	}*/
 
 	return Spectrum(0.0f);
 }

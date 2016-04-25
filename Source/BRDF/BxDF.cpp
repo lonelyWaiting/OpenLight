@@ -2,12 +2,18 @@
 #include "Sampler/Sampling.h"
 #include "BxDF.h"
 
+BxDF::BxDF( BxDFType type )
+	:type( type )
+{
+
+}
+
 BxDF::~BxDF()
 {
 
 }
 
-Spectrum BxDF::Sample_f( const Vector3f& wo , Vector3f* wi , const Point2f& samplePoint , double* pdf ) const
+Spectrum BxDF::Sample_f( const Vector3f& wo , const Normal& n , Vector3f* wi , const Point2f& samplePoint , double* pdf ) const
 {
 	// 生成半球采样方向
 	*wi = CosineSampleHemisphere( samplePoint );
@@ -15,9 +21,9 @@ Spectrum BxDF::Sample_f( const Vector3f& wo , Vector3f* wi , const Point2f& samp
 	// 由于wi->z总是为正
 	// 所以当wo为负值时
 	// 需要反转wi->z,从而保证位于同一个半球
-	if( wo.z < 0.0f )
+	if( Dot( wo , *wi ) < 0.0 )
 	{
-		wi->z *= -1.0f;
+		*wi *= -1;
 	}
 
 	// 计算该方向对的pdf
@@ -31,10 +37,10 @@ Spectrum BxDF::Sample_f( const Vector3f& wo , Vector3f* wi , const Point2f& samp
 // 因此cos(theta) = (0 , 0 , 1) * wi = wi.z
 double BxDF::PDF( const Vector3f& wi , const Vector3f& wo ) const
 {
-	return ( wi.z * wo.z > 0.0 ) ? fabs( wi.z ) * INV_PI : 0.0f;
+	return ( wi.z * wo.z > 0.0 ) ? AbsDot( wi , wi ) * INV_PI : 0.0f;
 }
 
-Spectrum BxDF::rho( int nSamples , Point2f* Samples1 , Point2f* Samples2 ) const
+Spectrum BxDF::rho( const Normal& n , int nSamples , Point2f* Samples1 , Point2f* Samples2 ) const
 {
 	Spectrum r = 0;
 
@@ -49,7 +55,7 @@ Spectrum BxDF::rho( int nSamples , Point2f* Samples1 , Point2f* Samples2 ) const
 		double PdfOutput = INV_TWO_PI; 
 		double PdfInput = 0.0f;
 
-		Spectrum f = Sample_f( wo , &wi , Samples1[i] , &PdfInput );
+		Spectrum f = Sample_f( wo , n , &wi , Samples1[i] , &PdfInput );
 
 		if( PdfInput > 0.0f )
 		{
@@ -62,7 +68,7 @@ Spectrum BxDF::rho( int nSamples , Point2f* Samples1 , Point2f* Samples2 ) const
 
 // 给定出射方向，以及一组采样点
 // 该组采样点用于生成一组入射方向
-Spectrum BxDF::rho( const Vector3f& wo , int nSamples , Point2f* samples ) const
+Spectrum BxDF::rho( const Vector3f& wo , const Normal& n , int nSamples , Point2f* samples ) const
 { 
 	Spectrum r = 0;
 
@@ -71,7 +77,7 @@ Spectrum BxDF::rho( const Vector3f& wo , int nSamples , Point2f* samples ) const
 		Vector3f wi;
 		double pdf = 0.0f;
 
-		Spectrum f = Sample_f( wo , &wi , samples[i] , &pdf );
+		Spectrum f = Sample_f( wo , n , &wi , samples[i] , &pdf );
 
 		if( pdf > 0.0 )
 		{
