@@ -246,6 +246,9 @@
     <ClCompile Include="..\..\Source\Material\GlassMaterial.cpp">
       <Filter>Material</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Material\DiffuseMaterial.cpp">
+      <Filter>Material</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Math\Matrix3.h">
@@ -447,6 +450,9 @@
       <Filter>BRDF</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Material\GlassMaterial.h">
+      <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Material\DiffuseMaterial.h">
       <Filter>Material</Filter>
     </ClInclude>
   </ItemGroup>

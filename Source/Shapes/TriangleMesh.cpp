@@ -79,12 +79,20 @@ void TriangleMesh::Deserialization( XMLElement* ShapeRootElement )
 	*WorldToObject = Inverse( *ObjectToWorld );
 
 	double r , g , b;
-	XMLElement* ShapeEmmisiveElement = ShapeRootElement->FirstChildElement( "emmisive" );
-	ShapeEmmisiveElement->FirstChildElement( "r" )->QueryDoubleText( &r );
-	ShapeEmmisiveElement->FirstChildElement( "g" )->QueryDoubleText( &g );
-	ShapeEmmisiveElement->FirstChildElement( "b" )->QueryDoubleText( &b );
+	XMLElement* ShapeEmissionElement = ShapeRootElement->FirstChildElement( "Emissive" );
+	ShapeEmissionElement->FirstChildElement( "r" )->QueryDoubleText( &r );
+	ShapeEmissionElement->FirstChildElement( "g" )->QueryDoubleText( &g );
+	ShapeEmissionElement->FirstChildElement( "b" )->QueryDoubleText( &b );
 
-	emmisive = Spectrum::FromRGB( r , g , b );
+	Emissive = Spectrum::FromRGB( r , g , b );
+
+	// read Surface Color Data
+	XMLElement* ShapeSurfaceColorElement = ShapeRootElement->FirstChildElement( "SurfaceColor" );
+	ShapeSurfaceColorElement->FirstChildElement( "r" )->QueryDoubleText( &r );
+	ShapeSurfaceColorElement->FirstChildElement( "g" )->QueryDoubleText( &g );
+	ShapeSurfaceColorElement->FirstChildElement( "b" )->QueryDoubleText( &b );
+
+	SurfaceColor = Spectrum::FromRGB( r , g , b );
 
 	// ½âÎöOBJÄ£ĞÍ
 	ModelParse( filename , points , normals , triangles , VertexNum , TriangleCount );

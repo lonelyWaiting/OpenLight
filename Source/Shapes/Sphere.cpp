@@ -62,14 +62,15 @@ bool Sphere::Intersect( Ray& r , IntersectRecord* record ) const
 			}
 		}
 
-		r.MaxT = t;
-		record->primitivePtr = pPrimitive;
-		record->HitT = t;
+		r.MaxT                = t;
+		record->primitivePtr  = pPrimitive;
+		record->HitT          = t;
 		record->ObjectToWorld = *ObjectToWorld;
 		record->WorldToObject = *WorldToObject;
-		record->normal = Normal( Normalize( r( t ) - m_Center ) );
-		record->Emmisive = emmisive;
-		record->HitPoint = r( t );
+		record->normal        = Normal( Normalize( r( t ) - m_Center ) );
+		record->Emission      = Emissive;
+		record->SurfaceColor  = SurfaceColor;
+		record->HitPoint      = r( t );
 		return true;
 	}
 	
@@ -86,12 +87,20 @@ void Sphere::Deserialization( XMLElement* ShapeRootElement )
 
 	ShapeRootElement->FirstChildElement( "radius" )->QueryDoubleText( &m_Radius );
 
+	// Read Emissive
 	double r, g, b;
-	ShapeRootElement->FirstChildElement("emmisive")->FirstChildElement("r")->QueryDoubleText(&r);
-	ShapeRootElement->FirstChildElement("emmisive")->FirstChildElement("g")->QueryDoubleText(&g);
-	ShapeRootElement->FirstChildElement("emmisive")->FirstChildElement("b")->QueryDoubleText(&b);
+	ShapeRootElement->FirstChildElement("Emissive")->FirstChildElement("r")->QueryDoubleText(&r);
+	ShapeRootElement->FirstChildElement("Emissive")->FirstChildElement("g")->QueryDoubleText(&g);
+	ShapeRootElement->FirstChildElement("Emissive")->FirstChildElement("b")->QueryDoubleText(&b);
 
-	emmisive = Spectrum::FromRGB(r, g, b);
+	Emissive = Spectrum::FromRGB(r, g, b);
+
+	// Read Surface Color
+	ShapeRootElement->FirstChildElement( "SurfaceColor" )->FirstChildElement( "r" )->QueryDoubleText( &r );
+	ShapeRootElement->FirstChildElement( "SurfaceColor" )->FirstChildElement( "g" )->QueryDoubleText( &g );
+	ShapeRootElement->FirstChildElement( "SurfaceColor" )->FirstChildElement( "b" )->QueryDoubleText( &b );
+	
+	SurfaceColor = Spectrum::FromRGB( r , g , b );
 
 	*ObjectToWorld = Translate( Vector3f( m_Center ) );
 	*WorldToObject = Inverse( *ObjectToWorld );

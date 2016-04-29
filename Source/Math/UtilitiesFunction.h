@@ -4,10 +4,10 @@
 #include "Normal.h"
 #include "Vector3.h"
 
-double AbsDot( const Vector3f& v , const Normal& n )
-{
-	return fabs( v.x * n.x + v.y * n.y + v.z * n.z );
-}
+//double AbsDot( const Vector3f& v , const Normal& n )
+//{
+//	return fabs( v.x * n.x + v.y * n.y + v.z * n.z );
+//}
 
 Ray Reflect( const Ray& r , const Normal& n , const Point3f& p , double bias )
 {

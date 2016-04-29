@@ -32,7 +32,8 @@ public:
 public:
 	Transform*	ObjectToWorld;
 	Transform*	WorldToObject;
-	Spectrum	emmisive;
+	Spectrum	Emissive;				
+	Spectrum	SurfaceColor;			
 	bool		bCombination;			// 是否由其它shape组成
 	Primitive*  pPrimitive;				// 所属图元
 };

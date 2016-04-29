@@ -19,8 +19,6 @@ bool AggregateShape::Intersect( Ray& ray , IntersectRecord* record ) const
 		if( ( *iter )->Intersect( ray , record ) )
 		{
 			bHit = true;
-			/*record->HitPoint = ray( record->HitT );
-			record->Emmisive = ( *iter )->emmisive;*/
 		}
 	}
 

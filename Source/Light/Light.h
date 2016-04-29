@@ -2,6 +2,8 @@
 
 #include "Math/Transform.h"
 #include "Spectrum/Spectrum.h"
+#include "Core/VSerializableObject.h"
+#include "VisibilityTester.h"
 
 class Scene;
 
@@ -10,14 +12,16 @@ struct LightSample
 	double value[2];
 };
 
-class Light
+class Light : public VSerializableObject
 {
 public:
+	Light();
+
 	virtual ~Light();
 
 	Light( const Transform& _LightToWorld , int _nSamples = 1 );
 
-	virtual Spectrum Sample_L( const Point3f& p , Vector3f* wi , double* pdf ) const = 0;
+	virtual Spectrum Sample_L( const Point3f& p , Vector3f* wi , double* pdf , VisibilityTester* pVisibility ) const = 0;
 
 	virtual Spectrum Power( const Scene* scene ) const = 0;
 
@@ -28,8 +32,8 @@ public:
 	virtual Spectrum Sample_L( const Scene* scene , LightSample& _lightSample , Ray* ray , Normal* NormalShading , double* pdf ) const = 0;
 
 protected:
-	const Transform LightToWorld;
-	const Transform WorldToLight;
+	Transform LightToWorld;
+	Transform WorldToLight;
 
 public:
 	int nSamples;

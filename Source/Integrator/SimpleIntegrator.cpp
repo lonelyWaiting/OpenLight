@@ -19,7 +19,7 @@ Spectrum SimpleIntegrator::Li( const Scene* scene , const Renderer* renderer , I
 	if (ray->depth < MaxDepth)
 	{
 		// 计算Hit Point处的BRDF
-		BxDF* brdf = record->GetBSDF();
+		BSDF* brdf = record->GetBSDF();
 
 		// 着色点位置，着色点法线
 		const Point3f& p = record->HitPoint;
@@ -52,14 +52,14 @@ Spectrum SimpleIntegrator::Li( const Scene* scene , const Renderer* renderer , I
 			if( pAccelerator->Intersect( r , scene , record ) )
 			{
 				// pdf强行使用INV_PI
-				L += Li( scene , renderer , record , &r , pAccelerator ) * brdf->f( wo , wi ) * AbsDot( normal , wi ) / INV_PI;
+				L += Li( scene , renderer , record , &r , pAccelerator ) * brdf->f( wo , wi , record->normal , BxDFType( DIFFUSE ) ) *AbsDot( normal , wi ) / INV_PI;
 			}
 		}
 
 		L /= SamplePathNumber;
 	}
 	
-	L += record->Emmisive;
+	L += record->Emission;
 
 	return L;
 }

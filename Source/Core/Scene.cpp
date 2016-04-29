@@ -55,3 +55,8 @@ const Primitive& Scene::GetPrimitive( int index ) const
 {
 	return Objects[index];
 }
+
+Light* Scene::GetLight( int index ) const
+{
+	return lights[index];
+}

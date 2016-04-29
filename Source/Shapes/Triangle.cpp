@@ -87,8 +87,9 @@ bool Triangle::Intersect( Ray& rayWorld , IntersectRecord* record ) const
 		record->HitT          = t;
 		record->ObjectToWorld = *( pMesh->ObjectToWorld );
 		record->WorldToObject = *( pMesh->WorldToObject );
-		record->normal        = pMesh->normals[index0];			// 该triangle上的三个顶点
-		record->Emmisive      = pMesh->emmisive;
+		record->normal        = ( *ObjectToWorld )( pMesh->normals[index0] );			// 该triangle上的三个顶点
+		record->Emission      = pMesh->Emissive;
+		record->SurfaceColor  = pMesh->SurfaceColor;
 		record->HitPoint      = rayWorld( t );
 		record->primitivePtr  = pMesh->pPrimitive;
 		return true;

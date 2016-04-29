@@ -3,7 +3,7 @@
 #include "Math/Transform.h"
 #include "Spectrum/Spectrum.h"
 #include "Math/Point3.h"
-#include "BRDF/BxDF.h"
+#include "BRDF/BSDF.h"
 #include "Math/Normal.h"
 
 class Primitive;
@@ -23,5 +23,6 @@ struct IntersectRecord
 	double HitT;
 	Point3f HitPoint;
 	Normal normal;
-	Spectrum Emmisive;
+	Spectrum Emission;
+	Spectrum SurfaceColor;
 };

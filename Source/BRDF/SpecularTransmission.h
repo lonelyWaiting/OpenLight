@@ -16,8 +16,8 @@ public:
 	double PDF( const Vector3f& wi , const Vector3f& wo ) const;
 
 private:
-	double etaI;
-	double etaT;
+	mutable double etaI;
+	mutable double etaT;
 	const Spectrum	T;		// use to scale transmission color
 	const FresnelDielectric fresnel;
 };

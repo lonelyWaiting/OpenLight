@@ -3,10 +3,16 @@
 #include "SpecularReflection.h"
 
 SpecularReflection::SpecularReflection( const Spectrum& R , const Fresnel* fresnel )
-	: R( R )
+	: BxDF( BxDFType( REFLECTION | SPECULAR ) )
+	, R( R )
 	, fresnel( fresnel )
 {
 
+}
+
+SpecularReflection::~SpecularReflection()
+{
+	SAFE_DELETE( fresnel );
 }
 
 Spectrum SpecularReflection::f( const Vector3f& wo , const Vector3f& wi ) const

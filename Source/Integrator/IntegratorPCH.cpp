@@ -18,17 +18,14 @@ Spectrum SpecularReflect( const Ray& ray , const Scene* scene , const Renderer* 
 
 	double pdf;
 
-	// 计算Hit Point处的BRDF
-	BSDF* brdf = record->GetBSDF();
-
 	// 光线方向的反方向为出射方向
 	Vector3f wo = -1.0f * ray.Direction;
 
 	Vector3f wi;
 
-	Point2f SamplePoint( ( float )rand() / ( float )RAND_MAX , ( float )rand() / ( float )RAND_MAX );
+	Point2f SamplePoint( ( double )rand() / ( double )RAND_MAX , ( double )rand() / ( double )RAND_MAX );
 
-	Spectrum f = brdf->Sample_f( wo , record->normal , &wi , SamplePoint , &pdf , BxDFType( REFLECTION | SPECULAR ) );
+	Spectrum f = pBSDF->Sample_f( wo , normal , &wi , SamplePoint , &pdf , BxDFType( REFLECTION | SPECULAR ) );
 
 	Spectrum L = 0.0;
 
@@ -60,9 +57,6 @@ Spectrum SpecularTransmit( const Ray& ray , const Scene* scene , const Renderer*
 
 	double pdf;
 
-	// 计算Hit Point处的BRDF
-	BSDF* brdf = record->GetBSDF();
-
 	// 光线方向的反方向为出射方向
 	Vector3f wo = -1.0f * ray.Direction;
 
@@ -70,7 +64,7 @@ Spectrum SpecularTransmit( const Ray& ray , const Scene* scene , const Renderer*
 
 	Point2f SamplePoint( ( float )rand() / ( float )RAND_MAX , ( float )rand() / ( float )RAND_MAX );
 
-	Spectrum f = brdf->Sample_f( wo , record->normal , &wi , SamplePoint , &pdf , BxDFType( TRANSMISSION | SPECULAR ) );
+	Spectrum f = pBSDF->Sample_f( wo , normal , &wi , SamplePoint , &pdf , BxDFType( TRANSMISSION | SPECULAR ) );
 
 	Spectrum L = 0.0;
 

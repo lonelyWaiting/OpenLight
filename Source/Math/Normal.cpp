@@ -163,7 +163,12 @@ double AbsDot( const Normal& n , const Vector3f& v )
 	return fabs( n.x * v.x + n.y * v.y + n.z * v.z );
 }
 
-double AbsDot( const Vector3f& v , const Vector3f& normal )
+double AbsDot( const Vector3f& v , const Normal& normal )
 {
 	return fabs( v.x * normal.x + v.y * normal.y + v.z * normal.z );
+}
+
+Normal Normalize( const Normal& n )
+{
+	return n / n.Length();
 }

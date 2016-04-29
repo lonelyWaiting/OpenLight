@@ -13,6 +13,7 @@
 #include "IO/FileSystem.h"
 #include "Sampler/NRooksSampler.h"
 #include "Integrator/SimpleIntegrator.h"
+#include "Integrator/WhittedIntegrator.h"
 #include "BRDF/Lambertian.h"
 #include "Light/PointLight.h"
 #include "Accelerator/Grid.h"
@@ -32,10 +33,27 @@ Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrat
 	doc.LoadFile( srString::ToAscii( SceneFilename ).c_str() );
 
 	// ----------------------------------Primitive---------------------------------------------
-	Primitive* primitive = new Primitive;
 	XMLElement* PrimitiveElement = doc.FirstChildElement()->FirstChildElement( "primitive" );
-	primitive->Deserialization( PrimitiveElement );
-	scene->AddObject( *primitive );
+	while( PrimitiveElement )
+	{
+		Primitive* primitive = new Primitive;
+		primitive->Deserialization( PrimitiveElement );
+		scene->AddObject( *primitive );
+
+		PrimitiveElement = PrimitiveElement->NextSiblingElement( "primitive" );
+	}
+	
+	// -----------------------------------Light---------------------------------------------
+	XMLElement* LightRootElement = doc.FirstChildElement()->FirstChildElement( "light" );
+	while( LightRootElement )
+	{
+		// for test , hard core
+		Light* light = new PointLight;
+		light->Deserialization( LightRootElement );
+		scene->AddLight( light );
+
+		LightRootElement = LightRootElement->NextSiblingElement( "light" );
+	}
 
 	// ---------------------------------Film---------------------------------------------
 	Film* film = new Film();
@@ -75,7 +93,7 @@ Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrat
 	const char* IntegratorType = IntegratorRootElement->FirstAttribute()->Value();
 	if( !std::strcmp( "Whitted" , IntegratorType ) )
 	{
-		pSurfaceIntegrator = new SimpleIntegrator;
+		pSurfaceIntegrator = new WhittedIntegrator;
 		pSurfaceIntegrator->Deserialization( IntegratorRootElement );
 	}
 	else

@@ -1,5 +1,6 @@
 #include "PCH.h"
 #include "Core/Scene.h"
+#include "Accelerator/Accelerator.h"
 #include "VisibilityTester.h"
 
 void VisibilityTester::SetSegment( const Point3f& p1 , double eps1 , const Point3f& p2 , double eps2 )
@@ -9,12 +10,14 @@ void VisibilityTester::SetSegment( const Point3f& p1 , double eps1 , const Point
 	r = Ray( p1 , ( p2 - p1 ) / dist , eps1 , dist + ( 1 - eps2 ) );
 }
 
-bool VisibilityTester::Unoccluded( const Scene* scene ) const
+bool VisibilityTester::Unoccluded( const Scene* scene , Accelerator* pAccelerator ) const
 {
-	/*if( !scene->IntersectP( r ) )
+	IntersectRecord record;
+	if( !pAccelerator->Intersect( r , scene , &record ) )
 	{
+		// 未发生碰撞，即未被遮挡，返回true
 		return true;
-	}*/
+	}
 
 	return false;
 }

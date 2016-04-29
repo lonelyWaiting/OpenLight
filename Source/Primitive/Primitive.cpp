@@ -3,6 +3,7 @@
 #include "Shapes/TriangleMesh.h"
 #include "Math/Ray.h"
 #include "Material/GlassMaterial.h"
+#include "Material/DiffuseMaterial.h"
 #include "Primitive.h"
 
 Primitive::Primitive()
@@ -36,7 +37,7 @@ bool Primitive::Intersect( Ray& r , IntersectRecord* record ) const
 			if( shapes[i]->Intersect( r , record ) )
 			{
 				record->HitPoint = r( record->HitT );
-				record->Emmisive = shapes[i]->emmisive;
+				record->Emission = shapes[i]->Emissive;
 				bHit = true;
 			}
 		}
@@ -107,6 +108,11 @@ void Primitive::DeserializationMaterial( XMLElement* MaterialRootElement )
 	if( !std::strcmp( "Glass" , MaterialType ) )
 	{
 		pMaterial = new GlassMaterial;
+		pMaterial->Deserialization( MaterialRootElement );
+	}
+	else if( !std::strcmp( "Diffuse" , MaterialType ) )
+	{
+		pMaterial = new DiffuseMaterial;
 		pMaterial->Deserialization( MaterialRootElement );
 	}
 }

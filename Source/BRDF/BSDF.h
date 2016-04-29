@@ -25,7 +25,7 @@ public:
 
 	double PDF( const Vector3f& wo , const Vector3f& wi , BxDFType type ) const;
 
-private:
+//private:
 	~BSDF();
 
 private:

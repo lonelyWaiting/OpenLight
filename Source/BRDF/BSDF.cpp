@@ -11,7 +11,10 @@ BSDF::BSDF()
 
 BSDF::~BSDF()
 {
-
+	for( int i = 0; i < nBxDF; i++ )
+	{
+		SAFE_DELETE( bxdfs[i] );
+	}
 }
 
 void BSDF::Add( BxDF* bxdf )
@@ -28,7 +31,7 @@ Spectrum BSDF::f( const Vector3f& wo , const Vector3f& wi , const Normal& n , co
 
 	for( int i = 0; i < nBxDF; i++ )
 	{
-		if( bxdfs[i]->type & type )
+		if( ( bxdfs[i]->type & type ) == bxdfs[i]->type )
 		{
 			if( ( IsReflect && ( bxdfs[i]->type & REFLECTION ) ) || ( !IsReflect && ( bxdfs[i]->type & TRANSMISSION ) ) )
 			{
@@ -57,7 +60,7 @@ Spectrum BSDF::Sample_f( const Vector3f&wo , const Normal& n , Vector3f* wi , co
 	BxDF* bxdf = nullptr;
 	for( int i = 0; i < nBxDF; i++ )
 	{
-		if( bxdfs[i]->type & type && index-- == 0 )
+		if( ( bxdfs[i]->type & type ) == type && index-- == 0 )
 		{
 			bxdf = bxdfs[i];
 			break;
@@ -79,7 +82,7 @@ Spectrum BSDF::Sample_f( const Vector3f&wo , const Normal& n , Vector3f* wi , co
 	{
 		for( int i = 0; i < nBxDF; i++ )
 		{
-			if( bxdfs[i] != bxdf && bxdfs[i]->type & type )
+			if( bxdfs[i] != bxdf && ( bxdfs[i]->type & type ) == type )
 			{
 				*pdf += bxdfs[i]->PDF( wo , *wi );
 			}
@@ -98,7 +101,7 @@ Spectrum BSDF::Sample_f( const Vector3f&wo , const Normal& n , Vector3f* wi , co
 
 		for( int i = 0; i < nBxDF; i++ )
 		{
-			if( bxdfs[i]->type & type )
+			if( ( bxdfs[i]->type & type ) == type )
 			{
 				if( ( IsReflect && ( bxdfs[i]->type & REFLECTION ) ) || ( !IsReflect && ( bxdfs[i]->type & TRANSMISSION ) ) )
 				{
@@ -119,7 +122,7 @@ double BSDF::PDF( const Vector3f& wo , const Vector3f& wi , BxDFType type ) cons
 	// 计算与type匹配的bxdf的pdf和
 	for( int i = 0; i < nBxDF; i++ )
 	{
-		if( bxdfs[i]->type & type )
+		if( ( bxdfs[i]->type & type ) == type )
 		{
 			pdf += bxdfs[i]->PDF( wo , wi );
 			Num++;
@@ -140,7 +143,7 @@ int BSDF::Count( BxDFType type ) const
 
 	for( int i = 0; i < nBxDF; i++ )
 	{
-		if( bxdfs[i]->type & type )
+		if( ( bxdfs[i]->type & type ) == type )
 		{
 			count++;
 		}

@@ -5,6 +5,11 @@
 #include "Math/Normal.h"
 #include "PointLight.h"
 
+PointLight::PointLight()
+{
+
+}
+
 PointLight::PointLight( const Transform& LightToWorld , const Spectrum & _intensity )
 	:Light( LightToWorld )
 {
@@ -24,12 +29,15 @@ Spectrum PointLight::Sample_L( const Scene* scene , LightSample& lightSample , R
 	return intensity;
 }
 
-Spectrum PointLight::Sample_L( const Point3f& p , Vector3f* wi , double* pdf ) const
+Spectrum PointLight::Sample_L( const Point3f& p , Vector3f* wi , double* pdf , VisibilityTester* pVisibility ) const
 {
 	// 计算入射光线
 	*wi = Normalize( LightPosWorld - p );
 
 	*pdf = 1.0f;
+	
+	// 创建线段
+	pVisibility->SetSegment( p , EPSILON , LightPosWorld , 0 );
 
 	// 计算在p点处的强度
 	return intensity / ( LightPosWorld - p ).Length();
@@ -43,4 +51,23 @@ Spectrum PointLight::Power( const Scene* scene ) const
 double PointLight::PDF( const Point3f& p , const Vector3f& wi ) const
 {
 	return 0;
+}
+
+void PointLight::Deserialization( XMLElement* LightRootElement )
+{
+	XMLElement* LightPositionRootElement = LightRootElement->FirstChildElement( "transform" )->FirstChildElement( "position" );
+	LightPositionRootElement->FirstChildElement( "x" )->QueryDoubleText( &LightPosWorld.x );
+	LightPositionRootElement->FirstChildElement( "y" )->QueryDoubleText( &LightPosWorld.y );
+	LightPositionRootElement->FirstChildElement( "z" )->QueryDoubleText( &LightPosWorld.z );
+
+	LightToWorld = Translate( Vector3f( LightPosWorld ) );
+	WorldToLight = Inverse( LightToWorld );
+
+	double r , g , b;
+	XMLElement* IntensityRootElement = LightRootElement->FirstChildElement( "intensity" );
+	IntensityRootElement->FirstChildElement( "r" )->QueryDoubleText( &r );
+	IntensityRootElement->FirstChildElement( "g" )->QueryDoubleText( &g );
+	IntensityRootElement->FirstChildElement( "b" )->QueryDoubleText( &b );
+
+	intensity = Spectrum::FromRGB( r , g , b );
 }

@@ -13,7 +13,7 @@ Shape::Shape(Spectrum _emmisive /*= Spectrum(0)*/)
 
 	WorldToObject = new Transform;
 
-	emmisive = _emmisive;
+	Emissive = _emmisive;
 
 	bCombination = false;
 }

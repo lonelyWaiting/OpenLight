@@ -24,7 +24,7 @@ Ray PinholeCamera::GenerateRay( double RasterX , double RasterY , const CameraSa
 
 	// 视平面上的采样点
 	double x = ( RasterX + SamplePoint.ImageSamples.x ) / RasterResolution.x  * ( Right - Left ) + Left;
-	double y = ( RasterY + SamplePoint.ImageSamples.y ) / RasterResolution.y * ( Top - Bottom ) + Bottom;
+	double y = ( 1.0 - ( RasterY + SamplePoint.ImageSamples.y ) / RasterResolution.y ) * ( Top - Bottom ) + Bottom;
 
 	Vector3f dir = x * uvw.U + y * uvw.V + ViewDistance * uvw.W;
 

@@ -5,6 +5,14 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="hybrid|Win32">
+      <Configuration>hybrid</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="hybrid|x64">
+      <Configuration>hybrid</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
@@ -49,6 +57,7 @@
     <ClCompile Include="..\..\Source\Light\Light.cpp" />
     <ClCompile Include="..\..\Source\Light\PonitLight.cpp" />
     <ClCompile Include="..\..\Source\Light\VisibilityTester.cpp" />
+    <ClCompile Include="..\..\Source\Material\DiffuseMaterial.cpp" />
     <ClCompile Include="..\..\Source\Material\GlassMaterial.cpp" />
     <ClCompile Include="..\..\Source\Material\Material.cpp" />
     <ClCompile Include="..\..\Source\Math\Bounds2.cpp" />
@@ -84,6 +93,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='hybrid|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\Source\Utilities\RandomNumberGenerator.cpp" />
     <ClCompile Include="..\..\Source\Utilities\srString.cpp" />
@@ -121,6 +131,7 @@
     <ClInclude Include="..\..\Source\Light\Light.h" />
     <ClInclude Include="..\..\Source\Light\PointLight.h" />
     <ClInclude Include="..\..\Source\Light\VisibilityTester.h" />
+    <ClInclude Include="..\..\Source\Material\DiffuseMaterial.h" />
     <ClInclude Include="..\..\Source\Material\GlassMaterial.h" />
     <ClInclude Include="..\..\Source\Material\Material.h" />
     <ClInclude Include="..\..\Source\Math\Bounds2.h" />
@@ -190,6 +201,14 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='hybrid|Win32'">
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='hybrid|x64'">
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
@@ -231,6 +250,11 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)Application\Bin\$(Configuration)\</OutDir>
     <IncludePath>$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='hybrid|Win32'">
+    <OutDir>$(SolutionDir)Application\Bin\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -313,6 +337,29 @@
       <AdditionalLibraryDirectories>$(SolutionDir)Library\FreeImage\Lib;$(SolutionDir)Library\TinyXML2\Lib\x64-Release-Lib;$(SolutionDir)Library\assimp\Lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>FreeImage.lib;tinyxml2.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='hybrid|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)Source;$(SolutionDir)Library\FreeImage\Inc;$(SolutionDir)Source\Utilities;$(SolutionDir)Library\TinyXML2\Inc;$(SolutionDir)Library\assimp\Inc</AdditionalIncludeDirectories>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <OpenMPSupport>false</OpenMPSupport>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)Library\FreeImage\Lib;$(SolutionDir)Library\TinyXML2\Lib\Win32-Release-Lib;$(SolutionDir)Library\assimp\Lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>FreeImage.lib;tinyxml2.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)\Library\assimp\Lib\Release\assimp-vc140-mt.dll ..\Bin\Release\</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

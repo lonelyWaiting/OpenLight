@@ -2,7 +2,7 @@
 #include "Lambertian.h"
 
 Lambertian::Lambertian( const Spectrum& reflectance )
-	: BxDF()
+	: BxDF( BxDFType( DIFFUSE | REFLECTION ) )
 	, R( reflectance )
 { 
 

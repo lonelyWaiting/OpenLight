@@ -2,58 +2,73 @@
 <scene>
 	<!-- 渲染器 -->
 	<Renderer type="Sampler">
-		<spp>196</spp>
+		<spp>1280</spp>
 	</Renderer>
 
 	<!-- 图元 -->
 	<primitive>
-		<shape type="obj">
+		<shape type="sphere">
 			<filename>sphere.obj</filename>
 			<transform>
 				<position>
 					<x>0</x>
-					<y>0</y>
-					<z>10</z>
+					<y>2</y>
+					<z>14</z>
 				</position>
 			</transform>
-			<radius>1</radius>
-			<emmisive>
+			<radius>2</radius>
+			<Emissive>
 				<r>0.0</r>
 				<g>0.0</g>
-				<b>1.0</b>
-			</emmisive>
-		</shape>
-		<shape type="obj">
-			<filename>sphere.obj</filename>
-			<transform>
-				<position>
-					<x>2</x>
-					<y>0</y>
-					<z>12</z>
-				</position>
-			</transform>
-			<radius>1</radius>
-			<emmisive>
+				<b>0.0</b>
+			</Emissive>
+			<SurfaceColor>
 				<r>1.0</r>
-				<g>0.0</g>
-				<b>0.0</b>
-			</emmisive>
+				<g>1.0</g>
+				<b>1.0</b>
+			</SurfaceColor>
 		</shape>
-		<shape type="obj">
+		<shape type="sphere">
 			<filename>sphere.obj</filename>
 			<transform>
 				<position>
-					<x>-2</x>
-					<y>0</y>
+					<x>5</x>
+					<y>2</y>
 					<z>12</z>
 				</position>
 			</transform>
-			<radius>1</radius>
-			<emmisive>
+			<radius>2</radius>
+			<Emissive>
 				<r>0.0</r>
-				<g>1.0</g>
+				<g>0.0</g>
 				<b>0.0</b>
-			</emmisive>
+			</Emissive>
+			<SurfaceColor>
+				<r>1.0</r>
+				<g>1.0</g>
+				<b>1.0</b>
+			</SurfaceColor>
+		</shape>
+		<shape type="sphere">
+			<filename>sphere.obj</filename>
+			<transform>
+				<position>
+					<x>-5</x>
+					<y>2</y>
+					<z>12</z>
+				</position>
+			</transform>
+			<radius>2</radius>
+			<Emissive>
+				<r>0.0</r>
+				<g>0.0</g>
+				<b>0.0</b>
+			</Emissive>
+			<SurfaceColor>
+				<r>1.0</r>
+				<g>1.0</g>
+				<b>1.0</b>
+			</SurfaceColor>
 		</shape>
 		<material type="Glass">
 			<Reflection>
@@ -70,6 +85,161 @@
 		</material>
 	</primitive>
 
+	<!-- bottom Plane ,Blue Surface Color , No Emissive -->
+	<primitive>
+		<shape type="obj">
+			<filename>cbox_bottom.obj</filename>
+			<transform>
+				<position>
+					<x>0</x>
+					<y>0</y>
+					<z>0</z>
+				</position>
+			</transform>
+			<Emissive>
+				<r>0.0</r>
+				<g>0.0</g>
+				<b>0.0</b>
+			</Emissive>
+			<SurfaceColor>
+				<r>0.0</r>
+				<g>0.0</g>
+				<b>1.0</b>
+			</SurfaceColor>
+		</shape>
+		<material type="Diffuse">
+			<Reflection>
+				<r>1.0</r>
+				<g>1.0</g>
+				<b>1.0</b>
+			</Reflection>
+		</material>
+	</primitive>
+
+	<!-- floor Plane ,Black Surface Color , Emissive White Light -->
+	<primitive>
+		<shape type="obj">
+			<filename>cbox_floor.obj</filename>
+			<transform>
+				<position>
+					<x>0</x>
+					<y>0</y>
+					<z>0</z>
+				</position>
+			</transform>
+			<Emissive>
+				<r>0.0</r>
+				<g>0.0</g>
+				<b>0.0</b>
+			</Emissive>
+			<SurfaceColor>
+				<r>1.0</r>
+				<g>0.0</g>
+				<b>0.0</b>
+			</SurfaceColor>
+		</shape>
+		<material type="Diffuse">
+			<Reflection>
+				<r>1.0</r>
+				<g>1.0</g>
+				<b>1.0</b>
+			</Reflection>
+		</material>
+	</primitive>
+
+	<!-- Right Plane ,Red Surface Color , No Emissive -->
+	<primitive>
+		<shape type="obj">
+			<filename>cbox_right.obj</filename>
+			<transform>
+				<position>
+					<x>0</x>
+					<y>0</y>
+					<z>0</z>
+				</position>
+			</transform>
+			<Emissive>
+				<r>0.0</r>
+				<g>0.0</g>
+				<b>0.0</b>
+			</Emissive>
+			<SurfaceColor>
+				<r>1.0</r>
+				<g>0.0</g>
+				<b>0.0</b>
+			</SurfaceColor>
+		</shape>
+		<material type="Diffuse">
+			<Reflection>
+				<r>1.0</r>
+				<g>1.0</g>
+				<b>1.0</b>
+			</Reflection>
+		</material>
+	</primitive>
+
+	<!-- Left Plane ,Red Surface Color , No Emissive -->
+	<primitive>
+		<shape type="obj">
+			<filename>cbox_left.obj</filename>
+			<transform>
+				<position>
+					<x>0</x>
+					<y>0</y>
+					<z>0</z>
+				</position>
+			</transform>
+			<Emissive>
+				<r>0.0</r>
+				<g>0.0</g>
+				<b>0.0</b>
+			</Emissive>
+			<SurfaceColor>
+				<r>0.0</r>
+				<g>1.0</g>
+				<b>0.0</b>
+			</SurfaceColor>
+		</shape>
+		<material type="Diffuse">
+			<Reflection>
+				<r>1.0</r>
+				<g>1.0</g>
+				<b>1.0</b>
+			</Reflection>
+		</material>
+	</primitive>
+
+	<!-- Front Plane ,Blue Surface Color , No Emissive -->
+	<primitive>
+		<shape type="obj">
+			<filename>cbox_front.obj</filename>
+			<transform>
+				<position>
+					<x>0</x>
+					<y>0</y>
+					<z>0</z>
+				</position>
+			</transform>
+			<Emissive>
+				<r>0.0</r>
+				<g>0.0</g>
+				<b>0.0</b>
+			</Emissive>
+			<SurfaceColor>
+				<r>1.0</r>
+				<g>0.0</g>
+				<b>1.0</b>
+			</SurfaceColor>
+		</shape>
+		<material type="Diffuse">
+			<Reflection>
+				<r>1.0</r>
+				<g>1.0</g>
+				<b>1.0</b>
+			</Reflection>
+		</material>
+	</primitive>
+
 	<!-- Film -->
 	<Film>
 		<filename>result.ppm</filename>
@@ -78,24 +248,24 @@
 	</Film>
 
 	<!-- Camera -->
-	<Camera type="ThinLens">
+	<Camera type="Pinhole">
 		<Position>
 			<x>0.0</x>
-			<y>0.0</y>
-			<z>0.0</z>
+			<y>1.0</y>
+			<z>1.0</z>
 		</Position>
 		<Target>
 			<x>0.0</x>
-			<y>0.0</y>
-			<z>1.0</z>
+			<y>1.0</y>
+			<z>2.0</z>
 		</Target>
 		<LensFocus>12</LensFocus>
 		<LensRadius>0.01</LensRadius>
 		<ApertureResolution>
 			<width>0.825</width>
-			<height>0.446></height>
+			<height>0.825></height>
 		</ApertureResolution>
-		<ApertureDistance>35</ApertureDistance>
+		<ApertureDistance>20</ApertureDistance>
 		<ExposureTime>0.0</ExposureTime>
 		<ViewDistance>1.0</ViewDistance>
 	</Camera>
@@ -103,12 +273,57 @@
 	<!-- 采样器 -->
 	<Sampler type="PureRandom">
 		<SampleGroupCount>81</SampleGroupCount>
-		<SampleCount>60</SampleCount>
+		<SampleCount>3000</SampleCount>
 	</Sampler>
 
 	<!-- 积分器 -->
 	<Integrator type="Whitted">
-		<MaxDepth>5</MaxDepth>
+		<MaxDepth>64</MaxDepth>
 		<SamplePathNumber>16</SamplePathNumber>
 	</Integrator>
+
+	<light>
+		<transform>
+			<position>
+				<x>0.0</x>
+				<y>15.0</y>
+				<z>10.0</z>
+			</position>
+		</transform>
+		<intensity>
+			<r>60.0</r>
+			<g>60.0</g>
+			<b>60.0</b>
+		</intensity>
+	</light>
+
+	<light>
+		<transform>
+			<position>
+				<x>5.0</x>
+				<y>15.0</y>
+				<z>10.0</z>
+			</position>
+		</transform>
+		<intensity>
+			<r>60.0</r>
+			<g>60.0</g>
+			<b>60.0</b>
+		</intensity>
+	</light>
+
+	<light>
+		<transform>
+			<position>
+				<x>-5.0</x>
+				<y>15.0</y>
+				<z>10.0</z>
+			</position>
+		</transform>
+		<intensity>
+			<r>60.0</r>
+			<g>60.0</g>
+			<b>60.0</b>
+		</intensity>
+	</light>
 </scene>

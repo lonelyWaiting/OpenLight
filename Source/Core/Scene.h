@@ -20,6 +20,8 @@ public:
 
 	const std::vector<Light*>& GetLights() const;
 
+	Light* GetLight( int index ) const;
+
 	bool Intersect( const Ray& ray , IntersectRecord* record ) const;
 
 public:

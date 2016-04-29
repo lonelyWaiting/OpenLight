@@ -57,6 +57,8 @@ public:
 
 	friend double AbsDot( const Vector3f& v , const Normal& n );
 
+	friend Normal Normalize( const Normal& n );
+
 public:
 	double x , y , z;
 };

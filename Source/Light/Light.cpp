@@ -6,6 +6,11 @@ Light::~Light()
 
 }
 
+Light::Light()
+{
+
+}
+
 Light::Light( const Transform& _LightToWorld , int _nSamples )
 	: LightToWorld( _LightToWorld )
 	, WorldToLight( Inverse( _LightToWorld ) )

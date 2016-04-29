@@ -4,7 +4,8 @@
 #include "SpecularTransmission.h"
 
 SpecularTransmission::SpecularTransmission( double etaI , double etaT , const Spectrum & T )
-	: etaI( etaI )
+	: BxDF( BxDFType( TRANSMISSION | SPECULAR ) )
+	, etaI( etaI )
 	, etaT( etaT )
 	, T( T )
 	, fresnel( etaI , etaT )
