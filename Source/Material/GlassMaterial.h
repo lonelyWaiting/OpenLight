@@ -4,6 +4,8 @@
 
 class GlassMaterial : public Material
 {
+	DECLARE_DYNAMIC_CREATE_DERIVED( GlassMaterial , Material )
+
 public:
 	GlassMaterial();
 

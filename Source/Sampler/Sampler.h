@@ -5,9 +5,12 @@
 #include "Math/Point2.h"
 #include "Math/Point3.h"
 #include "CameraSample.h"
+#include "Core/VCustomRTTI.h"
 
 class Sampler
 {
+	DECLARE_DYNAMIC_CREATE_BASE( Sampler )
+
 public:
 	Sampler();
 

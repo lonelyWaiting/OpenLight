@@ -5,6 +5,8 @@
 #include "Math/Normal.h"
 #include "PointLight.h"
 
+IMPLEMENT_DYNAMIC_CREATE_DERIVED( PointLight , Light )
+
 PointLight::PointLight()
 {
 

@@ -5,11 +5,14 @@
 #include "Film/Film.h"
 #include "Math/Vector3.h"
 #include "Sampler/CameraSample.h"
+#include "Core/VCustomRTTI.h"
 
 class Scene;
 
 class Camera
 {
+	DECLARE_DYNAMIC_CREATE_BASE( Camera )
+
 public:
 	enum FitMode
 	{

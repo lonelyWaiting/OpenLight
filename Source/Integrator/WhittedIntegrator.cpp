@@ -9,6 +9,8 @@
 #include "WhittedIntegrator.h"
 #include "BRDF/BxDFType.h"
 
+IMPLEMENT_DYNAMIC_CREATE_DERIVED( WhittedIntegrator , SurfaceIntegrator )
+
 Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Ray* ray , Accelerator* pAccelerator ) const
 {
 	Spectrum L( 0.0 );

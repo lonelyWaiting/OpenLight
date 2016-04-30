@@ -4,6 +4,8 @@
 
 class NRooksSampler : public Sampler
 {
+	DECLARE_DYNAMIC_CREATE_DERIVED( NRooksSampler , Sampler )
+
 public:
 	NRooksSampler();
 

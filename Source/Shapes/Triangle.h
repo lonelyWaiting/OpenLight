@@ -8,6 +8,8 @@ class TriangleMesh;
 
 class Triangle : public Shape
 {
+	DECLARE_DYNAMIC_CREATE_DERIVED( Triangle , Shape )
+
 public:
 	Triangle();
 

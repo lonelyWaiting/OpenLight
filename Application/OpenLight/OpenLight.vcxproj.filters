@@ -249,6 +249,9 @@
     <ClCompile Include="..\..\Source\Material\DiffuseMaterial.cpp">
       <Filter>Material</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Core\VCustomRTTI.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Math\Matrix3.h">
@@ -310,9 +313,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Utilities\srString.h">
       <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Shapes\Shape.h">
-      <Filter>Shapes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Math\Normal.h">
       <Filter>Math</Filter>
@@ -454,6 +454,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Material\DiffuseMaterial.h">
       <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Core\VCustomRTTI.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Shapes\Shape.h">
+      <Filter>Shapes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

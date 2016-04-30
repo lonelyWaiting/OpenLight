@@ -6,6 +6,8 @@
 
 class Sphere : public Shape
 {
+	DECLARE_DYNAMIC_CREATE_DERIVED(Sphere , Shape)
+
 public:
 	Sphere();
 

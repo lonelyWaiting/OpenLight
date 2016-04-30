@@ -5,6 +5,8 @@
 #include "ModelParser.h"
 #include "TriangleMesh.h"
 
+IMPLEMENT_DYNAMIC_CREATE_DERIVED( TriangleMesh , Shape )
+
 TriangleMesh::TriangleMesh()
 {
 	points        = nullptr;

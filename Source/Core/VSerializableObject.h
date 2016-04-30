@@ -5,5 +5,7 @@
 class VSerializableObject
 {
 public:
-	virtual void Deserialization( XMLElement* RootElement ) = 0;
+	virtual void Deserialization( XMLElement* RootElement )
+	{
+	};
 };

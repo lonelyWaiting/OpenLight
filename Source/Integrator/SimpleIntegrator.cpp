@@ -12,6 +12,8 @@
 #include "Accelerator/Grid.h"
 #include "SimpleIntegrator.h"
 
+IMPLEMENT_DYNAMIC_CREATE_DERIVED( SimpleIntegrator , SurfaceIntegrator )
+
 Spectrum SimpleIntegrator::Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Ray* ray , Accelerator* pAccelerator ) const
 {
 	Spectrum L( 0.0 );

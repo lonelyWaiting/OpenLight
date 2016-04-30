@@ -5,9 +5,12 @@
 #include "BRDF/BxDF.h"
 #include "BRDF/BSDF.h"
 #include "Core/VSerializableObject.h"
+#include "Core/VCustomRTTI.h"
 
 class Material : public VSerializableObject
 {
+	DECLARE_DYNAMIC_CREATE_BASE( Material )
+
 public:
 	Material();
 

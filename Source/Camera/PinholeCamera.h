@@ -2,6 +2,8 @@
 
 class PinholeCamera : public Camera
 {
+	DECLARE_DYNAMIC_CREATE_DERIVED( PinholeCamera , Camera )
+
 public:
 	PinholeCamera();
 

@@ -5,6 +5,8 @@
 
 class PointLight : public Light
 {
+	DECLARE_DYNAMIC_CREATE_DERIVED( PointLight , Light )
+
 public:
 	PointLight();
 

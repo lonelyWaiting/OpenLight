@@ -1,6 +1,8 @@
 #include "PCH.h"
 #include "NRooksSampler.h"
 
+IMPLEMENT_DYNAMIC_CREATE_DERIVED( NRooksSampler , Sampler )
+
 NRooksSampler::NRooksSampler()
 	:Sampler()
 {

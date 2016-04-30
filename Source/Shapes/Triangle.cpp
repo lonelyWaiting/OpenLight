@@ -5,6 +5,8 @@
 #include "TriangleMesh.h"
 #include "Triangle.h"
 
+IMPLEMENT_DYNAMIC_CREATE_DERIVED( Triangle , Shape )
+
 Triangle::Triangle()
 	: index0( 0 ) 
 	, index1( 0 ) 

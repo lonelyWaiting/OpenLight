@@ -4,6 +4,8 @@
 #include "BRDF/FresnelDielectric.h"
 #include "GlassMaterial.h"
 
+IMPLEMENT_DYNAMIC_CREATE_DERIVED( GlassMaterial , Material )
+
 GlassMaterial::GlassMaterial() : Material()
 {
 

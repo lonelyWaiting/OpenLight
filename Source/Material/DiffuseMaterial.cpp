@@ -2,6 +2,8 @@
 #include "BRDF/Lambertian.h"
 #include "DiffuseMaterial.h"
 
+IMPLEMENT_DYNAMIC_CREATE_DERIVED( DiffuseMaterial , Material )
+
 DiffuseMaterial::DiffuseMaterial() : Material()
 {
 

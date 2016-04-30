@@ -2,14 +2,16 @@
 
 #include "Renderer.h"
 
-class Camera;
-class SurfaceIntegrator;
-class Accelerator;
-
 class SamplerRenderer : public Renderer
 {
+	DECLARE_DYNAMIC_CREATE_DERIVED( SamplerRenderer , Renderer )
+
 public:
+	SamplerRenderer();
+
 	SamplerRenderer(Sampler* sampler, Camera* camera, SurfaceIntegrator* _surfaceIntegrator, Accelerator* _pAccelerator , int _spp = 8);
+
+	void SetProperty( Sampler* sampler , Camera* camera , SurfaceIntegrator* _surfaceIntegrator , Accelerator* _pAccelerator );
 
 	virtual ~SamplerRenderer();
 

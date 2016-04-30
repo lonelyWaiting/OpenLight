@@ -10,6 +10,8 @@
 
 class ThinLensCamera : public Camera
 {
+	DECLARE_DYNAMIC_CREATE_DERIVED( ThinLensCamera , Camera )
+
 public:
 	ThinLensCamera();
 

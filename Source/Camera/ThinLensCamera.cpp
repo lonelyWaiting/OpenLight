@@ -2,6 +2,8 @@
 #include "Sampler/Sampling.h"
 #include "ThinLensCamera.h"
 
+IMPLEMENT_DYNAMIC_CREATE_DERIVED( ThinLensCamera , Camera )
+
 ThinLensCamera::ThinLensCamera()
 {
 

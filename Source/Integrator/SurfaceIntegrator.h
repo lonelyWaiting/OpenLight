@@ -2,6 +2,7 @@
 
 #include "Spectrum/Spectrum.h"
 #include "Core/VSerializableObject.h"
+#include "Core/VCustomRTTI.h"
 
 class Scene;
 class Renderer;
@@ -11,6 +12,8 @@ class Accelerator;
 
 class SurfaceIntegrator : public VSerializableObject
 {
+	DECLARE_DYNAMIC_CREATE_BASE( SurfaceIntegrator )
+
 public:
 	virtual Spectrum Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Ray* ray , Accelerator* pAccelerator ) const = 0;
 

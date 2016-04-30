@@ -1,9 +1,10 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Math/Bound3.h"
 #include "Spectrum/Spectrum.h"
 #include "Core/VSerializableObject.h"
 #include "Core/VIntersectable.h"
+#include "Core/VCustomRTTI.h"
 
 struct IntersectRecord;
 class  Transform;
@@ -12,6 +13,8 @@ class  Ray;
 
 class Shape : public VSerializableObject , public VIntersectable
 {
+	DECLARE_DYNAMIC_CREATE_BASE( Shape )
+
 public:
 	Shape( Spectrum _emmisive = Spectrum( 0 ) );
 
@@ -32,8 +35,8 @@ public:
 public:
 	Transform*	ObjectToWorld;
 	Transform*	WorldToObject;
-	Spectrum	Emissive;				
-	Spectrum	SurfaceColor;			
-	bool		bCombination;			// ÊÇ·ñÓÉÆäËüshape×é³É
-	Primitive*  pPrimitive;				// ËùÊôÍ¼Ôª
+	Spectrum	Emissive;
+	Spectrum	SurfaceColor;
+	bool		bCombination;			// æ˜¯å¦ç”±å…¶å®ƒshapeç»„æˆ
+	Primitive*  pPrimitive;				// æ‰€å±å›¾å…ƒ
 };

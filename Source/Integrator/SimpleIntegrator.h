@@ -4,6 +4,8 @@
 
 class SimpleIntegrator : public SurfaceIntegrator
 {
+	DECLARE_DYNAMIC_CREATE_DERIVED( SimpleIntegrator , SurfaceIntegrator )
+
 public:
 	Spectrum Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Ray* ray , Accelerator* pAccelerator ) const;
 

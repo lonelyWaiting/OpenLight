@@ -5,6 +5,8 @@
 #include "Sampler/Sampling.h"
 #include "Sphere.h"
 
+IMPLEMENT_DYNAMIC_CREATE_DERIVED( Sphere , Shape )
+
 Sphere::Sphere()
 {
 	m_Radius = 0;

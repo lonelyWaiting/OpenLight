@@ -4,6 +4,7 @@
 #include "Spectrum/Spectrum.h"
 #include "Core/VSerializableObject.h"
 #include "VisibilityTester.h"
+#include "Core/VCustomRTTI.h"
 
 class Scene;
 
@@ -14,6 +15,8 @@ struct LightSample
 
 class Light : public VSerializableObject
 {
+	DECLARE_DYNAMIC_CREATE_BASE( Light )
+
 public:
 	Light();
 

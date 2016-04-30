@@ -1,6 +1,8 @@
 #include "PCH.h"
 #include "PureRandomSampler.h"
 
+IMPLEMENT_DYNAMIC_CREATE_DERIVED( PureRandomSampler , Sampler )
+
 PureRandomSampler::PureRandomSampler()
 	:Sampler()
 {

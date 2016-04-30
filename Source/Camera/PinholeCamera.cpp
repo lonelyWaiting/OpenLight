@@ -7,6 +7,8 @@
 #include "Camera.h"
 #include "PinholeCamera.h"
 
+IMPLEMENT_DYNAMIC_CREATE_DERIVED( PinholeCamera , Camera )
+
 PinholeCamera::PinholeCamera()
 {
 

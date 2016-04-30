@@ -10,6 +10,13 @@
 #include "Accelerator/Grid.h"
 #include "SamplerRenderer.h"
 
+IMPLEMENT_DYNAMIC_CREATE_DERIVED( SamplerRenderer , Renderer )
+
+SamplerRenderer::SamplerRenderer()
+{
+
+}
+
 SamplerRenderer::SamplerRenderer( Sampler* _sampler , Camera* _camera , SurfaceIntegrator* _surfaceIntegrator , Accelerator* _pAccelerator , int _spp/*=8*/ )
 	: sampler( _sampler )
 	, camera( _camera )
@@ -23,6 +30,14 @@ SamplerRenderer::SamplerRenderer( Sampler* _sampler , Camera* _camera , SurfaceI
 SamplerRenderer::~SamplerRenderer()
 {
 
+}
+
+void SamplerRenderer::SetProperty( Sampler* _sampler , Camera* _camera , SurfaceIntegrator* _surfaceIntegrator , Accelerator* _pAccelerator )
+{
+	sampler           = _sampler;
+	camera            = _camera;
+	surfaceIntegrator = _surfaceIntegrator;
+	pAccelerator      = _pAccelerator;
 }
 
 void SamplerRenderer::Render( const Scene* scene )

@@ -64,6 +64,7 @@ void Primitive::Deserialization( XMLElement* PrimitiveRootElment )
 		ShapeRootElement = ShapeRootElement->NextSiblingElement( "shape" );
 	}
 	
+	// least one material node
 	XMLElement* MaterialRootElement = PrimitiveRootElment->FirstChildElement( "material" );
 	DeserializationMaterial( MaterialRootElement );
 
@@ -79,24 +80,11 @@ void Primitive::DeserializationShape( XMLElement* ShapeRootElement )
 {
 	const char* ShapeType = ShapeRootElement->FirstAttribute()->Value();
 
-	if( !std::strcmp( "sphere" , ShapeType ) )
-	{
-		Sphere* shape = new Sphere;
-		shapes.push_back( shape );
-		shape->SetPrimitive( this );
-		shape->Deserialization( ShapeRootElement );
-	}
-	else if( !std::strcmp( "obj" , ShapeType ) )
-	{
-		TriangleMesh* mesh = new TriangleMesh;
-		shapes.push_back( mesh );
-		mesh->SetPrimitive( this );
-		mesh->Deserialization( ShapeRootElement );
-	}
-	else
-	{
-		Assert( "don't support \'%s\' shape object" , ShapeType );
-	}
+	Shape* shape = Shape::Create( ShapeType );
+	Assert( shape != nullptr );
+	shapes.push_back( shape );
+	shape->SetPrimitive( this );
+	shape->Deserialization( ShapeRootElement );
 }
 
 void Primitive::DeserializationMaterial( XMLElement* MaterialRootElement )
@@ -105,16 +93,9 @@ void Primitive::DeserializationMaterial( XMLElement* MaterialRootElement )
 
 	const char* MaterialType = MaterialRootElement->FirstAttribute()->Value();
 
-	if( !std::strcmp( "Glass" , MaterialType ) )
-	{
-		pMaterial = new GlassMaterial;
-		pMaterial->Deserialization( MaterialRootElement );
-	}
-	else if( !std::strcmp( "Diffuse" , MaterialType ) )
-	{
-		pMaterial = new DiffuseMaterial;
-		pMaterial->Deserialization( MaterialRootElement );
-	}
+	pMaterial = Material::Create( MaterialType );
+	Assert( pMaterial != nullptr );
+	pMaterial->Deserialization( MaterialRootElement );
 }
 
 BSDF* Primitive::GetBSDF( const Point3f& point , const Normal& normal ) const

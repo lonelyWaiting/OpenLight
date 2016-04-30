@@ -3,6 +3,8 @@
 
 class PureRandomSampler : public Sampler
 {
+	DECLARE_DYNAMIC_CREATE_DERIVED( PureRandomSampler , Sampler )
+
 public:
 	PureRandomSampler();
 
