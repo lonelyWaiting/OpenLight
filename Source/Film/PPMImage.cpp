@@ -51,8 +51,12 @@ void PPMImage::Display()
 
 	double RGB[3];
 
+	clock_t start = clock();
+
 	for( int row = 0; row < Height; row++ )
 	{
+		fprintf( stdout , "\rWriting Image Data: %8.2f%%" , ( double )row / ( double )Height * 100 );
+
 		for( int col = 0; col < Width; col++ )
 		{
 			data[row * Width + col].ToRGB( RGB );
@@ -74,4 +78,9 @@ void PPMImage::Display()
 			Log::Get().Info( "row : %d , col : %d , r : %d , g : %d , b : %d" , row , col , red , green , blue );
 		}
 	}
+
+	clock_t end = clock();
+	double t = ( double )( end - start ) / CLOCKS_PER_SEC;
+	printf( "\nWriting time: %fs.\n" , t );
+	Log::Get().Info( "\nWriting time: %fs.\n" , t );
 }
