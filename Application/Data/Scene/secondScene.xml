@@ -2,33 +2,28 @@
 <scene>
 	<!-- 渲染器 -->
 	<Renderer type="SamplerRenderer">
-		<spp>196</spp>
+		<spp>8</spp>
 	</Renderer>
 
 	<!-- 图元 -->
 	<primitive>
-		<shape type="Sphere">
+		<shape type="Sphere" bCompositeObject="false">
 			<filename>sphere.obj</filename>
 			<transform>
 				<position>
-					<x>-0.75</x>
+					<x>0.0</x>
 					<y>-1.45</y>
-					<z>4.4</z>
+					<z>3.0</z>
 				</position>
 			</transform>
 			<radius>1.05</radius>
-			<Emissive>
+			<SurfaceColor>
 				<r>0.0</r>
 				<g>0.0</g>
 				<b>0.0</b>
-			</Emissive>
-			<SurfaceColor>
-				<r>1.0</r>
-				<g>1.0</g>
-				<b>1.0</b>
 			</SurfaceColor>
 		</shape>
-		<shape type="Sphere">
+		<shape type="Sphere" bCompositeObject="false">
 			<filename>sphere.obj</filename>
 			<transform>
 				<position>
@@ -38,32 +33,6 @@
 				</position>
 			</transform>
 			<radius>0.5</radius>
-			<Emissive>
-				<r>0.0</r>
-				<g>0.0</g>
-				<b>0.0</b>
-			</Emissive>
-			<SurfaceColor>
-				<r>1.0</r>
-				<g>1.0</g>
-				<b>1.0</b>
-			</SurfaceColor>
-		</shape>
-		<shape type="Sphere">
-			<filename>sphere.obj</filename>
-			<transform>
-				<position>
-					<x>-1.75</x>
-					<y>-1.85</y>
-					<z>3.1</z>
-				</position>
-			</transform>
-			<radius>0.6</radius>
-			<Emissive>
-				<r>0.0</r>
-				<g>0.0</g>
-				<b>0.0</b>
-			</Emissive>
 			<SurfaceColor>
 				<r>1.0</r>
 				<g>1.0</g>
@@ -72,9 +41,9 @@
 		</shape>
 		<material type="GlassMaterial">
 			<Reflection>
-				<r>1.0</r>
-				<g>1.0</g>
-				<b>1.0</b>
+				<r>10.0</r>
+				<g>10.0</g>
+				<b>10.0</b>
 			</Reflection>
 			<Transmission>
 				<r>1.0</r>
@@ -85,9 +54,35 @@
 		</material>
 	</primitive>
 
+	<primitive>
+		<shape type="Sphere" bCompositeObject="false">
+			<filename>sphere.obj</filename>
+			<transform>
+				<position>
+					<x>-1.75</x>
+					<y>-1.85</y>
+					<z>3.1</z>
+				</position>
+			</transform>
+			<radius>0.6</radius>
+			<SurfaceColor>
+				<r>0.17</r>
+				<g>0.17</g>
+				<b>0.51</b>
+			</SurfaceColor>
+		</shape>
+		<material type="DiffuseMaterial">
+			<Reflection>
+				<r>1.0</r>
+				<g>1.0</g>
+				<b>1.0</b>
+			</Reflection>
+		</material>
+	</primitive>
+
 	<!-- bottom Plane ,Blue Surface Color , No Emissive -->
 	<primitive>
-		<shape type="TriangleMesh">
+		<shape type="TriangleMesh" bCompositeObject="true">
 			<filename>cbox_bottom.obj</filename>
 			<transform>
 				<position>
@@ -96,11 +91,6 @@
 					<z>0</z>
 				</position>
 			</transform>
-			<Emissive>
-				<r>0.0</r>
-				<g>0.0</g>
-				<b>0.0</b>
-			</Emissive>
 			<SurfaceColor>
 				<r>1.0</r>
 				<g>1.0</g>
@@ -116,9 +106,9 @@
 		</material>
 	</primitive>
 
-	<!-- floor Plane ,Black Surface Color , Emissive White Light -->
+	<!-- floor Plane ,White Surface Color , Emissive White Light -->
 	<primitive>
-		<shape type="TriangleMesh">
+		<shape type="TriangleMesh" bCompositeObject="true">
 			<filename>cbox_floor.obj</filename>
 			<transform>
 				<position>
@@ -127,11 +117,6 @@
 					<z>0</z>
 				</position>
 			</transform>
-			<Emissive>
-				<r>0.0</r>
-				<g>0.0</g>
-				<b>0.0</b>
-			</Emissive>
 			<SurfaceColor>
 				<r>1.0</r>
 				<g>1.0</g>
@@ -145,11 +130,18 @@
 				<b>1.0</b>
 			</Reflection>
 		</material>
+		<AreaLight>
+			<Le>
+				<r>30.0</r>
+				<g>30.0</g>
+				<b>30.0</b>
+			</Le>
+		</AreaLight>
 	</primitive>
 
-	<!-- Right Plane ,Red Surface Color , No Emissive -->
+	<!-- Right Plane ,Blue Surface Color , No Emissive -->
 	<primitive>
-		<shape type="TriangleMesh">
+		<shape type="TriangleMesh" bCompositeObject="true">
 			<filename>cbox_right.obj</filename>
 			<transform>
 				<position>
@@ -158,15 +150,10 @@
 					<z>0</z>
 				</position>
 			</transform>
-			<Emissive>
-				<r>0.0</r>
-				<g>0.0</g>
-				<b>0.0</b>
-			</Emissive>
 			<SurfaceColor>
 				<r>0.0</r>
-				<g>0.0</g>
-				<b>1.0</b>
+				<g>1.0</g>
+				<b>0.0</b>
 			</SurfaceColor>
 		</shape>
 		<material type="DiffuseMaterial">
@@ -180,7 +167,7 @@
 
 	<!-- Left Plane ,Red Surface Color , No Emissive -->
 	<primitive>
-		<shape type="TriangleMesh">
+		<shape type="TriangleMesh" bCompositeObject="true">
 			<filename>cbox_left.obj</filename>
 			<transform>
 				<position>
@@ -189,11 +176,6 @@
 					<z>0</z>
 				</position>
 			</transform>
-			<Emissive>
-				<r>0.0</r>
-				<g>0.0</g>
-				<b>0.0</b>
-			</Emissive>
 			<SurfaceColor>
 				<r>1.0</r>
 				<g>0.0</g>
@@ -209,9 +191,9 @@
 		</material>
 	</primitive>
 
-	<!-- Front Plane ,Blue Surface Color , No Emissive -->
+	<!-- Front Plane ,White Surface Color , No Emissive -->
 	<primitive>
-		<shape type="TriangleMesh">
+		<shape type="TriangleMesh" bCompositeObject="true">
 			<filename>cbox_front.obj</filename>
 			<transform>
 				<position>
@@ -220,15 +202,10 @@
 					<z>0</z>
 				</position>
 			</transform>
-			<Emissive>
-				<r>0.0</r>
-				<g>0.0</g>
-				<b>0.0</b>
-			</Emissive>
 			<SurfaceColor>
-				<r>1.0</r>
-				<g>1.0</g>
-				<b>1.0</b>
+				<r>0.0</r>
+				<g>0.5</g>
+				<b>0.5</b>
 			</SurfaceColor>
 		</shape>
 		<material type="DiffuseMaterial">
@@ -240,10 +217,10 @@
 		</material>
 	</primitive>
 
-	<!-- Front Plane ,Blue Surface Color , No Emissive -->
+	<!-- Back Plane ,White Surface Color , No Emissive -->
 	<primitive>
-		<shape type="TriangleMesh">
-			<filename>cbox_bottom.obj</filename>
+		<shape type="TriangleMesh" bCompositeObject="true">
+			<filename>cbox_back.obj</filename>
 			<transform>
 				<position>
 					<x>0</x>
@@ -251,15 +228,10 @@
 					<z>0</z>
 				</position>
 			</transform>
-			<Emissive>
-				<r>0.0</r>
-				<g>0.0</g>
-				<b>0.0</b>
-			</Emissive>
 			<SurfaceColor>
-				<r>1.0</r>
-				<g>1.0</g>
-				<b>1.0</b>
+				<r>0.5</r>
+				<g>0.5</g>
+				<b>0.5</b>
 			</SurfaceColor>
 		</shape>
 		<material type="DiffuseMaterial">
@@ -282,12 +254,12 @@
 	<Camera type="PinholeCamera">
 		<Position>
 			<x>0.0</x>
-			<y>0.0</y>
+			<y>-1.45</y>
 			<z>0.0</z>
 		</Position>
 		<Target>
 			<x>0.0</x>
-			<y>0.0</y>
+			<y>-1.45</y>
 			<z>1.0</z>
 		</Target>
 		<LensFocus>12</LensFocus>
@@ -312,19 +284,4 @@
 		<MaxDepth>16</MaxDepth>
 		<SamplePathNumber>16</SamplePathNumber>
 	</Integrator>
-
-	<light type="PointLight">
-		<transform>
-			<position>
-				<x>0.0</x>
-				<y>3.0</y>
-				<z>3.0</z>
-			</position>
-		</transform>
-		<intensity>
-			<r>30.0</r>
-			<g>30.0</g>
-			<b>30.0</b>
-		</intensity>
-	</light>
 </scene>

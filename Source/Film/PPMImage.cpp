@@ -55,7 +55,7 @@ void PPMImage::Display()
 
 	for( int row = 0; row < Height; row++ )
 	{
-		fprintf( stdout , "\rWriting Image Data: %8.2f%%" , ( double )row / ( double )Height * 100 );
+		fprintf( stdout , "\rWriting Image Data: %8.2f%%" , ( double )row / ( double )( Height - 1 ) *100 );
 
 		for( int col = 0; col < Width; col++ )
 		{
@@ -74,8 +74,6 @@ void PPMImage::Display()
 			blue  = ( unsigned char )( iblue );
 
 			ofs << red << green << blue;
-
-			Log::Get().Info( "row : %d , col : %d , r : %d , g : %d , b : %d" , row , col , red , green , blue );
 		}
 	}
 

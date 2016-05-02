@@ -16,7 +16,7 @@ Vector3f UniformSampleSphere( double u1 , double u2 );
 
 Vector3f UniformSampleCone( double u1 , double u2 , double cosThetaMax , const Vector3f& x , const Vector3f& y , const Vector3f& z );
 
-// 每个方向对应的实体角
+// http://lonelywaiting.github.io/Uniform-Cone-PDF/
 double UniformConePDF( double cosThetaMax );
 
 double UniformSpherePDF();

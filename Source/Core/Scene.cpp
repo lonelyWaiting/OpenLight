@@ -16,6 +16,11 @@ void Scene::AddObject( Primitive& prim )
 
 void Scene::AddLight( Light* light )
 {
+	if( light == nullptr )
+	{
+		return;
+	}
+
 	lights.push_back( light );
 }
 

@@ -60,8 +60,6 @@ Spectrum SimpleIntegrator::Li( const Scene* scene , const Renderer* renderer , I
 
 		L /= SamplePathNumber;
 	}
-	
-	L += record->Emission;
 
 	return L;
 }

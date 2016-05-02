@@ -31,7 +31,7 @@ Spectrum PointLight::Sample_L( const Scene* scene , LightSample& lightSample , R
 	return intensity;
 }
 
-Spectrum PointLight::Sample_L( const Point3f& p , Vector3f* wi , double* pdf , VisibilityTester* pVisibility ) const
+Spectrum PointLight::Sample_L( const Point3f& p , Vector3f* wi , LightSample& _lightSample , double* pdf , VisibilityTester* pVisibility ) const
 {
 	// 计算入射光线
 	*wi = Normalize( LightPosWorld - p );

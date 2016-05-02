@@ -22,9 +22,9 @@ public:
 	void Deserialization( XMLElement* ShapeRootElement );
 
 public:
-	int GetSubShapeCount() const;
+	int GetChildCount() const;
 
-	Shape* GetSubShape( int index ) const;
+	Shape* GetChild( int index ) const;
 
 private:
 	Point3f * points;

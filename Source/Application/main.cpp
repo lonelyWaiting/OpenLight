@@ -40,15 +40,16 @@ Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrat
 		Assert( primitive != nullptr );
 		primitive->Deserialization( PrimitiveElement );
 		scene->AddObject( *primitive );
-
+		scene->AddLight( primitive->GetAreaLight() );
 		PrimitiveElement = PrimitiveElement->NextSiblingElement( "primitive" );
 	}
 	
 	// -----------------------------------Light---------------------------------------------
 	XMLElement* LightRootElement = doc.FirstChildElement()->FirstChildElement( "light" );
-	const char* LightType = LightRootElement->FirstAttribute()->Value();
 	while( LightRootElement )
 	{
+		const char* LightType = LightRootElement->FirstAttribute()->Value();
+
 		Light* light = Light::Create( LightType );
 		light->Deserialization( LightRootElement );
 		scene->AddLight( light );
@@ -117,6 +118,8 @@ int main( void )
 	{
 		renderer->Render( scene );
 	}
+
+	/*system( "pause" );*/
 
 	return 0;
 }

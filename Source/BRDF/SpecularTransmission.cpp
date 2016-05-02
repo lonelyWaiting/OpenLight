@@ -28,7 +28,7 @@ Spectrum SpecularTransmission::Sample_f( const Vector3f& wo , const Normal& n , 
 		Swap( etaI , etaT );
 	}
 
-	if( !Refract( wo , n , etaI / etaT , wi ) )
+	if( !Refract( wo , n , etaI / etaT , wi , entering ) )
 	{
 		// 未发生折射
 		return 0;
@@ -37,7 +37,7 @@ Spectrum SpecularTransmission::Sample_f( const Vector3f& wo , const Normal& n , 
 	// 在折射方向上pdf位1
 	*pdf = 1.0;
 
-	return ( etaI * etaI ) / ( etaT * etaT ) * T * ( Spectrum( 1.0 ) - fresnel.Evalute( Dot( *wi , n ) ) ) / AbsDot( *wi , n );
+	return ( etaI * etaI ) / ( etaT * etaT ) * T * ( Spectrum( 1.0 ) - fresnel.Evalute( Dot( wo , n ) ) ) / AbsDot( *wi , n );
 }
 
 double SpecularTransmission::PDF( const Vector3f& wi , const Vector3f& wo ) const

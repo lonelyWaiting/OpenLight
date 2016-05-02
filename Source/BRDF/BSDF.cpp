@@ -60,7 +60,7 @@ Spectrum BSDF::Sample_f( const Vector3f&wo , const Normal& n , Vector3f* wi , co
 	BxDF* bxdf = nullptr;
 	for( int i = 0; i < nBxDF; i++ )
 	{
-		if( ( bxdfs[i]->type & type ) == type && index-- == 0 )
+		if( ( bxdfs[i]->type & type ) == bxdfs[i]->type && index-- == 0 )
 		{
 			bxdf = bxdfs[i];
 			break;
@@ -82,7 +82,7 @@ Spectrum BSDF::Sample_f( const Vector3f&wo , const Normal& n , Vector3f* wi , co
 	{
 		for( int i = 0; i < nBxDF; i++ )
 		{
-			if( bxdfs[i] != bxdf && ( bxdfs[i]->type & type ) == type )
+			if( bxdfs[i] != bxdf && ( bxdfs[i]->type & type ) == bxdfs[i]->type )
 			{
 				*pdf += bxdfs[i]->PDF( wo , *wi );
 			}
@@ -101,7 +101,7 @@ Spectrum BSDF::Sample_f( const Vector3f&wo , const Normal& n , Vector3f* wi , co
 
 		for( int i = 0; i < nBxDF; i++ )
 		{
-			if( ( bxdfs[i]->type & type ) == type )
+			if( ( bxdfs[i]->type & type ) == bxdfs[i]->type )
 			{
 				if( ( IsReflect && ( bxdfs[i]->type & REFLECTION ) ) || ( !IsReflect && ( bxdfs[i]->type & TRANSMISSION ) ) )
 				{
@@ -143,7 +143,7 @@ int BSDF::Count( BxDFType type ) const
 
 	for( int i = 0; i < nBxDF; i++ )
 	{
-		if( ( bxdfs[i]->type & type ) == type )
+		if( ( bxdfs[i]->type & type ) == bxdfs[i]->type )
 		{
 			count++;
 		}

@@ -28,7 +28,7 @@
     <ClCompile Include="..\..\Source\BRDF\FresnelDielectric.cpp" />
     <ClCompile Include="..\..\Source\BRDF\Lambertian.cpp" />
     <ClCompile Include="..\..\Source\BRDF\SpecularReflection.cpp" />
-    <ClCompile Include="..\..\Source\BRDF\SpecularTransmissioncpp.cpp" />
+    <ClCompile Include="..\..\Source\BRDF\SpecularTransmission.cpp" />
     <ClCompile Include="..\..\Source\Camera\Camera.cpp" />
     <ClCompile Include="..\..\Source\Camera\PinholeCamera.cpp" />
     <ClCompile Include="..\..\Source\Camera\ThinLensCamera.cpp" />
@@ -47,6 +47,7 @@
     <ClCompile Include="..\..\Source\Integrator\WhittedIntegrator.cpp" />
     <ClCompile Include="..\..\Source\IO\FileSystsem.cpp" />
     <ClCompile Include="..\..\Source\IO\Log.cpp" />
+    <ClCompile Include="..\..\Source\Light\AreaLight.cpp" />
     <ClCompile Include="..\..\Source\Light\Light.cpp" />
     <ClCompile Include="..\..\Source\Light\PonitLight.cpp" />
     <ClCompile Include="..\..\Source\Light\VisibilityTester.cpp" />
@@ -121,6 +122,7 @@
     <ClInclude Include="..\..\Source\Integrator\WhittedIntegrator.h" />
     <ClInclude Include="..\..\Source\IO\FileSystem.h" />
     <ClInclude Include="..\..\Source\IO\Log.h" />
+    <ClInclude Include="..\..\Source\Light\AreaLighth.h" />
     <ClInclude Include="..\..\Source\Light\Light.h" />
     <ClInclude Include="..\..\Source\Light\PointLight.h" />
     <ClInclude Include="..\..\Source\Light\VisibilityTester.h" />

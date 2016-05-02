@@ -10,6 +10,12 @@ class Scene;
 
 struct LightSample
 {
+	LightSample( double x , double y )
+	{
+		value[0] = x;
+		value[1] = y;
+	}
+
 	double value[2];
 };
 
@@ -24,13 +30,13 @@ public:
 
 	Light( const Transform& _LightToWorld , int _nSamples = 1 );
 
-	virtual Spectrum Sample_L( const Point3f& p , Vector3f* wi , double* pdf , VisibilityTester* pVisibility ) const = 0;
+	virtual Spectrum Sample_L( const Point3f& p , Vector3f* wi , LightSample& _lightSample , double* pdf , VisibilityTester* pVisibility ) const = 0;
 
 	virtual Spectrum Power( const Scene* scene ) const = 0;
 
 	virtual double PDF( const Point3f& p , const Vector3f& wi ) const = 0;
 
-	virtual Spectrum Le( const Ray& r ) const;
+	virtual Spectrum Le( const Point3f& p , const Normal& n , const Vector3f& wo ) const;
 
 	virtual Spectrum Sample_L( const Scene* scene , LightSample& _lightSample , Ray* ray , Normal* NormalShading , double* pdf ) const = 0;
 

@@ -17,12 +17,13 @@ struct IntersectRecord
 
 	BSDF* GetBSDF();
 
+	Spectrum Le( const Vector3f& wo );
+
 	const Primitive* primitivePtr;
 	Transform WorldToObject;
 	Transform ObjectToWorld;
 	double HitT;
 	Point3f HitPoint;
 	Normal normal;
-	Spectrum Emission;
 	Spectrum SurfaceColor;
 };

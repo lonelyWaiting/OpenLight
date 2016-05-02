@@ -22,6 +22,11 @@ public:
 
 	bool Intersect( Ray& ray , IntersectRecord* record ) const;
 
+	Point3f Sample( const Point3f& p , LightSample& lightSample , Normal& normalSample );
+
+public:
+	double Area() const;
+
 public:
 	void Deserialization( XMLElement* RootElement );
 

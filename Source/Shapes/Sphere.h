@@ -17,6 +17,12 @@ public:
 
 	bool Intersect( Ray& ray , IntersectRecord* record ) const;
 
+	double Area() const;
+	
+	double PDF( const Point3f& p , const Vector3f& wi ) const;
+
+	Point3f Sample( const Point3f& p , LightSample& lightSample , Normal& normalSample );
+
 public:
 	void Deserialization( XMLElement* ShapeRootElement );
 

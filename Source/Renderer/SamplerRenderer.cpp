@@ -57,7 +57,7 @@ void SamplerRenderer::Render( const Scene* scene )
 
 	for( int iRow = 0; iRow < Height; iRow++ )
 	{
-		fprintf( stdout , "\rRendering: %1.0fspp %8.2f%%" , ( double )spp , ( double )iRow / ( double )Height * 100 );
+		fprintf( stdout , "\rRendering: %1.0fspp %8.2f%%" , ( double )spp , ( double )iRow / ( double )( Height - 1 ) *100 );
 
 		for( int iCol = 0; iCol < Width; iCol++ )
 		{

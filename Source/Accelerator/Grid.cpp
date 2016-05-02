@@ -18,19 +18,7 @@ void Grid::Setup( const Scene* scene )
 	{
 		Primitive primitive = scene->GetPrimitive( i );
 
-		for( int j = 0; j < primitive.GetShapeCount(); j++ )
-		{
-			Shape* shape = primitive.GetShape( j );
-
-			if( shape->IsCombinationShape() )
-			{
-				Count += shape->GetSubShapeCount();
-			}
-			else
-			{
-				Count += 1;
-			}
-		}
+		Count += primitive.GetShapeCount();
 	}
 
 	// 计算scene bounding box沿着x , y , z轴的长度
@@ -73,109 +61,50 @@ void Grid::Setup( const Scene* scene )
 		{
 			Shape* shape = primitive.GetShape( j );
 
-			if( shape->IsCombinationShape() )
+			BBox = shape->GetWorldBoundingBox();
+
+			int iMinX = ( BBox.pMin.x - SceneBBox.pMin.x ) * nx / wx;
+			int iMinY = ( BBox.pMin.y - SceneBBox.pMin.y ) * ny / wy;
+			int iMinZ = ( BBox.pMin.z - SceneBBox.pMin.z ) * nz / wz;
+
+			int iMaxX = ( BBox.pMax.x - SceneBBox.pMin.x ) * nx / wx;
+			int iMaxY = ( BBox.pMax.y - SceneBBox.pMin.y ) * ny / wy;
+			int iMaxZ = ( BBox.pMax.z - SceneBBox.pMin.z ) * nz / wz;
+
+			Clamp( iMinX , 0 , nx - 1 );
+			Clamp( iMinY , 0 , ny - 1 );
+			Clamp( iMinZ , 0 , nz - 1 );
+
+			Clamp( iMaxX , 0 , nx - 1 );
+			Clamp( iMaxY , 0 , ny - 1 );
+			Clamp( iMaxZ , 0 , nz - 1 );
+
+
+			for( int iz = iMinZ; iz <= iMaxZ; iz++ )
 			{
-				// 组合形状
-				for( int k = 0; k < shape->GetSubShapeCount(); k++ )
+				for( int iy = iMinY; iy <= iMaxY; iy++ )
 				{
-					Shape* SubShape = shape->GetSubShape( k );
-
-					BBox = SubShape->GetWorldBoundingBox();
-
-					int iMinX = ( BBox.pMin.x - SceneBBox.pMin.x ) * nx / wx;
-					int iMinY = ( BBox.pMin.y - SceneBBox.pMin.y ) * ny / wy;
-					int iMinZ = ( BBox.pMin.z - SceneBBox.pMin.z ) * nz / wz;
-
-					int iMaxX = ( BBox.pMax.x - SceneBBox.pMin.x ) * nx / wx;
-					int iMaxY = ( BBox.pMax.y - SceneBBox.pMin.y ) * ny / wy;
-					int iMaxZ = ( BBox.pMax.z - SceneBBox.pMin.z ) * nz / wz;
-
-					Clamp( iMinX , 0 , nx - 1 );
-					Clamp( iMinY , 0 , ny - 1 );
-					Clamp( iMinZ , 0 , nz - 1 );
-
-					Clamp( iMaxX , 0 , nx - 1 );
-					Clamp( iMaxY , 0 , ny - 1 );
-					Clamp( iMaxZ , 0 , nz - 1 );
-
-					for( int iz = iMinZ; iz <= iMaxZ; iz++ )
+					for( int ix = iMinX; ix <= iMaxX; ix++ )
 					{
-						for( int iy = iMinY; iy <= iMaxY; iy++ )
-						{
-							for( int ix = iMinX; ix <= iMaxX; ix++ )
-							{
-								index = ix + nx * iy + iz * ny * nx;
+						index = ix + nx * iy + iz * ny * nx;
 
-								if( Counts[index] == 0 )
-								{
-									cells[index] = SubShape;
-									Counts[index] += 1;
-								}
-								else if( Counts[index] == 1 )
-								{
-									AggregateShape* pAggregateShape = new AggregateShape;
-									pAggregateShape->AddShape( cells[index] );
-									pAggregateShape->AddShape( SubShape );
-									cells[index] = pAggregateShape;
-									Counts[index] += 1;
-								}
-								else
-								{
-									( ( AggregateShape* )cells[index] )->AddShape( SubShape );
-									Counts[index] += 1;
-								}
-							}
+						if( Counts[index] == 0 )
+						{
+							cells[index] = shape;
+							Counts[index] += 1;
 						}
-					}
-				}
-			}
-			else
-			{
-				BBox = shape->GetWorldBoundingBox();
-
-				int iMinX = ( BBox.pMin.x - SceneBBox.pMin.x ) * nx / wx;
-				int iMinY = ( BBox.pMin.y - SceneBBox.pMin.y ) * ny / wy;
-				int iMinZ = ( BBox.pMin.z - SceneBBox.pMin.z ) * nz / wz;
-
-				int iMaxX = ( BBox.pMax.x - SceneBBox.pMin.x ) * nx / wx;
-				int iMaxY = ( BBox.pMax.y - SceneBBox.pMin.y ) * ny / wy;
-				int iMaxZ = ( BBox.pMax.z - SceneBBox.pMin.z ) * nz / wz;
-
-				Clamp( iMinX , 0 , nx - 1 );
-				Clamp( iMinY , 0 , ny - 1 );
-				Clamp( iMinZ , 0 , nz - 1 );
-
-				Clamp( iMaxX , 0 , nx - 1 );
-				Clamp( iMaxY , 0 , ny - 1 );
-				Clamp( iMaxZ , 0 , nz - 1 );
-
-				
-				for( int iz = iMinZ; iz <= iMaxZ; iz++ )
-				{
-					for( int iy = iMinY; iy <= iMaxY; iy++ )
-					{
-						for( int ix = iMinX; ix <= iMaxX; ix++ )
+						else if( Counts[index] == 1 )
 						{
-							index = ix + nx * iy + iz * ny * nx;
-
-							if( Counts[index] == 0 )
-							{
-								cells[index] = shape;
-								Counts[index] += 1;
-							}
-							else if( Counts[index] == 1 )
-							{
-								AggregateShape* pAggregateShape = new AggregateShape;
-								pAggregateShape->AddShape( cells[index] );
-								pAggregateShape->AddShape( shape );
-								cells[index] = pAggregateShape;
-								Counts[index] += 1;
-							}
-							else
-							{
-								( ( AggregateShape* )cells[index] )->AddShape( shape );
-								Counts[index] += 1;
-							}
+							AggregateShape* pAggregateShape = new AggregateShape;
+							pAggregateShape->AddShape( cells[index] );
+							pAggregateShape->AddShape( shape );
+							cells[index] = pAggregateShape;
+							Counts[index] += 1;
+						}
+						else
+						{
+							( ( AggregateShape* )cells[index] )->AddShape( shape );
+							Counts[index] += 1;
 						}
 					}
 				}

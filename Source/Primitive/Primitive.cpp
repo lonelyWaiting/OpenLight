@@ -4,21 +4,28 @@
 #include "Math/Ray.h"
 #include "Material/GlassMaterial.h"
 #include "Material/DiffuseMaterial.h"
+#include "Light/AreaLighth.h"
 #include "Primitive.h"
 
 Primitive::Primitive()
 {
-
+	m_pMaterial = nullptr;
+	m_pAreaLight = nullptr;
+	m_SumArea = 0.0;
 }
 
 Primitive::~Primitive()
 {
-
+	
 }
 
 void Primitive::AddShape( Shape* _shape )
 {
-	shapes.push_back( _shape );
+	_shape->SetPrimitive( this );
+
+	m_vShapes.push_back( _shape );
+
+	m_SumArea += _shape->Area();
 
 	BBoxLocal.ExpendToInclude( _shape->GetObjectBoundingBox() );
 	BBoxWorld.ExpendToInclude( _shape->GetWorldBoundingBox() );
@@ -32,12 +39,11 @@ bool Primitive::Intersect( Ray& r , IntersectRecord* record ) const
 
 		bool bHit = false;
 
-		for( int i = 0; i < shapes.size(); i++ )
+		for( int i = 0; i < m_vShapes.size(); i++ )
 		{
-			if( shapes[i]->Intersect( r , record ) )
+			if( m_vShapes[i]->Intersect( r , record ) )
 			{
 				record->HitPoint = r( record->HitT );
-				record->Emission = shapes[i]->Emissive;
 				bHit = true;
 			}
 		}
@@ -50,7 +56,7 @@ bool Primitive::Intersect( Ray& r , IntersectRecord* record ) const
 
 void Primitive::SetMaterial(Material* material)
 {
-	pMaterial = material;
+	m_pMaterial = material;
 }
 
 void Primitive::Deserialization( XMLElement* PrimitiveRootElment )
@@ -68,23 +74,40 @@ void Primitive::Deserialization( XMLElement* PrimitiveRootElment )
 	XMLElement* MaterialRootElement = PrimitiveRootElment->FirstChildElement( "material" );
 	DeserializationMaterial( MaterialRootElement );
 
+	// AreaLight
+	XMLElement* AreaLightRootElement = PrimitiveRootElment->FirstChildElement( "AreaLight" );
+	DeserializationAreaLight( AreaLightRootElement );
+
 	// Update Bounding Box
-	for( int i = 0; i < shapes.size(); i++ )
+	for( int i = 0; i < m_vShapes.size(); i++ )
 	{
-		BBoxLocal.ExpendToInclude( shapes[i]->GetObjectBoundingBox() );
-		BBoxWorld.ExpendToInclude( shapes[i]->GetWorldBoundingBox() );
+		BBoxLocal.ExpendToInclude( m_vShapes[i]->GetObjectBoundingBox() );
+		BBoxWorld.ExpendToInclude( m_vShapes[i]->GetWorldBoundingBox() );
 	}
 }
 
 void Primitive::DeserializationShape( XMLElement* ShapeRootElement )
 {
 	const char* ShapeType = ShapeRootElement->FirstAttribute()->Value();
+	const char* bCompositeObject = ShapeRootElement->Attribute( "bCompositeObject" );
 
 	Shape* shape = Shape::Create( ShapeType );
 	Assert( shape != nullptr );
-	shapes.push_back( shape );
-	shape->SetPrimitive( this );
+
 	shape->Deserialization( ShapeRootElement );
+
+	if( !std::strcmp( bCompositeObject , "true" ) )
+	{
+		// 返回一系列的Shape对象
+		for( int i = 0; i < shape->GetChildCount(); i++ )
+		{
+			AddShape( shape->GetChild( i ) );
+		}
+	}
+	else
+	{
+		AddShape( shape );
+	}
 }
 
 void Primitive::DeserializationMaterial( XMLElement* MaterialRootElement )
@@ -93,22 +116,59 @@ void Primitive::DeserializationMaterial( XMLElement* MaterialRootElement )
 
 	const char* MaterialType = MaterialRootElement->FirstAttribute()->Value();
 
-	pMaterial = Material::Create( MaterialType );
-	Assert( pMaterial != nullptr );
-	pMaterial->Deserialization( MaterialRootElement );
+	m_pMaterial = Material::Create( MaterialType );
+	Assert( m_pMaterial != nullptr );
+	m_pMaterial->Deserialization( MaterialRootElement );
+}
+
+void Primitive::DeserializationAreaLight( XMLElement* AreaLightRootElement )
+{
+	if( AreaLightRootElement )
+	{
+		m_pAreaLight = new AreaLight;
+		m_pAreaLight->Deserialization( AreaLightRootElement );
+		m_pAreaLight->SetPrimitive( this );
+	}
 }
 
 BSDF* Primitive::GetBSDF( const Point3f& point , const Normal& normal ) const
 {
-	return pMaterial->GetBSDF( point , normal );
+	return m_pMaterial->GetBSDF( point , normal );
 }
 
 int Primitive::GetShapeCount() const
 {
-	return shapes.size();
+	return m_vShapes.size();
 }
 
 Shape* Primitive::GetShape( int index )
 {
-	return shapes[index];
+	return m_vShapes[index];
+}
+
+void Primitive::AddAreaLight( AreaLight* _pAreaLight )
+{
+	m_pAreaLight = _pAreaLight;
+}
+
+double Primitive::PDF( const Point3f& p , const Vector3f& wi )
+{
+	double pdf = 0.0;
+
+	for( int i = 0; i < m_vShapes.size(); i++ )
+	{
+		pdf += m_vShapes[i]->Area() * m_vShapes[i]->PDF( p , wi );
+	}
+	
+	return pdf / m_SumArea;
+}
+
+double Primitive::GetArea() const
+{
+	return m_SumArea;
+}
+
+Light* Primitive::GetAreaLight() const
+{ 
+	return m_pAreaLight;
 }

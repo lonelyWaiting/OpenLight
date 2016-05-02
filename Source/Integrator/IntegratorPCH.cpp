@@ -14,7 +14,7 @@ Spectrum SpecularReflect( const Ray& ray , const Scene* scene , const Renderer* 
 	const Point3f& p = record->HitPoint;
 
 	// 着色点法线
-	const Normal& normal = record->normal;
+	const Normal& normal = Normalize( record->normal );
 
 	double pdf;
 
@@ -32,7 +32,7 @@ Spectrum SpecularReflect( const Ray& ray , const Scene* scene , const Renderer* 
 	if( pdf > 0.0 && !f.IsBlack() && AbsDot( wi , normal ) != 0.0 )
 	{
 		// 沿着法线方向的偏移量
-		Vector3f bias = Vector3f( normal.x * EPSILON , normal.y * EPSILON , normal.z * EPSILON );
+		Vector3f bias = Vector3f( normal.x * 1e-6f , normal.y * 1e-6f , normal.z * 1e-6f );
 
 		// 将光线沿着法线方向偏移
 		Ray r( record->HitPoint + bias , wi , ray , 1e-3f , Infinity );
@@ -71,10 +71,10 @@ Spectrum SpecularTransmit( const Ray& ray , const Scene* scene , const Renderer*
 	if( pdf > 0.0 && !f.IsBlack() && AbsDot( wi , normal ) != 0.0 )
 	{
 		// 沿着法线方向的偏移量
-		Vector3f bias = Vector3f( normal.x * EPSILON , normal.y * EPSILON , normal.z * EPSILON );
+		// Vector3f bias = Vector3f( normal.x * EPSILON , normal.y * EPSILON , normal.z * EPSILON );
 
 		// 将光线沿着法线方向偏移
-		Ray r( record->HitPoint + bias , wi , ray , 1e-3f , Infinity );
+		Ray r( record->HitPoint /*+ bias */, wi , ray , 1e-3f , Infinity );
 
 		Spectrum Li = renderer->Li( scene , &r , record );
 

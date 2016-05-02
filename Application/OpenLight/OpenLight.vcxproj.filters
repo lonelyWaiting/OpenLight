@@ -237,9 +237,6 @@
     <ClCompile Include="..\..\Source\BRDF\FresnelDielectric.cpp">
       <Filter>BRDF</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\BRDF\SpecularTransmissioncpp.cpp">
-      <Filter>BRDF</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\BRDF\BSDF.cpp">
       <Filter>BRDF</Filter>
     </ClCompile>
@@ -251,6 +248,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Core\VCustomRTTI.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Light\AreaLight.cpp">
+      <Filter>Light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\BRDF\SpecularTransmission.cpp">
+      <Filter>BRDF</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -460,6 +463,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Shapes\Shape.h">
       <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Light\AreaLighth.h">
+      <Filter>Light</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

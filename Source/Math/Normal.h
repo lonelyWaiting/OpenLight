@@ -15,6 +15,8 @@ public:
 
 	operator Vector3f() const;
 
+	Normal& operator = ( const Normal& n );
+
 	Normal operator - () const;
 
 	Normal operator + ( const Normal& n ) const;

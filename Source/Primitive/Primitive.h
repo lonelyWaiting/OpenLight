@@ -9,6 +9,9 @@
 #include "Core/VSerializableObject.h"
 #include "Core/VIntersectable.h"
 
+class AreaLight;
+class Light;
+
 class Primitive : public VSerializableObject , public VIntersectable
 {
 public:
@@ -28,6 +31,10 @@ public:
 
 	void SetMaterial(Material* material);
 
+	void AddAreaLight( AreaLight* _pAreaLight );
+
+	Light* GetAreaLight() const;
+
 public:
 	void Deserialization( XMLElement* PrimitiveRootElment );
 
@@ -35,8 +42,17 @@ public:
 
 	void DeserializationMaterial( XMLElement* MaterialRootElement );
 
-protected:
-	std::vector<Shape*> shapes;
+	void DeserializationAreaLight( XMLElement* AreaLightRootElement );
 
-	Material* pMaterial;
+public:
+	double PDF( const Point3f& p , const Vector3f& w );
+
+public:
+	double GetArea() const;
+
+protected:
+	std::vector<Shape*> m_vShapes;
+	Material*           m_pMaterial;
+	AreaLight*          m_pAreaLight;
+	double              m_SumArea;
 };

@@ -3,6 +3,7 @@
 #include "Math/Ray.h"
 #include "Primitive/IntersectRecord.h"
 #include "ModelParser.h"
+#include "Light/Light.h"
 #include "TriangleMesh.h"
 
 IMPLEMENT_DYNAMIC_CREATE_DERIVED( TriangleMesh , Shape )
@@ -81,12 +82,6 @@ void TriangleMesh::Deserialization( XMLElement* ShapeRootElement )
 	*WorldToObject = Inverse( *ObjectToWorld );
 
 	double r , g , b;
-	XMLElement* ShapeEmissionElement = ShapeRootElement->FirstChildElement( "Emissive" );
-	ShapeEmissionElement->FirstChildElement( "r" )->QueryDoubleText( &r );
-	ShapeEmissionElement->FirstChildElement( "g" )->QueryDoubleText( &g );
-	ShapeEmissionElement->FirstChildElement( "b" )->QueryDoubleText( &b );
-
-	Emissive = Spectrum::FromRGB( r , g , b );
 
 	// read Surface Color Data
 	XMLElement* ShapeSurfaceColorElement = ShapeRootElement->FirstChildElement( "SurfaceColor" );
@@ -101,7 +96,6 @@ void TriangleMesh::Deserialization( XMLElement* ShapeRootElement )
 
 	for( int i = 0; i < TriangleCount; i++ )
 	{
-		triangles[i].SetPrimitive( pPrimitive );
 		triangles[i].SetTriangleMesh( this );
 	}
 
@@ -113,12 +107,12 @@ void TriangleMesh::Deserialization( XMLElement* ShapeRootElement )
 	BBoxWorld = ( *ObjectToWorld )( BBoxLocal );
 }
 
-int TriangleMesh::GetSubShapeCount() const
+int TriangleMesh::GetChildCount() const
 {
 	return TriangleCount;
 }
 
-Shape* TriangleMesh::GetSubShape( int index ) const
+Shape* TriangleMesh::GetChild( int index ) const
 {
 	return &triangles[index];
 }

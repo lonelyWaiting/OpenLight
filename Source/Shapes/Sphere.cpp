@@ -3,6 +3,7 @@
 #include "Math/Transform.h"
 #include "Primitive/IntersectRecord.h"
 #include "Sampler/Sampling.h"
+#include "Light/Light.h"
 #include "Sphere.h"
 
 IMPLEMENT_DYNAMIC_CREATE_DERIVED( Sphere , Shape )
@@ -70,7 +71,6 @@ bool Sphere::Intersect( Ray& r , IntersectRecord* record ) const
 		record->ObjectToWorld = *ObjectToWorld;
 		record->WorldToObject = *WorldToObject;
 		record->normal        = Normal( Normalize( r( t ) - m_Center ) );
-		record->Emission      = Emissive;
 		record->SurfaceColor  = SurfaceColor;
 		record->HitPoint      = r( t );
 		return true;
@@ -89,13 +89,7 @@ void Sphere::Deserialization( XMLElement* ShapeRootElement )
 
 	ShapeRootElement->FirstChildElement( "radius" )->QueryDoubleText( &m_Radius );
 
-	// Read Emissive
 	double r, g, b;
-	ShapeRootElement->FirstChildElement("Emissive")->FirstChildElement("r")->QueryDoubleText(&r);
-	ShapeRootElement->FirstChildElement("Emissive")->FirstChildElement("g")->QueryDoubleText(&g);
-	ShapeRootElement->FirstChildElement("Emissive")->FirstChildElement("b")->QueryDoubleText(&b);
-
-	Emissive = Spectrum::FromRGB(r, g, b);
 
 	// Read Surface Color
 	ShapeRootElement->FirstChildElement( "SurfaceColor" )->FirstChildElement( "r" )->QueryDoubleText( &r );
@@ -110,4 +104,76 @@ void Sphere::Deserialization( XMLElement* ShapeRootElement )
 	BBoxLocal = Bound3f( Point3f( -m_Radius , -m_Radius , -m_Radius ) , Point3f( m_Radius , m_Radius , m_Radius ) );
 
 	BBoxWorld = ( *ObjectToWorld )( BBoxLocal );
+}
+
+double Sphere::Area() const
+{
+	return 4.0 * PI * m_Radius * m_Radius;
+}
+
+double Sphere::PDF( const Point3f& p , const Vector3f& wi ) const
+{
+	// Test whether inside sphere
+	if( ( p - m_Center ).LengthSq() - m_Radius * m_Radius < 1e4f )
+	{
+		return Shape::PDF( p , wi );
+	}
+
+	double SinThetaMax2 = m_Radius * m_Radius / ( p - m_Center ).LengthSq();
+	double CosThetaMax = sqrtf( MAX( 0.0 , 1.0 - SinThetaMax2 ) );
+
+	return UniformConePDF( CosThetaMax );
+}
+
+Point3f Sphere::Sample( const Point3f& p , LightSample& lightSample , Normal& SampleNormal )
+{
+	Vector3f dirZ = Normalize( m_Center - p );
+
+	// 在球面上采样一个点
+	if( ( p - m_Center ).LengthSq() - m_Radius * m_Radius < 1e4f )
+	{
+		// 使用默认的采样
+		Vector3f SampleDir = UniformSampleHemisphere( Point2f( lightSample.value[0] , lightSample.value[1] ) );
+
+		if( Dot( SampleDir , dirZ ) < 0.0 )
+		{
+			SampleDir *= -1.0;
+		}
+
+		Point3f SamplePoint = m_Center + Normalize( dirZ ) * m_Radius;
+
+		// Compute Normal Dir
+		SampleNormal = Normalize( Normal( SamplePoint - m_Center ) );
+		
+		return SamplePoint;
+	}
+
+	
+	Vector3f dirX , dirY;
+	CoordinateSystem( dirZ , &dirX , &dirY );
+
+	// 均匀采样cone
+	double sinThetaMax2 = m_Radius * m_Radius / ( p - m_Center ).LengthSq();
+	double cosThetaMax = sqrtf( MAX( 0.0 , 1.0 - sinThetaMax2 ) );
+
+	Ray r( p , UniformSampleCone( lightSample.value[0] , lightSample.value[1] , cosThetaMax , dirX , dirY , dirZ ) );
+
+	// Test whether intersect
+	double t;
+	IntersectRecord record;
+	Point3f SamplePoint;
+	if( !Intersect( r , &record ) )
+	{
+		// 必定是切线但被判定为无交点
+		t = Dot( m_Center - p , r.Direction );
+		SamplePoint = r( t );
+	}
+	else
+	{
+		SamplePoint = record.HitPoint;
+	}
+	
+	SampleNormal = Normalize( SamplePoint - m_Center );
+
+	return SamplePoint;
 }

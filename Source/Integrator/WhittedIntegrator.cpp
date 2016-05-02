@@ -18,13 +18,12 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 	// 计算Hit Point处的BRDF
 	BSDF* bsdf = record->GetBSDF();
 
-	// 自发光
-	L += record->Emission;
-
 	Point3f HitPoint = record->HitPoint;
 	Normal n = Normalize( record->normal );
 
 	Vector3f wo = -ray->Direction;
+
+	L += record->Le( wo );
 
 	for( int i = 0; i < scene->GetLights().size(); i++ )
 	{
@@ -32,7 +31,7 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 		double pdf;
 		VisibilityTester* pVisibility = new VisibilityTester;
 
-		Spectrum Li = scene->GetLight( i )->Sample_L( HitPoint , &wi , &pdf , pVisibility );
+		Spectrum Li = scene->GetLight( i )->Sample_L( HitPoint , &wi , LightSample( ( double )rand() / ( double )RAND_MAX , ( double )rand() / ( double )RAND_MAX ) , &pdf , pVisibility );
 
 		if( Li.IsBlack() || pdf == 0.0f )
 		{
@@ -57,7 +56,7 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 		Li += SpecularReflect( *ray , scene , renderer , record , pAccelerator , bsdf );
 
 		// 跟踪折射光线
-		Li += SpecularTransmit( *ray , scene , renderer , record , pAccelerator , bsdf );
+		//Li += SpecularTransmit( *ray , scene , renderer , record , pAccelerator , bsdf );
 
 		L = L + Li * record->SurfaceColor;
 	}

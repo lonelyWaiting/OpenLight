@@ -2,6 +2,7 @@
 #include "Math/Ray.h"
 #include "Math/Transform.h"
 #include "Primitive/IntersectRecord.h"
+#include "Light/Light.h"
 #include "TriangleMesh.h"
 #include "Triangle.h"
 
@@ -90,19 +91,48 @@ bool Triangle::Intersect( Ray& rayWorld , IntersectRecord* record ) const
 		record->ObjectToWorld = *( pMesh->ObjectToWorld );
 		record->WorldToObject = *( pMesh->WorldToObject );
 		record->normal        = ( *ObjectToWorld )( pMesh->normals[index0] );			// 该triangle上的三个顶点
-		record->Emission      = pMesh->Emissive;
 		record->SurfaceColor  = pMesh->SurfaceColor;
 		record->HitPoint      = rayWorld( t );
-		record->primitivePtr  = pMesh->pPrimitive;
+		record->primitivePtr  = pPrimitive;
 		return true;
 	}
-
 
 	return false;
 }
 
+double Triangle::Area() const
+{
+	// |\overrightarrow{a} \times \overrightarrow{b}| = |\overrightarrow{a}| \times |\overrightarrow{b}|sin\theta
+	// so Area = \frac{|\overrightarrow{a} \times \overrightarrow{b}|}{2}
+	
+	// First construct two vector
+	Vector3f v1 = pMesh->points[index1] - pMesh->points[index0];
+	Vector3f v2 = pMesh->points[index2] - pMesh->points[index0];
+
+	double area = 1.0 / 2.0 * Cross( v1 , v2 ).Length();
+
+	return area;
+}
+
 void Triangle::Deserialization( XMLElement* RootElement )
 { 
-	// nothing to do , i only Deserialization obj model , never Deserialization single triangle
+	// nothing to do , we only Deserialization obj model , never Deserialization single triangle
 	return;
+}
+
+Point3f Triangle::Sample( const Point3f& p , LightSample& lightSample , Normal& SampleNormal )
+{
+	// 保证0.0 < u + v < 1.0
+	double u = 1.0f - sqrtf( lightSample.value[0] );
+	double v = lightSample.value[1] * sqrtf( lightSample.value[0] );
+
+	// 使用重心坐标
+	Point3f SamplePoint = pMesh->points[index0] * u + pMesh->points[index1] * v + pMesh->points[index2] * ( 1.0 - u - v );
+
+	/*SampleNormal = Normal( Cross( pMesh->points[index1] - pMesh->points[index0] , pMesh->points[index2] - pMesh->points[index0] ) );*/
+	SampleNormal = pMesh->normals[index0];
+
+	SampleNormal = Normalize( SampleNormal );
+
+	return SamplePoint;
 }
