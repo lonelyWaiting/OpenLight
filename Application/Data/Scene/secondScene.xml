@@ -13,7 +13,7 @@
 				<position>
 					<x>0.0</x>
 					<y>-1.45</y>
-					<z>3.0</z>
+					<z>4.0</z>
 				</position>
 			</transform>
 			<radius>1.05</radius>
@@ -29,14 +29,14 @@
 				<position>
 					<x>2.0</x>
 					<y>-2.0</y>
-					<z>3.7</z>
+					<z>4.0</z>
 				</position>
 			</transform>
 			<radius>0.5</radius>
 			<SurfaceColor>
-				<r>1.0</r>
-				<g>1.0</g>
-				<b>1.0</b>
+				<r>0.0</r>
+				<g>0.0</g>
+				<b>0.0</b>
 			</SurfaceColor>
 		</shape>
 		<material type="GlassMaterial">
@@ -50,7 +50,7 @@
 				<g>1.0</g>
 				<b>1.0</b>
 			</Transmission>
-			<ior>1.33</ior>
+			<ior>1.5</ior>
 		</material>
 	</primitive>
 
@@ -132,9 +132,9 @@
 		</material>
 		<AreaLight>
 			<Le>
-				<r>30.0</r>
-				<g>30.0</g>
-				<b>30.0</b>
+				<r>40.0</r>
+				<g>40.0</g>
+				<b>40.0</b>
 			</Le>
 		</AreaLight>
 	</primitive>
@@ -254,12 +254,12 @@
 	<Camera type="PinholeCamera">
 		<Position>
 			<x>0.0</x>
-			<y>-1.45</y>
+			<y>0</y>
 			<z>0.0</z>
 		</Position>
 		<Target>
 			<x>0.0</x>
-			<y>-1.45</y>
+			<y>0</y>
 			<z>1.0</z>
 		</Target>
 		<LensFocus>12</LensFocus>

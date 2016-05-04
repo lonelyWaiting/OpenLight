@@ -53,10 +53,10 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 		Spectrum Li( 0.0 );
 
 		// 跟踪反射光线
-		Li += SpecularReflect( *ray , scene , renderer , record , pAccelerator , bsdf );
+		//Li += SpecularReflect( *ray , scene , renderer , record , pAccelerator , bsdf );
 
 		// 跟踪折射光线
-		//Li += SpecularTransmit( *ray , scene , renderer , record , pAccelerator , bsdf );
+		Li += SpecularTransmit( *ray , scene , renderer , record , pAccelerator , bsdf );
 
 		L = L + Li * record->SurfaceColor;
 	}
