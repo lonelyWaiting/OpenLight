@@ -22,11 +22,11 @@ Spectrum SpecularReflection::f( const Vector3f& wo , const Vector3f& wi ) const
 
 Spectrum SpecularReflection::Sample_f( const Vector3f& wo , const Normal& n , Vector3f* wi , const Point2f& samplePoint , double* pdf ) const
 {
-	*wi = Normalize( 2 * Dot( wo , n ) / n.Length() * n - wo );
+	*wi = Normalize( 2 * Dot( wo , n ) / n.Length() * Normalize( n ) - wo );
 
 	*pdf = 1.0;
 
-	return fresnel->Evalute( *wi * n ) * R / Dot( *wi , n );
+	return fresnel->Evalute( wo * n ) * R / AbsDot( *wi , n );
 }
 
 double SpecularReflection::PDF( const Vector3f& wi , const Vector3f& wo ) const

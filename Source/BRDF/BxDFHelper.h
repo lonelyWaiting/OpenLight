@@ -6,7 +6,7 @@
 
 // compute refraction ray 
 // eta = etaI / etaT
-inline bool Refract( const Vector3f& wi , const Normal& n , double eta , Vector3f* wt , bool entering )
+inline bool Refract( const Vector3f& wi , const Normal& n , double eta , Vector3f* wt )
 {
 	double CosThetaI = AbsDot( wi , n );
 
@@ -19,9 +19,7 @@ inline bool Refract( const Vector3f& wi , const Normal& n , double eta , Vector3
 		return false;
 	}
 
-	*wt = eta * wi + n * ( eta * CosThetaI - std::sqrt( 1 - sinThetaT2 ) );
-
-	*wt = Normalize( *wt );
+	*wt = Normalize( eta * wi + n * ( eta * CosThetaI - std::sqrt( 1 - sinThetaT2 ) ) );
 
 	return true;
 }

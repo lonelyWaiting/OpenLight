@@ -67,14 +67,11 @@ void ThinLensCamera::Deserialization( XMLElement* CameraRootElement )
 
 	CameraRootElement->FirstChildElement( "LensRadius" )->QueryDoubleText( &LensRadius );
 
-	CameraRootElement->FirstChildElement( "ApertureResolution" )->FirstChildElement( "width" )->QueryDoubleText( &( ApertureResolution.x) );
-	CameraRootElement->FirstChildElement( "ApertureResolution" )->FirstChildElement( "height" )->QueryDoubleText( &( ApertureResolution.y ) );
-
-	CameraRootElement->FirstChildElement( "ApertureDistance" )->QueryDoubleText( &ApertureDistance );
-
 	CameraRootElement->FirstChildElement( "ExposureTime" )->QueryDoubleText( &ExposureTime );
 
 	CameraRootElement->FirstChildElement( "ViewDistance" )->QueryDoubleText( &ViewDistance );
+
+	CameraRootElement->FirstChildElement( "Fovy" )->QueryDoubleText( &fovy );
 
 	UpdateProperty();
 }

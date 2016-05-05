@@ -24,12 +24,6 @@ BSDF* GlassMaterial::GetBSDF( const Point3f& point , const Normal& normal ) cons
 {
 	BSDF* bsdf = new BSDF();
 
-	/*double ReflectRGB[3] = { 1.0 , 1.0 , 1.0 };
-	R = Spectrum::FromRGB( ReflectRGB );
-
-	double Transmission[3] = { 1.0 , 1.0  ,1.0 };
-	T = Spectrum::FromRGB( Transmission );*/
-
 	bsdf->Add( new SpecularReflection( R , new FresnelDielectric( 1.0 , ior ) ) );
 
 	bsdf->Add( new SpecularTransmission( 1.0 , ior , T ) );

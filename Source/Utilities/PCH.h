@@ -74,12 +74,12 @@ inline double Lerp( const double& t , const double& p1 , const double& p2 )
 
 inline double ToRadians( double degree )
 {
-	return ( ( degree / 180.0f ) * PI );
+	return ( ( degree / 180.0 ) * PI );
 }
 
 inline double ToDegree( double radian )
 {
-	return ( ( 180.0f / PI ) * radian );
+	return ( ( 180.0 / PI ) * radian );
 }
 
 template<typename T>

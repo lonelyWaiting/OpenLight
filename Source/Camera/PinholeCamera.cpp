@@ -43,14 +43,11 @@ void PinholeCamera::Deserialization( XMLElement* CameraRootElement )
 	CameraRootElement->FirstChildElement( "Target" )->FirstChildElement( "y" )->QueryDoubleText( &( Target.y ) );
 	CameraRootElement->FirstChildElement( "Target" )->FirstChildElement( "z" )->QueryDoubleText( &( Target.z ) );
 
-	CameraRootElement->FirstChildElement( "ApertureResolution" )->FirstChildElement( "width" )->QueryDoubleText( &( ApertureResolution.x ) );
-	CameraRootElement->FirstChildElement( "ApertureResolution" )->FirstChildElement( "height" )->QueryDoubleText( &( ApertureResolution.y ) );
-
-	CameraRootElement->FirstChildElement( "ApertureDistance" )->QueryDoubleText( &ApertureDistance );
-
 	CameraRootElement->FirstChildElement( "ExposureTime" )->QueryDoubleText( &ExposureTime );
 
 	CameraRootElement->FirstChildElement( "ViewDistance" )->QueryDoubleText( &ViewDistance );
+	
+	CameraRootElement->FirstChildElement( "Fovy" )->QueryDoubleText( &fovy );
 
 	UpdateProperty();
 }

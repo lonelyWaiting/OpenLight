@@ -2,7 +2,7 @@
 <scene>
 	<!-- 渲染器 -->
 	<Renderer type="SamplerRenderer">
-		<spp>8</spp>
+		<spp>32</spp>
 	</Renderer>
 
 	<!-- 图元 -->
@@ -13,7 +13,7 @@
 				<position>
 					<x>0.0</x>
 					<y>-1.45</y>
-					<z>4.0</z>
+					<z>3.4</z>
 				</position>
 			</transform>
 			<radius>1.05</radius>
@@ -28,8 +28,8 @@
 			<transform>
 				<position>
 					<x>2.0</x>
-					<y>-2.0</y>
-					<z>4.0</z>
+					<y>-2.05</y>
+					<z>3.4</z>
 				</position>
 			</transform>
 			<radius>0.5</radius>
@@ -41,9 +41,9 @@
 		</shape>
 		<material type="GlassMaterial">
 			<Reflection>
-				<r>10.0</r>
-				<g>10.0</g>
-				<b>10.0</b>
+				<r>1.0</r>
+				<g>1.0</g>
+				<b>1.0</b>
 			</Reflection>
 			<Transmission>
 				<r>1.0</r>
@@ -60,7 +60,7 @@
 			<transform>
 				<position>
 					<x>-1.75</x>
-					<y>-1.85</y>
+					<y>-1.95</y>
 					<z>3.1</z>
 				</position>
 			</transform>
@@ -132,9 +132,9 @@
 		</material>
 		<AreaLight>
 			<Le>
-				<r>40.0</r>
-				<g>40.0</g>
-				<b>40.0</b>
+				<r>30.0</r>
+				<g>30.0</g>
+				<b>30.0</b>
 			</Le>
 		</AreaLight>
 	</primitive>
@@ -254,23 +254,19 @@
 	<Camera type="PinholeCamera">
 		<Position>
 			<x>0.0</x>
-			<y>0</y>
+			<y>0.0</y>
 			<z>0.0</z>
 		</Position>
 		<Target>
 			<x>0.0</x>
-			<y>0</y>
+			<y>0.0</y>
 			<z>1.0</z>
 		</Target>
 		<LensFocus>12</LensFocus>
 		<LensRadius>0.01</LensRadius>
-		<ApertureResolution>
-			<width>1.574</width>
-			<height>1.181></height>
-		</ApertureResolution>
-		<ApertureDistance>20</ApertureDistance>
 		<ExposureTime>0.0</ExposureTime>
 		<ViewDistance>1.0</ViewDistance>
+		<Fovy>90</Fovy>
 	</Camera>
 
 	<!-- 采样器 -->
@@ -281,7 +277,7 @@
 
 	<!-- 积分器 -->
 	<Integrator type="WhittedIntegrator">
-		<MaxDepth>16</MaxDepth>
+		<MaxDepth>8</MaxDepth>
 		<SamplePathNumber>16</SamplePathNumber>
 	</Integrator>
 </scene>
