@@ -8,7 +8,7 @@
 #include "BRDF/BxDF.h"
 #include "IntegratorPCH.h"
 
-Spectrum SpecularReflect( const Ray& ray , const Scene* scene , const Renderer* renderer , IntersectRecord* record , Accelerator* pAccelerator , BSDF* pBSDF )
+Spectrum SpecularReflect( const Ray& ray , const Scene* scene , const Renderer* renderer , IntersectRecord* record , Accelerator* pAccelerator , BSDF* pBSDF , bool& bNoOccur )
 {
 	// 着色点位置
 	const Point3f& p = record->HitPoint;
@@ -25,7 +25,7 @@ Spectrum SpecularReflect( const Ray& ray , const Scene* scene , const Renderer* 
 
 	Point2f SamplePoint( ( double )rand() / ( double )RAND_MAX , ( double )rand() / ( double )RAND_MAX );
 
-	Spectrum f = pBSDF->Sample_f( wo , normal , &wi , SamplePoint , &pdf , BxDFType( REFLECTION | SPECULAR ) );
+	Spectrum f = pBSDF->Sample_f( wo , normal , &wi , SamplePoint , &pdf , BxDFType( REFLECTION | SPECULAR ) , bNoOccur );
 
 	Spectrum L = 0.0;
 
@@ -47,7 +47,7 @@ Spectrum SpecularReflect( const Ray& ray , const Scene* scene , const Renderer* 
 	return Spectrum( 0.0 );
 }
 
-Spectrum SpecularTransmit( const Ray& ray , const Scene* scene , const Renderer* renderer , IntersectRecord* record , Accelerator* pAccelerator , BSDF* pBSDF )
+Spectrum SpecularTransmit( const Ray& ray , const Scene* scene , const Renderer* renderer , IntersectRecord* record , Accelerator* pAccelerator , BSDF* pBSDF , bool& bNoOccur )
 {
 	// 着色点位置
 	const Point3f& p = record->HitPoint;
@@ -61,7 +61,7 @@ Spectrum SpecularTransmit( const Ray& ray , const Scene* scene , const Renderer*
 
 	Point2f SamplePoint( ( double )rand() / ( double )RAND_MAX , ( double )rand() / ( double )RAND_MAX );
 
-	Spectrum f = pBSDF->Sample_f( ray.Direction , normal , &wi , SamplePoint , &pdf , BxDFType( TRANSMISSION | SPECULAR ) );
+	Spectrum f = pBSDF->Sample_f( ray.Direction , normal , &wi , SamplePoint , &pdf , BxDFType( TRANSMISSION | SPECULAR ) , bNoOccur );
 
 	Spectrum L = 0.0;
 
@@ -76,9 +76,7 @@ Spectrum SpecularTransmit( const Ray& ray , const Scene* scene , const Renderer*
 		Spectrum Li = renderer->Li( scene , &r , record );
 
 		L = f * Li * AbsDot( wi , normal ) / pdf;
-
-		return L;
 	}
 
-	return Spectrum( 0.0 );
+	return L;
 }

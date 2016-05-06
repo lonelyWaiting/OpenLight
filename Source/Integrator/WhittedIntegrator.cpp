@@ -52,12 +52,17 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 	{
 		Spectrum Li( 0.0 );
 
+		bool bNoReflectOccur = false;
+
 		// 跟踪反射光线
-		//Li += SpecularReflect( *ray , scene , renderer , record , pAccelerator , bsdf );
+		Li += SpecularReflect( *ray , scene , renderer , record , pAccelerator , bsdf , bNoReflectOccur );
 
-		// 跟踪折射光线
-		Li += SpecularTransmit( *ray , scene , renderer , record , pAccelerator , bsdf );
-
+		if( bNoReflectOccur )
+		{
+			// 跟踪折射光线
+			Li += SpecularTransmit( *ray , scene , renderer , record , pAccelerator , bsdf , bNoReflectOccur );
+		}
+		
 		L = L + Li;
 	}
 

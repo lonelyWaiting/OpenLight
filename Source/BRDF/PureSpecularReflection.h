@@ -1,14 +1,13 @@
 #pragma once
 
 #include "BxDF.h"
-#include "Fresnel.h"
 
-class SpecularReflection : public BxDF
+class PureSpecularReflection : public BxDF
 {
 public:
-	SpecularReflection( const Spectrum& R , const Fresnel* fresnel );
+	PureSpecularReflection( const Spectrum& R );
 
-	~SpecularReflection();
+	~PureSpecularReflection();
 
 	Spectrum f( const Vector3f& wo , const Vector3f& wi ) const;
 
@@ -18,5 +17,4 @@ public:
 
 private:
 	const Spectrum R;			// 用于缩放反射颜色
-	const Fresnel* fresnel;	// 用于计算入射光被反射的比例
 };

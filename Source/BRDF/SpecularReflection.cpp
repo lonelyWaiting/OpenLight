@@ -20,13 +20,21 @@ Spectrum SpecularReflection::f( const Vector3f& wo , const Vector3f& wi ) const
 	return Spectrum( 0.0 );
 }
 
-Spectrum SpecularReflection::Sample_f( const Vector3f& wo , const Normal& n , Vector3f* wi , const Point2f& samplePoint , double* pdf ) const
+Spectrum SpecularReflection::Sample_f( const Vector3f& wo , const Normal& n , Vector3f* wi , const Point2f& samplePoint , double* pdf , bool& bNoOccur ) const
 {
 	*wi = Normalize( 2 * Dot( wo , n ) / n.Length() * Normalize( n ) - wo );
 
 	*pdf = 1.0;
 
-	return fresnel->Evalute( wo * n ) * R / AbsDot( *wi , n );
+	Spectrum F = fresnel->Evalute( wo * n );
+	if( ( ( double )rand() / ( double )RAND_MAX ) > F[0] )
+	{
+		// Œﬁ∑¥…‰
+		bNoOccur = true;
+		return Spectrum( 0 );
+	}
+
+	return F * R / AbsDot( *wi , n );
 }
 
 double SpecularReflection::PDF( const Vector3f& wi , const Vector3f& wo ) const

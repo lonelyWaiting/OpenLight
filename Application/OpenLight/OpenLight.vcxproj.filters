@@ -255,6 +255,12 @@
     <ClCompile Include="..\..\Source\BRDF\SpecularTransmission.cpp">
       <Filter>BRDF</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Material\PureReflectionMaterial.cpp">
+      <Filter>Material</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\BRDF\PureSpecularReflection.cpp">
+      <Filter>BRDF</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Math\Matrix3.h">
@@ -466,6 +472,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Light\AreaLighth.h">
       <Filter>Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Material\PureReflectionMaterial.h">
+      <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\BRDF\PureSpecularReflection.h">
+      <Filter>BRDF</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

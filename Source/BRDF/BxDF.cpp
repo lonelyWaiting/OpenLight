@@ -14,7 +14,7 @@ BxDF::~BxDF()
 
 }
 
-Spectrum BxDF::Sample_f( const Vector3f& wo , const Normal& n , Vector3f* wi , const Point2f& samplePoint , double* pdf ) const
+Spectrum BxDF::Sample_f( const Vector3f& wo , const Normal& n , Vector3f* wi , const Point2f& samplePoint , double* pdf , bool& bNoOccur) const
 {
 	// 生成半球采样方向
 	*wi = CosineSampleHemisphere( samplePoint );
@@ -45,6 +45,8 @@ Spectrum BxDF::rho( const Normal& n , int nSamples , Point2f* Samples1 , Point2f
 {
 	Spectrum r = 0;
 
+	bool bNoOccur = false;
+
 	for( int i = 0; i < nSamples; i++ )
 	{
 		Vector3f wo , wi;
@@ -56,7 +58,7 @@ Spectrum BxDF::rho( const Normal& n , int nSamples , Point2f* Samples1 , Point2f
 		double PdfOutput = INV_TWO_PI; 
 		double PdfInput = 0.0f;
 
-		Spectrum f = Sample_f( wo , n , &wi , Samples1[i] , &PdfInput );
+		Spectrum f = Sample_f( wo , n , &wi , Samples1[i] , &PdfInput , bNoOccur );
 
 		if( PdfInput > 0.0f )
 		{
@@ -73,12 +75,14 @@ Spectrum BxDF::rho( const Vector3f& wo , const Normal& n , int nSamples , Point2
 { 
 	Spectrum r = 0;
 
+	bool bNoOccur = false;
+
 	for( int i = 0; i < nSamples; i++ )
 	{
 		Vector3f wi;
 		double pdf = 0.0f;
 
-		Spectrum f = Sample_f( wo , n , &wi , samples[i] , &pdf );
+		Spectrum f = Sample_f( wo , n , &wi , samples[i] , &pdf , bNoOccur );
 
 		if( pdf > 0.0 )
 		{

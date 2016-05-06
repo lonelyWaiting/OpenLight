@@ -21,7 +21,7 @@ public:
 
 	Spectrum f( const Vector3f& wo , const Vector3f& wi , const Normal& n , const BxDFType type );
 
-	Spectrum Sample_f( const Vector3f&wo , const Normal& n , Vector3f* wi , const Point2f& samplePoint , double* pdf , BxDFType type ) const;
+	Spectrum Sample_f( const Vector3f&wo , const Normal& n , Vector3f* wi , const Point2f& samplePoint , double* pdf , BxDFType type , bool& bNoOccur ) const;
 
 	double PDF( const Vector3f& wo , const Vector3f& wi , BxDFType type ) const;
 

@@ -2,7 +2,7 @@
 <scene>
 	<!-- 渲染器 -->
 	<Renderer type="SamplerRenderer">
-		<spp>32</spp>
+		<spp>196</spp>
 	</Renderer>
 
 	<!-- 图元 -->
@@ -13,30 +13,41 @@
 				<position>
 					<x>0.0</x>
 					<y>-1.45</y>
-					<z>3.4</z>
+					<z>3.8</z>
 				</position>
 			</transform>
 			<radius>1.05</radius>
 			<SurfaceColor>
-				<r>0.0</r>
-				<g>0.0</g>
-				<b>0.0</b>
+				<r>1.0</r>
+				<g>1.0</g>
+				<b>1.0</b>
 			</SurfaceColor>
 		</shape>
+		<material type="PureReflectionMaterial">
+			<Reflection>
+				<r>1.0</r>
+				<g>1.0</g>
+				<b>1.0</b>
+			</Reflection>
+			<ior>1.5</ior>
+		</material>
+	</primitive>
+
+	<primitive>
 		<shape type="Sphere" bCompositeObject="false">
 			<filename>sphere.obj</filename>
 			<transform>
 				<position>
 					<x>2.0</x>
 					<y>-2.05</y>
-					<z>3.4</z>
+					<z>3.7</z>
 				</position>
 			</transform>
 			<radius>0.5</radius>
 			<SurfaceColor>
-				<r>0.0</r>
-				<g>0.0</g>
-				<b>0.0</b>
+				<r>1.0</r>
+				<g>1.0</g>
+				<b>1.0</b>
 			</SurfaceColor>
 		</shape>
 		<material type="GlassMaterial">
@@ -92,9 +103,9 @@
 				</position>
 			</transform>
 			<SurfaceColor>
-				<r>1.0</r>
-				<g>1.0</g>
-				<b>1.0</b>
+				<r>0.75</r>
+				<g>0.75</g>
+				<b>0.75</b>
 			</SurfaceColor>
 		</shape>
 		<material type="DiffuseMaterial">
@@ -118,9 +129,9 @@
 				</position>
 			</transform>
 			<SurfaceColor>
-				<r>1.0</r>
-				<g>1.0</g>
-				<b>1.0</b>
+				<r>0.75</r>
+				<g>0.75</g>
+				<b>0.75</b>
 			</SurfaceColor>
 		</shape>
 		<material type="DiffuseMaterial">
@@ -132,9 +143,9 @@
 		</material>
 		<AreaLight>
 			<Le>
-				<r>30.0</r>
-				<g>30.0</g>
-				<b>30.0</b>
+				<r>40.0</r>
+				<g>40.0</g>
+				<b>40.0</b>
 			</Le>
 		</AreaLight>
 	</primitive>
@@ -151,9 +162,9 @@
 				</position>
 			</transform>
 			<SurfaceColor>
-				<r>0.0</r>
-				<g>1.0</g>
-				<b>0.0</b>
+				<r>0.25</r>
+				<g>0.25</g>
+				<b>0.75</b>
 			</SurfaceColor>
 		</shape>
 		<material type="DiffuseMaterial">
@@ -177,9 +188,9 @@
 				</position>
 			</transform>
 			<SurfaceColor>
-				<r>1.0</r>
-				<g>0.0</g>
-				<b>0.0</b>
+				<r>0.75</r>
+				<g>0.25</g>
+				<b>0.25</b>
 			</SurfaceColor>
 		</shape>
 		<material type="DiffuseMaterial">
@@ -203,9 +214,9 @@
 				</position>
 			</transform>
 			<SurfaceColor>
-				<r>0.0</r>
-				<g>0.5</g>
-				<b>0.5</b>
+				<r>0.75</r>
+				<g>0.75</g>
+				<b>0.75</b>
 			</SurfaceColor>
 		</shape>
 		<material type="DiffuseMaterial">
@@ -229,9 +240,9 @@
 				</position>
 			</transform>
 			<SurfaceColor>
-				<r>0.5</r>
-				<g>0.5</g>
-				<b>0.5</b>
+				<r>0.0</r>
+				<g>0.0</g>
+				<b>0.0</b>
 			</SurfaceColor>
 		</shape>
 		<material type="DiffuseMaterial">
@@ -277,7 +288,7 @@
 
 	<!-- 积分器 -->
 	<Integrator type="WhittedIntegrator">
-		<MaxDepth>8</MaxDepth>
+		<MaxDepth>16</MaxDepth>
 		<SamplePathNumber>16</SamplePathNumber>
 	</Integrator>
 </scene>

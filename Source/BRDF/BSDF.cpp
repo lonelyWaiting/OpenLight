@@ -43,7 +43,7 @@ Spectrum BSDF::f( const Vector3f& wo , const Vector3f& wi , const Normal& n , co
 	return f;
 }
 
-Spectrum BSDF::Sample_f( const Vector3f&wo , const Normal& n , Vector3f* wi , const Point2f& samplePoint , double* pdf , BxDFType type ) const
+Spectrum BSDF::Sample_f( const Vector3f&wo , const Normal& n , Vector3f* wi , const Point2f& samplePoint , double* pdf , BxDFType type , bool& bNoOccur ) const
 {
 	// 计算匹配的bxdf
 	int MatchCount = Count( type );
@@ -71,7 +71,7 @@ Spectrum BSDF::Sample_f( const Vector3f&wo , const Normal& n , Vector3f* wi , co
 	// 重映射采样值到[0~1]^2
 	Point2f RemappedSamplePoint( samplePoint[0] * MatchCount - index , samplePoint[1] );
 	*pdf = 0.0;
-	Spectrum f = bxdf->Sample_f( wo , n , wi , RemappedSamplePoint , pdf );
+	Spectrum f = bxdf->Sample_f( wo , n , wi , RemappedSamplePoint , pdf , bNoOccur );
 
 	if( *pdf == 0 )
 	{
