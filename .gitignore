@@ -22,7 +22,7 @@ bld/
 [Bb]in/
 [Oo]bj/
 
-!*./Library/assimp/Lib
+!*./Library/assimp/Lib/Release
 
 # Visual Studio 2015 cache/options directory
 .vs/
