@@ -3,13 +3,15 @@
 #include "Spectrum/Spectrum.h"
 #include "Image.h"
 #include "Math/Vector2.h"
+#include "Core/VSerializableObject.h"
 
 namespace tinyxml2
 {
+	class XMLDocument;
 	class XMLElement;
 }
 
-class Film
+class Film : public VSerializableObject
 {
 public:
 	Film();
@@ -34,6 +36,8 @@ public:
 
 public:
 	void Deserialization( const tinyxml2::XMLElement* FilmRootElement );
+
+	void Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement );
 
 private:
 	int Width;

@@ -26,7 +26,12 @@ public:\
 	{\
 		static std::map<std::string , ClassGenerate> ClassRepository;\
 		return ClassRepository;\
+	}\
+	virtual const char* GetName()\
+	{\
+		return nullptr;\
 	}
+	
 
 #define DECLARE_DYNAMIC_CREATE_DERIVED(Derived , Base)\
 public:\
@@ -45,7 +50,11 @@ public:\
 	static Base* Create()\
 	{\
 		return new Derived;\
-	};
+	};\
+	const char* GetName()\
+	{\
+		return #Derived;\
+	}
 
 // 自动实现注册功能
 #define IMPLEMENT_DYNAMIC_CREATE_DERIVED(Derived)\

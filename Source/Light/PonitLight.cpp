@@ -72,3 +72,60 @@ void PointLight::Deserialization( tinyxml2::XMLElement* LightRootElement )
 
 	intensity = Spectrum::FromRGB( r , g , b );
 }
+
+void PointLight::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
+{
+	pRootElement->SetAttribute( "type" , GetName() );
+
+	{
+		tinyxml2::XMLElement* pTransformElement = xmlDoc.NewElement( "transform" );
+
+		pRootElement->InsertEndChild( pTransformElement );
+
+		tinyxml2::XMLElement* pPositionElement = xmlDoc.NewElement( "position" );
+
+		pTransformElement->InsertEndChild( pPositionElement );
+
+		tinyxml2::XMLElement* pXElement = xmlDoc.NewElement( "x" );
+
+		pXElement->SetText( LightPosWorld.x );
+
+		pPositionElement->InsertEndChild( pXElement );
+
+		tinyxml2::XMLElement* pYElement = xmlDoc.NewElement( "y" );
+
+		pYElement->SetText( LightPosWorld.y );
+
+		pPositionElement->InsertEndChild( pYElement );
+
+		tinyxml2::XMLElement* pZElement = xmlDoc.NewElement( "z" );
+
+		pZElement->SetText( LightPosWorld.z );
+
+		pPositionElement->InsertEndChild( pZElement );
+	}
+
+	{
+		tinyxml2::XMLElement* pIntensityElement = xmlDoc.NewElement( "intensity" );
+
+		pRootElement->InsertEndChild( pIntensityElement );
+
+		tinyxml2::XMLElement* pRElement = xmlDoc.NewElement( "r" );
+
+		pRElement->SetText( intensity[0] );
+
+		pIntensityElement->InsertEndChild( pRElement );
+
+		tinyxml2::XMLElement* pGElement = xmlDoc.NewElement( "g" );
+
+		pGElement->SetText( intensity[1] );
+
+		pIntensityElement->InsertEndChild( pGElement );
+
+		tinyxml2::XMLElement* pBElement = xmlDoc.NewElement( "b" );
+
+		pBElement->SetText( intensity[2] );
+
+		pIntensityElement->InsertEndChild( pBElement );
+	}
+}

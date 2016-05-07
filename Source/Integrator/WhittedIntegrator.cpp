@@ -74,3 +74,16 @@ void WhittedIntegrator::Deserialization( tinyxml2::XMLElement* IntegratorRootEle
 {
 	IntegratorRootElement->FirstChildElement( "MaxDepth" )->QueryIntText( &mMaxDepth );
 }
+
+void WhittedIntegrator::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
+{
+	pRootElement->SetAttribute( "type" , GetName() );
+
+	{
+		tinyxml2::XMLElement* pMaxDepthElement = xmlDoc.NewElement( "MaxDepth" );
+
+		pMaxDepthElement->SetText( mMaxDepth );
+
+		pRootElement->InsertEndChild( pMaxDepthElement );
+	}
+}

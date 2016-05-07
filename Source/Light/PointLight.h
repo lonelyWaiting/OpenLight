@@ -5,6 +5,7 @@
 
 namespace tinyxml2
 {
+	class XMLDocument;
 	class XMLElement;
 }
 
@@ -27,6 +28,8 @@ public:
 
 public:
 	void Deserialization( tinyxml2::XMLElement* LightRootElement );
+
+	void Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement );
 
 private:
 	Point3f LightPosWorld;

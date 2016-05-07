@@ -102,3 +102,14 @@ void SamplerRenderer::Deserialization( tinyxml2::XMLElement* RendererRootElement
 {
 	RendererRootElement->FirstChildElement( "spp" )->QueryIntText( &spp );
 }
+
+void SamplerRenderer::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
+{
+	pRootElement->SetAttribute( "type" , GetName() );
+
+	{
+		tinyxml2::XMLElement* pElement = xmlDoc.NewElement( "spp" );
+		pElement->SetText( spp );
+		pRootElement->InsertEndChild( pElement );
+	}
+}

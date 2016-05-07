@@ -90,13 +90,16 @@ void Primitive::Deserialization( tinyxml2::XMLElement* PrimitiveRootElment )
 
 void Primitive::DeserializationShape( tinyxml2::XMLElement* ShapeRootElement )
 {
-	const char* ShapeType = ShapeRootElement->FirstAttribute()->Value();
+	const char* type             = ShapeRootElement->FirstAttribute()->Value();
 	const char* bCompositeObject = ShapeRootElement->Attribute( "bCompositeObject" );
 	
-	Shape* shape = Shape::Create( ShapeType );
+	Shape* shape                 = Shape::Create( type );
 	Assert( shape != nullptr );
 
 	shape->Deserialization( ShapeRootElement );
+
+	// 记录反序列化信息
+	m_vShapeInformations.push_back( shape );
 
 	if( !std::strcmp( bCompositeObject , "true" ) )
 	{
@@ -130,6 +133,36 @@ void Primitive::DeserializationAreaLight( tinyxml2::XMLElement* AreaLightRootEle
 		m_pAreaLight = new AreaLight;
 		m_pAreaLight->Deserialization( AreaLightRootElement );
 		m_pAreaLight->SetPrimitive( this );
+	}
+}
+
+void Primitive::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
+{
+	for( auto& shape : m_vShapeInformations )
+	{
+		tinyxml2::XMLElement* pElement = xmlDoc.NewElement( "shape" );
+
+		shape->Serialization( xmlDoc , pElement );
+		
+		pRootElement->InsertEndChild( pElement );
+	}
+
+	if( m_pMaterial != nullptr )
+	{
+		tinyxml2::XMLElement* pElement = xmlDoc.NewElement( "material" );
+
+		m_pMaterial->Serialization( xmlDoc , pElement );
+
+		pRootElement->InsertEndChild( pElement );
+	}
+
+	if( m_pAreaLight != nullptr )
+	{
+		tinyxml2::XMLElement* pElement = xmlDoc.NewElement( "AreaLight" );
+
+		m_pAreaLight->Serialization( xmlDoc , pElement );
+
+		pRootElement->InsertEndChild( pElement );
 	}
 }
 

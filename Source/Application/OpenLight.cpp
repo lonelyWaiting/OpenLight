@@ -42,10 +42,10 @@ bool InitRTTI()
 	return true;
 }
 
-Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrator* pSurfaceIntegrator , Sampler* pSampler )
+Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrator*& pSurfaceIntegrator , Sampler*& pSampler )
 {
 	FileSystem fs;
-	std::wstring SceneFilename = fs.GetSceneFolder() + L"secondScene.xml";
+	std::wstring SceneFilename = fs.GetSceneFolder() + L"Scene.xml";
 
 	tinyxml2::XMLDocument doc;
 	doc.LoadFile( srString::ToAscii( SceneFilename ).c_str() );
@@ -123,6 +123,54 @@ Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrat
 	return renderer;
 }
 
+bool SerializationScene( Scene* scene , Camera* camera , SurfaceIntegrator* pSurfaceIntegrator , Sampler* pSampler , Renderer* pRenderer )
+{
+	tinyxml2::XMLDocument xmlDoc;
+
+	// Create Root Node
+	tinyxml2::XMLElement* pRoot = xmlDoc.NewElement( "Root" );
+
+	// Attach it to the XMLDocument
+	xmlDoc.InsertFirstChild( pRoot );
+
+	// -----------------------------------Serialization Scene-------------------------------------------
+	scene->Serialization( xmlDoc , pRoot );
+
+	// ---------------------------------Serialization Camera-----------------------------------------------
+	{
+		tinyxml2::XMLElement* pElement = xmlDoc.NewElement( "Camera" );
+		pRoot->InsertEndChild( pElement );
+		camera->Serialization( xmlDoc , pElement );
+	}
+
+	// ---------------------------------Serialization Integrator-------------------------------------------
+	{
+		tinyxml2::XMLElement* pElement = xmlDoc.NewElement( "Integrator" );
+		pRoot->InsertEndChild( pElement );
+		pSurfaceIntegrator->Serialization( xmlDoc , pElement );
+	}
+
+	// ---------------------------------Serialization Sampler--------------------------------------
+	{
+		tinyxml2::XMLElement* pElement = xmlDoc.NewElement( "Sampler" );
+		pRoot->InsertEndChild( pElement );
+		pSampler->Serialization( xmlDoc , pElement );
+	}
+
+	// -------------------------------Serialzation Renderer------------------------------------------
+	{
+		tinyxml2::XMLElement* pElement = xmlDoc.NewElement( "Renderer" );
+		pRoot->InsertEndChild( pElement );
+		pRenderer->Serialization( xmlDoc , pElement );
+	}
+
+	FileSystem fs;
+	std::wstring filename = fs.GetSceneFolder() + L"SavedData.xml";
+	tinyxml2::XMLError eResult = xmlDoc.SaveFile( srString::ToAscii( filename ).c_str() );
+
+	return true;
+}
+
 int main( void )
 {	
 	InitRTTI();
@@ -145,6 +193,8 @@ int main( void )
 	}
 
 	/*system( "pause" );*/
+
+	SerializationScene( scene , camera , pSurfaceIntegrator , pSampler , renderer );
 
 	return 0;
 }

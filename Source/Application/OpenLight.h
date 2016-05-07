@@ -43,6 +43,8 @@
 
 //#include "tinyxml2.h"
 
-Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrator* pSurfaceIntegrator , Sampler* pSampler );
+Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrator*& pSurfaceIntegrator , Sampler*& pSampler );
+
+bool SerializationScene( Scene* scene , Camera* camera , SurfaceIntegrator* pSurfaceIntegrator , Sampler* pSampler , Renderer* pRenderer );
 
 bool InitRTTI();

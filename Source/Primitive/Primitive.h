@@ -14,6 +14,7 @@ class Light;
 
 namespace tinyxml2
 {
+	class XMLDocument;
 	class XMLElement;
 }
 
@@ -49,6 +50,8 @@ public:
 
 	void DeserializationAreaLight( tinyxml2::XMLElement* AreaLightRootElement );
 
+	void Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement );
+
 public:
 	double PDF( const Point3f& p , const Vector3f& w );
 
@@ -56,8 +59,10 @@ public:
 	double GetArea() const;
 
 protected:
-	std::vector<Shape*> m_vShapes;
-	Material*           m_pMaterial;
-	AreaLight*          m_pAreaLight;
-	double              m_SumArea;
+	std::vector<Shape*>           m_vShapes;
+	Material*                     m_pMaterial;
+	AreaLight*                    m_pAreaLight;
+	double                        m_SumArea;
+
+	std::vector<Shape*>           m_vShapeInformations;
 };

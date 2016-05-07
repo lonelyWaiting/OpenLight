@@ -50,3 +50,90 @@ void PinholeCamera::Deserialization( tinyxml2::XMLElement* CameraRootElement )
 
 	UpdateProperty();
 }
+
+void PinholeCamera::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
+{
+	pRootElement->SetAttribute( "type" , GetName() );
+
+	{
+		tinyxml2::XMLElement* pEyeElement = xmlDoc.NewElement( "Position" );
+
+		pRootElement->InsertEndChild( pEyeElement );
+
+		tinyxml2::XMLElement* pXElement = xmlDoc.NewElement( "x" );
+
+		pXElement->SetText( Eye.x );
+
+		pEyeElement->InsertEndChild( pXElement );
+
+		tinyxml2::XMLElement* pYElement = xmlDoc.NewElement( "y" );
+
+		pYElement->SetText( Eye.y );
+
+		pEyeElement->InsertEndChild( pYElement );
+
+		tinyxml2::XMLElement* pZElement = xmlDoc.NewElement( "z" );
+
+		pZElement->SetText( Eye.z );
+
+		pEyeElement->InsertEndChild( pZElement );
+	}
+
+	{
+		tinyxml2::XMLElement* pTargetElement = xmlDoc.NewElement( "Target" );
+
+		pRootElement->InsertEndChild( pTargetElement );
+
+		tinyxml2::XMLElement* pXElement = xmlDoc.NewElement( "x" );
+
+		pXElement->SetText( Target.x );
+
+		pTargetElement->InsertEndChild( pXElement );
+
+		tinyxml2::XMLElement* pYElement = xmlDoc.NewElement( "y" );
+
+		pYElement->SetText( Target.y );
+
+		pTargetElement->InsertEndChild( pYElement );
+
+		tinyxml2::XMLElement* pZElement = xmlDoc.NewElement( "z" );
+
+		pZElement->SetText( Target.z );
+
+		pTargetElement->InsertEndChild( pZElement );
+	}
+
+	{
+		tinyxml2::XMLElement* pExposureTimeElement = xmlDoc.NewElement( "ExposureTime" );
+
+		pExposureTimeElement->SetText( ExposureTime );
+
+		pRootElement->InsertEndChild( pExposureTimeElement );
+	}
+
+	{
+		tinyxml2::XMLElement* pViewDistanceElement = xmlDoc.NewElement( "ViewDistance" );
+
+		pViewDistanceElement->SetText( ViewDistance );
+
+		pRootElement->InsertEndChild( pViewDistanceElement );
+	}
+
+	{
+		tinyxml2::XMLElement* pFovyElement = xmlDoc.NewElement( "Fovy" );
+
+		pFovyElement->SetText( fovy );
+
+		pRootElement->InsertEndChild( pFovyElement );
+	}
+
+	{
+		tinyxml2::XMLElement* pFirstElement = xmlDoc.FirstChildElement();
+
+		tinyxml2::XMLElement* pFilmElement = xmlDoc.NewElement( "Film" );
+
+		pFirstElement->InsertEndChild( pFilmElement );
+
+		GetFilm()->Serialization( xmlDoc , pFilmElement );
+	}
+}

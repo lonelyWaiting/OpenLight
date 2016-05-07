@@ -6,6 +6,7 @@
 #include "Math/Vector3.h"
 #include "Sampler/CameraSample.h"
 #include "Core/VCustomRTTI.h"
+#include "Core/VSerializableObject.h"
 
 namespace tinyxml2
 {
@@ -14,7 +15,7 @@ namespace tinyxml2
 
 class Scene;
 
-class Camera
+class Camera : public VSerializableObject
 {
 	DECLARE_DYNAMIC_CREATE_BASE( Camera )
 
@@ -47,9 +48,6 @@ public:
 	virtual Ray GenerateRay( double RasterX, double RasterY , const CameraSample& SamplePoint ) = 0;
 
 	virtual void UpdateProperty();
-
-public:
-	virtual void Deserialization( tinyxml2::XMLElement* CameraRootElement ) = 0;
 
 protected:
 	Point3f		Eye;						// 相机中心

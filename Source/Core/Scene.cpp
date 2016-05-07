@@ -49,7 +49,43 @@ const std::vector<Light*>& Scene::GetLights() const
 
 void Scene::Deserialization( tinyxml2::XMLElement* RootElement )
 {
+	tinyxml2::XMLElement* PrimitiveElement = RootElement->FirstChildElement( "primitive" );
+	while( PrimitiveElement )
+	{
+		Primitive* primitive = new Primitive;
+		Assert( primitive != nullptr );
+		primitive->Deserialization( PrimitiveElement );
+		AddObject( *primitive );
+		AddLight( primitive->GetAreaLight() );
+		PrimitiveElement = PrimitiveElement->NextSiblingElement( "primitive" );
+	}
+}
 
+void Scene::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
+{
+	for( auto& object : Objects )
+	{
+		tinyxml2::XMLElement* pElement = xmlDoc.NewElement( "primitive" );
+
+		pRootElement->InsertEndChild( pElement );
+
+		object.Serialization( xmlDoc , pElement );
+	}
+
+	for( auto& light : lights )
+	{
+		if( !strcmp( light->GetName() , "AreaLight" ) )
+		{
+			// AreaLight只会挂接在Primitive下，由Primitive序列化
+			continue;
+		}
+
+		tinyxml2::XMLElement* pElement = xmlDoc.NewElement( "light" );
+
+		pRootElement->InsertEndChild( pElement );
+
+		light->Serialization( xmlDoc , pElement );
+	}
 }
 
 int Scene::GetObjectCount() const

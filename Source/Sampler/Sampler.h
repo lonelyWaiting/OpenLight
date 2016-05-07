@@ -5,14 +5,16 @@
 #include "Math/Point2.h"
 #include "Math/Point3.h"
 #include "CameraSample.h"
+#include "Core/VSerializableObject.h"
 #include "Core/VCustomRTTI.h"
 
 namespace tinyxml2
 {
+	class XMLDocument;
 	class XMLElement;
 }
 
-class Sampler
+class Sampler : public VSerializableObject
 {
 	DECLARE_DYNAMIC_CREATE_BASE( Sampler )
 
@@ -37,9 +39,6 @@ protected:
 
 public:
 	CameraSample GetSamplePoint();
-
-public:
-	virtual void Deserialization( tinyxml2::XMLElement* SamplerRootElement ) = 0;
 
 public:
 	std::vector<int>			ShuffledIndices;					// 采样集的数目

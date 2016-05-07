@@ -4,6 +4,7 @@
 
 namespace tinyxml2
 {
+	class XMLDocument;
 	class XMLElement;
 }
 
@@ -16,12 +17,13 @@ public:
 
 	BSDF* GetBSDF( const Point3f& point , const Normal& normal ) const;
 
-	PureReflectionMaterial( Spectrum R , double ior );
+	PureReflectionMaterial( Spectrum R );
 
 public:
 	void Deserialization( tinyxml2::XMLElement* RootElement );
 
+	void Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement );
+
 private:
 	mutable Spectrum R;
-	double ior;
 };

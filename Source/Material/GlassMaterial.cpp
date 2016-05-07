@@ -51,3 +51,64 @@ void GlassMaterial::Deserialization( tinyxml2::XMLElement* RootElement )
 
 	RootElement->FirstChildElement( "ior" )->QueryDoubleText( &ior );
 }
+
+void GlassMaterial::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
+{
+	pRootElement->SetAttribute( "type" , GetName() );
+
+	{
+		tinyxml2::XMLElement* pReflectionElement = xmlDoc.NewElement( "Reflection" );
+
+		pRootElement->InsertEndChild( pReflectionElement );
+
+		tinyxml2::XMLElement* pRElement = xmlDoc.NewElement( "r" );
+
+		pRElement->SetText( R[0] );
+
+		pReflectionElement->InsertEndChild( pRElement );
+
+		tinyxml2::XMLElement* pGElement = xmlDoc.NewElement( "g" );
+
+		pGElement->SetText( R[1] );
+
+		pReflectionElement->InsertEndChild( pGElement );
+
+		tinyxml2::XMLElement* pBElement = xmlDoc.NewElement( "b" );
+
+		pBElement->SetText( R[2] );
+
+		pReflectionElement->InsertEndChild( pBElement );
+	}
+
+	{
+		tinyxml2::XMLElement* pTransmissionElement = xmlDoc.NewElement( "Transmission" );
+
+		pRootElement->InsertEndChild( pTransmissionElement );
+
+		tinyxml2::XMLElement* pRElement = xmlDoc.NewElement( "r" );
+
+		pRElement->SetText( T[0] );
+
+		pTransmissionElement->InsertEndChild( pRElement );
+
+		tinyxml2::XMLElement* pGElement = xmlDoc.NewElement( "g" );
+
+		pGElement->SetText( T[1] );
+
+		pTransmissionElement->InsertEndChild( pGElement );
+
+		tinyxml2::XMLElement* pBElement = xmlDoc.NewElement( "b" );
+
+		pBElement->SetText( T[2] );
+
+		pTransmissionElement->InsertEndChild( pBElement );
+	}
+
+	{
+		tinyxml2::XMLElement* pIORElement = xmlDoc.NewElement( "ior" );
+
+		pIORElement->SetText( ior );
+
+		pRootElement->InsertEndChild( pIORElement );
+	}
+}

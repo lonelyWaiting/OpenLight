@@ -311,7 +311,8 @@
       <AdditionalDependencies>FreeImage.lib;tinyxml2.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)\Library\assimp\Lib\Release\assimp-vc140-mt.dll ..\Bin\Release\</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>

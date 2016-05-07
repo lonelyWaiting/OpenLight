@@ -4,6 +4,7 @@
 
 namespace tinyxml2
 {
+	class XMLDocument;
 	class XMLElement;
 }
 
@@ -20,6 +21,8 @@ public:
 
 public:
 	void Deserialization( tinyxml2::XMLElement* RootElement );
+
+	void Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement );
 
 private:
 	mutable Spectrum R;

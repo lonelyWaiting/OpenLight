@@ -103,3 +103,13 @@ Point3f Shape::Sample( const Point3f& p , LightSample& lightSample , Normal& nor
 	// unimplement method
 	return Point3f();
 }
+
+Point3f Shape::GetPosition()
+{
+	return Pos;
+}
+
+Spectrum Shape::GetSurfaceColor()
+{
+	return SurfaceColor;
+}

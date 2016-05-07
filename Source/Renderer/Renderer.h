@@ -2,6 +2,7 @@
 
 #include "Spectrum/Spectrum.h"
 #include "Core/VCustomRTTI.h"
+#include "Core/VSerializableObject.h"
 
 class Scene;
 class Sampler;
@@ -16,7 +17,7 @@ namespace tinyxml2
 	class XMLElement;
 }
 
-class Renderer
+class Renderer : public VSerializableObject
 {
 	DECLARE_DYNAMIC_CREATE_BASE( Renderer )
 
@@ -36,9 +37,6 @@ public:
 						 IntersectRecord* record = nullptr) const = 0;
 
 	void SetSpp( int spp );
-
-public:
-	virtual void Deserialization( tinyxml2::XMLElement* RendererRootElement ) = 0;
 
 protected:
 	int spp;		// sample per pixel

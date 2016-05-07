@@ -74,3 +74,22 @@ void NRooksSampler::Deserialization( tinyxml2::XMLElement* SamplerRootElement )
 
 	SetProperty( SampleCount , SampleGroupCount );
 }
+
+void NRooksSampler::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
+{
+	pRootElement->SetAttribute( "type" , GetName() );
+
+	{
+		tinyxml2::XMLElement* pSampleGroupCountElement = xmlDoc.NewElement( "SampleGroupCount" );
+
+		pSampleGroupCountElement->SetText( SampleGroupCount );
+
+		pRootElement->InsertEndChild( pSampleGroupCountElement );
+
+		tinyxml2::XMLElement* pSampleCountElement = xmlDoc.NewElement( "SampleCount" );
+
+		pSampleCountElement->SetText( SampleCount );
+
+		pRootElement->InsertEndChild( pSampleCountElement );
+	}
+}

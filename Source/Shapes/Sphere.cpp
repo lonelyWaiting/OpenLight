@@ -14,8 +14,9 @@ Sphere::Sphere()
 
 Sphere::Sphere( Point3f Center , double radius )
 	: m_Radius( radius )
-	, m_Center( Center )
 {
+	Pos = Center;
+
 	*ObjectToWorld = Translate( Vector3f( Center ) );
 	
 	*WorldToObject = Inverse( *ObjectToWorld );
@@ -69,7 +70,7 @@ bool Sphere::Intersect( Ray& r , IntersectRecord* record ) const
 		record->HitT          = t;
 		record->ObjectToWorld = *ObjectToWorld;
 		record->WorldToObject = *WorldToObject;
-		record->normal        = Normal( Normalize( r( t ) - m_Center ) );
+		record->normal        = Normal( Normalize( r( t ) - Pos ) );
 		record->SurfaceColor  = SurfaceColor;
 		record->HitPoint      = r( t );
 		return true;
@@ -82,9 +83,9 @@ void Sphere::Deserialization( tinyxml2::XMLElement* ShapeRootElement )
 {
 	tinyxml2::XMLElement* PrimitivePosiitonElement = ShapeRootElement->FirstChildElement( "transform" )->FirstChildElement( "position" );
 
-	PrimitivePosiitonElement->FirstChildElement( "x" )->QueryDoubleText( &( m_Center.x ) );
-	PrimitivePosiitonElement->FirstChildElement( "y" )->QueryDoubleText( &( m_Center.y ) );
-	PrimitivePosiitonElement->FirstChildElement( "z" )->QueryDoubleText( &( m_Center.z ) );
+	PrimitivePosiitonElement->FirstChildElement( "x" )->QueryDoubleText( &( Pos.x ) );
+	PrimitivePosiitonElement->FirstChildElement( "y" )->QueryDoubleText( &( Pos.y ) );
+	PrimitivePosiitonElement->FirstChildElement( "z" )->QueryDoubleText( &( Pos.z ) );
 
 	ShapeRootElement->FirstChildElement( "radius" )->QueryDoubleText( &m_Radius );
 
@@ -97,12 +98,79 @@ void Sphere::Deserialization( tinyxml2::XMLElement* ShapeRootElement )
 	
 	SurfaceColor = Spectrum::FromRGB( r , g , b );
 
-	*ObjectToWorld = Translate( Vector3f( m_Center ) );
+	*ObjectToWorld = Translate( Vector3f( Pos ) );
 	*WorldToObject = Inverse( *ObjectToWorld );
 
 	BBoxLocal = Bound3f( Point3f( -m_Radius , -m_Radius , -m_Radius ) , Point3f( m_Radius , m_Radius , m_Radius ) );
 
 	BBoxWorld = ( *ObjectToWorld )( BBoxLocal );
+}
+
+void Sphere::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
+{
+	pRootElement->SetAttribute( "type" , GetName() );
+	pRootElement->SetAttribute( "bCompositeObject" , "false" );
+
+	{
+		tinyxml2::XMLElement* pTransformElement = xmlDoc.NewElement( "transform" );
+
+		pRootElement->InsertEndChild( pTransformElement );
+
+		tinyxml2::XMLElement* pPositionElement = xmlDoc.NewElement( "position" );
+
+		pTransformElement->InsertEndChild( pPositionElement );
+
+		tinyxml2::XMLElement* pXElement = xmlDoc.NewElement( "x" );
+
+		pXElement->SetText( Pos.x );
+
+		pPositionElement->InsertEndChild( pXElement );
+
+		tinyxml2::XMLElement* pYElement = xmlDoc.NewElement( "y" );
+
+		pYElement->SetText( Pos.y );
+
+		pPositionElement->InsertEndChild( pYElement );
+
+		tinyxml2::XMLElement* pZElement = xmlDoc.NewElement( "z" );
+
+		pZElement->SetText( Pos.z );
+
+		pPositionElement->InsertEndChild( pZElement );
+	}
+
+	{
+		tinyxml2::XMLElement* pRadiusElement = xmlDoc.NewElement( "radius" );
+
+		pRadiusElement->SetText( m_Radius );
+
+		pRootElement->InsertEndChild( pRadiusElement );
+	}
+
+	{
+		tinyxml2::XMLElement* pSurfaceElement = xmlDoc.NewElement( "SurfaceColor" );
+
+		pRootElement->InsertEndChild( pSurfaceElement );
+
+		tinyxml2::XMLElement* pRElement = xmlDoc.NewElement( "r" );
+
+		pRElement->SetText( SurfaceColor[0] );
+
+		pSurfaceElement->InsertEndChild( pRElement );
+
+		tinyxml2::XMLElement* pGElement = xmlDoc.NewElement( "g" );
+
+		pGElement->SetText( SurfaceColor[1] );
+
+		pSurfaceElement->InsertEndChild( pGElement );
+
+		tinyxml2::XMLElement* pBElement = xmlDoc.NewElement( "b" );
+
+		pBElement->SetText( SurfaceColor[2] );
+
+		pSurfaceElement->InsertEndChild( pBElement );
+	}
+	
 }
 
 double Sphere::Area() const
@@ -113,12 +181,12 @@ double Sphere::Area() const
 double Sphere::PDF( const Point3f& p , const Vector3f& wi ) const
 {
 	// Test whether inside sphere
-	if( ( p - m_Center ).LengthSq() - m_Radius * m_Radius < 1e4f )
+	if( ( p - Pos ).LengthSq() - m_Radius * m_Radius < 1e4f )
 	{
 		return Shape::PDF( p , wi );
 	}
 
-	double SinThetaMax2 = m_Radius * m_Radius / ( p - m_Center ).LengthSq();
+	double SinThetaMax2 = m_Radius * m_Radius / ( p - Pos ).LengthSq();
 	double CosThetaMax = sqrt( MAX( 0.0 , 1.0 - SinThetaMax2 ) );
 
 	return UniformConePDF( CosThetaMax );
@@ -126,10 +194,10 @@ double Sphere::PDF( const Point3f& p , const Vector3f& wi ) const
 
 Point3f Sphere::Sample( const Point3f& p , LightSample& lightSample , Normal& SampleNormal )
 {
-	Vector3f dirZ = Normalize( m_Center - p );
+	Vector3f dirZ = Normalize( Pos - p );
 
 	// 在球面上采样一个点
-	if( ( p - m_Center ).LengthSq() - m_Radius * m_Radius < 1e4f )
+	if( ( p - Pos ).LengthSq() - m_Radius * m_Radius < 1e4f )
 	{
 		// 使用默认的采样
 		Vector3f SampleDir = UniformSampleHemisphere( Point2f( lightSample.value[0] , lightSample.value[1] ) );
@@ -139,10 +207,10 @@ Point3f Sphere::Sample( const Point3f& p , LightSample& lightSample , Normal& Sa
 			SampleDir *= -1.0;
 		}
 
-		Point3f SamplePoint = m_Center + Normalize( dirZ ) * m_Radius;
+		Point3f SamplePoint = Pos + Normalize( dirZ ) * m_Radius;
 
 		// Compute Normal Dir
-		SampleNormal = Normalize( Normal( SamplePoint - m_Center ) );
+		SampleNormal = Normalize( Normal( SamplePoint - Pos ) );
 		
 		return SamplePoint;
 	}
@@ -152,7 +220,7 @@ Point3f Sphere::Sample( const Point3f& p , LightSample& lightSample , Normal& Sa
 	CoordinateSystem( dirZ , &dirX , &dirY );
 
 	// 均匀采样cone
-	double sinThetaMax2 = m_Radius * m_Radius / ( p - m_Center ).LengthSq();
+	double sinThetaMax2 = m_Radius * m_Radius / ( p - Pos ).LengthSq();
 	double cosThetaMax = sqrt( MAX( 0.0 , 1.0 - sinThetaMax2 ) );
 
 	Ray r( p , UniformSampleCone( lightSample.value[0] , lightSample.value[1] , cosThetaMax , dirX , dirY , dirZ ) );
@@ -164,7 +232,7 @@ Point3f Sphere::Sample( const Point3f& p , LightSample& lightSample , Normal& Sa
 	if( !Intersect( r , &record ) )
 	{
 		// 必定是切线但被判定为无交点
-		t = Dot( m_Center - p , r.Direction );
+		t = Dot( Pos - p , r.Direction );
 		SamplePoint = r( t );
 	}
 	else
@@ -172,7 +240,7 @@ Point3f Sphere::Sample( const Point3f& p , LightSample& lightSample , Normal& Sa
 		SamplePoint = record.HitPoint;
 	}
 	
-	SampleNormal = Normalize( SamplePoint - m_Center );
+	SampleNormal = Normalize( SamplePoint - Pos );
 
 	return SamplePoint;
 }

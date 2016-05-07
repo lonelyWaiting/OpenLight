@@ -9,6 +9,7 @@
 
 namespace tinyxml2
 {
+	class XMLDocument;
 	class XMLElement;
 }
 
@@ -30,6 +31,8 @@ public:
 	bool Intersect( const Ray& ray , IntersectRecord* record ) const;
 
 public:
+	virtual void Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement );
+
 	virtual void Deserialization( tinyxml2::XMLElement* RootElement );
 
 public:

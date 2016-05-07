@@ -61,6 +61,33 @@ void AreaLight::Deserialization( tinyxml2::XMLElement* LightRootElement )
 	Lemission = Spectrum::FromRGB( r , g , b );
 }
 
+void AreaLight::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
+{
+	{
+		tinyxml2::XMLElement* pLeElement = xmlDoc.NewElement( "Le" );
+
+		pRootElement->InsertEndChild( pLeElement );
+
+		tinyxml2::XMLElement* pRElement = xmlDoc.NewElement( "r" );
+
+		pRElement->SetText( Lemission[0] );
+
+		pLeElement->InsertEndChild( pRElement );
+
+		tinyxml2::XMLElement* pGElement = xmlDoc.NewElement( "g" );
+
+		pGElement->SetText( Lemission[1] );
+
+		pLeElement->InsertEndChild( pGElement );
+
+		tinyxml2::XMLElement* pBElement = xmlDoc.NewElement( "b" );
+
+		pBElement->SetText( Lemission[2] );
+
+		pLeElement->InsertEndChild( pBElement );
+	}
+}
+
 Spectrum AreaLight::Le( const Point3f& p , const Normal& n , const Vector3f& wo ) const
 {
 	return Dot( n , wo ) > 0.0 ? Lemission : 0.0;

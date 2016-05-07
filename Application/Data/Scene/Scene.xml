@@ -2,7 +2,7 @@
 <scene>
 	<!-- 渲染器 -->
 	<Renderer type="SamplerRenderer">
-		<spp>196</spp>
+		<spp>4</spp>
 	</Renderer>
 
 	<!-- 图元 -->
@@ -257,8 +257,8 @@
 	<!-- Film -->
 	<Film>
 		<filename>result.ppm</filename>
-		<width>800</width>
-		<height>600</height>
+		<width>100</width>
+		<height>100</height>
 	</Film>
 
 	<!-- Camera -->
@@ -288,7 +288,7 @@
 
 	<!-- 积分器 -->
 	<Integrator type="WhittedIntegrator">
-		<MaxDepth>16</MaxDepth>
+		<MaxDepth>2</MaxDepth>
 		<SamplePathNumber>16</SamplePathNumber>
 	</Integrator>
 </scene>

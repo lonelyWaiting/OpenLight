@@ -85,6 +85,25 @@ void Film::Deserialization( const tinyxml2::XMLElement* FilmRootElement )
 	image = new PPMImage( Filename , Width , Height );
 }
 
+void Film::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
+{
+	{
+		tinyxml2::XMLElement* pFilenameElement = xmlDoc.NewElement( "filename" );
+		pFilenameElement->SetText( Filename );
+		pRootElement->InsertEndChild( pFilenameElement );
+	}
+
+	{
+		tinyxml2::XMLElement* pWidthElement = xmlDoc.NewElement( "width" );
+		pWidthElement->SetText( Width );
+		pRootElement->InsertEndChild( pWidthElement );
+
+		tinyxml2::XMLElement* pHeightElement = xmlDoc.NewElement( "height" );
+		pHeightElement->SetText( Height );
+		pRootElement->InsertEndChild( pHeightElement );
+	}
+}
+
 Image* Film::GetImage()
 {
 	return image;

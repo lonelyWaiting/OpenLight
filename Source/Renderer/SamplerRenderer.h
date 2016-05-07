@@ -29,6 +29,8 @@ public:
 public:
 	void Deserialization( tinyxml2::XMLElement* RendererRootElement );
 
+	void Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement );
+
 private:
 	Sampler* sampler;
 	Camera* camera;

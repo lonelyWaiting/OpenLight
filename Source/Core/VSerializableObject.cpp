@@ -7,3 +7,8 @@ void VSerializableObject::Deserialization( tinyxml2::XMLElement* RootElement )
 	// do nothing
 	return;
 }
+
+void VSerializableObject::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
+{
+	return;
+}

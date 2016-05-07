@@ -32,6 +32,8 @@ public:
 public:
 	void Deserialization( tinyxml2::XMLElement* CameraRootElement );
 
+	void Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement );
+
 private:
 	double LensRadius;			// Í¸¾µ°ë¾¶
 	double LensFocus;			// ½¹¾à

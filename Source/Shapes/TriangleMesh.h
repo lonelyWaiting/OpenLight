@@ -26,6 +26,8 @@ public:
 public:
 	void Deserialization( tinyxml2::XMLElement* ShapeRootElement );
 
+	void Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement );
+
 public:
 	int GetChildCount() const;
 
@@ -37,6 +39,9 @@ private:
 	Triangle* triangles;
 	int		  VertexNum;
 	int		  TriangleCount;
+
+	Point3f Pos;
+	char* filename;
 
 	friend class Triangle;
 };

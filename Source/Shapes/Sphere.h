@@ -6,6 +6,7 @@
 
 namespace tinyxml2
 {
+	class XMLDocument;
 	class XMLElement;
 }
 
@@ -31,9 +32,9 @@ public:
 public:
 	void Deserialization( tinyxml2::XMLElement* ShapeRootElement );
 
+	void Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement );
 private:
 	double m_Radius;
-	Point3f m_Center;
 };
 
 #endif
