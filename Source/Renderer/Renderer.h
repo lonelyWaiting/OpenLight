@@ -6,11 +6,15 @@
 class Scene;
 class Sampler;
 class RandomNumberGenerator;
-class IntersectRecord;
+struct IntersectRecord;
 class Ray;
 class Camera;
 class SurfaceIntegrator;
 class Accelerator;
+namespace tinyxml2
+{
+	class XMLElement;
+}
 
 class Renderer
 {
@@ -18,6 +22,10 @@ class Renderer
 
 public:
 	virtual ~Renderer();
+
+	Renderer();
+
+	Renderer( int spp );
 
 	virtual void Render( const Scene* scene ) = 0;
 
@@ -27,6 +35,11 @@ public:
 						 Ray* ray ,
 						 IntersectRecord* record = nullptr) const = 0;
 
+	void SetSpp( int spp );
+
 public:
-	virtual void Deserialization( XMLElement* RendererRootElement ) = 0;
+	virtual void Deserialization( tinyxml2::XMLElement* RendererRootElement ) = 0;
+
+protected:
+	int spp;		// sample per pixel
 };

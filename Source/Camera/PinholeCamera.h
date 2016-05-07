@@ -1,5 +1,9 @@
 #pragma once
 
+namespace tinyxml2
+{
+	class XMLElement;
+}
 class PinholeCamera : public Camera
 {
 	DECLARE_DYNAMIC_CREATE_DERIVED( PinholeCamera , Camera )
@@ -12,5 +16,5 @@ public:
 public:
 	Ray GenerateRay( double RasterX , double RasterY , const CameraSample& SamplePoint );
 
-	void Deserialization( XMLElement* CameraRootElement );
+	void Deserialization( tinyxml2::XMLElement* CameraRootElement );
 };

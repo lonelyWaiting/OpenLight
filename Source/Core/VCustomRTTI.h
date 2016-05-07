@@ -26,7 +26,7 @@ public:\
 	{\
 		static std::map<std::string , ClassGenerate> ClassRepository;\
 		return ClassRepository;\
-	}\
+	}
 
 #define DECLARE_DYNAMIC_CREATE_DERIVED(Derived , Base)\
 public:\

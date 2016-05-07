@@ -1,11 +1,16 @@
 #pragma once
 
-#include "PCH.h"
-#include "RandomNumberGenerator.h"
+#include "Utilities/PCH.h"
+#include "Utilities/RandomNumberGenerator.h"
 #include "Math/Point2.h"
 #include "Math/Point3.h"
 #include "CameraSample.h"
 #include "Core/VCustomRTTI.h"
+
+namespace tinyxml2
+{
+	class XMLElement;
+}
 
 class Sampler
 {
@@ -34,7 +39,7 @@ public:
 	CameraSample GetSamplePoint();
 
 public:
-	virtual void Deserialization( XMLElement* SamplerRootElement ) = 0;
+	virtual void Deserialization( tinyxml2::XMLElement* SamplerRootElement ) = 0;
 
 public:
 	std::vector<int>			ShuffledIndices;					// 采样集的数目

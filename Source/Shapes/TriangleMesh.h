@@ -5,6 +5,11 @@
 #include "Math/Point2.h"
 #include "Triangle.h"
 
+namespace tinyxml2
+{
+	class XMLElement;
+}
+
 class TriangleMesh : public Shape
 {
 	DECLARE_DYNAMIC_CREATE_DERIVED( TriangleMesh , Shape )
@@ -19,7 +24,7 @@ public:
 	bool Intersect( Ray& ray , IntersectRecord* record ) const;
 
 public:
-	void Deserialization( XMLElement* ShapeRootElement );
+	void Deserialization( tinyxml2::XMLElement* ShapeRootElement );
 
 public:
 	int GetChildCount() const;

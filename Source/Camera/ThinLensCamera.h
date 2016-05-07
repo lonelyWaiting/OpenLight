@@ -8,6 +8,11 @@
 #include "Sampler/Sampler.h"
 #include "Core/Scene.h"
 
+namespace tinyxml2
+{
+	class XMLElement;
+}
+
 class ThinLensCamera : public Camera
 {
 	DECLARE_DYNAMIC_CREATE_DERIVED( ThinLensCamera , Camera )
@@ -25,7 +30,7 @@ public:
 	Ray GenerateRay( double RasterX , double RasterY , const CameraSample& SamplePoint );
 
 public:
-	void Deserialization( XMLElement* CameraRootElement );
+	void Deserialization( tinyxml2::XMLElement* CameraRootElement );
 
 private:
 	double LensRadius;			// Í¸¾µ°ë¾¶

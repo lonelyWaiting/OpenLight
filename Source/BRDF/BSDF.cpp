@@ -1,4 +1,4 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "IO/Log.h"
 #include "BxDF.h"
 #include "Math/Normal.h"
@@ -25,7 +25,7 @@ void BSDF::Add( BxDF* bxdf )
 
 Spectrum BSDF::f( const Vector3f& wo , const Vector3f& wi , const Normal& n , const BxDFType type )
 {
-	bool IsReflect = Dot( wi , n ) * Dot( wo , n );
+	bool IsReflect = Dot( wi , n ) * Dot( wo , n ) > 0.0 ? true : false;
 
 	Spectrum f( 0.0 );
 

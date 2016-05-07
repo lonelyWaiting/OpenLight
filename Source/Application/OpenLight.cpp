@@ -1,39 +1,57 @@
-#include "PCH.h"
-#include "Core/Scene.h"
-#include "Renderer/SamplerRenderer.h"
-#include "Primitive/Primitive.h"
-#include "Math/Transform.h"
-#include "Math/Point3.h"
-#include "Shapes/Sphere.h"
-#include "Camera/ThinLensCamera.h"
-#include "Camera/PinholeCamera.h"
-#include "Sampler/PureRandomSampler.h"
-#include "Spectrum/Spectrum.h"
-#include "Utilities/srString.h"
-#include "IO/FileSystem.h"
-#include "Sampler/NRooksSampler.h"
-#include "Integrator/SimpleIntegrator.h"
-#include "Integrator/WhittedIntegrator.h"
-#include "BRDF/Lambertian.h"
-#include "Light/PointLight.h"
-#include "Accelerator/Grid.h"
+#include "Utilities/PCH.h"
 #include "tinyxml2.h"
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
+#include "OpenLight.h"
 
-using namespace tinyxml2;
+bool InitRTTI()
+{
+	// Shape
+	IMPLEMENT_DYNAMIC_CREATE_DERIVED( Sphere )
+
+	IMPLEMENT_DYNAMIC_CREATE_DERIVED( Triangle )
+
+	IMPLEMENT_DYNAMIC_CREATE_DERIVED( TriangleMesh )
+
+	// Renderer
+	IMPLEMENT_DYNAMIC_CREATE_DERIVED( SamplerRenderer )
+
+	// Sampler
+	IMPLEMENT_DYNAMIC_CREATE_DERIVED( NRooksSampler )
+
+	IMPLEMENT_DYNAMIC_CREATE_DERIVED( PureRandomSampler )
+
+	// Camera
+	IMPLEMENT_DYNAMIC_CREATE_DERIVED( PinholeCamera )
+
+	IMPLEMENT_DYNAMIC_CREATE_DERIVED( ThinLensCamera )
+
+	// Material
+	IMPLEMENT_DYNAMIC_CREATE_DERIVED( DiffuseMaterial )
+
+	IMPLEMENT_DYNAMIC_CREATE_DERIVED( GlassMaterial )
+
+	IMPLEMENT_DYNAMIC_CREATE_DERIVED( PureReflectionMaterial )
+
+	// Integrator
+	IMPLEMENT_DYNAMIC_CREATE_DERIVED( WhittedIntegrator )
+
+	// Light
+	IMPLEMENT_DYNAMIC_CREATE_DERIVED( AreaLight )
+
+	IMPLEMENT_DYNAMIC_CREATE_DERIVED( PointLight )
+
+	return true;
+}
 
 Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrator* pSurfaceIntegrator , Sampler* pSampler )
 {
 	FileSystem fs;
 	std::wstring SceneFilename = fs.GetSceneFolder() + L"secondScene.xml";
 
-	XMLDocument doc;
+	tinyxml2::XMLDocument doc;
 	doc.LoadFile( srString::ToAscii( SceneFilename ).c_str() );
 
 	// ----------------------------------Primitive---------------------------------------------
-	XMLElement* PrimitiveElement = doc.FirstChildElement()->FirstChildElement( "primitive" );
+	tinyxml2::XMLElement* PrimitiveElement = doc.FirstChildElement()->FirstChildElement( "primitive" );
 	while( PrimitiveElement )
 	{
 		Primitive* primitive = new Primitive;
@@ -45,12 +63,13 @@ Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrat
 	}
 	
 	// -----------------------------------Light---------------------------------------------
-	XMLElement* LightRootElement = doc.FirstChildElement()->FirstChildElement( "light" );
+	tinyxml2::XMLElement* LightRootElement = doc.FirstChildElement()->FirstChildElement( "light" );
 	while( LightRootElement )
 	{
 		const char* LightType = LightRootElement->FirstAttribute()->Value();
 
 		Light* light = Light::Create( LightType );
+		Assert( light != nullptr );
 		light->Deserialization( LightRootElement );
 		scene->AddLight( light );
 
@@ -60,28 +79,31 @@ Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrat
 	// ---------------------------------Film---------------------------------------------
 	Film* film = new Film();
 	Assert( film != nullptr );
-	XMLElement* FilmElement = doc.FirstChildElement()->FirstChildElement( "Film" );
+	tinyxml2::XMLElement* FilmElement = doc.FirstChildElement()->FirstChildElement( "Film" );
 	film->Deserialization( FilmElement );
 
 	// ---------------------------------Camera---------------------------------------------
-	XMLElement* CameraElement = doc.FirstChildElement()->FirstChildElement( "Camera" );
+	tinyxml2::XMLElement* CameraElement = doc.FirstChildElement()->FirstChildElement( "Camera" );
 	const char* CameraType = CameraElement->FirstAttribute()->Value();
 	SAFE_DELETE( camera );
+
 	camera = Camera::Create( CameraType );
 	Assert( camera != nullptr );
 	camera->SetFilm( film );
 	camera->Deserialization( CameraElement );
 
 	// -----------------------------Integrator--------------------------------------
-	XMLElement* IntegratorRootElement = doc.FirstChildElement()->FirstChildElement( "Integrator" );
+	tinyxml2::XMLElement* IntegratorRootElement = doc.FirstChildElement()->FirstChildElement( "Integrator" );
 	const char* IntegratorType = IntegratorRootElement->FirstAttribute()->Value();
+
 	pSurfaceIntegrator = SurfaceIntegrator::Create( IntegratorType );
 	Assert( pSurfaceIntegrator != nullptr );
 	pSurfaceIntegrator->Deserialization( IntegratorRootElement );
 
 	// --------------------------Sampler--------------------------------------------
-	XMLElement* SamplerRootElement = doc.FirstChildElement()->FirstChildElement( "Sampler" );
+	tinyxml2::XMLElement* SamplerRootElement = doc.FirstChildElement()->FirstChildElement( "Sampler" );
 	const char* SamplerType = SamplerRootElement->FirstAttribute()->Value();
+
 	pSampler = Sampler::Create( SamplerType );
 	Assert( pSampler != nullptr );
 	pSampler->Deserialization( SamplerRootElement );
@@ -91,8 +113,9 @@ Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrat
 	pGrid->Setup( scene );
 
 	// ----------------------Renderer----------------------------------------
-	XMLElement* RendererRootElement = doc.FirstChildElement()->FirstChildElement( "Renderer" );
+	tinyxml2::XMLElement* RendererRootElement = doc.FirstChildElement()->FirstChildElement( "Renderer" );
 	const char* RendererType = RendererRootElement->FirstAttribute()->Value();
+
 	Renderer* renderer = Renderer::Create( RendererType );
 	Assert( renderer != nullptr );
 	renderer->SetProperty( pSampler , camera , pSurfaceIntegrator , pGrid );
@@ -102,6 +125,8 @@ Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrat
 
 int main( void )
 {	
+	InitRTTI();
+
 	srand( ( unsigned int )time( NULL ) );
 
 	Scene* scene = new Scene;

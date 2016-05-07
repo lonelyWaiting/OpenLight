@@ -1,4 +1,4 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "Spectrum/Spectrum.h"
 #include "PPMImage.h"
 

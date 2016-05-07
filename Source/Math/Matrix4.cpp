@@ -1,4 +1,4 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "Point3.h"
 #include "Vector4.h"
 #include "Vector3.h"
@@ -190,12 +190,12 @@ void MakeTranspose( Matrix4f& rhs )
 
 Matrix4f Matrix4f::Rotate( double fThetaX , double fThetaY , double fThetaZ )
 {
-	double sinThetaX = sinf( ToRadians( fThetaX ) );
-	double cosThetaX = cosf( ToRadians( fThetaX ) );
-	double sinThetaY = sinf( ToRadians( fThetaY ) );
-	double cosThetaY = cosf( ToRadians( fThetaY ) );
-	double sinThetaZ = sinf( ToRadians( fThetaZ ) );
-	double cosThetaZ = cosf( ToRadians( fThetaZ ) );
+	double sinThetaX = sin( ToRadians( fThetaX ) );
+	double cosThetaX = cos( ToRadians( fThetaX ) );
+	double sinThetaY = sin( ToRadians( fThetaY ) );
+	double cosThetaY = cos( ToRadians( fThetaY ) );
+	double sinThetaZ = sin( ToRadians( fThetaZ ) );
+	double cosThetaZ = cos( ToRadians( fThetaZ ) );
 	
 	double cosYMulCosZ = cosThetaY * cosThetaZ;
 	double sinYMulCosZ = sinThetaY * cosThetaZ;
@@ -227,8 +227,8 @@ Matrix4f Matrix4f::RotateAxis( const Vector3f& axis , double fTheta )
 
 Matrix4f Matrix4f::RotateX( double fTheta )
 {
-	double fSin = sinf( ToRadians( fTheta ) );
-	double fCos = cosf( ToRadians( fTheta ) );
+	double fSin = sin( ToRadians( fTheta ) );
+	double fCos = cos( ToRadians( fTheta ) );
 
 	return Matrix4f( 1.0f , 0.0f , 0.0f , 0.0f ,
 					 0.0f , fCos , fSin , 0.0f ,
@@ -238,8 +238,8 @@ Matrix4f Matrix4f::RotateX( double fTheta )
 
 Matrix4f Matrix4f::RotateY( double fTheta )
 {
-	double fSin = sinf( ToRadians( fTheta ) );
-	double fCos = cosf( ToRadians( fTheta ) );
+	double fSin = sin( ToRadians( fTheta ) );
+	double fCos = cos( ToRadians( fTheta ) );
 
 	return Matrix4f( fCos , 0.0f , -fSin , 0.0f ,
 					 0.0f , 1.0f , 0.0f , 0.0f ,
@@ -249,8 +249,8 @@ Matrix4f Matrix4f::RotateY( double fTheta )
 
 Matrix4f Matrix4f::RotateZ( double fTheta )
 {
-	double fSin = sinf( ToRadians(fTheta) );
-	double fCos = cosf( ToRadians( fTheta ) );
+	double fSin = sin( ToRadians(fTheta) );
+	double fCos = cos( ToRadians( fTheta ) );
 
 	return Matrix4f( fCos , fSin , 0.0f , 0.0f ,
 					 -fSin , fCos , 0.0f , 0.0f ,

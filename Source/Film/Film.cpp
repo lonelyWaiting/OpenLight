@@ -1,5 +1,6 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "PPMImage.h"
+#include "tinyxml2.h"
 #include "Film.h"
 
 Film::Film()
@@ -70,7 +71,7 @@ Vector2f Film::GetResolution() const
 	return Vector2f( Width , Height );
 }
 
-void Film::Deserialization( const XMLElement* FilmRootElement )
+void Film::Deserialization( const tinyxml2::XMLElement* FilmRootElement )
 {
 	// ---------------------------------Film---------------------------------------------
 	Filename = new char[20];
@@ -82,4 +83,9 @@ void Film::Deserialization( const XMLElement* FilmRootElement )
 	SAFE_DELETE( image );
 
 	image = new PPMImage( Filename , Width , Height );
+}
+
+Image* Film::GetImage()
+{
+	return image;
 }

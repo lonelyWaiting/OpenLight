@@ -1,12 +1,11 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "Math/Ray.h"
 #include "Math/Transform.h"
 #include "Primitive/IntersectRecord.h"
 #include "Sampler/Sampling.h"
 #include "Light/Light.h"
+#include "tinyxml2.h"
 #include "Sphere.h"
-
-IMPLEMENT_DYNAMIC_CREATE_DERIVED( Sphere , Shape )
 
 Sphere::Sphere()
 {
@@ -79,9 +78,9 @@ bool Sphere::Intersect( Ray& r , IntersectRecord* record ) const
 	return false;
 }
 
-void Sphere::Deserialization( XMLElement* ShapeRootElement )
+void Sphere::Deserialization( tinyxml2::XMLElement* ShapeRootElement )
 {
-	XMLElement* PrimitivePosiitonElement = ShapeRootElement->FirstChildElement( "transform" )->FirstChildElement( "position" );
+	tinyxml2::XMLElement* PrimitivePosiitonElement = ShapeRootElement->FirstChildElement( "transform" )->FirstChildElement( "position" );
 
 	PrimitivePosiitonElement->FirstChildElement( "x" )->QueryDoubleText( &( m_Center.x ) );
 	PrimitivePosiitonElement->FirstChildElement( "y" )->QueryDoubleText( &( m_Center.y ) );
@@ -120,7 +119,7 @@ double Sphere::PDF( const Point3f& p , const Vector3f& wi ) const
 	}
 
 	double SinThetaMax2 = m_Radius * m_Radius / ( p - m_Center ).LengthSq();
-	double CosThetaMax = sqrtf( MAX( 0.0 , 1.0 - SinThetaMax2 ) );
+	double CosThetaMax = sqrt( MAX( 0.0 , 1.0 - SinThetaMax2 ) );
 
 	return UniformConePDF( CosThetaMax );
 }
@@ -154,7 +153,7 @@ Point3f Sphere::Sample( const Point3f& p , LightSample& lightSample , Normal& Sa
 
 	// ¾ùÔÈ²ÉÑùcone
 	double sinThetaMax2 = m_Radius * m_Radius / ( p - m_Center ).LengthSq();
-	double cosThetaMax = sqrtf( MAX( 0.0 , 1.0 - sinThetaMax2 ) );
+	double cosThetaMax = sqrt( MAX( 0.0 , 1.0 - sinThetaMax2 ) );
 
 	Ray r( p , UniformSampleCone( lightSample.value[0] , lightSample.value[1] , cosThetaMax , dirX , dirY , dirZ ) );
 

@@ -2,6 +2,11 @@
 
 #include "Material/Material.h"
 
+namespace tinyxml2
+{
+	class XMLElement;
+}
+
 class DiffuseMaterial : public Material
 {
 	DECLARE_DYNAMIC_CREATE_DERIVED( DiffuseMaterial , Material )
@@ -14,7 +19,7 @@ public:
 	DiffuseMaterial( Spectrum R );
 
 public:
-	void Deserialization( XMLElement* RootElement );
+	void Deserialization( tinyxml2::XMLElement* RootElement );
 
 private:
 	mutable Spectrum R;

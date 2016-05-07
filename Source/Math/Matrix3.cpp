@@ -1,4 +1,4 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "Point3.h"
 #include "Vector4.h"
 #include "Vector3.h"
@@ -91,7 +91,7 @@ Matrix3f& Matrix3f::operator *= ( const Matrix3f& rhs )
 void Matrix3f::Orthonormalize()
 {
 	// 使用施密特正交化方法
-	double fInvLength = static_cast< double >( 1.0f / sqrtf( m[0] * m[0] + m[3] * m[3] + m[6] * m[6] ) );
+	double fInvLength = static_cast< double >( 1.0f / sqrt( m[0] * m[0] + m[3] * m[3] + m[6] * m[6] ) );
 
 	m[0] *= fInvLength;
 	m[3] *= fInvLength;
@@ -103,7 +103,7 @@ void Matrix3f::Orthonormalize()
 	m[4] -= fDot0 * m[3];
 	m[7] -= fDot0 * m[6];
 
-	fInvLength = static_cast< double >( 1.0f / sqrtf( m[1] * m[1] + m[4] * m[4] + m[7] * m[7] ) );
+	fInvLength = static_cast< double >( 1.0f / sqrt( m[1] * m[1] + m[4] * m[4] + m[7] * m[7] ) );
 
 	m[1] *= fInvLength;
 	m[4] *= fInvLength;
@@ -116,7 +116,7 @@ void Matrix3f::Orthonormalize()
 	m[5] -= ( fDot1 * m[3] + fDot2 * m[4] );
 	m[8] -= ( fDot1 * m[6] + fDot2 * m[7] );
 
-	fInvLength = static_cast< double >( 1.0f / sqrtf( m[2] * m[2] + m[5] * m[5] + m[8] * m[8] ) );
+	fInvLength = static_cast< double >( 1.0f / sqrt( m[2] * m[2] + m[5] * m[5] + m[8] * m[8] ) );
 
 	m[2] *= fInvLength;
 	m[5] *= fInvLength;
@@ -126,8 +126,8 @@ void Matrix3f::Orthonormalize()
 
 Matrix3f Matrix3f::RotationX( double fTheta )
 {
-	double fSin = sinf( ToRadians( fTheta ) );
-	double fCos = cosf( ToRadians( fTheta ) );
+	double fSin = sin( ToRadians( fTheta ) );
+	double fCos = cos( ToRadians( fTheta ) );
 
 	return Matrix3f( 1.0f , 0.0f , 0.0f ,
 					 0.0f , fCos , fSin ,
@@ -136,8 +136,8 @@ Matrix3f Matrix3f::RotationX( double fTheta )
 
 Matrix3f Matrix3f::RotationY( double fTheta )
 {
-	double fSin = sinf( ToRadians( fTheta ) );
-	double fCos = cosf( ToRadians( fTheta ) );
+	double fSin = sin( ToRadians( fTheta ) );
+	double fCos = cos( ToRadians( fTheta ) );
 
 	return Matrix3f( fCos , 0.0f , -fSin ,
 					 0.0f , 1.0f , 0.0f ,
@@ -146,8 +146,8 @@ Matrix3f Matrix3f::RotationY( double fTheta )
 
 Matrix3f Matrix3f::RotationZ( double fTheta )
 {
-	double fSin = sinf( ToRadians( fTheta ) );
-	double fCos = cosf( ToRadians( fTheta ) );
+	double fSin = sin( ToRadians( fTheta ) );
+	double fCos = cos( ToRadians( fTheta ) );
 
 	return Matrix3f( fCos , fSin , 0.0f ,
 					 -fSin , fCos , 0.0f ,
@@ -156,12 +156,12 @@ Matrix3f Matrix3f::RotationZ( double fTheta )
 
 Matrix3f Matrix3f::Rotation( double ThetaX , double ThetaY , double ThetaZ )
 {
-	double fSinX = sinf( ToRadians( ThetaX ) );
-	double fCosX = cosf( ToRadians( ThetaX ) );
-	double fSinY = sinf( ToRadians( ThetaY ) );
-	double fCosY = cosf( ToRadians( ThetaY ) );
-	double fSinZ = sinf( ToRadians( ThetaZ ) );
-	double fCosZ = cosf( ToRadians( ThetaZ ) );
+	double fSinX = sin( ToRadians( ThetaX ) );
+	double fCosX = cos( ToRadians( ThetaX ) );
+	double fSinY = sin( ToRadians( ThetaY ) );
+	double fCosY = cos( ToRadians( ThetaY ) );
+	double fSinZ = sin( ToRadians( ThetaZ ) );
+	double fCosZ = cos( ToRadians( ThetaZ ) );
 
 	double fCosYfCosZ = fCosY * fCosZ;
 	double fSinYfCosZ = fSinY * fCosZ;
@@ -179,9 +179,9 @@ Matrix3f Matrix3f::RotateAxis( Vector3f & Axis , double fTheta )
 	double y = Axis.y;
 	double z = Axis.z;
 
-	double Cos = cosf( ToRadians( fTheta ) );
+	double Cos = cos( ToRadians( fTheta ) );
 	double OneSubCos = 1 - Cos;
-	double Sin = sinf( ToRadians( fTheta ) );
+	double Sin = sin( ToRadians( fTheta ) );
 
 	return Matrix3f( x * x * OneSubCos + Cos , x * y * OneSubCos + z * Sin , x * z * OneSubCos - y * Sin ,
 					 x * y * OneSubCos - z * Sin , y * y * OneSubCos + Cos , y * z * OneSubCos + x * Sin ,

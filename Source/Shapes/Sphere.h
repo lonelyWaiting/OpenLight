@@ -4,6 +4,11 @@
 #include "Math/Bound3.h"
 #include "Shape.h"
 
+namespace tinyxml2
+{
+	class XMLElement;
+}
+
 class Sphere : public Shape
 {
 	DECLARE_DYNAMIC_CREATE_DERIVED(Sphere , Shape)
@@ -24,7 +29,7 @@ public:
 	Point3f Sample( const Point3f& p , LightSample& lightSample , Normal& normalSample );
 
 public:
-	void Deserialization( XMLElement* ShapeRootElement );
+	void Deserialization( tinyxml2::XMLElement* ShapeRootElement );
 
 private:
 	double m_Radius;

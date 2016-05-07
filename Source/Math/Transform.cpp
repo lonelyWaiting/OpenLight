@@ -1,4 +1,4 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "Bound3.h"
 #include "Matrix4.h"
 #include "Normal.h"
@@ -134,7 +134,7 @@ Transform Transform::operator* ( const Transform& t2 ) const
 
 Transform Perspective( double fov , double aspect , double zNear , double zFar )
 {
-	double t = 1.0f / tanf( ToRadians( fov * 0.5f ) );
+	double t = 1.0f / tan( ToRadians( fov * 0.5f ) );
 	double temp = zFar / ( zFar - zNear );
 
 	Matrix4f perspective( 1 / aspect * t , 0.0f , 0.0f , 0.0f ,
@@ -219,8 +219,8 @@ Transform Rotate( const Vector3f& axis , double theta )
 
 Transform RotateZ( double theta )
 {
-	double fSin = sinf( ToRadians( theta ) );
-	double fCos = cosf( ToRadians( theta ) );
+	double fSin = sin( ToRadians( theta ) );
+	double fCos = cos( ToRadians( theta ) );
 
 	return Transform( Matrix4f( fCos , -fSin , 0.0f , 0.0f ,
 					  fSin , fCos , 0.0f , 0.0f ,
@@ -234,8 +234,8 @@ Transform RotateZ( double theta )
 
 Transform RotateY( double theta )
 {
-	double fSin = sinf( ToRadians( theta ) );
-	double fCos = cosf( ToRadians( theta ) );
+	double fSin = sin( ToRadians( theta ) );
+	double fCos = cos( ToRadians( theta ) );
 
 	return Transform( Matrix4f( fCos , 0.0f , fSin , 0.0f ,
 					  0.0f , 1.0f , 0.0f , 0.0f ,
@@ -249,8 +249,8 @@ Transform RotateY( double theta )
 
 Transform RotateX( double theta )
 {
-	double fSin = sinf( ToRadians( theta ) );
-	double fCos = cosf( ToRadians( theta ) );
+	double fSin = sin( ToRadians( theta ) );
+	double fCos = cos( ToRadians( theta ) );
 
 	return Transform( Matrix4f( 1.0f , 0.0f , 0.0f , 0.0f ,
 					  0.0f , fCos , -fSin , 0.0f ,
@@ -285,7 +285,7 @@ bool SolveLinearSystem2x2( const double A[2][2] , const double B[2] , double* x 
 {
 	double det = A[0][0] * A[1][1] - A[0][1] * A[1][0];
 
-	if( fabsf( det ) < 1e-10f )
+	if( fabs( det ) < 1e-10f )
 	{
 		return false;
 	}

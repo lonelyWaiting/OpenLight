@@ -16,7 +16,7 @@ public:
 	virtual ~NRooksSampler();
 
 public:
-	virtual void Deserialization( XMLElement* SamplerRootElement );
+	virtual void Deserialization( tinyxml2::XMLElement* SamplerRootElement );
 
 private:
 	virtual void GenerateUnitSquareSamples();

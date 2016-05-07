@@ -1,11 +1,16 @@
 #pragma once
 
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "Primitive/Primitive.h"
 #include "Math/Ray.h"
 #include "Light/Light.h"
 #include "Spectrum/Spectrum.h"
 #include "VSerializableObject.h"
+
+namespace tinyxml2
+{
+	class XMLElement;
+}
 
 class Scene : public VSerializableObject , public VIntersectable
 {
@@ -25,7 +30,7 @@ public:
 	bool Intersect( const Ray& ray , IntersectRecord* record ) const;
 
 public:
-	virtual void Deserialization( XMLElement* RootElement );
+	virtual void Deserialization( tinyxml2::XMLElement* RootElement );
 
 public:
 	int GetObjectCount() const;

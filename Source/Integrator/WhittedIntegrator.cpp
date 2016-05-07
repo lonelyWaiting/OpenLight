@@ -1,4 +1,4 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "BRDF/BxDF.h"
 #include "Primitive/IntersectRecord.h"
 #include "Math/Ray.h"
@@ -7,9 +7,8 @@
 #include "Core/Scene.h"
 #include "Light/Light.h"
 #include "WhittedIntegrator.h"
+#include "tinyxml2.h"
 #include "BRDF/BxDFType.h"
-
-IMPLEMENT_DYNAMIC_CREATE_DERIVED( WhittedIntegrator , SurfaceIntegrator )
 
 Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Ray* ray , Accelerator* pAccelerator ) const
 {
@@ -25,7 +24,7 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 
 	L += record->Le( wo );
 
-	for( int i = 0; i < scene->GetLights().size(); i++ )
+	for( unsigned int i = 0; i < scene->GetLights().size(); i++ )
 	{
 		Vector3f wi;
 		double pdf;
@@ -71,12 +70,7 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 	return L;
 }
 
-void WhittedIntegrator::SetMaxRecusiveDepth( int maxdepth )
-{
-	mMaxDepth = maxdepth;
-}
-
-void WhittedIntegrator::Deserialization( XMLElement* IntegratorRootElement )
+void WhittedIntegrator::Deserialization( tinyxml2::XMLElement* IntegratorRootElement )
 {
 	IntegratorRootElement->FirstChildElement( "MaxDepth" )->QueryIntText( &mMaxDepth );
 }

@@ -1,7 +1,6 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
+#include "tinyxml2.h"
 #include "PureRandomSampler.h"
-
-IMPLEMENT_DYNAMIC_CREATE_DERIVED( PureRandomSampler , Sampler )
 
 PureRandomSampler::PureRandomSampler()
 	:Sampler()
@@ -43,7 +42,7 @@ void PureRandomSampler::GenerateUnitSquareSamples()
 	}
 }
 
-void PureRandomSampler::Deserialization( XMLElement* SamplerRootElement )
+void PureRandomSampler::Deserialization( tinyxml2::XMLElement* SamplerRootElement )
 {
 	SamplerRootElement->FirstChildElement( "SampleGroupCount" )->QueryIntText( &SampleGroupCount );
 	SamplerRootElement->FirstChildElement( "SampleCount" )->QueryIntText( &SampleCount );

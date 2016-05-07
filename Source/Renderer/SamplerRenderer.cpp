@@ -1,4 +1,4 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "Spectrum/Spectrum.h"
 #include "Primitive/IntersectRecord.h"
 #include "Core/Scene.h"
@@ -8,20 +8,20 @@
 #include "Core/Scene.h"
 #include "Integrator/SurfaceIntegrator.h"
 #include "Accelerator/Grid.h"
+#include "tinyxml2.h"
 #include "SamplerRenderer.h"
 
-IMPLEMENT_DYNAMIC_CREATE_DERIVED( SamplerRenderer , Renderer )
-
 SamplerRenderer::SamplerRenderer()
+	:Renderer()
 {
 
 }
 
 SamplerRenderer::SamplerRenderer( Sampler* _sampler , Camera* _camera , SurfaceIntegrator* _surfaceIntegrator , Accelerator* _pAccelerator , int _spp/*=8*/ )
-	: sampler( _sampler )
+	: Renderer( _spp )
+	, sampler( _sampler )
 	, camera( _camera )
 	, surfaceIntegrator( _surfaceIntegrator )
-	, spp( _spp )
 	, pAccelerator( _pAccelerator )
 {
 
@@ -44,8 +44,8 @@ void SamplerRenderer::Render( const Scene* scene )
 {
 	Vector2f Resolution = camera->GetFilm()->GetResolution();
 	
-	int Width  = Resolution.x;
-	int Height = Resolution.y;
+	int Width = static_cast< int >( Resolution.x );
+	int Height = static_cast< int >( Resolution.y );
 
 	Spectrum L;
 
@@ -98,7 +98,7 @@ Spectrum SamplerRenderer::Li( const Scene* scene , Ray* ray , IntersectRecord* r
 	return Spectrum(0.0f);
 }
 
-void SamplerRenderer::Deserialization( XMLElement* RendererRootElement )
+void SamplerRenderer::Deserialization( tinyxml2::XMLElement* RendererRootElement )
 {
 	RendererRootElement->FirstChildElement( "spp" )->QueryIntText( &spp );
 }

@@ -6,9 +6,13 @@
 
 class Scene;
 class Renderer;
-class IntersectRecord;
+struct IntersectRecord;
 class Ray;
 class Accelerator;
+namespace tinyxml2
+{
+	class XMLElement;
+}
 
 class SurfaceIntegrator : public VSerializableObject
 {
@@ -17,5 +21,10 @@ class SurfaceIntegrator : public VSerializableObject
 public:
 	virtual Spectrum Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Ray* ray , Accelerator* pAccelerator ) const = 0;
 
-	virtual void Deserialization(XMLElement* IntegratorRootElement)= 0;
+	virtual void Deserialization( tinyxml2::XMLElement* IntegratorRootElement ) = 0;
+
+	void SetMaxRecusiveDepth( int MaxDepth );
+
+protected:
+	int mMaxDepth;
 };

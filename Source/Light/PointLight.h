@@ -3,6 +3,11 @@
 #include "Light.h"
 #include "Math/Point3.h"
 
+namespace tinyxml2
+{
+	class XMLElement;
+}
+
 class PointLight : public Light
 {
 	DECLARE_DYNAMIC_CREATE_DERIVED( PointLight , Light )
@@ -21,7 +26,7 @@ public:
 	double PDF( const Point3f& p , const Vector3f& wi ) const;
 
 public:
-	void Deserialization( XMLElement* LightRootElement );
+	void Deserialization( tinyxml2::XMLElement* LightRootElement );
 
 private:
 	Point3f LightPosWorld;

@@ -1,10 +1,9 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "BRDF/SpecularReflection.h"
 #include "BRDF/SpecularTransmission.h"
 #include "BRDF/FresnelDielectric.h"
+#include "tinyxml2.h"
 #include "GlassMaterial.h"
-
-IMPLEMENT_DYNAMIC_CREATE_DERIVED( GlassMaterial , Material )
 
 GlassMaterial::GlassMaterial() : Material()
 {
@@ -31,9 +30,9 @@ BSDF* GlassMaterial::GetBSDF( const Point3f& point , const Normal& normal ) cons
 	return bsdf;
 }
 
-void GlassMaterial::Deserialization( XMLElement* RootElement )
+void GlassMaterial::Deserialization( tinyxml2::XMLElement* RootElement )
 {
-	XMLElement* pReflection = RootElement->FirstChildElement( "Reflection" );
+	tinyxml2::XMLElement* pReflection = RootElement->FirstChildElement( "Reflection" );
 
 	double r , g , b;
 	pReflection->FirstChildElement( "r" )->QueryDoubleText( &r );
@@ -42,7 +41,7 @@ void GlassMaterial::Deserialization( XMLElement* RootElement )
 
 	R = Spectrum::FromRGB( r , g , b );
 
-	XMLElement* pTransmission = RootElement->FirstChildElement( "Transmission" );
+	tinyxml2::XMLElement* pTransmission = RootElement->FirstChildElement( "Transmission" );
 
 	pTransmission->FirstChildElement( "r" )->QueryDoubleText( &r );
 	pTransmission->FirstChildElement( "g" )->QueryDoubleText( &g );

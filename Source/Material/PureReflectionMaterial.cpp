@@ -1,8 +1,7 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "BRDF/PureSpecularReflection.h"
+#include "tinyxml2.h"
 #include "PureReflectionMaterial.h"
-
-IMPLEMENT_DYNAMIC_CREATE_DERIVED( PureReflectionMaterial , Material )
 
 PureReflectionMaterial::PureReflectionMaterial() : Material()
 {
@@ -26,9 +25,9 @@ BSDF* PureReflectionMaterial::GetBSDF( const Point3f& point , const Normal& norm
 	return bsdf;
 }
 
-void PureReflectionMaterial::Deserialization( XMLElement* RootElement )
+void PureReflectionMaterial::Deserialization( tinyxml2::XMLElement* RootElement )
 {
-	XMLElement* pReflection = RootElement->FirstChildElement( "Reflection" );
+	tinyxml2::XMLElement* pReflection = RootElement->FirstChildElement( "Reflection" );
 
 	double r , g , b;
 	pReflection->FirstChildElement( "r" )->QueryDoubleText( &r );

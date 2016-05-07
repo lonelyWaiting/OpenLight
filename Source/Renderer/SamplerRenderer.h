@@ -2,6 +2,11 @@
 
 #include "Renderer.h"
 
+namespace tinyxml2
+{
+	class XMLElement;
+}
+
 class SamplerRenderer : public Renderer
 {
 	DECLARE_DYNAMIC_CREATE_DERIVED( SamplerRenderer , Renderer )
@@ -22,12 +27,11 @@ public:
 						IntersectRecord* record = nullptr ) const;
 
 public:
-	void Deserialization( XMLElement* RendererRootElement );
+	void Deserialization( tinyxml2::XMLElement* RendererRootElement );
 
 private:
 	Sampler* sampler;
 	Camera* camera;
 	SurfaceIntegrator* surfaceIntegrator;
-	int spp;		// sample per pixel
 	Accelerator* pAccelerator;
 };

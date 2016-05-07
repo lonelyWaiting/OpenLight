@@ -1,8 +1,7 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "BRDF/Lambertian.h"
+#include "tinyxml2.h"
 #include "DiffuseMaterial.h"
-
-IMPLEMENT_DYNAMIC_CREATE_DERIVED( DiffuseMaterial , Material )
 
 DiffuseMaterial::DiffuseMaterial() : Material()
 {
@@ -28,9 +27,9 @@ BSDF* DiffuseMaterial::GetBSDF( const Point3f& point , const Normal& normal ) co
 	return bsdf;
 }
 
-void DiffuseMaterial::Deserialization( XMLElement* RootElement )
+void DiffuseMaterial::Deserialization( tinyxml2::XMLElement* RootElement )
 {
-	XMLElement* pReflection = RootElement->FirstChildElement( "Reflection" );
+	tinyxml2::XMLElement* pReflection = RootElement->FirstChildElement( "Reflection" );
 
 	double r , g , b;
 	pReflection->FirstChildElement( "r" )->QueryDoubleText( &r );

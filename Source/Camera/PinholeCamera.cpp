@@ -1,13 +1,12 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "Math/Vector3.h"
 #include "Math/Point3.h"
 #include "Math/Vector2.h"
 #include "Core/Scene.h"
 #include "Film/Film.h"
 #include "Camera.h"
+#include "tinyxml2.h"
 #include "PinholeCamera.h"
-
-IMPLEMENT_DYNAMIC_CREATE_DERIVED( PinholeCamera , Camera )
 
 PinholeCamera::PinholeCamera()
 {
@@ -33,7 +32,7 @@ Ray PinholeCamera::GenerateRay( double RasterX , double RasterY , const CameraSa
 	return Ray( Eye , Normalize( dir ) , 1e-3f );
 }
 
-void PinholeCamera::Deserialization( XMLElement* CameraRootElement )
+void PinholeCamera::Deserialization( tinyxml2::XMLElement* CameraRootElement )
 {
 	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "x" )->QueryDoubleText( &( Eye.x ) );
 	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "y" )->QueryDoubleText( &( Eye.y ) );

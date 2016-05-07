@@ -4,6 +4,11 @@
 #include "Image.h"
 #include "Math/Vector2.h"
 
+namespace tinyxml2
+{
+	class XMLElement;
+}
+
 class Film
 {
 public:
@@ -20,13 +25,15 @@ public:
 
 	void Display();
 
+	Image* GetImage();
+
 public:
 	Vector2f GetResolution() const;
 
 	double GetAspectio() const;
 
 public:
-	void Deserialization( const XMLElement* FilmRootElement );
+	void Deserialization( const tinyxml2::XMLElement* FilmRootElement );
 
 private:
 	int Width;

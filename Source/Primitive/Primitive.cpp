@@ -1,10 +1,12 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "Shapes/Sphere.h"
 #include "Shapes/TriangleMesh.h"
 #include "Math/Ray.h"
 #include "Material/GlassMaterial.h"
 #include "Material/DiffuseMaterial.h"
+#include "Material/PureReflectionMaterial.h"
 #include "Light/AreaLighth.h"
+#include "tinyxml2.h"
 #include "Primitive.h"
 
 Primitive::Primitive()
@@ -39,7 +41,7 @@ bool Primitive::Intersect( Ray& r , IntersectRecord* record ) const
 
 		bool bHit = false;
 
-		for( int i = 0; i < m_vShapes.size(); i++ )
+		for( unsigned int i = 0; i < m_vShapes.size(); i++ )
 		{
 			if( m_vShapes[i]->Intersect( r , record ) )
 			{
@@ -59,9 +61,9 @@ void Primitive::SetMaterial(Material* material)
 	m_pMaterial = material;
 }
 
-void Primitive::Deserialization( XMLElement* PrimitiveRootElment )
+void Primitive::Deserialization( tinyxml2::XMLElement* PrimitiveRootElment )
 {
-	XMLElement* ShapeRootElement = PrimitiveRootElment->FirstChildElement( "shape" );
+	tinyxml2::XMLElement* ShapeRootElement = PrimitiveRootElment->FirstChildElement( "shape" );
 
 	while( ShapeRootElement )
 	{
@@ -71,26 +73,26 @@ void Primitive::Deserialization( XMLElement* PrimitiveRootElment )
 	}
 	
 	// least one material node
-	XMLElement* MaterialRootElement = PrimitiveRootElment->FirstChildElement( "material" );
+	tinyxml2::XMLElement* MaterialRootElement = PrimitiveRootElment->FirstChildElement( "material" );
 	DeserializationMaterial( MaterialRootElement );
 
 	// AreaLight
-	XMLElement* AreaLightRootElement = PrimitiveRootElment->FirstChildElement( "AreaLight" );
+	tinyxml2::XMLElement* AreaLightRootElement = PrimitiveRootElment->FirstChildElement( "AreaLight" );
 	DeserializationAreaLight( AreaLightRootElement );
 
 	// Update Bounding Box
-	for( int i = 0; i < m_vShapes.size(); i++ )
+	for( unsigned int i = 0; i < m_vShapes.size(); i++ )
 	{
 		BBoxLocal.ExpendToInclude( m_vShapes[i]->GetObjectBoundingBox() );
 		BBoxWorld.ExpendToInclude( m_vShapes[i]->GetWorldBoundingBox() );
 	}
 }
 
-void Primitive::DeserializationShape( XMLElement* ShapeRootElement )
+void Primitive::DeserializationShape( tinyxml2::XMLElement* ShapeRootElement )
 {
 	const char* ShapeType = ShapeRootElement->FirstAttribute()->Value();
 	const char* bCompositeObject = ShapeRootElement->Attribute( "bCompositeObject" );
-
+	
 	Shape* shape = Shape::Create( ShapeType );
 	Assert( shape != nullptr );
 
@@ -110,7 +112,7 @@ void Primitive::DeserializationShape( XMLElement* ShapeRootElement )
 	}
 }
 
-void Primitive::DeserializationMaterial( XMLElement* MaterialRootElement )
+void Primitive::DeserializationMaterial( tinyxml2::XMLElement* MaterialRootElement )
 {
 	Assert( MaterialRootElement != nullptr );
 
@@ -121,7 +123,7 @@ void Primitive::DeserializationMaterial( XMLElement* MaterialRootElement )
 	m_pMaterial->Deserialization( MaterialRootElement );
 }
 
-void Primitive::DeserializationAreaLight( XMLElement* AreaLightRootElement )
+void Primitive::DeserializationAreaLight( tinyxml2::XMLElement* AreaLightRootElement )
 {
 	if( AreaLightRootElement )
 	{
@@ -155,7 +157,7 @@ double Primitive::PDF( const Point3f& p , const Vector3f& wi )
 {
 	double pdf = 0.0;
 
-	for( int i = 0; i < m_vShapes.size(); i++ )
+	for( unsigned int i = 0; i < m_vShapes.size(); i++ )
 	{
 		pdf += m_vShapes[i]->Area() * m_vShapes[i]->PDF( p , wi );
 	}

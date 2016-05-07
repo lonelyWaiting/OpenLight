@@ -1,8 +1,7 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "Sampler/Sampling.h"
+#include "tinyxml2.h"
 #include "ThinLensCamera.h"
-
-IMPLEMENT_DYNAMIC_CREATE_DERIVED( ThinLensCamera , Camera )
 
 ThinLensCamera::ThinLensCamera()
 {
@@ -53,7 +52,7 @@ Ray ThinLensCamera::GenerateRay( double RasterX , double RasterY , const CameraS
 	return Ray( Orig , Normalize( dir ) , 1e-3f );
 }
 
-void ThinLensCamera::Deserialization( XMLElement* CameraRootElement )
+void ThinLensCamera::Deserialization( tinyxml2::XMLElement* CameraRootElement )
 {
 	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "x" )->QueryDoubleText( &( Eye.x ) );
 	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "y" )->QueryDoubleText( &( Eye.y ) );

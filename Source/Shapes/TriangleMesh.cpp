@@ -1,12 +1,11 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "Math/Bound3.h"
 #include "Math/Ray.h"
 #include "Primitive/IntersectRecord.h"
 #include "ModelParser.h"
 #include "Light/Light.h"
+#include "tinyxml2.h"
 #include "TriangleMesh.h"
-
-IMPLEMENT_DYNAMIC_CREATE_DERIVED( TriangleMesh , Shape )
 
 TriangleMesh::TriangleMesh()
 {
@@ -66,11 +65,11 @@ bool TriangleMesh::Intersect( Ray& ray , IntersectRecord* record ) const
 	return false;
 }
 
-void TriangleMesh::Deserialization( XMLElement* ShapeRootElement )
+void TriangleMesh::Deserialization( tinyxml2::XMLElement* ShapeRootElement )
 {
 	const char* filename = ShapeRootElement->FirstChildElement( "filename" )->GetText();
 
-	XMLElement* ShapeTransformElement = ShapeRootElement->FirstChildElement( "transform" );
+	tinyxml2::XMLElement* ShapeTransformElement = ShapeRootElement->FirstChildElement( "transform" );
 
 	double x , y , z;
 
@@ -84,7 +83,7 @@ void TriangleMesh::Deserialization( XMLElement* ShapeRootElement )
 	double r , g , b;
 
 	// read Surface Color Data
-	XMLElement* ShapeSurfaceColorElement = ShapeRootElement->FirstChildElement( "SurfaceColor" );
+	tinyxml2::XMLElement* ShapeSurfaceColorElement = ShapeRootElement->FirstChildElement( "SurfaceColor" );
 	ShapeSurfaceColorElement->FirstChildElement( "r" )->QueryDoubleText( &r );
 	ShapeSurfaceColorElement->FirstChildElement( "g" )->QueryDoubleText( &g );
 	ShapeSurfaceColorElement->FirstChildElement( "b" )->QueryDoubleText( &b );

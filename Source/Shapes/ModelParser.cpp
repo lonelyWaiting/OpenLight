@@ -1,4 +1,4 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "Math/Point3.h"
 #include "Math/Point2.h"
 #include "Math/Normal.h"
@@ -31,7 +31,7 @@ void ModelParse( const std::string& filename , Point3f*& points , Normal*& norma
 		VertexCount = 0;
 		FaceCount = 0;
 
-		for( int i = 0; i < scene->mNumMeshes; i++ )
+		for( unsigned int i = 0; i < scene->mNumMeshes; i++ )
 		{
 			aiMesh* mesh = scene->mMeshes[i];
 
@@ -50,7 +50,7 @@ void ModelParse( const std::string& filename , Point3f*& points , Normal*& norma
 
 		int Vertexindex = 0;
 		int FaceIndex = 0;
-		for( int i = 0; i < scene->mNumMeshes; i++ )
+		for( unsigned int i = 0; i < scene->mNumMeshes; i++ )
 		{
 			aiMesh* mesh = scene->mMeshes[i];
 
@@ -63,7 +63,7 @@ void ModelParse( const std::string& filename , Point3f*& points , Normal*& norma
 				normals[Vertexindex] = Normal( mesh->mNormals[j].x , mesh->mNormals[j].y , mesh->mNormals[j].z );
 			}
 
-			for( int j = 0; j < mesh->mNumFaces; j++ , FaceIndex++ )
+			for( unsigned int j = 0; j < mesh->mNumFaces; j++ , FaceIndex++ )
 			{
 				const aiFace& face = mesh->mFaces[j];
 

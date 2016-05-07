@@ -1,4 +1,4 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "Vector3.h"
 #include "Normal.h"
 #include "IO/Log.h"
@@ -149,7 +149,7 @@ double Normal::LengthSquared() const
 
 double Normal::Length() const
 {
-	return sqrtf( x * x + y * y + z * z );
+	return sqrt( x * x + y * y + z * z );
 }
 
 bool Normal::HasNAN() const

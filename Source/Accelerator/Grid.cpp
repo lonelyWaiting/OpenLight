@@ -1,4 +1,4 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "Core/Scene.h"
 #include "Math/Ray.h"
 #include "Shapes/Shape.h"
@@ -9,7 +9,7 @@ void Grid::Setup( const Scene* scene )
 {
 	Bound3f SceneBBox = scene->GetWorldBoundingBox();
 
-	float ObjectCount = scene->GetObjectCount();
+	int ObjectCount = scene->GetObjectCount();
 
 	int Count = 0;
 
@@ -22,17 +22,17 @@ void Grid::Setup( const Scene* scene )
 	}
 
 	// 计算scene bounding box沿着x , y , z轴的长度
-	float wx = SceneBBox.pMax.x - SceneBBox.pMin.x;
-	float wy = SceneBBox.pMax.y - SceneBBox.pMin.y;
-	float wz = SceneBBox.pMax.z - SceneBBox.pMin.z;
+	double wx = SceneBBox.pMax.x - SceneBBox.pMin.x;
+	double wy = SceneBBox.pMax.y - SceneBBox.pMin.y;
+	double wz = SceneBBox.pMax.z - SceneBBox.pMin.z;
 
-	float lambda = 2.0f;
+	double lambda = 2.0f;
 
-	float s = std::pow( wx * wy * wz / Count , 1.0f / 3.0f );
+	double s = std::pow( wx * wy * wz / Count , 1.0f / 3.0f );
 
-	nx = lambda * wx / s + 1;
-	ny = lambda * wy / s + 1;
-	nz = lambda * wz / s + 1;
+	nx = static_cast< int >( lambda * wx / s + 1 );
+	ny = static_cast< int >( lambda * wy / s + 1 );
+	nz = static_cast< int >( lambda * wz / s + 1 );
 
 	int CellsCount = nx * ny * nz;
 
@@ -63,13 +63,13 @@ void Grid::Setup( const Scene* scene )
 
 			BBox = shape->GetWorldBoundingBox();
 
-			int iMinX = ( BBox.pMin.x - SceneBBox.pMin.x ) * nx / wx;
-			int iMinY = ( BBox.pMin.y - SceneBBox.pMin.y ) * ny / wy;
-			int iMinZ = ( BBox.pMin.z - SceneBBox.pMin.z ) * nz / wz;
+			int iMinX = static_cast< int >( ( BBox.pMin.x - SceneBBox.pMin.x ) * nx / wx );
+			int iMinY = static_cast< int >( ( BBox.pMin.y - SceneBBox.pMin.y ) * ny / wy );
+			int iMinZ = static_cast< int >( ( BBox.pMin.z - SceneBBox.pMin.z ) * nz / wz );
 
-			int iMaxX = ( BBox.pMax.x - SceneBBox.pMin.x ) * nx / wx;
-			int iMaxY = ( BBox.pMax.y - SceneBBox.pMin.y ) * ny / wy;
-			int iMaxZ = ( BBox.pMax.z - SceneBBox.pMin.z ) * nz / wz;
+			int iMaxX = static_cast< int >( ( BBox.pMax.x - SceneBBox.pMin.x ) * nx / wx );
+			int iMaxY = static_cast< int >( ( BBox.pMax.y - SceneBBox.pMin.y ) * ny / wy );
+			int iMaxZ = static_cast< int >( ( BBox.pMax.z - SceneBBox.pMin.z ) * nz / wz );
 
 			Clamp( iMinX , 0 , nx - 1 );
 			Clamp( iMinY , 0 , ny - 1 );
@@ -216,9 +216,9 @@ bool Grid::Intersect( Ray& ray , const Scene* scene , IntersectRecord* record )
 
 	if( Inside( ray.Origin , SceneBoundingBox ) )
 	{
-		ix = ( ox - x0 ) / ( x1 - x0 ) * nx;
-		iy = ( oy - y0 ) / ( y1 - y0 ) * ny;
-		iz = ( oz - z0 ) / ( z1 - z0 ) * nz;
+		ix = static_cast< int >( ( ox - x0 ) / ( x1 - x0 ) * nx );
+		iy = static_cast< int >( ( oy - y0 ) / ( y1 - y0 ) * ny );
+		iz = static_cast< int >( ( oz - z0 ) / ( z1 - z0 ) * nz );
 
 		Clamp( ix , 0 , nx - 1 );
 		Clamp( iy , 0 , ny - 1 );
@@ -228,9 +228,9 @@ bool Grid::Intersect( Ray& ray , const Scene* scene , IntersectRecord* record )
 	{
 		Point3f p = ray( t0 );
 
-		ix = ( p.x - x0 ) / ( x1 - x0 ) * nx;
-		iy = ( p.y - y0 ) / ( y1 - y0 ) * ny;
-		iz = ( p.z - z0 ) / ( z1 - z0 ) * nz;
+		ix = static_cast< int >( ( p.x - x0 ) / ( x1 - x0 ) * nx );
+		iy = static_cast< int >( ( p.y - y0 ) / ( y1 - y0 ) * ny );
+		iz = static_cast< int >( ( p.z - z0 ) / ( z1 - z0 ) * nz );
 
 		Clamp( ix , 0 , nx - 1 );
 		Clamp( iy , 0 , ny - 1 );

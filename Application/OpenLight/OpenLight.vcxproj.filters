@@ -141,9 +141,6 @@
     <ClCompile Include="..\..\Source\Film\PPMImage.cpp">
       <Filter>Film</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Application\main.cpp">
-      <Filter>Aplication</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Math\Transform.cpp">
       <Filter>Math</Filter>
     </ClCompile>
@@ -201,9 +198,6 @@
     <ClCompile Include="..\..\Source\Light\VisibilityTester.cpp">
       <Filter>Light</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Integrator\SurfaceIntegrator.cpp">
-      <Filter>Integrator</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Accelerator\Grid.cpp">
       <Filter>Accelerator</Filter>
     </ClCompile>
@@ -212,12 +206,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Shapes\AggregateShape.cpp">
       <Filter>Shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Core\VSerializableObject.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Integrator\SimpleIntegrator.cpp">
-      <Filter>Integrator</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Integrator\WhittedIntegrator.cpp">
       <Filter>Integrator</Filter>
@@ -246,9 +234,6 @@
     <ClCompile Include="..\..\Source\Material\DiffuseMaterial.cpp">
       <Filter>Material</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Core\VCustomRTTI.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Light\AreaLight.cpp">
       <Filter>Light</Filter>
     </ClCompile>
@@ -260,6 +245,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\BRDF\PureSpecularReflection.cpp">
       <Filter>BRDF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Application\OpenLight.cpp">
+      <Filter>Aplication</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Core\VSerializableObject.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Integrator\SurfaceIntegrator.cpp">
+      <Filter>Integrator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -425,9 +419,6 @@
     <ClInclude Include="..\..\Source\Core\VSerializableObject.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Integrator\SimpleIntegrator.h">
-      <Filter>Integrator</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Integrator\WhittedIntegrator.h">
       <Filter>Integrator</Filter>
     </ClInclude>
@@ -478,6 +469,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\BRDF\PureSpecularReflection.h">
       <Filter>BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Application\OpenLight.h">
+      <Filter>Aplication</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

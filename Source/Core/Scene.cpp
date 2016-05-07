@@ -1,4 +1,5 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
+#include "tinyxml2.h"
 #include "Scene.h"
 
 Scene::Scene()
@@ -30,7 +31,7 @@ bool Scene::Intersect( const Ray& ray , IntersectRecord* record ) const
 
 	Ray r( ray.Origin , ray.Direction , ray.MinT , ray.MaxT , ray.time , ray.depth );
 
-	for( int i = 0; i < Objects.size(); i++ )
+	for( unsigned int i = 0; i < Objects.size(); i++ )
 	{
 		if( Objects[i].Intersect( r , record ) )
 		{
@@ -46,7 +47,7 @@ const std::vector<Light*>& Scene::GetLights() const
 	return lights;
 }
 
-void Scene::Deserialization( XMLElement* RootElement )
+void Scene::Deserialization( tinyxml2::XMLElement* RootElement )
 {
 
 }

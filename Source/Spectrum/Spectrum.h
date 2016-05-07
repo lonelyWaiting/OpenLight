@@ -15,7 +15,7 @@ extern const double CIE_Z[CIESamplesNum];
 
 extern const double CIE_lambda[CIESamplesNum];
 
-static const int CIE_Y_Integral = 106.856895;
+static const double CIE_Y_Integral = 106.856895;
 
 enum class SpectrumType
 {

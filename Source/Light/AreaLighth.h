@@ -3,6 +3,10 @@
 #include "Light.h"
 
 class Primitive;
+namespace tinyxml2
+{
+	class XMLElement;
+}
 
 class AreaLight : public Light
 {
@@ -27,7 +31,7 @@ public:
 	void SetPrimitive( Primitive* pPrimitive );
 
 public:
-	void Deserialization( XMLElement* LightRootElement );
+	void Deserialization( tinyxml2::XMLElement* LightRootElement );
 
 protected:
 	Primitive* m_pPrimitive;	// Associated Primitive

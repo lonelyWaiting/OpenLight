@@ -7,6 +7,11 @@
 #include "Sampler/CameraSample.h"
 #include "Core/VCustomRTTI.h"
 
+namespace tinyxml2
+{
+	class XMLElement;
+}
+
 class Scene;
 
 class Camera
@@ -36,13 +41,15 @@ public:
 
 	Film* GetFilm() const;
 
+	void SetFovy( double fov );
+
 public:
 	virtual Ray GenerateRay( double RasterX, double RasterY , const CameraSample& SamplePoint ) = 0;
 
 	virtual void UpdateProperty();
 
 public:
-	virtual void Deserialization( XMLElement* CameraRootElement ) = 0;
+	virtual void Deserialization( tinyxml2::XMLElement* CameraRootElement ) = 0;
 
 protected:
 	Point3f		Eye;						// 相机中心

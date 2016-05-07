@@ -1,4 +1,5 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
+#include "tinyxml2.h"
 #include "Sampler.h"
 
 Sampler::Sampler()
@@ -31,6 +32,8 @@ Sampler& Sampler::operator = ( const Sampler& rhs )
 	SamplePoints = rhs.SamplePoints;
 	ShuffledIndices = rhs.ShuffledIndices;
 	SamplePos = rhs.SamplePos;
+
+	return *this;
 }
 
 void Sampler::SetProperty( const int _SampleCount , const int _SampleGroupCount )

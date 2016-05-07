@@ -5,6 +5,10 @@
 #include "Shape.h"
 
 class TriangleMesh;
+namespace tinyxml2
+{
+	class XMLElement;
+}
 
 class Triangle : public Shape
 {
@@ -28,7 +32,7 @@ public:
 	double Area() const;
 
 public:
-	void Deserialization( XMLElement* RootElement );
+	void Deserialization( tinyxml2::XMLElement* RootElement );
 
 private:
 	int index0 , index1 , index2;

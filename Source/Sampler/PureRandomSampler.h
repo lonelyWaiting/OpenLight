@@ -1,6 +1,11 @@
 #pragma once
 #include "Sampler.h"
 
+namespace tinyxml2
+{
+	class XMLElement;
+}
+
 class PureRandomSampler : public Sampler
 {
 	DECLARE_DYNAMIC_CREATE_DERIVED( PureRandomSampler , Sampler )
@@ -13,7 +18,7 @@ public:
 	PureRandomSampler& operator = ( const PureRandomSampler& rhs );
 
 public:
-	void Deserialization( XMLElement* SamplerRootElement );
+	void Deserialization( tinyxml2::XMLElement* SamplerRootElement );
 
 private:
 	virtual void GenerateUnitSquareSamples();

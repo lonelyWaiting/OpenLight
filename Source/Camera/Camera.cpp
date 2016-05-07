@@ -1,9 +1,10 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "Math/Point2.h"
 #include "Math/Point3.h"
 #include "Math/Vector2.h"
 #include "Math/Ray.h"
 #include "Camera.h"
+#include "tinyxml2.h"
 
 Camera::Camera()
 {
@@ -49,13 +50,19 @@ Film* Camera::GetFilm() const
 	return film;
 }
 
+void Camera::SetFovy( double fov )
+{
+	fovy = fov;
+	UpdateProperty();
+}
+
 void Camera::UpdateProperty()
 {
 	Vector3f look = Target - Eye;
 
 	uvw.InitFromW(look);
 	
-	double tanfovYinv2 = tanf( ToRadians( fovy / 2.0 ) );
+	double tanfovYinv2 = tan( ToRadians( fovy / 2.0 ) );
 
 	Top = ViewDistance * tanfovYinv2;
 	Bottom = -Top;

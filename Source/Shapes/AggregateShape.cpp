@@ -1,4 +1,4 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "Math/Ray.h"
 #include "Primitive/IntersectRecord.h"
 #include "AggregateShape.h"
@@ -25,7 +25,7 @@ bool AggregateShape::Intersect( Ray& ray , IntersectRecord* record ) const
 	return bHit;
 }
 
-void AggregateShape::Deserialization( XMLElement* RootElement )
+void AggregateShape::Deserialization( tinyxml2::XMLElement* RootElement )
 {
 	// nothing to do
 }

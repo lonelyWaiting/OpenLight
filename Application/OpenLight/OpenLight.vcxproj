@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\Accelerator\Grid.cpp" />
-    <ClCompile Include="..\..\Source\Application\main.cpp" />
+    <ClCompile Include="..\..\Source\Application\OpenLight.cpp" />
     <ClCompile Include="..\..\Source\BRDF\BSDF.cpp" />
     <ClCompile Include="..\..\Source\BRDF\BxDF.cpp" />
     <ClCompile Include="..\..\Source\BRDF\Fresnel.cpp" />
@@ -34,7 +34,6 @@
     <ClCompile Include="..\..\Source\Camera\PinholeCamera.cpp" />
     <ClCompile Include="..\..\Source\Camera\ThinLensCamera.cpp" />
     <ClCompile Include="..\..\Source\Core\Scene.cpp" />
-    <ClCompile Include="..\..\Source\Core\VCustomRTTI.cpp" />
     <ClCompile Include="..\..\Source\Core\VIntersectable.cpp" />
     <ClCompile Include="..\..\Source\Core\VSerializableObject.cpp" />
     <ClCompile Include="..\..\Source\Film\Film.cpp" />
@@ -44,7 +43,6 @@
     <ClCompile Include="..\..\Source\Filter\Filter.cpp" />
     <ClCompile Include="..\..\Source\Integrator\IntegratorPCH.cpp" />
     <ClCompile Include="..\..\Source\Integrator\SurfaceIntegrator.cpp" />
-    <ClCompile Include="..\..\Source\Integrator\SimpleIntegrator.cpp" />
     <ClCompile Include="..\..\Source\Integrator\WhittedIntegrator.cpp" />
     <ClCompile Include="..\..\Source\IO\FileSystsem.cpp" />
     <ClCompile Include="..\..\Source\IO\Log.cpp" />
@@ -85,8 +83,8 @@
     <ClCompile Include="..\..\Source\Shapes\TriangleMesh.cpp" />
     <ClCompile Include="..\..\Source\Spectrum\Spectrum.cpp" />
     <ClCompile Include="..\..\Source\Utilities\PCH.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
@@ -96,6 +94,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\Source\Accelerator\Accelerator.h" />
     <ClInclude Include="..\..\Source\Accelerator\Grid.h" />
+    <ClInclude Include="..\..\Source\Application\OpenLight.h" />
     <ClInclude Include="..\..\Source\BRDF\BSDF.h" />
     <ClInclude Include="..\..\Source\BRDF\BxDF.h" />
     <ClInclude Include="..\..\Source\BRDF\BxDFHelper.h" />
@@ -121,7 +120,6 @@
     <ClInclude Include="..\..\Source\Filter\Filter.h" />
     <ClInclude Include="..\..\Source\Integrator\IntegratorPCH.h" />
     <ClInclude Include="..\..\Source\Integrator\SurfaceIntegrator.h" />
-    <ClInclude Include="..\..\Source\Integrator\SimpleIntegrator.h" />
     <ClInclude Include="..\..\Source\Integrator\WhittedIntegrator.h" />
     <ClInclude Include="..\..\Source\IO\FileSystem.h" />
     <ClInclude Include="..\..\Source\IO\Log.h" />
@@ -224,6 +222,7 @@
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <ExecutablePath>$(VC_ExecutablePath_x86);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH)</ExecutablePath>
     <IncludePath>$(IncludePath)</IncludePath>
+    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -236,6 +235,7 @@
     <OutDir>$(SolutionDir)Application\Bin\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <IncludePath>$(IncludePath)</IncludePath>
+    <TargetName>$(ProjectName)-$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -244,7 +244,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -259,6 +259,17 @@
       <AdditionalLibraryDirectories>$(SolutionDir)Library\TinyXML2\Lib\Win32-Debug-Lib;$(SolutionDir)Library\FreeImage\Lib;$(SolutionDir)Library\assimp\Lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>FreeImage.lib;tinyxml2.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <Lib>
+      <AdditionalDependencies>FreeImage.lib;tinyxml2.lib;assimp-vc140-mt.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Library\FreeImage\Lib;$(SolutionDir)Library\assimp\Lib\Debug;$(SolutionDir)Library\TinyXML2\Lib\Win32-Debug-Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -280,7 +291,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -289,6 +300,7 @@
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(SolutionDir)Source;$(SolutionDir)Library\FreeImage\Inc;$(SolutionDir)Source\Utilities;$(SolutionDir)Library\TinyXML2\Inc;$(SolutionDir)Library\assimp\Inc</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -301,6 +313,13 @@
     <PostBuildEvent>
       <Command>copy $(SolutionDir)\Library\assimp\Lib\Release\assimp-vc140-mt.dll ..\Bin\Release\</Command>
     </PostBuildEvent>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)Library\FreeImage\Lib;$(SolutionDir)Library\TinyXML2\Lib\Win32-Release-Lib;$(SolutionDir)Library\assimp\Lib\Release</AdditionalLibraryDirectories>
+      <AdditionalDependencies>FreeImage.lib;tinyxml2.lib;assimp-vc140-mt-Release.lib;</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>

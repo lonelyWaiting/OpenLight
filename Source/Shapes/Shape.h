@@ -10,7 +10,7 @@ struct IntersectRecord;
 class  Transform;
 class  Primitive;
 class  Ray;
-class  LightSample;
+struct  LightSample;
 class  Normal;
 
 class Shape : public VSerializableObject , public VIntersectable

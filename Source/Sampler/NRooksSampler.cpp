@@ -1,7 +1,6 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
+#include "tinyxml2.h"
 #include "NRooksSampler.h"
-
-IMPLEMENT_DYNAMIC_CREATE_DERIVED( NRooksSampler , Sampler )
 
 NRooksSampler::NRooksSampler()
 	:Sampler()
@@ -68,7 +67,7 @@ void NRooksSampler::GenerateUnitSquareSamples()
 	ShuffleYCoordinate();
 }
 
-void NRooksSampler::Deserialization( XMLElement* SamplerRootElement )
+void NRooksSampler::Deserialization( tinyxml2::XMLElement* SamplerRootElement )
 {
 	SamplerRootElement->FirstChildElement( "SampleGroupCount" )->QueryIntText( &SampleGroupCount );
 	SamplerRootElement->FirstChildElement( "SampleCount" )->QueryIntText( &SampleCount );

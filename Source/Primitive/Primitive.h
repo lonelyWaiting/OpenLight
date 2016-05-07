@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "Math/Bound3.h"
 #include "IntersectRecord.h"
 #include "Shapes/Shape.h"
@@ -11,6 +11,11 @@
 
 class AreaLight;
 class Light;
+
+namespace tinyxml2
+{
+	class XMLElement;
+}
 
 class Primitive : public VSerializableObject , public VIntersectable
 {
@@ -36,13 +41,13 @@ public:
 	Light* GetAreaLight() const;
 
 public:
-	void Deserialization( XMLElement* PrimitiveRootElment );
+	void Deserialization( tinyxml2::XMLElement* PrimitiveRootElment );
 
-	void DeserializationShape( XMLElement* ShapeRootElement );
+	void DeserializationShape( tinyxml2::XMLElement* ShapeRootElement );
 
-	void DeserializationMaterial( XMLElement* MaterialRootElement );
+	void DeserializationMaterial( tinyxml2::XMLElement* MaterialRootElement );
 
-	void DeserializationAreaLight( XMLElement* AreaLightRootElement );
+	void DeserializationAreaLight( tinyxml2::XMLElement* AreaLightRootElement );
 
 public:
 	double PDF( const Point3f& p , const Vector3f& w );

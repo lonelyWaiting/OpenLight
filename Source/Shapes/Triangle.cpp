@@ -1,12 +1,11 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "Math/Ray.h"
 #include "Math/Transform.h"
 #include "Primitive/IntersectRecord.h"
 #include "Light/Light.h"
 #include "TriangleMesh.h"
+#include "tinyxml2.h"
 #include "Triangle.h"
-
-IMPLEMENT_DYNAMIC_CREATE_DERIVED( Triangle , Shape )
 
 Triangle::Triangle()
 	: index0( 0 ) 
@@ -114,7 +113,7 @@ double Triangle::Area() const
 	return area;
 }
 
-void Triangle::Deserialization( XMLElement* RootElement )
+void Triangle::Deserialization( tinyxml2::XMLElement* RootElement )
 { 
 	// nothing to do , we only Deserialization obj model , never Deserialization single triangle
 	return;
@@ -123,8 +122,8 @@ void Triangle::Deserialization( XMLElement* RootElement )
 Point3f Triangle::Sample( const Point3f& p , LightSample& lightSample , Normal& SampleNormal )
 {
 	// 保证0.0 < u + v < 1.0
-	double u = 1.0f - sqrtf( lightSample.value[0] );
-	double v = lightSample.value[1] * sqrtf( lightSample.value[0] );
+	double u = 1.0f - sqrt( lightSample.value[0] );
+	double v = lightSample.value[1] * sqrt( lightSample.value[0] );
 
 	// 使用重心坐标
 	Point3f SamplePoint = pMesh->points[index0] * u + pMesh->points[index1] * v + pMesh->points[index2] * ( 1.0 - u - v );

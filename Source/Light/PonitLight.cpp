@@ -1,11 +1,10 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "Math/Vector3.h"
 #include "Sampler/Sampling.h"
 #include "Math/Ray.h"
 #include "Math/Normal.h"
+#include "tinyxml2.h"
 #include "PointLight.h"
-
-IMPLEMENT_DYNAMIC_CREATE_DERIVED( PointLight , Light )
 
 PointLight::PointLight()
 {
@@ -55,9 +54,9 @@ double PointLight::PDF( const Point3f& p , const Vector3f& wi ) const
 	return 0;
 }
 
-void PointLight::Deserialization( XMLElement* LightRootElement )
+void PointLight::Deserialization( tinyxml2::XMLElement* LightRootElement )
 {
-	XMLElement* LightPositionRootElement = LightRootElement->FirstChildElement( "transform" )->FirstChildElement( "position" );
+	tinyxml2::XMLElement* LightPositionRootElement = LightRootElement->FirstChildElement( "transform" )->FirstChildElement( "position" );
 	LightPositionRootElement->FirstChildElement( "x" )->QueryDoubleText( &LightPosWorld.x );
 	LightPositionRootElement->FirstChildElement( "y" )->QueryDoubleText( &LightPosWorld.y );
 	LightPositionRootElement->FirstChildElement( "z" )->QueryDoubleText( &LightPosWorld.z );
@@ -66,7 +65,7 @@ void PointLight::Deserialization( XMLElement* LightRootElement )
 	WorldToLight = Inverse( LightToWorld );
 
 	double r , g , b;
-	XMLElement* IntensityRootElement = LightRootElement->FirstChildElement( "intensity" );
+	tinyxml2::XMLElement* IntensityRootElement = LightRootElement->FirstChildElement( "intensity" );
 	IntensityRootElement->FirstChildElement( "r" )->QueryDoubleText( &r );
 	IntensityRootElement->FirstChildElement( "g" )->QueryDoubleText( &g );
 	IntensityRootElement->FirstChildElement( "b" )->QueryDoubleText( &b );

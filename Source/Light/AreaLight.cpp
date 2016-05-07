@@ -1,10 +1,8 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "Math/Normal.h"
 #include "Primitive/Primitive.h"
+#include "tinyxml2.h"
 #include "AreaLighth.h"
-
-IMPLEMENT_DYNAMIC_CREATE_DERIVED( AreaLight , Light )
-
 
 AreaLight::AreaLight()
 {
@@ -53,7 +51,7 @@ Spectrum AreaLight::Sample_L( const Scene* scene , LightSample& _lightSample , R
 	return Spectrum( 0.0 );
 }
 
-void AreaLight::Deserialization( XMLElement* LightRootElement )
+void AreaLight::Deserialization( tinyxml2::XMLElement* LightRootElement )
 {
 	double r , g , b;
 	LightRootElement->FirstChildElement( "Le" )->FirstChildElement( "r" )->QueryDoubleText( &r );

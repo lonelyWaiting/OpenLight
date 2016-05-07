@@ -3,7 +3,11 @@
 #include "Shape.h"
 
 class Ray;
-class IntersectRecord;
+struct IntersectRecord;
+namespace tinyxml2
+{
+	class XMLElement;
+}
 
 class AggregateShape : public Shape
 {
@@ -13,7 +17,7 @@ public:
 	bool Intersect( Ray& ray , IntersectRecord* record ) const;
 
 public:
-	void Deserialization( XMLElement* RootElement );
+	void Deserialization( tinyxml2::XMLElement* RootElement );
 
 protected:
 	mutable std::vector<Shape*> shapes;

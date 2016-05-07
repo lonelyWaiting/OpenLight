@@ -1,4 +1,4 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "Vector3.h"
 #include "Vector4.h"
 
@@ -144,7 +144,7 @@ std::ostream& operator << ( std::ostream os , const Vector4f& rhs )
 
 double Vector4f::length() const
 {
-	return sqrtf( x * x + y * y + z * z + w * w );
+	return sqrt( x * x + y * y + z * z + w * w );
 }
 
 double Vector4f::lengthSq() const

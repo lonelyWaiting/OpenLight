@@ -1,4 +1,4 @@
-#include "PCH.h"
+#include "Utilities/PCH.h"
 #include "Spectrum.h"
 
 bool IsOrdered( const double* lambda , int n )
@@ -65,6 +65,8 @@ double InterpolateSpectrumSamples( const double* lambda , const double* values ,
 			return Lerp( t , values[i] , values[i + 1] );
 		}
 	}
+
+	return true;
 }
 
 const double CIE_X[CIESamplesNum] = 
