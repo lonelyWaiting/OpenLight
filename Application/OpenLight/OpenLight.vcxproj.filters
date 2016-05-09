@@ -57,421 +57,421 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\Math\Matrix3.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Math\Matrix4.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Math\ONB.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\IO\FileSystsem.cpp">
-      <Filter>IO</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\IO\Log.cpp">
-      <Filter>IO</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Camera\Camera.cpp">
-      <Filter>Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Camera\PinholeCamera.cpp">
-      <Filter>Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Camera\ThinLensCamera.cpp">
-      <Filter>Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Filter\BoxFilter.cpp">
-      <Filter>Filter</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Filter\Filter.cpp">
-      <Filter>Filter</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Sampler\Sampling.cpp">
-      <Filter>Sampler</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Spectrum\Spectrum.cpp">
-      <Filter>Spectrum</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Utilities\PCH.cpp">
-      <Filter>Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Utilities\srString.cpp">
-      <Filter>Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Math\Normal.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Shapes\Shape.cpp">
-      <Filter>Shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Shapes\Sphere.cpp">
-      <Filter>Shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Primitive\IntersectRecord.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Primitive\Primitive.cpp">
-      <Filter>Primitive</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Utilities\RandomNumberGenerator.cpp">
-      <Filter>Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Sampler\Sampler.cpp">
-      <Filter>Sampler</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Core\Scene.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Sampler\PureRandomSampler.cpp">
-      <Filter>Sampler</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Renderer\Renderer.cpp">
-      <Filter>Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Renderer\SamplerRenderer.cpp">
-      <Filter>Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Film\Film.cpp">
-      <Filter>Film</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Film\Image.cpp">
-      <Filter>Film</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Film\PPMImage.cpp">
-      <Filter>Film</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Math\Transform.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Math\Bounds2.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Math\Point2.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Math\Point3.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Math\Ray.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Math\Vector2.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Math\Vector3.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Math\Vector4.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Math\Bound3.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Sampler\NRooksSampler.cpp">
-      <Filter>Sampler</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Shapes\Triangle.cpp">
-      <Filter>Shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Shapes\TriangleMesh.cpp">
-      <Filter>Shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Shapes\ModelParser.cpp">
-      <Filter>Shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Light\Light.cpp">
-      <Filter>Light</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Light\PonitLight.cpp">
-      <Filter>Light</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\BRDF\BxDF.cpp">
-      <Filter>BRDF</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\BRDF\Lambertian.cpp">
-      <Filter>BRDF</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Material\Material.cpp">
-      <Filter>Material</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Light\VisibilityTester.cpp">
-      <Filter>Light</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Accelerator\Grid.cpp">
+    <ClInclude Include="..\..\Source\OpenLight\Accelerator\Accelerator.h">
       <Filter>Accelerator</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Core\VIntersectable.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Shapes\AggregateShape.cpp">
-      <Filter>Shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Integrator\WhittedIntegrator.cpp">
-      <Filter>Integrator</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Integrator\IntegratorPCH.cpp">
-      <Filter>Integrator</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\BRDF\SpecularReflection.cpp">
-      <Filter>BRDF</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\BRDF\Fresnel.cpp">
-      <Filter>BRDF</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\BRDF\FresnelConductor.cpp">
-      <Filter>BRDF</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\BRDF\FresnelDielectric.cpp">
-      <Filter>BRDF</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\BRDF\BSDF.cpp">
-      <Filter>BRDF</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Material\GlassMaterial.cpp">
-      <Filter>Material</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Material\DiffuseMaterial.cpp">
-      <Filter>Material</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Light\AreaLight.cpp">
-      <Filter>Light</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\BRDF\SpecularTransmission.cpp">
-      <Filter>BRDF</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Material\PureReflectionMaterial.cpp">
-      <Filter>Material</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\BRDF\PureSpecularReflection.cpp">
-      <Filter>BRDF</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Application\OpenLight.cpp">
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Accelerator\Grid.h">
+      <Filter>Accelerator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Application\OpenLight.h">
       <Filter>Aplication</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Core\VSerializableObject.cpp">
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\BRDF\BSDF.h">
+      <Filter>BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\BRDF\BxDF.h">
+      <Filter>BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\BRDF\BxDFHelper.h">
+      <Filter>BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\BRDF\BxDFType.h">
+      <Filter>BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\BRDF\Fresnel.h">
+      <Filter>BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\BRDF\FresnelConductor.h">
+      <Filter>BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\BRDF\FresnelDielectric.h">
+      <Filter>BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\BRDF\Lambertian.h">
+      <Filter>BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\BRDF\PureSpecularReflection.h">
+      <Filter>BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\BRDF\SpecularReflection.h">
+      <Filter>BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\BRDF\SpecularTransmission.h">
+      <Filter>BRDF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Camera\Camera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Camera\PinholeCamera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Camera\ThinLensCamera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Core\Scene.h">
       <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Integrator\SurfaceIntegrator.cpp">
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Core\VCustomRTTI.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Core\VIntersectable.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Core\VSerializableObject.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Film\Film.h">
+      <Filter>Film</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Film\Image.h">
+      <Filter>Film</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Film\PPMImage.h">
+      <Filter>Film</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Filter\BoxFilter.h">
+      <Filter>Filter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Filter\Filter.h">
+      <Filter>Filter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Integrator\IntegratorPCH.h">
       <Filter>Integrator</Filter>
-    </ClCompile>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Integrator\SurfaceIntegrator.h">
+      <Filter>Integrator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Integrator\WhittedIntegrator.h">
+      <Filter>Integrator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\IO\FileSystem.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\IO\Log.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Light\AreaLighth.h">
+      <Filter>Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Light\Light.h">
+      <Filter>Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Light\PointLight.h">
+      <Filter>Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Light\VisibilityTester.h">
+      <Filter>Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Material\DiffuseMaterial.h">
+      <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Material\GlassMaterial.h">
+      <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Material\Material.h">
+      <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Material\PureReflectionMaterial.h">
+      <Filter>Material</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Math\Bound3.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Math\Bounds2.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Math\Matrix3.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Math\Matrix4.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Math\Normal.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Math\ONB.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Math\Point2.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Math\Point3.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Math\Ray.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Math\Transform.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Math\UtilitiesFunction.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Math\Vector2.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Math\Vector3.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Math\Vector4.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Primitive\IntersectRecord.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Primitive\Primitive.h">
+      <Filter>Primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Renderer\Renderer.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Renderer\SamplerRenderer.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Sampler\CameraSample.h">
+      <Filter>Sampler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Sampler\NRooksSampler.h">
+      <Filter>Sampler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Sampler\PureRandomSampler.h">
+      <Filter>Sampler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Sampler\Sampler.h">
+      <Filter>Sampler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Sampler\Sampling.h">
+      <Filter>Sampler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Shapes\AggregateShape.h">
+      <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Shapes\ModelParser.h">
+      <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Shapes\Shape.h">
+      <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Shapes\Sphere.h">
+      <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Shapes\Triangle.h">
+      <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Shapes\TriangleMesh.h">
+      <Filter>Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Spectrum\Spectrum.h">
+      <Filter>Spectrum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Utilities\PCH.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Utilities\RandomNumberGenerator.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Utilities\srString.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\Math\Matrix3.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Math\Matrix4.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Math\ONB.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Math\Point2.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Math\Point3.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Math\Transform.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Math\Vector2.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Math\Vector3.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Math\Vector4.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\IO\FileSystem.h">
-      <Filter>IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\IO\Log.h">
-      <Filter>IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Camera\Camera.h">
-      <Filter>Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Camera\PinholeCamera.h">
-      <Filter>Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Camera\ThinLensCamera.h">
-      <Filter>Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Filter\BoxFilter.h">
-      <Filter>Filter</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Filter\Filter.h">
-      <Filter>Filter</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Sampler\Sampling.h">
-      <Filter>Sampler</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Spectrum\Spectrum.h">
-      <Filter>Spectrum</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Utilities\PCH.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Utilities\srString.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Math\Normal.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Shapes\Sphere.h">
-      <Filter>Shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Primitive\Primitive.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Primitive\IntersectRecord.h">
-      <Filter>Primitive</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Utilities\RandomNumberGenerator.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Core\Scene.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Sampler\Sampler.h">
-      <Filter>Sampler</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Sampler\CameraSample.h">
-      <Filter>Sampler</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Sampler\PureRandomSampler.h">
-      <Filter>Sampler</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Renderer\Renderer.h">
-      <Filter>Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Renderer\SamplerRenderer.h">
-      <Filter>Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Film\Film.h">
-      <Filter>Film</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Film\Image.h">
-      <Filter>Film</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Film\PPMImage.h">
-      <Filter>Film</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Math\Bounds2.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Math\Ray.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Math\Bound3.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Sampler\NRooksSampler.h">
-      <Filter>Sampler</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Shapes\Triangle.h">
-      <Filter>Shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Shapes\TriangleMesh.h">
-      <Filter>Shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Shapes\ModelParser.h">
-      <Filter>Shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Integrator\SurfaceIntegrator.h">
-      <Filter>Integrator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Light\Light.h">
-      <Filter>Light</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Light\PointLight.h">
-      <Filter>Light</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\BRDF\BxDF.h">
-      <Filter>BRDF</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\BRDF\Lambertian.h">
-      <Filter>BRDF</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Material\Material.h">
-      <Filter>Material</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Light\VisibilityTester.h">
-      <Filter>Light</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Math\UtilitiesFunction.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Accelerator\Grid.h">
+    <ClCompile Include="..\..\Source\OpenLight\Accelerator\Grid.cpp">
       <Filter>Accelerator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Accelerator\Accelerator.h">
-      <Filter>Accelerator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Core\VIntersectable.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Shapes\AggregateShape.h">
-      <Filter>Shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Core\VSerializableObject.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Integrator\WhittedIntegrator.h">
-      <Filter>Integrator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Integrator\IntegratorPCH.h">
-      <Filter>Integrator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\BRDF\SpecularReflection.h">
-      <Filter>BRDF</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\BRDF\Fresnel.h">
-      <Filter>BRDF</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\BRDF\FresnelConductor.h">
-      <Filter>BRDF</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\BRDF\FresnelDielectric.h">
-      <Filter>BRDF</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\BRDF\SpecularTransmission.h">
-      <Filter>BRDF</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\BRDF\BxDFHelper.h">
-      <Filter>BRDF</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\BRDF\BxDFType.h">
-      <Filter>BRDF</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\BRDF\BSDF.h">
-      <Filter>BRDF</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Material\GlassMaterial.h">
-      <Filter>Material</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Material\DiffuseMaterial.h">
-      <Filter>Material</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Core\VCustomRTTI.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Shapes\Shape.h">
-      <Filter>Shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Light\AreaLighth.h">
-      <Filter>Light</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Material\PureReflectionMaterial.h">
-      <Filter>Material</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\BRDF\PureSpecularReflection.h">
-      <Filter>BRDF</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Application\OpenLight.h">
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Application\OpenLight.cpp">
       <Filter>Aplication</Filter>
-    </ClInclude>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\BRDF\BSDF.cpp">
+      <Filter>BRDF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\BRDF\BxDF.cpp">
+      <Filter>BRDF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\BRDF\Fresnel.cpp">
+      <Filter>BRDF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\BRDF\FresnelConductor.cpp">
+      <Filter>BRDF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\BRDF\FresnelDielectric.cpp">
+      <Filter>BRDF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\BRDF\Lambertian.cpp">
+      <Filter>BRDF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\BRDF\PureSpecularReflection.cpp">
+      <Filter>BRDF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\BRDF\SpecularReflection.cpp">
+      <Filter>BRDF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\BRDF\SpecularTransmission.cpp">
+      <Filter>BRDF</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Camera\Camera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Camera\PinholeCamera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Camera\ThinLensCamera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Core\Scene.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Core\VIntersectable.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Core\VSerializableObject.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Film\Film.cpp">
+      <Filter>Film</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Film\Image.cpp">
+      <Filter>Film</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Film\PPMImage.cpp">
+      <Filter>Film</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Filter\BoxFilter.cpp">
+      <Filter>Filter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Filter\Filter.cpp">
+      <Filter>Filter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Integrator\IntegratorPCH.cpp">
+      <Filter>Integrator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Integrator\SurfaceIntegrator.cpp">
+      <Filter>Integrator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Integrator\WhittedIntegrator.cpp">
+      <Filter>Integrator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\IO\FileSystsem.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\IO\Log.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Light\AreaLight.cpp">
+      <Filter>Light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Light\Light.cpp">
+      <Filter>Light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Light\PonitLight.cpp">
+      <Filter>Light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Light\VisibilityTester.cpp">
+      <Filter>Light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Material\DiffuseMaterial.cpp">
+      <Filter>Material</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Material\GlassMaterial.cpp">
+      <Filter>Material</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Material\Material.cpp">
+      <Filter>Material</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Material\PureReflectionMaterial.cpp">
+      <Filter>Material</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Math\Bound3.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Math\Bounds2.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Math\Matrix3.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Math\Matrix4.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Math\Normal.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Math\ONB.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Math\Point2.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Math\Point3.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Math\Ray.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Math\Transform.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Math\Vector2.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Math\Vector3.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Math\Vector4.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Primitive\IntersectRecord.cpp">
+      <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Primitive\Primitive.cpp">
+      <Filter>Primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Renderer\Renderer.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Renderer\SamplerRenderer.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Sampler\NRooksSampler.cpp">
+      <Filter>Sampler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Sampler\PureRandomSampler.cpp">
+      <Filter>Sampler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Sampler\Sampler.cpp">
+      <Filter>Sampler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Sampler\Sampling.cpp">
+      <Filter>Sampler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Shapes\AggregateShape.cpp">
+      <Filter>Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Shapes\ModelParser.cpp">
+      <Filter>Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Shapes\Shape.cpp">
+      <Filter>Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Shapes\Sphere.cpp">
+      <Filter>Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Shapes\Triangle.cpp">
+      <Filter>Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Shapes\TriangleMesh.cpp">
+      <Filter>Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Spectrum\Spectrum.cpp">
+      <Filter>Spectrum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Utilities\PCH.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Utilities\RandomNumberGenerator.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Utilities\srString.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

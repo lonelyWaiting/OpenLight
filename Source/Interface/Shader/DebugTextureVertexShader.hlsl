@@ -1,0 +1,27 @@
+cbuffer cbPerFrame
+{
+    float4x4 gWorldViewProj;
+};
+
+struct VertexIn
+{
+    float3 PosL     :       POSITION;
+    float2 Tex      :       TEXCOORD;
+};
+
+struct VertexOut
+{
+    float4 PosH     :       SV_POSITION;
+    float2 Tex      :       TEXCOORD;
+};
+
+
+VertexOut main( VertexIn input )
+{
+    VertexOut Output;
+
+    Output.PosH = mul( float4( input.PosL , 1.0f ) , gWorldViewProj );
+	Output.Tex = input.Tex;
+
+    return Output;
+}
