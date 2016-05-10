@@ -23,6 +23,7 @@ bld/
 [Oo]bj/
 
 !*/Library/Lib/assimp/Release
+!*.obj
 
 # Visual Studio 2015 cache/options directory
 .vs/
