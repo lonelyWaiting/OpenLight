@@ -273,6 +273,9 @@
     <ClInclude Include="..\..\Source\OpenLight\Utilities\srString.h">
       <Filter>Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Integrator\PathTracing.h">
+      <Filter>Integrator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\OpenLight\Accelerator\Grid.cpp">
@@ -472,6 +475,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\OpenLight\Utilities\srString.cpp">
       <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Integrator\PathTracing.cpp">
+      <Filter>Integrator</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

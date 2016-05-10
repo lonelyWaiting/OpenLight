@@ -276,29 +276,27 @@ void MeshViewApp::DrawScene()
 
 			renderer->Render( scene );
 
-			// Update Window Image
-			D3D11_MAPPED_SUBRESOURCE mappedResource;
-			ZeroMemory( &mappedResource , sizeof( D3D11_MAPPED_SUBRESOURCE ) );
-			md3dImmediateContext->Map( mTexture , 0 , D3D11_MAP_WRITE_DISCARD , 0 , &mappedResource );
-
-			DirectX::XMFLOAT4* data = static_cast< DirectX::XMFLOAT4* >( mappedResource.pData );
-
+			D3D11_MAPPED_SUBRESOURCE MappedRes;
+			ZeroMemory( &MappedRes , sizeof( D3D11_MAPPED_SUBRESOURCE ) );
+			md3dImmediateContext->Map( mTexture , 0 , D3D11_MAP_WRITE_DISCARD , 0 , &MappedRes );
+			float* pdata = static_cast< float* >( MappedRes.pData );
 			Image* image = camera->GetFilm()->GetImage();
-			for( int col = 0; col < Width; col++ )
+			for( int row = 0; row < Height; row++ )
 			{
-				for( int row = 0; row < Height; row++ )
-				{	
+				for( int col = 0; col < Width; col++ )
+				{
 					Spectrum sourcedata = image->GetColor( row , col );
 					double rgb[3];
 					sourcedata.ToRGB( rgb );
 
-					data[row * Width + col].x = /*( float )rgb[0]*/( ( row & 1 ) || ( col & 1 ) ) ? 0.0f : 1.0f;
-					data[row * Width + col].y = /*( float )rgb[1]*/( ( row & 1 ) || ( col & 1 ) ) ? 0.0f : 1.0f;
-					data[row * Width + col].z = /*( float )rgb[2]*/( ( row & 1 ) || ( col & 1 ) ) ? 0.0f : 1.0f;
-					data[row * Width + col].w = 1.0f;
+					pdata[4 * col + 0] = ( float )rgb[0];
+					pdata[4 * col + 1] = ( float )rgb[1];
+					pdata[4 * col + 2] = ( float )rgb[2];
+					pdata[4 * col + 3] = 1.0f;
 				}
+
+				pdata = ( float* )( ( BYTE* )pdata + MappedRes.RowPitch );
 			}
-			//	Reenable GPU access to the vertex buffer data.
 			md3dImmediateContext->Unmap( mTexture , 0 );
 		}
 	}
@@ -390,9 +388,6 @@ void MeshViewApp::DrawScreenQuad( ID3D11ShaderResourceView* const * srv )
 	md3dImmediateContext->IASetVertexBuffers( 0 , 1 , &mScreenQuadVertexBuffer , &stride , &offset );
 	md3dImmediateContext->IASetIndexBuffer( mScreenQuadIndexBuffer , DXGI_FORMAT_R32_UINT , 0 );
 
-	mDebugTextureEffectFactory->SetVertexTransformConstantBuffer( md3dImmediateContext );
-
-	// Set Shader State And Shader Object
 	mDebugTextureEffectFactory->Apply( md3dImmediateContext );
 	
 	md3dImmediateContext->PSSetShaderResources( 0 , 1 , srv );
@@ -449,13 +444,16 @@ void MeshViewApp::BuildResource()
 	// --------------------------------------------------Create Random Texture-------------------------------------------------------
 	//Create the random data
 	srand( 13 );
-	DirectX::XMFLOAT4* data = new DirectX::XMFLOAT4[Height * Width];
-	for ( int i = 0; i < Width * Height; i++ )
+	DirectX::XMFLOAT4* data = new DirectX::XMFLOAT4[Width * Height];
+	for( int i = 0; i < Height; i++ )
 	{
-		data[i].x = ( double )rand() / ( double )RAND_MAX;
-		data[i].y = ( double )rand() / ( double )RAND_MAX;
-		data[i].z = ( double )rand() / ( double )RAND_MAX;
-		data[i].w = 1.0f;
+		for( int j = 0; j < Width; j++ )
+		{
+			data[i * Width + j].x = ( ( i & 1 ) || ( j & 1 ) ) ? 0.0f : 1.0f;
+			data[i * Width + j].y = ( ( i & 1 ) || ( j & 1 ) ) ? 0.0f : 1.0f;
+			data[i * Width + j].z = ( ( i & 1 ) || ( j & 1 ) ) ? 0.0f : 1.0f;
+			data[i * Width + j].w = 1.0f;
+		}
 	}
 
 
@@ -476,7 +474,7 @@ void MeshViewApp::BuildResource()
 	D3D11_SUBRESOURCE_DATA InitData;
 	ZeroMemory( &InitData , sizeof( D3D11_SUBRESOURCE_DATA ) );
 	InitData.pSysMem = data;
-	InitData.SysMemPitch = sizeof( data[0] ) * Width;
+	InitData.SysMemPitch = sizeof( DirectX::XMFLOAT4 ) * Width;
 
 	HR( md3dDevice->CreateTexture2D( &tex_desc , &InitData , &mTexture ) );
 
@@ -490,6 +488,26 @@ void MeshViewApp::BuildResource()
 	srv_desc.Texture2D.MostDetailedMip = 0;
 
 	HR( md3dDevice->CreateShaderResourceView( mTexture , &srv_desc , &mTextureSRV ) );
+
+	int size = sizeof( DirectX::XMFLOAT4 );
+
+	D3D11_MAPPED_SUBRESOURCE MappedRes;
+	ZeroMemory( &MappedRes , sizeof( D3D11_MAPPED_SUBRESOURCE ) );
+	md3dImmediateContext->Map( mTexture , 0 , D3D11_MAP_WRITE_DISCARD , 0 , &MappedRes );
+	float* pdata = static_cast< float* >( MappedRes.pData );
+	for( int row = 0; row < Height; row++ )
+	{
+		for( int col = 0; col < Width; col++ )
+		{
+			pdata[4 * col + 0] = ( ( row & 1 ) || ( col & 1 ) ) ? 0.0f : 1.0f;
+			pdata[4 * col + 1] = ( ( row & 1 ) || ( col & 1 ) ) ? 0.0f : 1.0f;
+			pdata[4 * col + 2] = ( ( row & 1 ) || ( col & 1 ) ) ? 0.0f : 1.0f;
+			pdata[4 * col + 3] = 1.0f;
+		}
+
+		pdata = ( float* )( ( BYTE* )pdata + MappedRes.RowPitch );
+	}
+	md3dImmediateContext->Unmap( mTexture , 0 );
 }
 
 void MeshViewApp::ResizeTexture( int width , int height )
@@ -498,14 +516,17 @@ void MeshViewApp::ResizeTexture( int width , int height )
 	ReleaseCOM( mTexture );
 
 	DirectX::XMFLOAT4* data = new DirectX::XMFLOAT4[height * width];
-	for( int i = 0; i < width * height; i++ )
+	for( int i = 0; i < width; i++ )
 	{
-		data[i].x = ( double )rand() / ( double )RAND_MAX;
-		data[i].y = ( double )rand() / ( double )RAND_MAX;
-		data[i].z = ( double )rand() / ( double )RAND_MAX;
-		data[i].w = 1.0f;
+		for( int j = 0; j < height; j++ )
+		{
+			data[i * height + j].x = ( ( i & 1 ) || ( j & 1 ) ) ? 0.0f : 1.0f;
+			data[i * height + j].y = ( ( i & 1 ) || ( j & 1 ) ) ? 0.0f : 1.0f;
+			data[i * height + j].z = ( ( i & 1 ) || ( j & 1 ) ) ? 0.0f : 1.0f;
+			data[i * height + j].w = 1.0f;
+		}
 	}
-
+	
 
 	D3D11_TEXTURE2D_DESC tex_desc;
 	ZeroMemory( &tex_desc , sizeof( tex_desc ) );

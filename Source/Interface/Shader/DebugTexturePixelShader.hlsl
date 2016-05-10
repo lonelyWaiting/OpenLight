@@ -9,6 +9,5 @@ struct VertexOut
 
 float4 main( VertexOut input ) : SV_TARGET
 {
-	float4 color = gTexture.Sample( gSampleLinear , input.Tex );
-    return color;
+    return gTexture.Sample( gSampleLinear , input.Tex );
 }

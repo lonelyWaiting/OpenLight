@@ -20,7 +20,7 @@ VertexOut main( VertexIn input )
 {
     VertexOut Output;
 
-    Output.PosH = mul( float4( input.PosL , 1.0f ) , gWorldViewProj );
+	Output.PosH = float4( input.PosL , 1.0f );
 	Output.Tex = input.Tex;
 
     return Output;

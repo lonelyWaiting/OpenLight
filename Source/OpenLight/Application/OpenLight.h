@@ -29,6 +29,7 @@
 #include <Accelerator/Grid.h>
 
 #include <Integrator/WhittedIntegrator.h>
+#include <Integrator/PathTracing.h>
 
 #include <Shapes/Sphere.h>
 #include <Shapes/Triangle.h>

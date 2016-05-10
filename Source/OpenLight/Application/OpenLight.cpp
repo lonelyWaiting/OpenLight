@@ -34,6 +34,8 @@ bool InitRTTI()
 	// Integrator
 	IMPLEMENT_DYNAMIC_CREATE_DERIVED( WhittedIntegrator )
 
+	IMPLEMENT_DYNAMIC_CREATE_DERIVED( PathTracing )
+
 	// Light
 	IMPLEMENT_DYNAMIC_CREATE_DERIVED( AreaLight )
 

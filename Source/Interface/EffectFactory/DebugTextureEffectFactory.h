@@ -15,14 +15,10 @@ public:
 public:
     bool Init( ID3D11Device* device , std::string VertexShaderFilename , std::string PixelShaderFilename );
 
-	void SetVertexTransformConstantBuffer( ID3D11DeviceContext* deviceContext , DirectX::CXMMATRIX WorldViewProj = DirectX::XMMatrixIdentity() );
-
     void Apply( ID3D11DeviceContext* deviceContext );
 
 private:
     bool CreateDebugTextureShader( ID3D11Device* device , std::string VertexShaderFilename , std::string PixelShaderFilename );
-
-	void CreateSampler( ID3D11Device* device );
 
 private:
     ID3D11VertexShader* mVertexShader;
@@ -31,7 +27,5 @@ private:
     ID3D11InputLayout* mInputLayout;
 
 	ID3D11SamplerState* mSampleLinear;
-
-    IBuffer<DebugTextureEffect::VertexShader::cbPerFrame> mVertexTransformConstantBuffer;
 };
 #endif

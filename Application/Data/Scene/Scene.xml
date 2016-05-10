@@ -1,28 +1,28 @@
 <Root>
-    <primitive>
-        <shape type="Sphere" bCompositeObject="false">
-            <transform>
-                <position>
-                    <x>0</x>
-                    <y>-1.45</y>
-                    <z>3.7999999999999998</z>
-                </position>
-            </transform>
-            <radius>1.05</radius>
-            <SurfaceColor>
-                <r>1</r>
-                <g>1</g>
-                <b>1</b>
-            </SurfaceColor>
-        </shape>
-        <material type="PureReflectionMaterial">
-            <Reflection>
-                <r>1</r>
-                <g>1</g>
-                <b>1</b>
-            </Reflection>
-        </material>
-    </primitive>
+  <primitive>
+      <shape type="Sphere" bCompositeObject="false">
+          <transform>
+              <position>
+                  <x>0</x>
+                  <y>-1.45</y>
+                  <z>3.7999999999999998</z>
+              </position>
+          </transform>
+          <radius>1.05</radius>
+          <SurfaceColor>
+              <r>1</r>
+              <g>1</g>
+              <b>1</b>
+          </SurfaceColor>
+      </shape>
+      <material type="PureReflectionMaterial">
+          <Reflection>
+              <r>1</r>
+              <g>1</g>
+              <b>1</b>
+          </Reflection>
+      </material>
+  </primitive>
     <primitive>
         <shape type="Sphere" bCompositeObject="false">
             <transform>
@@ -126,9 +126,9 @@
         </material>
         <AreaLight>
             <Le>
-                <r>40</r>
-                <g>40</g>
-                <b>40</b>
+                <r>30</r>
+                <g>30</g>
+                <b>30</b>
             </Le>
         </AreaLight>
     </primitive>
@@ -245,8 +245,8 @@
     </Camera>
     <Film>
         <filename>result.ppm</filename>
-        <width>800</width>
-        <height>600</height>
+        <width>10</width>
+        <height>10</height>
     </Film>
     <Integrator type="WhittedIntegrator">
         <MaxDepth>2</MaxDepth>

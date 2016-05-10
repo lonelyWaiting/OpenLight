@@ -1,8 +1,7 @@
 #include "DebugTextureEffectFactory.h"
 
 DebugTextureEffectFactory::DebugTextureEffectFactory( _In_ ID3D11Device* device )
-	:IEffect() ,
-	mVertexTransformConstantBuffer( device )
+	:IEffect()
 {
     mVertexShader = nullptr;
     mInputLayout = nullptr;
@@ -71,14 +70,4 @@ void DebugTextureEffectFactory::Apply( ID3D11DeviceContext* deviceContext )
 
     deviceContext->VSSetShader( mVertexShader , nullptr , 0 );
     deviceContext->PSSetShader( mPixelShader , nullptr , 0 );
-
-	deviceContext->VSSetConstantBuffers( 0 , 1 , mVertexTransformConstantBuffer.GetBuffer() );
-}
-
-void DebugTextureEffectFactory::SetVertexTransformConstantBuffer( ID3D11DeviceContext* deviceContext , DirectX::CXMMATRIX WorldViewProj )
-{
-    DebugTextureEffect::VertexShader::cbPerFrame value;
-    DirectX::XMStoreFloat4x4( &value.WorldViewProj , DirectX::XMMatrixTranspose( WorldViewProj ) );
-
-    mVertexTransformConstantBuffer.SetData( deviceContext , value );
 }
