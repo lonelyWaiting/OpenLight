@@ -22,8 +22,6 @@ bld/
 [Bb]in/
 [Oo]bj/
 
-!*.obj
-
 # Visual Studio 2015 cache/options directory
 .vs/
 
@@ -49,6 +47,7 @@ artifacts/
 *_i.h
 *.ilk
 *.meta
+*.obj
 *.pch
 *.pdb
 *.pgc
@@ -212,4 +211,8 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 
-!*/Library/Lib/assimp/Release
+!*Application/Data/Model/*.obj
+!*Library/Lib/assimp/Release/
+!*Library/Lib/DirectXTK/Release/
+!*Library/Lib/TinyXML2/Release/
+!*Library/Lib/ImGui/Release/
