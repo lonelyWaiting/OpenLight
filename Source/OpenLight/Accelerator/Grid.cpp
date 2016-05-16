@@ -331,7 +331,12 @@ bool Grid::Intersect( Ray& ray , const Scene* scene , IntersectRecord* record )
 
 			if( bHit )
 			{
-				return true;
+				if( record->HitT < ray.MaxT )
+				{
+					return true;
+				}
+
+				return false;
 			}
 
 			txNext += dtx;
@@ -353,7 +358,12 @@ bool Grid::Intersect( Ray& ray , const Scene* scene , IntersectRecord* record )
 
 			if( bHit )
 			{
-				return true;
+				if( record->HitT < ray.MaxT )
+				{
+					return true;
+				}
+
+				return false;
 			}
 
 			tyNext += dty;
@@ -375,7 +385,12 @@ bool Grid::Intersect( Ray& ray , const Scene* scene , IntersectRecord* record )
 
 			if( bHit )
 			{
-				return true;
+				if( record->HitT < ray.MaxT )
+				{
+					return true;
+				}
+
+				return false;
 			}
 
 			tzNext += dtz;

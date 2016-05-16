@@ -38,7 +38,7 @@ Ray ThinLensCamera::GenerateRay( double RasterX , double RasterY , const CameraS
 	// x , y为视平面上的采样点
 	Point2f ImageSamples;
 	ImageSamples.x = ( RasterX + SamplePoint.ImageSamples.x ) / RasterResolution.x * ( Right - Left ) + Left;
-	ImageSamples.y = ( RasterY + SamplePoint.ImageSamples.y ) / RasterResolution.y  * ( Top - Bottom ) + Bottom;
+	ImageSamples.y = ( 1.0f - ( RasterY + SamplePoint.ImageSamples.y ) / RasterResolution.y ) * ( Top - Bottom ) + Bottom;
 
 	double x = ImageSamples.x / ViewDistance * LensFocus;
 	double y = ImageSamples.y / ViewDistance * LensFocus;
@@ -165,5 +165,15 @@ void ThinLensCamera::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XM
 		pFovyElement->SetText( fovy );
 
 		pRootElement->InsertEndChild( pFovyElement );
+	}
+
+	{
+		tinyxml2::XMLElement* pFirstElement = xmlDoc.FirstChildElement();
+
+		tinyxml2::XMLElement* pFilmElement = xmlDoc.NewElement( "Film" );
+
+		pFirstElement->InsertEndChild( pFilmElement );
+
+		GetFilm()->Serialization( xmlDoc , pFilmElement );
 	}
 }

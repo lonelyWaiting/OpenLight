@@ -488,26 +488,6 @@ void MeshViewApp::BuildResource()
 	srv_desc.Texture2D.MostDetailedMip = 0;
 
 	HR( md3dDevice->CreateShaderResourceView( mTexture , &srv_desc , &mTextureSRV ) );
-
-	int size = sizeof( DirectX::XMFLOAT4 );
-
-	D3D11_MAPPED_SUBRESOURCE MappedRes;
-	ZeroMemory( &MappedRes , sizeof( D3D11_MAPPED_SUBRESOURCE ) );
-	md3dImmediateContext->Map( mTexture , 0 , D3D11_MAP_WRITE_DISCARD , 0 , &MappedRes );
-	float* pdata = static_cast< float* >( MappedRes.pData );
-	for( int row = 0; row < Height; row++ )
-	{
-		for( int col = 0; col < Width; col++ )
-		{
-			pdata[4 * col + 0] = ( ( row & 1 ) || ( col & 1 ) ) ? 0.0f : 1.0f;
-			pdata[4 * col + 1] = ( ( row & 1 ) || ( col & 1 ) ) ? 0.0f : 1.0f;
-			pdata[4 * col + 2] = ( ( row & 1 ) || ( col & 1 ) ) ? 0.0f : 1.0f;
-			pdata[4 * col + 3] = 1.0f;
-		}
-
-		pdata = ( float* )( ( BYTE* )pdata + MappedRes.RowPitch );
-	}
-	md3dImmediateContext->Unmap( mTexture , 0 );
 }
 
 void MeshViewApp::ResizeTexture( int width , int height )
