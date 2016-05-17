@@ -24,7 +24,9 @@ public:
 	virtual Spectrum rho( const Normal& n , int nSamples , Point2f* Samples1 , Point2f* Samples2 ) const;
 
 	// 该组方向对所对应的概率密度值
-	virtual double PDF( const Vector3f& wi , const Vector3f& wo ) const;
+	virtual double PDF( const Vector3f& wi , const Vector3f& wo , const Normal& n ) const;
+
+	bool IsMatch( const BxDFType& flag );
 
 public:
 	BxDFType type;

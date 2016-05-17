@@ -28,7 +28,7 @@ Spectrum PureSpecularReflection::Sample_f( const Vector3f& wo , const Normal& n 
 	return R / AbsDot( *wi , n );
 }
 
-double PureSpecularReflection::PDF( const Vector3f& wi , const Vector3f& wo ) const
+double PureSpecularReflection::PDF( const Vector3f& wi , const Vector3f& wo , const Normal& n ) const
 {
 	// 除了反射方向其他方向的PDF全部为0
 	return 0;

@@ -101,6 +101,11 @@ double AreaLight::PDF( const Point3f& p , const Vector3f& wi ) const
 	return m_pPrimitive->PDF( p , wi );
 }
 
+bool AreaLight::IsDelta()
+{
+	return false;
+}
+
 void AreaLight::SetPrimitive( Primitive* pPrimitive )
 {
 	m_pPrimitive = pPrimitive;

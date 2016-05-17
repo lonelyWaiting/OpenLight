@@ -28,7 +28,7 @@ Spectrum BxDF::Sample_f( const Vector3f& wo , const Normal& n , Vector3f* wi , c
 	}
 
 	// 计算该方向对的pdf
-	*pdf = PDF( *wi , wo );
+	*pdf = PDF( *wi , wo , n );
 
 	return f( wo , *wi );
 }
@@ -36,9 +36,19 @@ Spectrum BxDF::Sample_f( const Vector3f& wo , const Normal& n , Vector3f* wi , c
 // wi是位于物体的局部空间
 // 因此法线为(0 , 0 , 1)
 // 因此cos(theta) = (0 , 0 , 1) * wi = wi.z
-double BxDF::PDF( const Vector3f& wi , const Vector3f& wo ) const
+double BxDF::PDF( const Vector3f& wi , const Vector3f& wo , const Normal& n ) const
 {
-	return ( wi.z * wo.z > 0.0 ) ? AbsDot( wi , wi ) * INV_PI : 0.0f;
+	return ( Dot( wi , n ) * Dot( wo , n ) > 0.0 ) ? AbsDot( wi , wi ) * INV_PI : 0.0f;
+}
+
+bool BxDF::IsMatch( const BxDFType & flag )
+{
+	if( ( type & flag ) == type )
+	{
+		return true;
+	}
+
+	return false;
 }
 
 Spectrum BxDF::rho( const Normal& n , int nSamples , Point2f* Samples1 , Point2f* Samples2 ) const

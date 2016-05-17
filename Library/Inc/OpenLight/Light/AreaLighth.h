@@ -28,6 +28,8 @@ public:
 
 	double PDF( const Point3f& p , const Vector3f& wi ) const;
 
+	bool IsDelta();
+
 public:
 	void SetPrimitive( Primitive* pPrimitive );
 

@@ -228,7 +228,7 @@
             </Reflection>
         </material>
     </primitive>
-    <Camera type="ThinLensCamera">
+    <Camera type="PinholeCamera">
         <Position>
             <x>0</x>
             <y>0</y>
@@ -250,14 +250,14 @@
         <width>800</width>
         <height>600</height>
     </Film>
-    <Integrator type="WhittedIntegrator">
-        <MaxDepth>2</MaxDepth>
+    <Integrator type="DirectIntegrator">
+        <MaxDepth>6</MaxDepth>
     </Integrator>
     <Sampler type="NRooksSampler">
         <SampleGroupCount>81</SampleGroupCount>
         <SampleCount>3000</SampleCount>
     </Sampler>
     <Renderer type="SamplerRenderer">
-        <spp>4</spp>
+        <spp>84</spp>
     </Renderer>
 </Root>

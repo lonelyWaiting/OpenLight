@@ -267,14 +267,14 @@
     <ClInclude Include="..\..\Source\OpenLight\Utilities\PCH.h">
       <Filter>Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\OpenLight\Utilities\RandomNumberGenerator.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\OpenLight\Utilities\srString.h">
       <Filter>Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\OpenLight\Integrator\PathTracing.h">
+    <ClInclude Include="..\..\Source\OpenLight\Integrator\DirectIntegrator.h">
       <Filter>Integrator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Utilities\RNG.h">
+      <Filter>Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -470,14 +470,14 @@
     <ClCompile Include="..\..\Source\OpenLight\Utilities\PCH.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\OpenLight\Utilities\RandomNumberGenerator.cpp">
-      <Filter>Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\OpenLight\Utilities\srString.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\OpenLight\Integrator\PathTracing.cpp">
+    <ClCompile Include="..\..\Source\OpenLight\Integrator\DirectIntegrator.cpp">
       <Filter>Integrator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Utilities\RNG.cpp">
+      <Filter>Utilities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

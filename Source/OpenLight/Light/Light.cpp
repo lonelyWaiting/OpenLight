@@ -23,3 +23,8 @@ Spectrum Light::Le( const Point3f& p , const Normal& n , const Vector3f& wo ) co
 {
 	return Spectrum( 0 );
 }
+
+bool Light::IsDelta()
+{
+	return false;
+}

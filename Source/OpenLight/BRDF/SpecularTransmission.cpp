@@ -49,7 +49,7 @@ Spectrum SpecularTransmission::Sample_f( const Vector3f& wo , const Normal& n , 
 	return ( newetaT * newetaT ) / ( newetaI * newetaI ) * T * ( Spectrum( 1.0 ) - fresnel.Evalute( Dot( -wo , n ) ) ) / AbsDot( *wi , n );
 }
 
-double SpecularTransmission::PDF( const Vector3f& wi , const Vector3f& wo ) const
+double SpecularTransmission::PDF( const Vector3f& wi , const Vector3f& wo , const Normal& n ) const
 {
 	return 0;
 }

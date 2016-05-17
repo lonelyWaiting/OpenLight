@@ -45,8 +45,8 @@
     <ClInclude Include="..\..\Source\OpenLight\Film\PPMImage.h" />
     <ClInclude Include="..\..\Source\OpenLight\Filter\BoxFilter.h" />
     <ClInclude Include="..\..\Source\OpenLight\Filter\Filter.h" />
+    <ClInclude Include="..\..\Source\OpenLight\Integrator\DirectIntegrator.h" />
     <ClInclude Include="..\..\Source\OpenLight\Integrator\IntegratorPCH.h" />
-    <ClInclude Include="..\..\Source\OpenLight\Integrator\PathTracing.h" />
     <ClInclude Include="..\..\Source\OpenLight\Integrator\SurfaceIntegrator.h" />
     <ClInclude Include="..\..\Source\OpenLight\Integrator\WhittedIntegrator.h" />
     <ClInclude Include="..\..\Source\OpenLight\IO\FileSystem.h" />
@@ -90,7 +90,7 @@
     <ClInclude Include="..\..\Source\OpenLight\Shapes\TriangleMesh.h" />
     <ClInclude Include="..\..\Source\OpenLight\Spectrum\Spectrum.h" />
     <ClInclude Include="..\..\Source\OpenLight\Utilities\PCH.h" />
-    <ClInclude Include="..\..\Source\OpenLight\Utilities\RandomNumberGenerator.h" />
+    <ClInclude Include="..\..\Source\OpenLight\Utilities\RNG.h" />
     <ClInclude Include="..\..\Source\OpenLight\Utilities\srString.h" />
   </ItemGroup>
   <ItemGroup>
@@ -116,8 +116,8 @@
     <ClCompile Include="..\..\Source\OpenLight\Film\PPMImage.cpp" />
     <ClCompile Include="..\..\Source\OpenLight\Filter\BoxFilter.cpp" />
     <ClCompile Include="..\..\Source\OpenLight\Filter\Filter.cpp" />
+    <ClCompile Include="..\..\Source\OpenLight\Integrator\DirectIntegrator.cpp" />
     <ClCompile Include="..\..\Source\OpenLight\Integrator\IntegratorPCH.cpp" />
-    <ClCompile Include="..\..\Source\OpenLight\Integrator\PathTracing.cpp" />
     <ClCompile Include="..\..\Source\OpenLight\Integrator\SurfaceIntegrator.cpp" />
     <ClCompile Include="..\..\Source\OpenLight\Integrator\WhittedIntegrator.cpp" />
     <ClCompile Include="..\..\Source\OpenLight\IO\FileSystsem.cpp" />
@@ -159,7 +159,7 @@
     <ClCompile Include="..\..\Source\OpenLight\Shapes\TriangleMesh.cpp" />
     <ClCompile Include="..\..\Source\OpenLight\Spectrum\Spectrum.cpp" />
     <ClCompile Include="..\..\Source\OpenLight\Utilities\PCH.cpp" />
-    <ClCompile Include="..\..\Source\OpenLight\Utilities\RandomNumberGenerator.cpp" />
+    <ClCompile Include="..\..\Source\OpenLight\Utilities\RNG.cpp" />
     <ClCompile Include="..\..\Source\OpenLight\Utilities\srString.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

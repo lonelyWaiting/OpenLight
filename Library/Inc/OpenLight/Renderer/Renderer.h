@@ -6,7 +6,7 @@
 
 class Scene;
 class Sampler;
-class RandomNumberGenerator;
+class RNG;
 struct IntersectRecord;
 class Ray;
 class Camera;

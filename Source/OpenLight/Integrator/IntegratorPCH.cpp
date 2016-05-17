@@ -80,3 +80,8 @@ Spectrum SpecularTransmit( const Ray& ray , const Scene* scene , const Renderer*
 
 	return L;
 }
+
+double PowerHeuristic( int nf , double fPdf , int ng , double gPdf )
+{
+	return ( nf * fPdf * nf * fPdf ) / ( nf * fPdf * nf * fPdf + ng * ng * gPdf * gPdf );
+}

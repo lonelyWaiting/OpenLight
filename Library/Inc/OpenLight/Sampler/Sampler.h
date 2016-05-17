@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Utilities/PCH.h"
-#include "Utilities/RandomNumberGenerator.h"
+#include "Utilities/RNG.h"
 #include "Math/Point2.h"
 #include "Math/Point3.h"
 #include "CameraSample.h"

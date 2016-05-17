@@ -40,6 +40,8 @@ public:
 
 	virtual Spectrum Sample_L( const Scene* scene , LightSample& _lightSample , Ray* ray , Normal* NormalShading , double* pdf ) const = 0;
 
+	virtual bool IsDelta();
+
 protected:
 	Transform LightToWorld;
 	Transform WorldToLight;

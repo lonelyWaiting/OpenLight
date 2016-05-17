@@ -54,6 +54,11 @@ double PointLight::PDF( const Point3f& p , const Vector3f& wi ) const
 	return 0;
 }
 
+bool PointLight::IsDelta()
+{
+	return true;
+}
+
 void PointLight::Deserialization( tinyxml2::XMLElement* LightRootElement )
 {
 	tinyxml2::XMLElement* LightPositionRootElement = LightRootElement->FirstChildElement( "transform" )->FirstChildElement( "position" );
