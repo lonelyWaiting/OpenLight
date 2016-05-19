@@ -8,7 +8,8 @@
 #include "Light/Light.h"
 #include "WhittedIntegrator.h"
 #include "tinyxml2.h"
-#include "BRDF/BxDFType.h"
+#include "Utilities/RNG.h"
+#include "BRDF/BxDFHelper.h"
 
 Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Ray* ray , Accelerator* pAccelerator ) const
 {
@@ -30,7 +31,7 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 		double pdf;
 		VisibilityTester* pVisibility = new VisibilityTester;
 
-		Spectrum Li = scene->GetLight( i )->Sample_L( HitPoint , &wi , LightSample( ( double )rand() / ( double )RAND_MAX , ( double )rand() / ( double )RAND_MAX ) , &pdf , pVisibility );
+		Spectrum Li = scene->GetLight( i )->Sample_L( HitPoint , &wi , LightSample( RNG::Get().GetDouble() , RNG::Get().GetDouble() ) , &pdf , pVisibility );
 
 		if( Li.IsBlack() || pdf == 0.0f )
 		{

@@ -75,9 +75,6 @@
     <ClInclude Include="..\..\Source\OpenLight\BRDF\BxDFHelper.h">
       <Filter>BRDF</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\OpenLight\BRDF\BxDFType.h">
-      <Filter>BRDF</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\OpenLight\BRDF\Fresnel.h">
       <Filter>BRDF</Filter>
     </ClInclude>
@@ -204,9 +201,6 @@
     <ClInclude Include="..\..\Source\OpenLight\Math\Transform.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\OpenLight\Math\UtilitiesFunction.h">
-      <Filter>Math</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\OpenLight\Math\Vector2.h">
       <Filter>Math</Filter>
     </ClInclude>
@@ -275,6 +269,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\OpenLight\Utilities\RNG.h">
       <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\OpenLight\Integrator\PathIntegrator.h">
+      <Filter>Integrator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -478,6 +475,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\OpenLight\Utilities\RNG.cpp">
       <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\OpenLight\Integrator\PathIntegrator.cpp">
+      <Filter>Integrator</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

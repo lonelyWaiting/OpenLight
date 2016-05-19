@@ -8,24 +8,19 @@ RNG& RNG::Get()
 	return rng;
 }
 
-double RNG::GetDouble()
+double RNG::GetDouble( double _max /*= 1.0*/ , double _min /*= 0.0*/ )
 {
-	return ( double )rand() / ( double )RAND_MAX;
+	return ( double )rand() / ( double )RAND_MAX * ( _max - _min ) + _min;
 }
 
-float RNG::GetFloat()
+float RNG::GetFloat( float _max /*= 1.0f*/ , float _min /*= 0.0f*/ )
 {
-	return ( float )rand() / ( float )RAND_MAX;
+	return ( float )rand() / ( float )RAND_MAX * ( _max - _min ) + _min;
 }
 
-int RNG::GetInt()
-{
-	return rand();
-}
-
-int RNG::GetInt( int _min , int _max )
+int RNG::GetInt( int _max , int _min /*= 0*/ )
 {
 	assert( _max > _min );
 
-	return rand() / ( _max - _min ) + _min;
+	return rand() % ( _max - _min ) + _min;
 }

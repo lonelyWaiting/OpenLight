@@ -75,7 +75,7 @@ void Sampler::ShuffleXCoordinate()
 	{
 		for( int j = 0; j < SampleCount - 1; j++ )
 		{
-			int target = i * SampleCount + rand() % SampleCount;
+			int target = i * SampleCount + RNG::Get().GetInt( SampleCount );
 
 			double temp = SamplePoints[i * SampleCount + j + 1]->ImageSamples.x;
 			SamplePoints[i * SampleCount + j + 1]->ImageSamples.x = SamplePoints[target]->ImageSamples.x;
@@ -87,7 +87,7 @@ void Sampler::ShuffleXCoordinate()
 	{
 		for( int j = 0; j < SampleCount - 1; j++ )
 		{
-			int target = i * SampleCount + rand() % SampleCount;
+			int target = i * SampleCount + RNG::Get().GetInt( SampleCount );
 
 			double temp = SamplePoints[i * SampleCount + j + 1]->LensSamples.x;
 			SamplePoints[i * SampleCount + j + 1]->LensSamples.x = SamplePoints[target]->LensSamples.x;
@@ -102,7 +102,8 @@ void Sampler::ShuffleYCoordinate()
 	{
 		for( int j = 0; j < SampleCount - 1; j++ )
 		{
-			int target = i * SampleCount + rand() % SampleCount;
+			int target = i * SampleCount + RNG::Get().GetInt( SampleCount );
+
 			double temp = SamplePoints[i * SampleCount + j + 1]->ImageSamples.y;
 			SamplePoints[i * SampleCount + j + 1]->ImageSamples.y = SamplePoints[target]->ImageSamples.y;
 			SamplePoints[target]->ImageSamples.y = temp;
@@ -113,7 +114,7 @@ void Sampler::ShuffleYCoordinate()
 	{
 		for( int j = 0; j < SampleCount - 1; j++ )
 		{
-			int target = i * SampleCount + rand() % SampleCount;
+			int target = i * SampleCount + RNG::Get().GetInt( SampleCount );
 
 			double temp = SamplePoints[i * SampleCount + j + 1]->LensSamples.y;
 			SamplePoints[i * SampleCount + j + 1]->LensSamples.y = SamplePoints[target]->LensSamples.y;
@@ -129,7 +130,7 @@ CameraSample Sampler::GetSamplePoint()
 
 	if( SamplePos % SampleCount == 0 )
 	{
-		Jump = ( rand() % SampleGroupCount ) * SampleCount;
+		Jump = ( RNG::Get().GetInt( SampleGroupCount ) ) * SampleCount;
 	}
 
 	SamplePos = ( SamplePos + 1 ) % SampleCount;

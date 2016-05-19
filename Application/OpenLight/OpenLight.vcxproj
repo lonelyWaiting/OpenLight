@@ -25,7 +25,6 @@
     <ClInclude Include="..\..\Source\OpenLight\BRDF\BSDF.h" />
     <ClInclude Include="..\..\Source\OpenLight\BRDF\BxDF.h" />
     <ClInclude Include="..\..\Source\OpenLight\BRDF\BxDFHelper.h" />
-    <ClInclude Include="..\..\Source\OpenLight\BRDF\BxDFType.h" />
     <ClInclude Include="..\..\Source\OpenLight\BRDF\Fresnel.h" />
     <ClInclude Include="..\..\Source\OpenLight\BRDF\FresnelConductor.h" />
     <ClInclude Include="..\..\Source\OpenLight\BRDF\FresnelDielectric.h" />
@@ -47,6 +46,7 @@
     <ClInclude Include="..\..\Source\OpenLight\Filter\Filter.h" />
     <ClInclude Include="..\..\Source\OpenLight\Integrator\DirectIntegrator.h" />
     <ClInclude Include="..\..\Source\OpenLight\Integrator\IntegratorPCH.h" />
+    <ClInclude Include="..\..\Source\OpenLight\Integrator\PathIntegrator.h" />
     <ClInclude Include="..\..\Source\OpenLight\Integrator\SurfaceIntegrator.h" />
     <ClInclude Include="..\..\Source\OpenLight\Integrator\WhittedIntegrator.h" />
     <ClInclude Include="..\..\Source\OpenLight\IO\FileSystem.h" />
@@ -69,7 +69,6 @@
     <ClInclude Include="..\..\Source\OpenLight\Math\Point3.h" />
     <ClInclude Include="..\..\Source\OpenLight\Math\Ray.h" />
     <ClInclude Include="..\..\Source\OpenLight\Math\Transform.h" />
-    <ClInclude Include="..\..\Source\OpenLight\Math\UtilitiesFunction.h" />
     <ClInclude Include="..\..\Source\OpenLight\Math\Vector2.h" />
     <ClInclude Include="..\..\Source\OpenLight\Math\Vector3.h" />
     <ClInclude Include="..\..\Source\OpenLight\Math\Vector4.h" />
@@ -118,6 +117,7 @@
     <ClCompile Include="..\..\Source\OpenLight\Filter\Filter.cpp" />
     <ClCompile Include="..\..\Source\OpenLight\Integrator\DirectIntegrator.cpp" />
     <ClCompile Include="..\..\Source\OpenLight\Integrator\IntegratorPCH.cpp" />
+    <ClCompile Include="..\..\Source\OpenLight\Integrator\PathIntegrator.cpp" />
     <ClCompile Include="..\..\Source\OpenLight\Integrator\SurfaceIntegrator.cpp" />
     <ClCompile Include="..\..\Source\OpenLight\Integrator\WhittedIntegrator.cpp" />
     <ClCompile Include="..\..\Source\OpenLight\IO\FileSystsem.cpp" />

@@ -1,5 +1,6 @@
 #include "Utilities/PCH.h"
 #include "IO/Log.h"
+#include "BxDFHelper.h"
 #include "BxDF.h"
 #include "Math/Normal.h"
 #include "BSDF.h"

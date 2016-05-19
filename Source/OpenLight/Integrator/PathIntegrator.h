@@ -1,24 +1,15 @@
 #pragma once
 
 #include "SurfaceIntegrator.h"
-#include "Utilities/PCH.h"
-#include "Spectrum/Spectrum.h"
-#include "BRDF/BxDFHelper.h"
 
 namespace tinyxml2
 {
 	class XMLElement;
 }
 
-class Light;
-class BSDF;
-class Point3f;
-class Vector3f;
-class Normal;
-
-class DirectIntegrator : public SurfaceIntegrator
+class PathIntegrator : public SurfaceIntegrator
 {
-	DECLARE_DYNAMIC_CREATE_DERIVED( DirectIntegrator , SurfaceIntegrator )
+	DECLARE_DYNAMIC_CREATE_DERIVED( PathIntegrator , SurfaceIntegrator )
 
 public:
 	Spectrum Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Ray* ray , Accelerator* pAccelerator ) const;

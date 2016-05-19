@@ -1,5 +1,6 @@
 #include "Utilities/PCH.h"
 #include "tinyxml2.h"
+#include "Utilities/RNG.h"
 #include "PureRandomSampler.h"
 
 PureRandomSampler::PureRandomSampler()
@@ -33,9 +34,9 @@ void PureRandomSampler::GenerateUnitSquareSamples()
 		for( int j = 0; j < SampleCount; j++ )
 		{
 			CameraSample* samples = new CameraSample;
-			samples->ImageSamples = Point2f( ( double )rand() / RAND_MAX , ( double )rand() / RAND_MAX );
-			samples->LensSamples  = Point2f( ( double )rand() / RAND_MAX , ( double )rand() / RAND_MAX );
-			samples->TimeSamples  = ( double )rand() / RAND_MAX;
+			samples->ImageSamples = Point2f( RNG::Get().GetDouble() , RNG::Get().GetDouble() );
+			samples->LensSamples  = Point2f( RNG::Get().GetDouble() , RNG::Get().GetDouble() );
+			samples->TimeSamples  = RNG::Get().GetDouble();
 
 			SamplePoints.push_back( samples );
 		}

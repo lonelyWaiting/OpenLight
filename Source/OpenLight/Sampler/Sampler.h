@@ -41,12 +41,12 @@ public:
 	CameraSample GetSamplePoint();
 
 public:
-	std::vector<int>			ShuffledIndices;					// 采样集的数目
-	unsigned long				SamplePos;							// 当前使用的采样点数目
+	std::vector<int>			ShuffledIndices;								// 采样集的数目
+	unsigned long				SamplePos;										// 当前使用的采样点数目
 
 	std::vector<CameraSample*> SamplePoints;
 
-	int SampleCount;													// 每组采样点的采样点数目
+	int SampleCount;														// 每组采样点的采样点数目
 	int SampleGroupCount;													// 采样组数
 };
 

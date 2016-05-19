@@ -10,9 +10,9 @@
             </transform>
             <radius>1.05</radius>
             <SurfaceColor>
-                <r>1</r>
-                <g>1</g>
-                <b>1</b>
+                <r>0.999</r>
+                <g>0.999</g>
+                <b>0.999</b>
             </SurfaceColor>
         </shape>
         <material type="PureReflectionMaterial">
@@ -34,9 +34,9 @@
             </transform>
             <radius>0.5</radius>
             <SurfaceColor>
-                <r>1</r>
-                <g>1</g>
-                <b>1</b>
+                <r>0.999</r>
+                <g>0.999</g>
+                <b>0.999</b>
             </SurfaceColor>
         </shape>
         <material type="GlassMaterial">
@@ -126,9 +126,9 @@
         </material>
         <AreaLight>
             <Le>
-                <r>10</r>
-                <g>10</g>
-                <b>10</b>
+                <r>12</r>
+                <g>12</g>
+                <b>12</b>
             </Le>
         </AreaLight>
     </primitive>
@@ -250,7 +250,7 @@
         <width>800</width>
         <height>600</height>
     </Film>
-    <Integrator type="DirectIntegrator">
+    <Integrator type="PathIntegrator">
         <MaxDepth>6</MaxDepth>
     </Integrator>
     <Sampler type="NRooksSampler">

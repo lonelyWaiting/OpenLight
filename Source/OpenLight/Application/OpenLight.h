@@ -30,6 +30,7 @@
 
 #include <Integrator/WhittedIntegrator.h>
 #include <Integrator/DirectIntegrator.h>
+#include <Integrator/PathIntegrator.h>
 
 #include <Shapes/Sphere.h>
 #include <Shapes/Triangle.h>

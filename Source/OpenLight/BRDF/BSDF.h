@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BxDFType.h"
+#include "BxDFHelper.h"
 #include "Spectrum/Spectrum.h"
 
 class BxDF;

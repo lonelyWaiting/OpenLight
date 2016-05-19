@@ -3,7 +3,7 @@
 #include "Spectrum/Spectrum.h"
 #include "Math/Vector3.h"
 #include "Math/Point2.h"
-#include "BxDFType.h"
+#include "BxDFHelper.h"
 
 class BxDF
 {

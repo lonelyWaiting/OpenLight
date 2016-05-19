@@ -1,6 +1,7 @@
 #include "Utilities/PCH.h"
 #include "Math/Normal.h"
 #include "SpecularReflection.h"
+#include "Utilities/RNG.h"
 
 SpecularReflection::SpecularReflection( const Spectrum& R , const Fresnel* fresnel )
 	: BxDF( BxDFType( REFLECTION | SPECULAR ) )
@@ -27,7 +28,7 @@ Spectrum SpecularReflection::Sample_f( const Vector3f& wo , const Normal& n , Ve
 	*pdf = 1.0;
 
 	Spectrum F = fresnel->Evalute( wo * n );
-	if( ( ( double )rand() / ( double )RAND_MAX ) > F[0] )
+	if( RNG::Get().GetDouble() > F[0] )
 	{
 		// Œﬁ∑¥…‰
 		bNoOccur = true;
