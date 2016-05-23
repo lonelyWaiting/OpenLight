@@ -59,11 +59,13 @@ Spectrum SpecularTransmit( const Ray& ray , const Scene* scene , const Renderer*
 
 	double pdf;
 
+	Vector3f wo = -1.0f * ray.Direction;
+
 	Vector3f wi;
 
 	Point2f SamplePoint( RNG::Get().GetDouble() , RNG::Get().GetDouble() );
 
-	Spectrum f = pBSDF->Sample_f( ray.Direction , normal , &wi , SamplePoint , &pdf , BxDFType( TRANSMISSION | SPECULAR ) , bNoOccur );
+	Spectrum f = pBSDF->Sample_f( wo , normal , &wi , SamplePoint , &pdf , BxDFType( TRANSMISSION | SPECULAR ) , bNoOccur );
 
 	Spectrum L = 0.0;
 

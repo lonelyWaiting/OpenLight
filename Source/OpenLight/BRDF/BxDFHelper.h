@@ -16,9 +16,9 @@ enum BxDFType
 
 // compute refraction ray 
 // eta = etaI / etaT
-inline bool Refract( const Vector3f& wi , const Normal& n , double eta , Vector3f* wt , bool entering )
+inline bool Refract( const Vector3f& w , const Normal& n , double eta , Vector3f* wt , bool entering )
 {
-	double CosThetaI = AbsDot( wi , n );
+	double CosThetaI = AbsDot( w , n );
 
 	double SinThetaI2 = std::max( double( 0 ) , 1 - CosThetaI * CosThetaI );
 	double sinThetaT2 = eta * eta * SinThetaI2;
@@ -29,14 +29,9 @@ inline bool Refract( const Vector3f& wi , const Normal& n , double eta , Vector3
 		return false;
 	}
 
-	if( entering )
-	{
-		*wt = Normalize( eta * wi + n * ( eta * CosThetaI - std::sqrt( 1 - sinThetaT2 ) ) );
-	}
-	else
-	{
-		*wt = Normalize( eta * wi - n * ( eta * CosThetaI - std::sqrt( 1 - sinThetaT2 ) ) );
-	}
+	float Flip = entering ? 1.0 : -1.0;
+
+	*wt = Normalize( eta * -w + Flip * n * ( eta * CosThetaI - std::sqrt( 1 - sinThetaT2 ) ) );
 
 	return true;
 }

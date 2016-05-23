@@ -19,6 +19,8 @@ Spectrum BxDF::Sample_f( const Vector3f& wo , const Normal& n , Vector3f* wi , c
 	// 生成半球采样方向
 	*wi = CosineSampleHemisphere( samplePoint );
 
+	*wi = Normalize( *wi );
+
 	// 由于wi->z总是为正
 	// 所以当wo为负值时
 	// 需要反转wi->z,从而保证位于同一个半球
@@ -38,7 +40,7 @@ Spectrum BxDF::Sample_f( const Vector3f& wo , const Normal& n , Vector3f* wi , c
 // 因此cos(theta) = (0 , 0 , 1) * wi = wi.z
 double BxDF::PDF( const Vector3f& wi , const Vector3f& wo , const Normal& n ) const
 {
-	return ( Dot( wi , n ) * Dot( wo , n ) > 0.0 ) ? AbsDot( wi , wi ) * INV_PI : 0.0f;
+	return ( Dot( wi , n ) * Dot( wo , n ) > 0.0 ) ? AbsDot( wi , n ) * INV_PI : 0.0f;
 }
 
 bool BxDF::IsMatch( const BxDFType & flag )

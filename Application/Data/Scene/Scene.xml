@@ -228,7 +228,7 @@
             </Reflection>
         </material>
     </primitive>
-    <Camera type="PinholeCamera">
+    <Camera type="ThinLensCamera">
         <Position>
             <x>0</x>
             <y>0</y>
@@ -239,25 +239,25 @@
             <y>0</y>
             <z>1</z>
         </Target>
-        <LensFocus>3.7000000000000002</LensFocus>
-        <LensRadius>0.20000000000000001</LensRadius>
+        <LensFocus>3.5</LensFocus>
+        <LensRadius>0.1</LensRadius>
         <ExposureTime>0</ExposureTime>
         <ViewDistance>1</ViewDistance>
         <Fovy>90</Fovy>
     </Camera>
     <Film>
         <filename>result.ppm</filename>
-        <width>800</width>
-        <height>600</height>
+        <width>600</width>
+        <height>400</height>
     </Film>
     <Integrator type="PathIntegrator">
-        <MaxDepth>6</MaxDepth>
+        <MaxDepth>1</MaxDepth>
     </Integrator>
     <Sampler type="NRooksSampler">
         <SampleGroupCount>81</SampleGroupCount>
         <SampleCount>3000</SampleCount>
     </Sampler>
     <Renderer type="SamplerRenderer">
-        <spp>84</spp>
+        <spp>4</spp>
     </Renderer>
 </Root>

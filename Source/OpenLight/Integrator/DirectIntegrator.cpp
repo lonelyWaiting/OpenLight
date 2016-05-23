@@ -42,9 +42,9 @@ Spectrum DirectIntegrator::Li( const Scene* scene , const Renderer* renderer , I
 	// ×Ô·¢¹â
 	L += record->Le( wo );
 
-	L += UniformSampleOneLight( scene , renderer , pAccelerator , bsdf , record->HitPoint , wo , record->normal );
+	L += UniformSampleOneLight( scene , renderer , pAccelerator , bsdf , record->HitPoint , wo , record->normal ) * record->SurfaceColor;
 
-	L *= record->SurfaceColor;
+	//L *= record->SurfaceColor;
 
 	if( ray->depth < mMaxDepth )
 	{
@@ -61,7 +61,7 @@ Spectrum DirectIntegrator::Li( const Scene* scene , const Renderer* renderer , I
 			Li += SpecularTransmit( *ray , scene , renderer , record , pAccelerator , bsdf , bNoReflectOccur );
 		}
 
-		L = L + Li;
+		L = L + Li * record->SurfaceColor;
 	}
 
 	SAFE_DELETE( bsdf );

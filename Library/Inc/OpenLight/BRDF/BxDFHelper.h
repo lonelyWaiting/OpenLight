@@ -1,6 +1,5 @@
 #pragma once
 
-#include <iostream>
 #include <algorithm>
 #include "Math/Vector3.h"
 #include "Math/Normal.h"
@@ -17,28 +16,22 @@ enum BxDFType
 
 // compute refraction ray 
 // eta = etaI / etaT
-inline bool Refract( const Vector3f& wi , const Normal& n , double eta , Vector3f* wt , bool entering )
+inline bool Refract( const Vector3f& w , const Normal& n , double eta , Vector3f* wt , bool entering )
 {
-	double CosThetaI = AbsDot( wi , n );
+	double CosThetaI = AbsDot( w , n );
 
-	double SinThetaI2 = 1 - CosThetaI * CosThetaI;
-	SinThetaI2 = SinThetaI2 > 0.0 ? SinThetaI2 : 0.0;
-	double SinThetaT2 = eta * eta * SinThetaI2;
+	double SinThetaI2 = MAX( double( 0 ) , 1 - CosThetaI * CosThetaI );
+	double sinThetaT2 = eta * eta * SinThetaI2;
 
-	if( SinThetaT2 >= 1.0 )
+	if( sinThetaT2 >= 1.0 )
 	{
 		// È«ÄÚ·´Éä
 		return false;
 	}
 
-	if( entering )
-	{
-		*wt = Normalize( eta * wi + n * ( eta * CosThetaI - std::sqrt( 1 - SinThetaT2 ) ) );
-	}
-	else
-	{
-		*wt = Normalize( eta * wi - n * ( eta * CosThetaI - std::sqrt( 1 - SinThetaT2 ) ) );
-	}
+	float Flip = entering ? 1.0 : -1.0;
+
+	*wt = Normalize( eta * -w + Flip * n * ( eta * CosThetaI - std::sqrt( 1 - sinThetaT2 ) ) );
 
 	return true;
 }

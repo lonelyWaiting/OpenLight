@@ -19,13 +19,17 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 	bool IsSpecular = false;
 	int count = 0;
 
+	IntersectRecord TempRecord;
+
+	Ray r;
+
 	while( true )
 	{
 		Vector3f wo = -ray->Direction;
 
 		if( count == 0 || IsSpecular )
 		{
-			L += Throughout * record->Le( wo );
+			L += Throughout * record->Le( wo ) * record->SurfaceColor;
 		}
 
 		BSDF* bsdf = record->GetBSDF();
@@ -34,10 +38,10 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 
 		const Normal& HitNormal = record->normal;
 
-		L += Throughout * UniformSampleOneLight( scene , renderer , pAccelerator , bsdf , HitPoint , wo , HitNormal );
+		L += Throughout * UniformSampleOneLight( scene , renderer , pAccelerator , bsdf , HitPoint , wo , HitNormal ) * record->SurfaceColor;
 
 		Vector3f wi;
-		double pdf;
+		double pdf = 0.0;
 		BxDFType flags;
 		
 		bool bReject = false;
@@ -49,7 +53,7 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 
 		if( bReject )
 		{
-			f = bsdf->Sample_f( wo , HitNormal , &wi , BRDFSamplePoint , &pdf , BxDFType( SPECULAR & TRANSMISSION ) , bReject , &flags );
+			f = bsdf->Sample_f( wo , HitNormal , &wi , BRDFSamplePoint , &pdf , BxDFType( SPECULAR | TRANSMISSION ) , bReject , &flags );
 		}
 
 		if( f.IsBlack() || pdf == 0.0 )
@@ -61,9 +65,7 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 
 		Throughout *= f * AbsDot( wi , HitNormal ) / pdf;
 
-		Ray r = Ray( HitPoint , wi , *ray , EPSILON );
-
-		SAFE_DELETE( ray );
+		r = Ray( HitPoint + wi * 1e-3f , wi , *ray , EPSILON );
 
 		ray = &r;
 
@@ -79,12 +81,10 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 			Throughout /= continueProbability;
 		}
 
-		if( count >= mMaxDepth )
+		if( ++count >= mMaxDepth )
 		{
 			break;
 		}
-		
-		IntersectRecord TempRecord;
 
 		if( !scene->Intersect( *ray , &TempRecord ) )
 		{
@@ -92,7 +92,7 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 			{
 				for( int i = 0; i < scene->GetLights().size(); i++ )
 				{
-					L += Throughout * scene->GetLight( i )->Le( HitPoint , HitNormal , -ray->Direction );
+					L += Throughout * scene->GetLight( i )->Le( HitPoint , HitNormal , -ray->Direction ) * record->SurfaceColor;
 				}
 			}
 
@@ -100,6 +100,8 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 		}
 
 		record = &TempRecord;
+
+		SAFE_DELETE( bsdf );
 	}
 
 	return L;
