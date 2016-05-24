@@ -12,7 +12,9 @@
 #include "SamplerRenderer.h"
 
 SamplerRenderer::SamplerRenderer()
-	:Renderer()
+	: Renderer()
+	, iRow( 0 )
+	, iCol( 0 )
 {
 
 }
@@ -23,6 +25,8 @@ SamplerRenderer::SamplerRenderer( Sampler* _sampler , Camera* _camera , SurfaceI
 	, camera( _camera )
 	, surfaceIntegrator( _surfaceIntegrator )
 	, pAccelerator( _pAccelerator )
+	, iRow( 0 )
+	, iCol( 0 )
 {
 
 }
@@ -51,15 +55,23 @@ void SamplerRenderer::Render( const Scene* scene )
 
 	clock_t start = clock();
 
+	if( iRow >= Height || iCol >= Width )
+	{
+		return;
+	}
+
+	int HeightBound = MIN( iRow + 40 , Height );
+	int WidthBound = MIN( iCol + 40 , Width );
+
 	#ifndef _DEBUG
 	#pragma omp parallel for schedule(dynamic , 1) private(L)
 	#endif
 
-	for( int iRow = 0; iRow < Height; iRow++ )
+	for( int Row = iRow; Row < HeightBound; Row++ )
 	{
-		fprintf( stdout , "\rRendering: %1.0fspp %8.2f%%" , ( double )spp , ( double )iRow / ( double )( Height - 1 ) *100 );
+		fprintf( stdout , "\rRendering: %1.0fspp %8.2f%%" , ( double )spp , ( double )Row / ( double )( Height - 1 ) *100 );
 
-		for( int iCol = 0; iCol < Width; iCol++ )
+		for( int Col = iCol; Col < WidthBound; Col++ )
 		{
 			L = Spectrum( 0 );
 
@@ -67,7 +79,7 @@ void SamplerRenderer::Render( const Scene* scene )
 			{
 				CameraSample SamplePoint = sampler->GetSamplePoint();
 
-				Ray ray = camera->GenerateRay( iCol , iRow , SamplePoint );
+				Ray ray = camera->GenerateRay( Col , Row , SamplePoint );
 
 				IntersectRecord record;
 
@@ -76,8 +88,18 @@ void SamplerRenderer::Render( const Scene* scene )
 			
 			L /= (double)spp;
 
-			camera->GetFilm()->SetColor( iRow , iCol , L );
+			camera->GetFilm()->SetColor( Row , Col , L );
 		}
+	}
+
+	if( iCol + 40 < Width )
+	{
+		iCol = iCol + 40;
+	}
+	else if( iCol + 40 >= Width )
+	{
+		iCol = 0;
+		iRow = iRow + 40;
 	}
 
 	clock_t end = clock();
@@ -85,7 +107,10 @@ void SamplerRenderer::Render( const Scene* scene )
 	printf( "\nRender time: %fs.\n" , t );
 	Log::Get().Info( "\nRender time: %fs.\n" , t );
 
-	camera->GetFilm()->Display();
+	if( iRow == Height && iCol == Width )
+	{
+		camera->GetFilm()->Display();
+	}
 }
 
 Spectrum SamplerRenderer::Li( const Scene* scene , Ray* ray , IntersectRecord* record /* = nullptr  */ ) const
@@ -112,4 +137,9 @@ void SamplerRenderer::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::X
 		pElement->SetText( spp );
 		pRootElement->InsertEndChild( pElement );
 	}
+}
+
+void SamplerRenderer::ResetRender()
+{ 
+	iRow = iCol = 0;
 }

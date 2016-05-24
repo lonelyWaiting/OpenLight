@@ -255,11 +255,14 @@ void MeshViewApp::DrawScene()
 			bResize = true;
 		}
 
-		if ( ImGui::Button( "Begin Rending" ) ) bBeginRendering ^= 1;
+		if( ImGui::Button( "Begin Rending" ) )
+		{
+			renderer->ResetRender();
+		}
+
 		if( ImGui::Button( "Save Scene" ) )	bSave ^= 1;
 	}
 
-	if( bBeginRendering )
 	{
 		if( bResize )
 		{

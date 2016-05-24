@@ -31,9 +31,14 @@ public:
 
 	void Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement );
 
+public:
+	void ResetRender();
+
 private:
 	Sampler* sampler;
 	Camera* camera;
 	SurfaceIntegrator* surfaceIntegrator;
 	Accelerator* pAccelerator;
+
+	int iRow , iCol;
 };

@@ -40,6 +40,8 @@ public:
 
 	int GetSpp() const;
 
+	virtual void ResetRender() = 0;
+
 protected:
 	int spp;		// sample per pixel
 };

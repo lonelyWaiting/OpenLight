@@ -250,7 +250,7 @@
         <width>600</width>
         <height>400</height>
     </Film>
-    <Integrator type="PathIntegrator">
+    <Integrator type="DirectIntegrator">
         <MaxDepth>1</MaxDepth>
     </Integrator>
     <Sampler type="NRooksSampler">
