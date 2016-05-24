@@ -91,8 +91,6 @@ int D3DApp::Run()
 {
 	MSG msg = {0};
 
-	mTimer.Reset();
-
 	while(msg.message != WM_QUIT)
 	{
 		if(PeekMessage(&msg , 0 , 0 , 0 , PM_REMOVE))
@@ -103,12 +101,9 @@ int D3DApp::Run()
 
 		else
 		{
-			mTimer.Tick();
-
 			if(!mAppPaused)
 			{
-				CalculateFrameStats();
-				UpdateScene(mTimer.DeltaTime());
+				UpdateScene(0);
 				DrawScene();
 			}
 			else
@@ -217,12 +212,10 @@ LRESULT D3DApp::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		if (LOWORD(wParam) == WA_INACTIVE)	//ÇÐ»»µ½Î´¼¤»î×´Ì¬
 		{
 			mAppPaused = true;
-			mTimer.Stop();
 		}
 		else								//´°¿ÚÇÐ»»µ½¼¤»î×´Ì¬
 		{
 			mAppPaused = false;
-			mTimer.Start();
 		}
 
 		return 0;
@@ -290,7 +283,6 @@ LRESULT D3DApp::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 		mAppPaused = true;
 		mResizing = true;
-		mTimer.Stop();
 		return 0;
 	}
 
@@ -300,7 +292,6 @@ LRESULT D3DApp::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 		mAppPaused = false;
 		mResizing = false;
-		mTimer.Start();
 		OnResize();
 		return 0;
 	}
@@ -493,26 +484,22 @@ bool D3DApp::InitDirect3D()
 	return true;
 }
 
-
-void D3DApp::CalculateFrameStats()
+std::vector<byte> D3DApp::LoadShader( std::string filename )
 {
-	static int frameCount = 0;
-	static float timeElapsed = 0.0f;
+	std::vector<byte> FileData;
 
-	frameCount++;
-	if (mTimer.TotalTime() - timeElapsed >= 1.0f)
+	std::ifstream ShaderFile( filename , std::ios::in | std::ios::binary | std::ios::ate );
+
+	if( ShaderFile.is_open() )
 	{
-		float fps = (float)frameCount;
-		float mspf = 1000.0f / fps;
+		int Length = ( int )ShaderFile.tellg();
 
-		std::wostringstream outs;
-		outs.precision(6);
-		outs << mMainWndCaption << TEXT("   ")
-			<< TEXT("FPS: ") << fps << TEXT("   ")
-			<< TEXT("Frame Time: ") << mspf << TEXT(" (ms)");
-		SetWindowText(mhMainWnd, outs.str().c_str());
+		FileData.resize( Length );
 
-		frameCount = 0;
-		timeElapsed += 1.0f;
+		ShaderFile.seekg( 0 , std::ios::beg );
+		ShaderFile.read( reinterpret_cast< char* >( &FileData[0] ) , FileData.size() );
+		ShaderFile.close();
 	}
+
+	return FileData;
 }

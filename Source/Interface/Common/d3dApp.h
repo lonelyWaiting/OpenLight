@@ -2,7 +2,6 @@
 #define D3DAPP_H
 
 #include "d3dUtil.h"
-#include "GameTimer.h"
 #include <string>
 
 #pragma comment(lib , "d3d11.lib")
@@ -34,12 +33,11 @@ public:
 	virtual void OnMouseUp(WPARAM buttonState , int x , int y) { };
 	virtual void OnMouseMove(WPARAM buttonState , int x , int y) { };
 
+	std::vector<byte> LoadShader( std::string filename );
 
 protected:
 	bool InitMainWindow();
 	bool InitDirect3D();
-
-	void CalculateFrameStats();
 
 protected:
 	HINSTANCE	mhAppInst;
@@ -49,8 +47,6 @@ protected:
 	bool		mMaximized;
 	bool		mResizing;
 	UINT		m4xMsaaQuality;
-
-	GameTimer mTimer;
 
 	ID3D11Device* md3dDevice;
 	ID3D11DeviceContext* md3dImmediateContext;

@@ -7,9 +7,6 @@
     <Filter Include="Common">
       <UniqueIdentifier>{4bea8ada-a13d-41d7-b04e-80fc67330155}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EffectFactory">
-      <UniqueIdentifier>{98465763-6ac7-40cf-89e2-7f9729328871}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Shader">
       <UniqueIdentifier>{e55e0009-2893-44c9-84bd-e4e0c4dcb169}</UniqueIdentifier>
     </Filter>
@@ -30,27 +27,6 @@
     <ClCompile Include="..\..\Source\Interface\Common\d3dUtil.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Interface\Common\GameTimer.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Interface\Common\GeometryGenerator.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Interface\Common\IEffect.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Interface\Common\MathHelper.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Interface\Common\RenderState.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Interface\Common\TextureMgr.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Interface\EffectFactory\DebugTextureEffectFactory.cpp">
-      <Filter>EffectFactory</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Interface\Application\imgui_impl_dx9.h">
@@ -64,33 +40,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Interface\Common\d3dUtil.h">
       <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Interface\Common\GameTimer.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Interface\Common\GeometryGenerator.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Interface\Common\IEffect.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Interface\Common\MathHelper.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Interface\Common\RenderState.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Interface\Common\TextureMgr.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Interface\EffectFactory\Vertex.h">
-      <Filter>EffectFactory</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Interface\EffectFactory\DebugTextureEffectFactory.h">
-      <Filter>EffectFactory</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Interface\EffectFactory\IBuffer.h">
-      <Filter>EffectFactory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
