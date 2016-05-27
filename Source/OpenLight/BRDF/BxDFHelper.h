@@ -20,7 +20,7 @@ inline bool Refract( const Vector3f& w , const Normal& n , double eta , Vector3f
 {
 	double CosThetaI = AbsDot( w , n );
 
-	double SinThetaI2 = std::max( double( 0 ) , 1 - CosThetaI * CosThetaI );
+	double SinThetaI2 = MAX( double( 0 ) , 1 - CosThetaI * CosThetaI );
 	double sinThetaT2 = eta * eta * SinThetaI2;
 
 	if( sinThetaT2 >= 1.0 )

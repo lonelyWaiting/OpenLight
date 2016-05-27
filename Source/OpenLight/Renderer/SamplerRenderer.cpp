@@ -53,13 +53,14 @@ void SamplerRenderer::Render( const Scene* scene )
 
 	Spectrum L;
 
-	clock_t start = clock();
-
 	if( iRow >= Height || iCol >= Width )
 	{
 		return;
 	}
-
+	else if( iRow == 0 && iCol == 0 )
+	{
+		start = clock();
+	}
 	int HeightBound = MIN( iRow + 40 , Height );
 	int WidthBound = MIN( iCol + 40 , Width );
 
@@ -102,13 +103,14 @@ void SamplerRenderer::Render( const Scene* scene )
 		iRow = iRow + 40;
 	}
 
-	clock_t end = clock();
-	double t = ( double )( end - start ) / CLOCKS_PER_SEC;
-	printf( "\nRender time: %fs.\n" , t );
-	Log::Get().Info( "\nRender time: %fs.\n" , t );
-
-	if( iRow == Height && iCol == Width )
+	if( iRow >= Height )
 	{
+		clock_t end = clock();
+		double t = ( double )( end - start ) / CLOCKS_PER_SEC;
+		printf( "\nRender time: %fs.\n" , t );
+		//Log::Get().Info( "\nRender time: %fs.\n" , t );
+
+		// 输出到文件
 		camera->GetFilm()->Display();
 	}
 }

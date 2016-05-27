@@ -3,7 +3,7 @@
 
 FileSystem::FileSystem()
 {
-	sDataFolder       = L"../Data/";
+	sDataFolder       = L"../../Resource/";
 	sModelSubFolder   = L"Model/";
 	sTextureSubFolder = L"Texture/";
 	sLogSubFolder     = L"Log/";

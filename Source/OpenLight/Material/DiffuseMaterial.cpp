@@ -19,9 +19,6 @@ BSDF* DiffuseMaterial::GetBSDF( const Point3f& point , const Normal& normal ) co
 {
 	BSDF* bsdf = new BSDF();
 
-	double ReflectRGB[3] = { 1.0 , 1.0 , 1.0 };
-	R = Spectrum::FromRGB( ReflectRGB );
-
 	bsdf->Add( new Lambertian( R ) );
 
 	return bsdf;

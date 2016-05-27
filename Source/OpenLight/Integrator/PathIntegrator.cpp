@@ -29,6 +29,7 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 
 		if( count == 0 || IsSpecular )
 		{
+			// ×Ô·¢¹â
 			L += Throughout * record->Le( wo ) * record->SurfaceColor;
 		}
 
@@ -81,20 +82,20 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 			Throughout /= continueProbability;
 		}
 
-		if( ++count >= mMaxDepth )
+		if( count++ >= mMaxDepth )
 		{
 			break;
 		}
 
 		if( !scene->Intersect( *ray , &TempRecord ) )
 		{
-			if( IsSpecular )
+			/*if( IsSpecular )
 			{
 				for( int i = 0; i < scene->GetLights().size(); i++ )
 				{
 					L += Throughout * scene->GetLight( i )->Le( HitPoint , HitNormal , -ray->Direction ) * record->SurfaceColor;
 				}
-			}
+			}*/
 
 			break;
 		}

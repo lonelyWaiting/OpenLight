@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Spectrum/Spectrum.h"
+#include <Spectrum/Spectrum.h>
 
 namespace tinyxml2
 {

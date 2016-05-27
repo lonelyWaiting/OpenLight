@@ -1,6 +1,6 @@
 #include "DirectIntegrator.h"
 #include "tinyxml2.h"
-#include "BRDF/BSDF.h"
+#include <BRDF/BSDF.h>
 #include "Primitive/IntersectRecord.h"
 #include "Math/Ray.h"
 #include "Math/Vector3.h"

@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Accelerator\Accelerator.h" />
+    <ClInclude Include="Accelerator\Grid.h" />
+    <ClInclude Include="OpenLight.h" />
+    <ClInclude Include="BRDF\BSDF.h" />
+    <ClInclude Include="BRDF\BxDF.h" />
+    <ClInclude Include="BRDF\BxDFHelper.h" />
+    <ClInclude Include="BRDF\Fresnel.h" />
+    <ClInclude Include="BRDF\FresnelConductor.h" />
+    <ClInclude Include="BRDF\FresnelDielectric.h" />
+    <ClInclude Include="BRDF\Lambertian.h" />
+    <ClInclude Include="BRDF\PureSpecularReflection.h" />
+    <ClInclude Include="BRDF\SpecularReflection.h" />
+    <ClInclude Include="BRDF\SpecularTransmission.h" />
+    <ClInclude Include="Camera\Camera.h" />
+    <ClInclude Include="Camera\PinholeCamera.h" />
+    <ClInclude Include="Camera\ThinLensCamera.h" />
+    <ClInclude Include="Core\Scene.h" />
+    <ClInclude Include="Core\VCustomRTTI.h" />
+    <ClInclude Include="Core\VIntersectable.h" />
+    <ClInclude Include="Core\VSerializableObject.h" />
+    <ClInclude Include="Film\Film.h" />
+    <ClInclude Include="Film\Image.h" />
+    <ClInclude Include="Film\PPMImage.h" />
+    <ClInclude Include="Filter\BoxFilter.h" />
+    <ClInclude Include="Filter\Filter.h" />
+    <ClInclude Include="Integrator\DirectIntegrator.h" />
+    <ClInclude Include="Integrator\IntegratorPCH.h" />
+    <ClInclude Include="Integrator\PathIntegrator.h" />
+    <ClInclude Include="Integrator\SurfaceIntegrator.h" />
+    <ClInclude Include="Integrator\WhittedIntegrator.h" />
+    <ClInclude Include="IO\FileSystem.h" />
+    <ClInclude Include="IO\Log.h" />
+    <ClInclude Include="Light\AreaLighth.h" />
+    <ClInclude Include="Light\Light.h" />
+    <ClInclude Include="Light\PointLight.h" />
+    <ClInclude Include="Light\VisibilityTester.h" />
+    <ClInclude Include="Material\DiffuseMaterial.h" />
+    <ClInclude Include="Material\GlassMaterial.h" />
+    <ClInclude Include="Material\Material.h" />
+    <ClInclude Include="Material\PureReflectionMaterial.h" />
+    <ClInclude Include="Math\Bound3.h" />
+    <ClInclude Include="Math\Bounds2.h" />
+    <ClInclude Include="Math\Matrix3.h" />
+    <ClInclude Include="Math\Matrix4.h" />
+    <ClInclude Include="Math\Normal.h" />
+    <ClInclude Include="Math\ONB.h" />
+    <ClInclude Include="Math\Point2.h" />
+    <ClInclude Include="Math\Point3.h" />
+    <ClInclude Include="Math\Ray.h" />
+    <ClInclude Include="Math\Transform.h" />
+    <ClInclude Include="Math\Vector2.h" />
+    <ClInclude Include="Math\Vector3.h" />
+    <ClInclude Include="Math\Vector4.h" />
+    <ClInclude Include="Primitive\IntersectRecord.h" />
+    <ClInclude Include="Primitive\Primitive.h" />
+    <ClInclude Include="Renderer\Renderer.h" />
+    <ClInclude Include="Renderer\SamplerRenderer.h" />
+    <ClInclude Include="Sampler\CameraSample.h" />
+    <ClInclude Include="Sampler\NRooksSampler.h" />
+    <ClInclude Include="Sampler\PureRandomSampler.h" />
+    <ClInclude Include="Sampler\Sampler.h" />
+    <ClInclude Include="Sampler\Sampling.h" />
+    <ClInclude Include="Shapes\AggregateShape.h" />
+    <ClInclude Include="Shapes\ModelParser.h" />
+    <ClInclude Include="Shapes\Shape.h" />
+    <ClInclude Include="Shapes\Sphere.h" />
+    <ClInclude Include="Shapes\Triangle.h" />
+    <ClInclude Include="Shapes\TriangleMesh.h" />
+    <ClInclude Include="Spectrum\Spectrum.h" />
+    <ClInclude Include="Utilities\PCH.h" />
+    <ClInclude Include="Utilities\RNG.h" />
+    <ClInclude Include="Utilities\srString.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Accelerator\Grid.cpp" />
+    <ClCompile Include="OpenLight.cpp" />
+    <ClCompile Include="BRDF\BSDF.cpp" />
+    <ClCompile Include="BRDF\BxDF.cpp" />
+    <ClCompile Include="BRDF\Fresnel.cpp" />
+    <ClCompile Include="BRDF\FresnelConductor.cpp" />
+    <ClCompile Include="BRDF\FresnelDielectric.cpp" />
+    <ClCompile Include="BRDF\Lambertian.cpp" />
+    <ClCompile Include="BRDF\PureSpecularReflection.cpp" />
+    <ClCompile Include="BRDF\SpecularReflection.cpp" />
+    <ClCompile Include="BRDF\SpecularTransmission.cpp" />
+    <ClCompile Include="Camera\Camera.cpp" />
+    <ClCompile Include="Camera\PinholeCamera.cpp" />
+    <ClCompile Include="Camera\ThinLensCamera.cpp" />
+    <ClCompile Include="Core\Scene.cpp" />
+    <ClCompile Include="Core\VIntersectable.cpp" />
+    <ClCompile Include="Core\VSerializableObject.cpp" />
+    <ClCompile Include="Film\Film.cpp" />
+    <ClCompile Include="Film\Image.cpp" />
+    <ClCompile Include="Film\PPMImage.cpp" />
+    <ClCompile Include="Filter\BoxFilter.cpp" />
+    <ClCompile Include="Filter\Filter.cpp" />
+    <ClCompile Include="Integrator\DirectIntegrator.cpp" />
+    <ClCompile Include="Integrator\IntegratorPCH.cpp" />
+    <ClCompile Include="Integrator\PathIntegrator.cpp" />
+    <ClCompile Include="Integrator\SurfaceIntegrator.cpp" />
+    <ClCompile Include="Integrator\WhittedIntegrator.cpp" />
+    <ClCompile Include="IO\FileSystsem.cpp" />
+    <ClCompile Include="IO\Log.cpp" />
+    <ClCompile Include="Light\AreaLight.cpp" />
+    <ClCompile Include="Light\Light.cpp" />
+    <ClCompile Include="Light\PonitLight.cpp" />
+    <ClCompile Include="Light\VisibilityTester.cpp" />
+    <ClCompile Include="Material\DiffuseMaterial.cpp" />
+    <ClCompile Include="Material\GlassMaterial.cpp" />
+    <ClCompile Include="Material\Material.cpp" />
+    <ClCompile Include="Material\PureReflectionMaterial.cpp" />
+    <ClCompile Include="Math\Bound3.cpp" />
+    <ClCompile Include="Math\Bounds2.cpp" />
+    <ClCompile Include="Math\Matrix3.cpp" />
+    <ClCompile Include="Math\Matrix4.cpp" />
+    <ClCompile Include="Math\Normal.cpp" />
+    <ClCompile Include="Math\ONB.cpp" />
+    <ClCompile Include="Math\Point2.cpp" />
+    <ClCompile Include="Math\Point3.cpp" />
+    <ClCompile Include="Math\Ray.cpp" />
+    <ClCompile Include="Math\Transform.cpp" />
+    <ClCompile Include="Math\Vector2.cpp" />
+    <ClCompile Include="Math\Vector3.cpp" />
+    <ClCompile Include="Math\Vector4.cpp" />
+    <ClCompile Include="Primitive\IntersectRecord.cpp" />
+    <ClCompile Include="Primitive\Primitive.cpp" />
+    <ClCompile Include="Renderer\Renderer.cpp" />
+    <ClCompile Include="Renderer\SamplerRenderer.cpp" />
+    <ClCompile Include="Sampler\NRooksSampler.cpp" />
+    <ClCompile Include="Sampler\PureRandomSampler.cpp" />
+    <ClCompile Include="Sampler\Sampler.cpp" />
+    <ClCompile Include="Sampler\Sampling.cpp" />
+    <ClCompile Include="Shapes\AggregateShape.cpp" />
+    <ClCompile Include="Shapes\ModelParser.cpp" />
+    <ClCompile Include="Shapes\Shape.cpp" />
+    <ClCompile Include="Shapes\Sphere.cpp" />
+    <ClCompile Include="Shapes\Triangle.cpp" />
+    <ClCompile Include="Shapes\TriangleMesh.cpp" />
+    <ClCompile Include="Spectrum\Spectrum.cpp" />
+    <ClCompile Include="Utilities\PCH.cpp" />
+    <ClCompile Include="Utilities\RNG.cpp" />
+    <ClCompile Include="Utilities\srString.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6AE3C859-8241-41C0-9E73-C3B5E5A2241E}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>OpenLight</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)Bin\$(Configuration)</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <ExecutablePath>$(VC_ExecutablePath_x86);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH)</ExecutablePath>
+    <IncludePath>$(ProjectDir);$(IncludePath)</IncludePath>
+    <TargetName>$(ProjectName)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)Bin\$(Configuration)</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <IncludePath>$(ProjectDir);$(IncludePath)</IncludePath>
+    <TargetName>$(ProjectName)</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)Library\Inc\TinyXML2\;$(SolutionDir)Library\Inc\assimp\</AdditionalIncludeDirectories>
+      <OpenMPSupport>true</OpenMPSupport>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)Library\TinyXML2\Lib\Debug;$(SolutionDir)Library\assimp\Lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>tinyxml2.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <Lib>
+      <AdditionalDependencies>tinyxml2.lib;assimp-vc140-mt.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Library\Lib\assimp\$(Configuration)\;$(SolutionDir)Library\Lib\TinyXML2\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)Library\Inc\TinyXML2\;$(SolutionDir)Library\Inc\assimp\</AdditionalIncludeDirectories>
+      <OpenMPSupport>true</OpenMPSupport>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)Library\TinyXML2\Lib\Release;$(SolutionDir)Library\assimp\Lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>tinyxml2.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)Library\Lib\TinyXML2\$(Configuration)\;$(SolutionDir)Library\Lib\assimp\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>tinyxml2.lib;assimp-vc140-mt.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

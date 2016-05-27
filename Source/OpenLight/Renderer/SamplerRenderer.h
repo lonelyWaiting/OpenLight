@@ -41,4 +41,7 @@ private:
 	Accelerator* pAccelerator;
 
 	int iRow , iCol;
+
+	clock_t start;
+	clock_t end;
 };
