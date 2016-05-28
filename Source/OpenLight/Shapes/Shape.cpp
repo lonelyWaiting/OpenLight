@@ -113,3 +113,14 @@ Spectrum Shape::GetSurfaceColor()
 {
 	return SurfaceColor;
 }
+
+void Shape::SetPosition( float* pos )
+{
+	Pos[0] = pos[0];
+	Pos[1] = pos[1];
+	Pos[2] = pos[2];
+
+	*ObjectToWorld = Translate( Vector3f( Pos ) );
+
+	*WorldToObject = Inverse( *ObjectToWorld );
+}

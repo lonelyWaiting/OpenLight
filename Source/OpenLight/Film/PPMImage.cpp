@@ -26,6 +26,8 @@ void PPMImage::SetColor( int row , int col , Spectrum spectrum )
 	}
 
 	data[row * Width + col] = spectrum;
+
+	GammaCorrect( row , col );
 }
 
 Spectrum PPMImage::GetColor( int row , int col ) const
@@ -86,4 +88,12 @@ void PPMImage::Display()
 	double t = ( double )( end - start ) / CLOCKS_PER_SEC;
 	printf( "\nWriting time: %fs.\n" , t );
 	Log::Get().Info( "\nWriting time: %fs.\n" , t );
+}
+
+void PPMImage::GammaCorrect( int row , int col )
+{ 
+	for( int i = 0; i < 3; i++ )
+	{
+		data[row * Width + col][i] = std::pow( data[row * Width + col][i] , 1.0 / 2.2 );
+	}
 }

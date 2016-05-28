@@ -16,6 +16,8 @@ public:
 
 	virtual void Display();
 
+	void GammaCorrect( int row , int col );
+
 protected:
 	PPMImage();
 

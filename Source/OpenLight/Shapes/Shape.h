@@ -45,6 +45,8 @@ public:
 
 	virtual Spectrum GetSurfaceColor();
 
+	virtual void SetPosition( float* pos );
+
 public:
 	Transform*	ObjectToWorld;
 	Transform*	WorldToObject;

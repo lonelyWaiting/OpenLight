@@ -63,6 +63,12 @@ void Primitive::SetMaterial(Material* material)
 
 void Primitive::Deserialization( tinyxml2::XMLElement* PrimitiveRootElment )
 {
+	{
+		const char* name = PrimitiveRootElment->Attribute( "name" );
+		m_Name = new char[strlen( name )];
+		memcpy( ( void* )m_Name , ( void* )name , strlen( name ) );
+	}
+
 	tinyxml2::XMLElement* ShapeRootElement = PrimitiveRootElment->FirstChildElement( "shape" );
 
 	while( ShapeRootElement )
@@ -176,7 +182,7 @@ int Primitive::GetShapeCount() const
 	return m_vShapes.size();
 }
 
-Shape* Primitive::GetShape( int index )
+Shape* Primitive::GetShape( int index ) const
 {
 	return m_vShapes[index];
 }
@@ -206,4 +212,16 @@ double Primitive::GetArea() const
 Light* Primitive::GetAreaLight() const
 { 
 	return m_pAreaLight;
+}
+
+void Primitive::SetName( const char* name )
+{
+	SAFE_DELETE( m_Name );
+	m_Name = new char[strlen( name )];
+	memcpy( m_Name , name , strlen( name ) );
+}
+
+const char* Primitive::GetName() const
+{
+	return m_Name;
 }

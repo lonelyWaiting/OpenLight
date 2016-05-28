@@ -164,13 +164,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -222,7 +222,7 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Lib>
-      <AdditionalDependencies>tinyxml2.lib;assimp-vc140-mt.lib;</AdditionalDependencies>
+      <AdditionalDependencies>tinyxml2.lib;assimp.lib;</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Library\Lib\assimp\$(Configuration)\;$(SolutionDir)Library\Lib\TinyXML2\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
@@ -253,7 +253,7 @@
     </ProjectReference>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)Library\Lib\TinyXML2\$(Configuration)\;$(SolutionDir)Library\Lib\assimp\$(Configuration)\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>tinyxml2.lib;assimp-vc140-mt.lib</AdditionalDependencies>
+      <AdditionalDependencies>tinyxml2.lib;assimp.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -74,6 +74,11 @@ public:
 	int		MaxDepth;
 	int		spp;
 
+	std::vector<const char*> ShapeList;
+
+	int index;
+	bool bShowProperyWindow;
+
 public:
 	bool bResize;
 };
@@ -112,6 +117,8 @@ MyApp::MyApp( HINSTANCE hInstance )
 	, mNoCullRS( nullptr )
 	, pVertexShader( nullptr )
 	, pPixelShader( nullptr )
+	, index( 0 )
+	, bShowProperyWindow( false )
 {
 	mMainWndCaption = TEXT( "MeshView Demo" );
 
@@ -308,6 +315,11 @@ bool MyApp::Init()
 
 	renderer = DeserializationScene( scene , camera , pSurfaceIntegrator , pSampler );
 
+	for( int i = 0; i < scene->GetObjectCount(); i++ )
+	{
+		ShapeList.push_back( ( scene->GetPrimitive( i ) ).GetName() );
+	}
+
 	Width    = camera->GetFilm()->GetResolution().x;
 	Height   = camera->GetFilm()->GetResolution().y;
 	fov      = camera->GetFovy();
@@ -389,6 +401,34 @@ void MyApp::DrawScene()
 		}
 
 		if( ImGui::Button( "Save Scene" ) )	bSave ^= 1;
+
+		if( ImGui::Combo( "Shape List" , &index , &ShapeList[0] , ShapeList.size() ) )
+		{
+			bShowProperyWindow = true;
+		}
+
+		if( bShowProperyWindow )
+		{
+			ImGui::SetNextWindowSize( ImVec2( 200 , 100 ) , ImGuiSetCond_FirstUseEver );
+			ImGui::Begin( "Shape Property" , &bShowProperyWindow );
+			if( !strcmp( ( scene->GetPrimitive( index ) ).GetShape( 0 )->GetName() , "Sphere" ) )
+			{
+				Point3f Pos = ( scene->GetPrimitive( index ) ).GetShape( 0 )->GetPosition();
+
+				float pos[3];
+				for( int i = 0; i < 3; i++ )
+				{
+					pos[i] = Pos[i];
+				}
+				ImGui::InputFloat3( "position" , &pos[0] );
+				scene->GetPrimitive( index ).GetShape( 0 )->SetPosition( &pos[0] );
+			}
+			else if( !strcmp( ( scene->GetPrimitive( index ) ).GetShape( 0 )->GetName() , "TriangleMesh" ) )
+			{
+
+			}
+			ImGui::End();
+		}
 	}
 
 	{

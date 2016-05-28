@@ -29,7 +29,7 @@ public:
 
 	void AddShape( Shape* _shape );
 
-	Shape* GetShape( int index );
+	Shape* GetShape( int index ) const;
 
 	int GetShapeCount() const;
 
@@ -58,6 +58,11 @@ public:
 public:
 	double GetArea() const;
 
+public:
+	const char* GetName() const;
+
+	void SetName( const char* name );
+
 protected:
 	std::vector<Shape*>           m_vShapes;
 	Material*                     m_pMaterial;
@@ -65,4 +70,6 @@ protected:
 	double                        m_SumArea;
 
 	std::vector<Shape*>           m_vShapeInformations;
+
+	char*					  m_Name;
 };
