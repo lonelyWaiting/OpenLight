@@ -35,6 +35,7 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 
 		if( Li.IsBlack() || pdf == 0.0f )
 		{
+			SAFE_DELETE( pVisibility );
 			continue;
 		}
 

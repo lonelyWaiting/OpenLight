@@ -24,7 +24,7 @@ Spectrum BxDF::Sample_f( const Vector3f& wo , const Normal& n , Vector3f* wi , c
 	// 由于wi->z总是为正
 	// 所以当wo为负值时
 	// 需要反转wi->z,从而保证位于同一个半球
-	if( Dot( n , *wi ) < 0.0 )
+	if( Dot( n , *wi ) * Dot( n , wo ) < 0.0 )
 	{
 		*wi *= -1;
 	}

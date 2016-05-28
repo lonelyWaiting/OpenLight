@@ -73,6 +73,9 @@ bool Sphere::Intersect( Ray& r , IntersectRecord* record ) const
 		record->normal        = Normal( Normalize( r( t ) - Pos ) );
 		record->SurfaceColor  = SurfaceColor;
 		record->HitPoint      = r( t );
+
+		double distance = ( record->HitPoint - Pos ).Length();
+
 		return true;
 	}
 	

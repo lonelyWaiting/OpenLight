@@ -27,11 +27,11 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 	{
 		Vector3f wo = -ray->Direction;
 
-		if( count == 0 || IsSpecular )
-		{
+		/*if( count == 0 || IsSpecular )
+		{*/
 			// ×Ô·¢¹â
-			L += Throughout * record->Le( wo ) * record->SurfaceColor;
-		}
+			L += Throughout * record->Le( wo );
+		/*}*/
 
 		BSDF* bsdf = record->GetBSDF();
 
@@ -39,7 +39,7 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 
 		const Normal& HitNormal = record->normal;
 
-		L += Throughout * UniformSampleOneLight( scene , renderer , pAccelerator , bsdf , HitPoint , wo , HitNormal ) * record->SurfaceColor;
+		/*L += Throughout * UniformSampleOneLight( scene , renderer , pAccelerator , bsdf , HitPoint , wo , HitNormal ) * record->SurfaceColor;*/
 
 		Vector3f wi;
 		double pdf = 0.0;
@@ -57,20 +57,22 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 			f = bsdf->Sample_f( wo , HitNormal , &wi , BRDFSamplePoint , &pdf , BxDFType( SPECULAR | TRANSMISSION ) , bReject , &flags );
 		}
 
+		SAFE_DELETE( bsdf );
+
 		if( f.IsBlack() || pdf == 0.0 )
 		{
 			break;
 		}
 
-		IsSpecular = ( flags & SPECULAR ) != 0;
+		/*IsSpecular = ( flags & SPECULAR ) != 0;*/
 
-		Throughout *= f * AbsDot( wi , HitNormal ) / pdf;
+		Throughout *= /*f * AbsDot( wi , HitNormal ) / pdf **/ record->SurfaceColor;
 
 		r = Ray( HitPoint + wi * 1e-3f , wi , *ray , EPSILON );
 
 		ray = &r;
 
-		if( count > 3 )
+		/*if( count > 3 )
 		{
 			double continueProbability = Throughout.y() > 0.5 ? Throughout.y() : 0.5;
 
@@ -80,7 +82,7 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 			}
 
 			Throughout /= continueProbability;
-		}
+		}*/
 
 		if( count++ >= mMaxDepth )
 		{
@@ -101,8 +103,6 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 		}
 
 		record = &TempRecord;
-
-		SAFE_DELETE( bsdf );
 	}
 
 	return L;

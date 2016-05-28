@@ -44,10 +44,10 @@ bool Quadtratic( double A , double B , double C , double* t0 , double* t1 )
 
 	double sqrtDelta = sqrt( delta );
 
-	double InvA = 1.0f / A;
+	double InvA = 1.0 / A;
 
-	*t0 = ( -1.0f * B - 1.0f * sqrtDelta ) * 0.5f * InvA;
-	*t1 = ( -1.0f * B + sqrtDelta ) * 0.5f * InvA;
+	*t0 = ( -1.0f * B - 1.0 * sqrtDelta ) * 0.5 * InvA;
+	*t1 = ( -1.0f * B + sqrtDelta ) * 0.5 * InvA;
 
 	if( *t0 > *t1 )
 	{

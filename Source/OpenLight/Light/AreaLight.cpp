@@ -92,8 +92,8 @@ Spectrum AreaLight::Le( const Point3f& p , const Normal& n , const Vector3f& wo 
 {
 	// Note: 将AreaLight看作点光源的集合，因此，不作方向判断，改成直接返回Lemission
 
-	return Dot( n , wo ) > 0.0 ? Lemission : 0.0;
-	/*return Lemission;*/
+	/*return Dot( n , wo ) > 0.0 ? Lemission : 0.0;*/
+	return Lemission;
 }
 
 double AreaLight::PDF( const Point3f& p , const Vector3f& wi ) const

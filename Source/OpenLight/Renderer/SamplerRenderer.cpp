@@ -63,6 +63,11 @@ void SamplerRenderer::Render( const Scene* scene )
 	}
 	int HeightBound = MIN( iRow + 40 , Height );
 	int WidthBound = MIN( iCol + 40 , Width );
+	
+	int ColTileNumber = std::ceil( Width / 40.0 );
+	int RowTileNumber = std::ceil( Height / 40.0 );
+	int CurrentTileIndex = ( iRow / 40 ) * ColTileNumber + std::ceil( ( iCol + 1 ) / 40.0 );
+	double percent = ( double )CurrentTileIndex / ( ColTileNumber * RowTileNumber );
 
 	#ifndef _DEBUG
 	#pragma omp parallel for schedule(dynamic , 1) private(L)
@@ -70,7 +75,7 @@ void SamplerRenderer::Render( const Scene* scene )
 
 	for( int Row = iRow; Row < HeightBound; Row++ )
 	{
-		fprintf( stdout , "\rRendering: %1.0fspp %8.2f%%" , ( double )spp , ( double )Row / ( double )( Height - 1 ) *100 );
+		fprintf( stdout , "\rRendering: %1.0fspp %8.2f%%" , ( double )spp , ( percent + ( Row - iRow ) / ( 40.0 * ColTileNumber * RowTileNumber ) ) * 100 );
 
 		for( int Col = iCol; Col < WidthBound; Col++ )
 		{

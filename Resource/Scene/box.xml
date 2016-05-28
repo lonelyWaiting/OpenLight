@@ -1,0 +1,257 @@
+<Root>
+    <primitive>
+        <shape type="Sphere" bCompositeObject="false">
+            <transform>
+                <position>
+                    <x>100001</x>
+                    <y>40.8</y>
+                    <z>81.6</z>
+                </position>
+            </transform>
+            <radius>100000</radius>
+            <SurfaceColor>
+                <r>0.75</r>
+                <g>0.25</g>
+                <b>0.25</b>
+            </SurfaceColor>
+        </shape>
+        <material type="DiffuseMaterial">
+            <Reflection>
+                <r>1</r>
+                <g>1</g>
+                <b>1</b>
+            </Reflection>
+        </material>
+    </primitive>
+    <primitive>
+      <shape type="Sphere" bCompositeObject="false">
+        <transform>
+            <position>
+                <x>-99901</x>
+                <y>40.8</y>
+                <z>81.6</z>
+            </position>
+        </transform>
+        <radius>100000</radius>
+          <SurfaceColor>
+            <r>0.25</r>
+            <g>0.25</g>
+            <b>0.25</b>
+          </SurfaceColor>
+        </shape>
+        <material type="DiffuseMaterial">
+          <Reflection>
+            <r>1</r>
+            <g>1</g>
+            <b>1</b>
+            </Reflection>
+        </material>
+    </primitive>
+    <primitive>
+      <shape type="Sphere" bCompositeObject="false">
+        <transform>
+            <position>
+                <x>50</x>
+                <y>40.8</y>
+                <z>100000</z>
+            </position>
+        </transform>
+        <radius>100000</radius>
+          <SurfaceColor>
+            <r>0.0</r>
+            <g>0.0</g>
+            <b>0.0</b>
+          </SurfaceColor>
+        </shape>
+        <material type="DiffuseMaterial">
+          <Reflection>
+            <r>1</r>
+            <g>1</g>
+            <b>1</b>
+            </Reflection>
+        </material>
+    </primitive>
+    <primitive>
+      <shape type="Sphere" bCompositeObject="false">
+        <transform>
+            <position>
+                <x>50</x>
+                <y>40.8</y>
+                <z>-99830</z>
+            </position>
+        </transform>
+        <radius>100000</radius>
+          <SurfaceColor>
+            <r>0.75</r>
+            <g>0.75</g>
+            <b>0.75</b>
+          </SurfaceColor>
+        </shape>
+        <material type="DiffuseMaterial">
+          <Reflection>
+            <r>1</r>
+            <g>1</g>
+            <b>1</b>
+            </Reflection>
+        </material>
+    </primitive>
+    <primitive>
+      <shape type="Sphere" bCompositeObject="false">
+        <transform>
+            <position>
+                <x>50</x>
+                <y>100000</y>
+                <z>81.6</z>
+            </position>
+        </transform>
+        <radius>100000</radius>
+          <SurfaceColor>
+            <r>0.75</r>
+            <g>0.75</g>
+            <b>0.75</b>
+          </SurfaceColor>
+        </shape>
+        <material type="DiffuseMaterial">
+          <Reflection>
+            <r>1</r>
+            <g>1</g>
+            <b>1</b>
+            </Reflection>
+        </material>
+    </primitive>
+    <primitive>
+      <shape type="Sphere" bCompositeObject="false">
+        <transform>
+            <position>
+                <x>50</x>
+                <y>-99918.4</y>
+                <z>81.6</z>
+            </position>
+        </transform>
+        <radius>100000</radius>
+          <SurfaceColor>
+            <r>0.75</r>
+            <g>0.75</g>
+            <b>0.75</b>
+          </SurfaceColor>
+        </shape>
+        <material type="DiffuseMaterial">
+          <Reflection>
+            <r>1</r>
+            <g>1</g>
+            <b>1</b>
+            </Reflection>
+        </material>
+    </primitive>
+    <primitive>
+      <shape type="Sphere" bCompositeObject="false">
+        <transform>
+            <position>
+                <x>27</x>
+                <y>16.5</y>
+                <z>47</z>
+            </position>
+        </transform>
+        <radius>16.5</radius>
+          <SurfaceColor>
+            <r>0.999</r>
+            <g>0.999</g>
+            <b>0.999</b>
+          </SurfaceColor>
+        </shape>
+        <material type="DiffuseMaterial">
+          <Reflection>
+            <r>1</r>
+            <g>1</g>
+            <b>1</b>
+            </Reflection>
+        </material>
+    </primitive>
+    <primitive>
+      <shape type="Sphere" bCompositeObject="false">
+        <transform>
+            <position>
+                <x>73</x>
+                <y>16.5</y>
+                <z>78</z>
+            </position>
+        </transform>
+        <radius>16.5</radius>
+          <SurfaceColor>
+            <r>0.999</r>
+            <g>0.999</g>
+            <b>0.999</b>
+          </SurfaceColor>
+        </shape>
+        <material type="DiffuseMaterial">
+          <Reflection>
+            <r>1</r>
+            <g>1</g>
+            <b>1</b>
+            </Reflection>
+        </material>
+    </primitive>
+    <primitive>
+      <shape type="Sphere" bCompositeObject="false">
+          <transform>
+              <position>
+                  <x>50</x>
+                  <y>681.33</y>
+                  <z>81.6</z>
+              </position>
+          </transform>
+          <radius>600</radius>
+          <SurfaceColor>
+              <r>0.0</r>
+              <g>0.0</g>
+              <b>0.0</b>
+          </SurfaceColor>
+      </shape>
+      <material type="DiffuseMaterial">
+          <Reflection>
+              <r>1.0</r>
+              <g>1.0</g>
+              <b>1.0</b>
+          </Reflection>
+      </material>
+        <AreaLight>
+            <Le>
+                <r>12</r>
+                <g>12</g>
+                <b>12</b>
+            </Le>
+        </AreaLight>
+    </primitive>
+    <Camera type="PinholeCamera">
+        <Position>
+            <x>50</x>
+            <y>16.5</y>
+            <z>0.1</z>
+        </Position>
+        <Target>
+            <x>50</x>
+            <y>16.5</y>
+            <z>1</z>
+        </Target>
+        <LensFocus>3.5</LensFocus>
+        <LensRadius>0.10000000000000001</LensRadius>
+        <ExposureTime>0</ExposureTime>
+        <ViewDistance>1</ViewDistance>
+        <Fovy>90</Fovy>
+    </Camera>
+    <Film>
+        <filename>result.ppm</filename>
+        <width>800</width>
+        <height>600</height>
+    </Film>
+    <Integrator type="PathIntegrator">
+        <MaxDepth>2</MaxDepth>
+    </Integrator>
+    <Sampler type="NRooksSampler">
+        <SampleGroupCount>81</SampleGroupCount>
+        <SampleCount>3000</SampleCount>
+    </Sampler>
+    <Renderer type="SamplerRenderer">
+        <spp>4</spp>
+    </Renderer>
+</Root>
