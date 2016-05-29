@@ -52,6 +52,8 @@ Spectrum DirectIntegrator::Li( const Scene* scene , const Renderer* renderer , I
 
 		bool bNoReflectOccur = false;
 
+		Spectrum SurfaceColor = record->SurfaceColor;
+
 		// ¸ú×Ù·´Éä¹âÏß
 		Li += SpecularReflect( *ray , scene , renderer , record , pAccelerator , bsdf , bNoReflectOccur );
 
@@ -61,7 +63,7 @@ Spectrum DirectIntegrator::Li( const Scene* scene , const Renderer* renderer , I
 			Li += SpecularTransmit( *ray , scene , renderer , record , pAccelerator , bsdf , bNoReflectOccur );
 		}
 
-		L = L + Li * record->SurfaceColor;
+		L += Li * SurfaceColor;
 	}
 
 	SAFE_DELETE( bsdf );
