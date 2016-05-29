@@ -116,11 +116,18 @@ Spectrum Shape::GetSurfaceColor()
 
 void Shape::SetPosition( float* pos )
 {
-	Pos[0] = pos[0];
-	Pos[1] = pos[1];
-	Pos[2] = pos[2];
+	Pos[0] = ( double )pos[0];
+	Pos[1] = ( double )pos[1];
+	Pos[2] = ( double )pos[2];
 
 	*ObjectToWorld = Translate( Vector3f( Pos ) );
 
 	*WorldToObject = Inverse( *ObjectToWorld );
+
+	BBoxWorld = ( *ObjectToWorld )( BBoxLocal );
+}
+
+void Shape::SetSurfaceColor( float* color )
+{
+	SurfaceColor = Spectrum::FromRGB( ( double )color[0] , ( double )color[1] , ( double )color[2] );
 }

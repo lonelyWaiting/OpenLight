@@ -271,11 +271,11 @@
     </Camera>
     <Film>
         <filename>result.ppm</filename>
-        <width>800</width>
-        <height>600</height>
+        <width>1024</width>
+        <height>768</height>
     </Film>
     <Integrator type="PathIntegrator">
-        <MaxDepth>2</MaxDepth>
+        <MaxDepth>3</MaxDepth>
     </Integrator>
     <Sampler type="NRooksSampler">
         <SampleGroupCount>81</SampleGroupCount>

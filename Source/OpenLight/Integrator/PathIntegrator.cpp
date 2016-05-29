@@ -72,7 +72,7 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 
 		ray = &r;
 
-		/*if( count > 3 )
+		if( count > 3 )
 		{
 			double continueProbability = Throughout.y() > 0.5 ? Throughout.y() : 0.5;
 
@@ -82,7 +82,7 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 			}
 
 			Throughout /= continueProbability;
-		}*/
+		}
 
 		if( count++ >= mMaxDepth )
 		{

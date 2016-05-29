@@ -7,6 +7,8 @@
 
 void Grid::Setup( const Scene* scene )
 {
+	pScene = scene;
+
 	Bound3f SceneBBox = scene->GetWorldBoundingBox();
 
 	int ObjectCount = scene->GetObjectCount();
@@ -113,6 +115,21 @@ void Grid::Setup( const Scene* scene )
 	}
 
 	Counts.erase( Counts.begin() , Counts.end() );
+}
+
+void Grid::Reset()
+{
+	for( int i = 0; i < cells.size(); i++ )
+	{
+		if( cells[i] != nullptr && ( typeid( *( cells[i] ) ) == typeid( AggregateShape ) ) )
+		{
+			SAFE_DELETE( cells[i] );
+		}
+	}
+
+	cells.clear();
+
+	Setup( pScene );
 }
 
 bool Grid::Intersect( Ray& ray , const Scene* scene , IntersectRecord* record )

@@ -225,3 +225,8 @@ const char* Primitive::GetName() const
 {
 	return m_Name;
 }
+
+Shape* Primitive::GetPrimitiveObject( int index ) const
+{
+	return m_vShapeInformations[index];
+}

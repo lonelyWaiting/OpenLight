@@ -120,7 +120,7 @@ MyApp::MyApp( HINSTANCE hInstance )
 	, index( 0 )
 	, bShowProperyWindow( false )
 {
-	mMainWndCaption = TEXT( "MeshView Demo" );
+	mMainWndCaption = TEXT( "OpenLight" );
 
 	mLastMousePos.x = 0;
 	mLastMousePos.y = 0;
@@ -411,19 +411,42 @@ void MyApp::DrawScene()
 		{
 			ImGui::SetNextWindowSize( ImVec2( 200 , 100 ) , ImGuiSetCond_FirstUseEver );
 			ImGui::Begin( "Shape Property" , &bShowProperyWindow );
-			if( !strcmp( ( scene->GetPrimitive( index ) ).GetShape( 0 )->GetName() , "Sphere" ) )
-			{
-				Point3f Pos = ( scene->GetPrimitive( index ) ).GetShape( 0 )->GetPosition();
 
-				float pos[3];
-				for( int i = 0; i < 3; i++ )
-				{
-					pos[i] = Pos[i];
-				}
-				ImGui::InputFloat3( "position" , &pos[0] );
-				scene->GetPrimitive( index ).GetShape( 0 )->SetPosition( &pos[0] );
+			// -------------------------------------------------------------------------------------
+			Point3f Pos = ( scene->GetPrimitive( index ) ).GetPrimitiveObject( 0 )->GetPosition();
+
+			float input[3];
+			for( int i = 0; i < 3; i++ )
+			{
+				input[i] = ( float )Pos[i];
 			}
-			else if( !strcmp( ( scene->GetPrimitive( index ) ).GetShape( 0 )->GetName() , "TriangleMesh" ) )
+			if( ImGui::InputFloat3( "position" , &input[0] ) )
+			{
+				scene->GetPrimitive( index ).GetPrimitiveObject( 0 )->SetPosition( &input[0] );
+
+				renderer->GetAccelerator()->Reset();
+			}
+			// -----------------------------------------------------------------------------------
+			Spectrum SurfaceColor = ( scene->GetPrimitive( index ) ).GetPrimitiveObject( 0 )->GetSurfaceColor();
+			
+			float input2[3];
+			for( int i = 0; i < 3; i++ )
+			{
+				input2[i] = ( float )SurfaceColor[i];
+			}
+
+			if( ImGui::InputFloat3( "SurfaceColor" , &input2[0] ) )
+			{
+				scene->GetPrimitive( index ).GetPrimitiveObject( 0 )->SetSurfaceColor( input2 );
+			}
+
+			//------------------------------------------------------------------------------------
+
+			if( !strcmp( ( scene->GetPrimitive( index ) ).GetPrimitiveObject( 0 )->GetName() , "Sphere" ) )
+			{
+
+			}
+			else if( !strcmp( ( scene->GetPrimitive( index ) ).GetPrimitiveObject( 0 )->GetName() , "TriangleMesh" ) )
 			{
 
 			}

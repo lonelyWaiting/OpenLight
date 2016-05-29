@@ -29,6 +29,7 @@ public:
 
 	void AddShape( Shape* _shape );
 
+	// 获取一个Shape：如Triangle,Sphere这些最基本的图元
 	Shape* GetShape( int index ) const;
 
 	int GetShapeCount() const;
@@ -40,6 +41,9 @@ public:
 	void AddAreaLight( AreaLight* _pAreaLight );
 
 	Light* GetAreaLight() const;
+
+	// 获取物体对象，比如一个球，或者一个TriangeMesh而Triangle
+	Shape* GetPrimitiveObject( int index ) const;
 
 public:
 	void Deserialization( tinyxml2::XMLElement* PrimitiveRootElment );

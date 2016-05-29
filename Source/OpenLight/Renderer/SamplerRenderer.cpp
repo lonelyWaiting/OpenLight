@@ -150,3 +150,8 @@ void SamplerRenderer::ResetRender()
 { 
 	iRow = iCol = 0;
 }
+
+Accelerator* SamplerRenderer::GetAccelerator()
+{
+	return pAccelerator;
+}

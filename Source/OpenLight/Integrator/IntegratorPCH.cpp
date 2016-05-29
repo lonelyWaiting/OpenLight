@@ -41,7 +41,7 @@ Spectrum SpecularReflect( const Ray& ray , const Scene* scene , const Renderer* 
 
 		Spectrum Li = renderer->Li( scene , &r , record );
 
-		L = f * Li * AbsDot( wi , normal ) / pdf;
+		L = f * Li * AbsDot( wi , normal ) / pdf * record->SurfaceColor;
 
 		return L;
 	}
@@ -79,7 +79,7 @@ Spectrum SpecularTransmit( const Ray& ray , const Scene* scene , const Renderer*
 
 		Spectrum Li = renderer->Li( scene , &r , record );
 
-		L = f * Li * AbsDot( wi , normal ) / pdf;
+		L = f * Li * AbsDot( wi , normal ) / pdf * record->SurfaceColor;
 	}
 
 	return L;

@@ -42,6 +42,8 @@ public:
 
 	virtual void ResetRender() = 0;
 
+	virtual Accelerator* GetAccelerator() = 0;
+
 protected:
 	int spp;		// sample per pixel
 };

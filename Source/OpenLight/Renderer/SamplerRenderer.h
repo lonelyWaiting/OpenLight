@@ -34,6 +34,8 @@ public:
 public:
 	void ResetRender();
 
+	Accelerator* GetAccelerator();
+
 private:
 	Sampler* sampler;
 	Camera* camera;
