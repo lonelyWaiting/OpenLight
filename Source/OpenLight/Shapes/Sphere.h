@@ -33,6 +33,12 @@ public:
 	void Deserialization( tinyxml2::XMLElement* ShapeRootElement );
 
 	void Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement );
+	
+public:
+	// -------------------------------Information-----------------------------------------
+	double GetRadius();
+
+	void SetRadius( double radius );
 private:
 	double m_Radius;
 };

@@ -24,6 +24,12 @@ public:
 
 	void Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement );
 
+public:
+	// ------------------------------Access Information-----------------------------------------
+	Spectrum GetReflection();
+
+	void SetReflection( float* reflection );
+
 private:
 	mutable Spectrum R;
 };

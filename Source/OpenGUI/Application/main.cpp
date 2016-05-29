@@ -8,6 +8,7 @@
 #include <tchar.h>
 
 #include "OpenLight.h"
+#include "GUI.h"
 
 struct Vertex
 {
@@ -35,6 +36,9 @@ private:
 	void DrawScreenQuad( ID3D11ShaderResourceView* const * srv );
 public:
 	void ResizeTexture( int width , int height );
+
+public:
+	void ShowSceneGUI( int bSave );
 
 private:
 	ID3D11Buffer* ScreenVertexBuffer;
@@ -378,81 +382,9 @@ void MyApp::DrawScene()
 
 	ImGui_ImplDX11_NewFrame();
 
-	int bBeginRendering = 0;
 	int bSave = 0;
 
-	{
-		ImGui::Text( "Hello, world!" );
-		ImGui::SliderFloat( "fov" , &fov , 45.0f , 180.0f );
-		ImGui::SliderInt( "MaxDepth" , &MaxDepth , 1 , 20 );
-		ImGui::InputInt( "spp" , &spp , 8 );
-		if( ImGui::InputInt( "Image Width" , &Width , 10 ) )
-		{
-			bResize = true;
-		}
-		if( ImGui::InputInt( "Image Height" , &Height , 10 ) )
-		{
-			bResize = true;
-		}
-
-		if( ImGui::Button( "Begin Rending" ) )
-		{
-			renderer->ResetRender();
-		}
-
-		if( ImGui::Button( "Save Scene" ) )	bSave ^= 1;
-
-		if( ImGui::Combo( "Shape List" , &index , &ShapeList[0] , ShapeList.size() ) )
-		{
-			bShowProperyWindow = true;
-		}
-
-		if( bShowProperyWindow )
-		{
-			ImGui::SetNextWindowSize( ImVec2( 200 , 100 ) , ImGuiSetCond_FirstUseEver );
-			ImGui::Begin( "Shape Property" , &bShowProperyWindow );
-
-			// -------------------------------------------------------------------------------------
-			Point3f Pos = ( scene->GetPrimitive( index ) ).GetPrimitiveObject( 0 )->GetPosition();
-
-			float input[3];
-			for( int i = 0; i < 3; i++ )
-			{
-				input[i] = ( float )Pos[i];
-			}
-			if( ImGui::InputFloat3( "position" , &input[0] ) )
-			{
-				scene->GetPrimitive( index ).GetPrimitiveObject( 0 )->SetPosition( &input[0] );
-
-				renderer->GetAccelerator()->Reset();
-			}
-			// -----------------------------------------------------------------------------------
-			Spectrum SurfaceColor = ( scene->GetPrimitive( index ) ).GetPrimitiveObject( 0 )->GetSurfaceColor();
-			
-			float input2[3];
-			for( int i = 0; i < 3; i++ )
-			{
-				input2[i] = ( float )SurfaceColor[i];
-			}
-
-			if( ImGui::InputFloat3( "SurfaceColor" , &input2[0] ) )
-			{
-				scene->GetPrimitive( index ).GetPrimitiveObject( 0 )->SetSurfaceColor( input2 );
-			}
-
-			//------------------------------------------------------------------------------------
-
-			if( !strcmp( ( scene->GetPrimitive( index ) ).GetPrimitiveObject( 0 )->GetName() , "Sphere" ) )
-			{
-
-			}
-			else if( !strcmp( ( scene->GetPrimitive( index ) ).GetPrimitiveObject( 0 )->GetName() , "TriangleMesh" ) )
-			{
-
-			}
-			ImGui::End();
-		}
-	}
+	ShowSceneGUI( bSave );
 
 	{
 		if( bResize )
@@ -507,7 +439,6 @@ void MyApp::DrawScene()
 	HR( mSwapChain->Present( 1 , 0 ) );
 }
 
-
 void MyApp::OnMouseDown( WPARAM buttonState , int x , int y )
 {
 	mLastMousePos.x = x;
@@ -516,12 +447,10 @@ void MyApp::OnMouseDown( WPARAM buttonState , int x , int y )
 	SetCapture( mhMainWnd );
 }
 
-
 void MyApp::OnMouseUp( WPARAM buttonState , int x , int y )
 {
 	ReleaseCapture();
 }
-
 
 void MyApp::OnMouseMove( WPARAM buttonState , int x , int y )
 {
@@ -599,4 +528,36 @@ void MyApp::ResizeTexture( int width , int height )
 	srv_desc.Texture2D.MostDetailedMip = 0;
 
 	HR( md3dDevice->CreateShaderResourceView( mTexture , &srv_desc , &mTextureSRV ) );
+}
+
+void MyApp::ShowSceneGUI( int bSave )
+{
+	ImGui::SliderFloat( "fov" , &fov , 0.0 , 180.0f );
+	ImGui::SliderInt( "MaxDepth" , &MaxDepth , 1 , 20 );
+	ImGui::InputInt( "spp" , &spp , 8 );
+	if( ImGui::InputInt( "Image Width" , &Width , 10 ) )
+	{
+		bResize = true;
+	}
+	if( ImGui::InputInt( "Image Height" , &Height , 10 ) )
+	{
+		bResize = true;
+	}
+
+	if( ImGui::Combo( "Shape List" , &index , &ShapeList[0] , ShapeList.size() ) )
+	{
+		bShowProperyWindow = true;
+	}
+
+	if( ImGui::Button( "Begin Rending" ) )
+	{
+		renderer->ResetRender();
+	}
+
+	if( ImGui::Button( "Save Scene" ) )	bSave ^= 1;
+
+	if( bShowProperyWindow )
+	{
+		ShowPropertyWindow( scene , renderer , index , bShowProperyWindow );
+	}
 }

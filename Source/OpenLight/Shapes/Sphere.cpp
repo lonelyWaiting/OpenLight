@@ -244,3 +244,17 @@ Point3f Sphere::Sample( const Point3f& p , LightSample& lightSample , Normal& Sa
 
 	return SamplePoint;
 }
+
+double Sphere::GetRadius()
+{
+	return m_Radius;
+}
+
+void Sphere::SetRadius( double radius )
+{
+	m_Radius = radius;
+
+	BBoxLocal = Bound3f( Point3f( -m_Radius , -m_Radius , -m_Radius ) , Point3f( m_Radius , m_Radius , m_Radius ) );
+
+	BBoxWorld = ( *ObjectToWorld )( BBoxLocal );
+}

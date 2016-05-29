@@ -36,6 +36,8 @@ public:
 
 	BSDF* GetBSDF( const Point3f& point , const Normal& normal ) const;
 
+	Material* GetMaterial() const;
+
 	void SetMaterial(Material* material);
 
 	void AddAreaLight( AreaLight* _pAreaLight );
@@ -68,12 +70,12 @@ public:
 	void SetName( const char* name );
 
 protected:
-	std::vector<Shape*>           m_vShapes;
-	Material*                     m_pMaterial;
-	AreaLight*                    m_pAreaLight;
-	double                        m_SumArea;
+	std::vector<Shape*>				m_vShapes;
+	Material*						m_pMaterial;
+	AreaLight*						m_pAreaLight;
+	double							m_SumArea;
 
-	std::vector<Shape*>           m_vShapeInformations;
+	std::vector<Shape*>				m_vShapeInformations;
 
-	char*					  m_Name;
+	char*							m_Name;
 };

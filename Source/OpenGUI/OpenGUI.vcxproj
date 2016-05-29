@@ -99,6 +99,7 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\GUI.cpp" />
     <ClCompile Include="Application\imgui_impl_dx11.cpp" />
     <ClCompile Include="Application\imgui_impl_dx9.cpp" />
     <ClCompile Include="Application\main.cpp" />
@@ -106,6 +107,7 @@
     <ClCompile Include="Common\d3dUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application\GUI.h" />
     <ClInclude Include="Application\imgui_impl_dx11.h" />
     <ClInclude Include="Application\imgui_impl_dx9.h" />
     <ClInclude Include="Common\d3dApp.h" />

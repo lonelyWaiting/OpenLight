@@ -346,6 +346,11 @@ public:
 		return c[i];
 	}
 
+	double* GetDataPtr()
+	{
+		return c;
+	}
+
 	static const int NSamples = NSpectrumSamples;
 
 protected:

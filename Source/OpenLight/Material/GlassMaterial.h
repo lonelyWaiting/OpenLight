@@ -24,6 +24,19 @@ public:
 
 	void Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement );
 
+public:
+	Spectrum GetReflection();
+
+	void SetReflection( float* r );
+
+	Spectrum GetTransmission();
+
+	void SetTransmission( float* t );
+
+	double GetIOR();
+
+	void SetIOR( float _ior );
+
 private:
 	mutable Spectrum R;
 	mutable Spectrum T;

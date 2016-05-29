@@ -64,3 +64,13 @@ void DiffuseMaterial::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::X
 		pReflectionElement->InsertEndChild( pBElement );
 	}
 }
+
+Spectrum DiffuseMaterial::GetReflection()
+{
+	return R;
+}
+
+void DiffuseMaterial::SetReflection( float* r )
+{
+	R = Spectrum::FromRGB( r[0] , r[1] , r[2] );
+}

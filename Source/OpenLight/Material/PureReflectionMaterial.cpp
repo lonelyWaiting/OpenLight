@@ -64,3 +64,13 @@ void PureReflectionMaterial::Serialization( tinyxml2::XMLDocument& xmlDoc , tiny
 		pReflectionElement->InsertEndChild( pBElement );
 	}
 }
+
+Spectrum PureReflectionMaterial::GetReflection()
+{
+	return R;
+}
+
+void PureReflectionMaterial::SetReflection( float* reflection )
+{
+	R = Spectrum::FromRGB( ( double )reflection[0] , ( double )reflection[1] , ( double )reflection[2] );
+}

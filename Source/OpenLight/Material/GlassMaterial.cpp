@@ -112,3 +112,33 @@ void GlassMaterial::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XML
 		pRootElement->InsertEndChild( pIORElement );
 	}
 }
+
+Spectrum GlassMaterial::GetReflection()
+{
+	return R;
+}
+
+Spectrum GlassMaterial::GetTransmission()
+{
+	return T;
+}
+
+double GlassMaterial::GetIOR()
+{
+	return ior;
+}
+
+void GlassMaterial::SetReflection( float* r )
+{
+	R = Spectrum::FromRGB( r[0] , r[1] , r[2] );
+}
+
+void GlassMaterial::SetTransmission( float* t )
+{
+	T = Spectrum::FromRGB( t[0] , t[1] , t[2] );
+}
+
+void GlassMaterial::SetIOR( float _ior )
+{
+	ior = _ior;
+}
