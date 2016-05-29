@@ -211,9 +211,8 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 
-!*Application/Data/Model/*.obj
+!*Resource/Model/*.obj
 !*Library/Lib/assimp/Release/
 !*Library/Lib/DirectXTK/Release/
 !*Library/Lib/TinyXML2/Release/
 !*Library/Lib/ImGui/Release/
-*Library/Inc/OpenLight/
