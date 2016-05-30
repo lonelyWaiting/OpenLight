@@ -49,11 +49,13 @@ Ray ThinLensCamera::GenerateRay( double RasterX , double RasterY , const CameraS
 
 	Vector3f dir = ( x - LensRadius * LensSamples.x ) * uvw.U + ( y - LensRadius * LensSamples.y ) * uvw.V + LensFocus * uvw.W;
 
-	return Ray( Orig , Normalize( dir ) , 1e-3f );
+	return Ray( Orig + Normalize( dir ) * NearPlane , Normalize( dir ) , 1e-3 );
 }
 
 void ThinLensCamera::Deserialization( tinyxml2::XMLElement* CameraRootElement )
 {
+	tinyxml2::XMLElement* pElement = nullptr;
+
 	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "x" )->QueryDoubleText( &( Eye.x ) );
 	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "y" )->QueryDoubleText( &( Eye.y ) );
 	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "z" )->QueryDoubleText( &( Eye.z ) );
@@ -64,13 +66,59 @@ void ThinLensCamera::Deserialization( tinyxml2::XMLElement* CameraRootElement )
 
 	CameraRootElement->FirstChildElement( "LensFocus" )->QueryDoubleText( &LensFocus );
 
-	CameraRootElement->FirstChildElement( "LensRadius" )->QueryDoubleText( &LensRadius );
+	pElement = CameraRootElement->FirstChildElement( "LensRadius" );
+	if( pElement )
+	{
+		pElement->QueryDoubleText( &LensRadius );
+	}
+	else
+	{
+		LensRadius = 1.0;
+	}
+	
 
-	CameraRootElement->FirstChildElement( "ExposureTime" )->QueryDoubleText( &ExposureTime );
+	pElement = CameraRootElement->FirstChildElement( "ExposureTime" );
+	if( pElement )
+	{
+		pElement->QueryDoubleText( &ExposureTime );
+	}
+	else
+	{
+		ExposureTime = 0.0;
+	}
 
-	CameraRootElement->FirstChildElement( "ViewDistance" )->QueryDoubleText( &ViewDistance );
+	pElement = CameraRootElement->FirstChildElement( "ViewDistance" );
+	if( pElement )
+	{
+		pElement->QueryDoubleText( &ViewDistance );
+	}
+	else
+	{
+		ViewDistance = 1.0;
+	}
+	
 
-	CameraRootElement->FirstChildElement( "Fovy" )->QueryDoubleText( &fovy );
+	pElement = CameraRootElement->FirstChildElement( "Fovy" );
+	
+	if( pElement )
+	{
+		pElement->QueryDoubleText( &fovy );
+	}
+	else
+	{
+		fovy = 45.0;
+	}
+	
+
+	if( CameraRootElement->FirstChildElement( "NearPlane" ) )
+	{
+		CameraRootElement->FirstChildElement( "NearPlane" )->QueryDoubleText( &NearPlane );
+	}
+	else
+	{
+		NearPlane = 0;
+	}
+	
 
 	UpdateProperty();
 }
@@ -165,6 +213,14 @@ void ThinLensCamera::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XM
 		pFovyElement->SetText( fovy );
 
 		pRootElement->InsertEndChild( pFovyElement );
+	}
+
+	{
+		tinyxml2::XMLElement* pNearPlaneElement = xmlDoc.NewElement( "NearPlane" );
+
+		pNearPlaneElement->SetText( NearPlane );
+
+		pRootElement->InsertEndChild( pNearPlaneElement );
 	}
 
 	{

@@ -23,30 +23,6 @@
             </Reflection>
         </material>
     </primitive>
-    <primitive name="PureReflectSphere1">
-          <shape type="Sphere" bCompositeObject="false">
-              <transform>
-                  <position>
-                      <x>44</x>
-                      <y>16.5</y>
-                      <z>60</z>
-                  </position>
-              </transform>
-              <radius>16.5</radius>
-              <SurfaceColor>
-                  <r>0.999</r>
-                  <g>0.999</g>
-                  <b>0.999</b>
-              </SurfaceColor>
-          </shape>
-          <material type="PureReflectionMaterial">
-              <Reflection>
-                  <r>1</r>
-                  <g>1</g>
-                  <b>1</b>
-              </Reflection>
-          </material>
-      </primitive>
     <primitive name="GlassSphere">
         <shape type="Sphere" bCompositeObject="false">
             <transform>
@@ -265,8 +241,7 @@
         </Target>
         <LensFocus>210</LensFocus>
         <LensRadius>0.10000000000000001</LensRadius>
-        <ExposureTime>0</ExposureTime>
-        <ViewDistance>1</ViewDistance>
+        <NearPlane>140</NearPlane>
         <Fovy>30</Fovy>
     </Camera>
     <Film>
