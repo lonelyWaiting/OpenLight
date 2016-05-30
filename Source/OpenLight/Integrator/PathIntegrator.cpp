@@ -37,7 +37,7 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 
 		const Point3f& HitPoint = record->HitPoint;
 
-		const Normal& HitNormal = record->normal;
+		const Normal& HitNormal = Normalize( record->normal );
 
 		L += Throughout * UniformSampleOneLight( scene , renderer , pAccelerator , bsdf , HitPoint , wo , HitNormal ) * record->SurfaceColor;
 
@@ -49,13 +49,29 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 
 		Point2f BRDFSamplePoint = Point2f( RNG::Get().GetDouble() , RNG::Get().GetDouble() );
 
+		Spectrum f = 0.0;
+
+		if( bsdf->Count( BxDFType( SPECULAR | REFLECTION ) ) && bsdf->Count( BxDFType( SPECULAR | TRANSMISSION ) ) )
+		{
+			f = bsdf->Sample_f( wo , HitNormal , &wi , BRDFSamplePoint , &pdf , BxDFType( SPECULAR | REFLECTION ) , bReject , &flags );
+
+			if( bReject )
+			{
+				f = bsdf->Sample_f( wo , HitNormal , &wi , BRDFSamplePoint , &pdf , BxDFType( SPECULAR | TRANSMISSION ) , bReject , &flags );
+			}
+		}
+		else
+		{
+			f = bsdf->Sample_f( wo , HitNormal , &wi , BRDFSamplePoint , &pdf , BxDFType( ALL_TYPE ) , bReject , &flags );
+		}
+		
 		// ¼ÆËãwiºÍpdf
-		Spectrum f = bsdf->Sample_f( wo , HitNormal , &wi , BRDFSamplePoint , &pdf , BxDFType( ALL_TYPE ) , bReject , &flags );
+		/*Spectrum f = bsdf->Sample_f( wo , HitNormal , &wi , BRDFSamplePoint , &pdf , BxDFType( ALL_TYPE ) , bReject , &flags );
 
 		if( bReject )
 		{
 			f = bsdf->Sample_f( wo , HitNormal , &wi , BRDFSamplePoint , &pdf , BxDFType( SPECULAR | TRANSMISSION ) , bReject , &flags );
-		}
+		}*/
 
 		SAFE_DELETE( bsdf );
 
@@ -64,7 +80,7 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 			break;
 		}
 
-		IsSpecular = ( flags & SPECULAR ) != 0;
+		IsSpecular = ( ( flags & SPECULAR ) != 0 );
 
 		Throughout *= f * AbsDot( wi , HitNormal ) / pdf * record->SurfaceColor;
 
@@ -74,14 +90,14 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 
 		if( count > 3 )
 		{
-			double continueProbability = Throughout.y() > 0.5 ? Throughout.y() : 0.5;
+			/*double continueProbability = Throughout.y() > 0.5 ? Throughout.y() : 0.5;
 
 			if( RNG::Get().GetDouble() > continueProbability )
 			{
 				break;
 			}
 
-			Throughout /= continueProbability;
+			Throughout /= continueProbability;*/
 		}
 
 		if( count++ >= mMaxDepth )
@@ -89,7 +105,7 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 			break;
 		}
 
-		if( !scene->Intersect( *ray , &TempRecord ) )
+		if( !scene->Intersect( *ray , record ) )
 		{
 			/*if( IsSpecular )
 			{
@@ -102,7 +118,7 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 			break;
 		}
 
-		record = &TempRecord;
+		//record = &TempRecord;
 	}
 
 	return L;

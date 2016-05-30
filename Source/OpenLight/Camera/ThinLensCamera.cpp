@@ -116,7 +116,7 @@ void ThinLensCamera::Deserialization( tinyxml2::XMLElement* CameraRootElement )
 	}
 	else
 	{
-		NearPlane = 0;
+		NearPlane = 0.0;
 	}
 	
 

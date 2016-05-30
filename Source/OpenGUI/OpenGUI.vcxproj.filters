@@ -49,11 +49,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Shader\DebugTextureVertexShader.hlsl">
+    <None Include="Shader\DebugTextureVertexShader.hlsl">
       <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="Shader\DebugTexturePixelShader.hlsl">
+    </None>
+    <None Include="Shader\DebugTexturePixelShader.hlsl">
       <Filter>Shader</Filter>
-    </FxCompile>
+    </None>
   </ItemGroup>
 </Project>

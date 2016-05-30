@@ -287,7 +287,7 @@ public:
 	}
 
 	template< int N>
-	friend inline CoefficientSpectrum<N> Pow( const CoefficientSpectrum<N>& rhs , double e );
+	friend CoefficientSpectrum<N> Pow( const CoefficientSpectrum<N>& rhs , double e );
 
 	friend CoefficientSpectrum Exp( const CoefficientSpectrum& rhs )
 	{

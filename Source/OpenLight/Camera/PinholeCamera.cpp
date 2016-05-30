@@ -29,7 +29,7 @@ Ray PinholeCamera::GenerateRay( double RasterX , double RasterY , const CameraSa
 
 	Vector3f dir = x * uvw.U + y * uvw.V + ViewDistance * uvw.W;
 
-	return Ray( Eye , Normalize( dir ) , 1e-3f );
+	return Ray( Eye + Normalize( dir ) * NearPlane , Normalize( dir ) , 1e-3f );
 }
 
 void PinholeCamera::Deserialization( tinyxml2::XMLElement* CameraRootElement )
@@ -42,11 +42,49 @@ void PinholeCamera::Deserialization( tinyxml2::XMLElement* CameraRootElement )
 	CameraRootElement->FirstChildElement( "Target" )->FirstChildElement( "y" )->QueryDoubleText( &( Target.y ) );
 	CameraRootElement->FirstChildElement( "Target" )->FirstChildElement( "z" )->QueryDoubleText( &( Target.z ) );
 
-	CameraRootElement->FirstChildElement( "ExposureTime" )->QueryDoubleText( &ExposureTime );
+	tinyxml2::XMLElement* pElement = nullptr;
 
-	CameraRootElement->FirstChildElement( "ViewDistance" )->QueryDoubleText( &ViewDistance );
+	pElement = CameraRootElement->FirstChildElement( "ExposureTime" );
+	if( pElement )
+	{
+		pElement->QueryDoubleText( &ExposureTime );
+	}
+	else
+	{
+		ExposureTime = 0.0;
+	}
+
+	pElement = CameraRootElement->FirstChildElement( "ViewDistance" );
+	if( pElement )
+	{
+		pElement->QueryDoubleText( &ViewDistance );
+	}
+	else
+	{
+		ViewDistance = 1.0;
+	}
 	
-	CameraRootElement->FirstChildElement( "Fovy" )->QueryDoubleText( &fovy );
+	pElement = CameraRootElement->FirstChildElement( "Fovy" );
+	if( pElement )
+	{
+		pElement->QueryDoubleText( &fovy );
+	}
+	else
+	{
+		fovy = 45.0;
+	}
+	
+
+	pElement = CameraRootElement->FirstChildElement( "NearPlane" );
+	if( pElement )
+	{
+		pElement->QueryDoubleText( &NearPlane );
+	}
+	else
+	{
+		NearPlane = 0.0;
+	}
+	
 
 	UpdateProperty();
 }
@@ -135,5 +173,13 @@ void PinholeCamera::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XML
 		pFirstElement->InsertEndChild( pFilmElement );
 
 		GetFilm()->Serialization( xmlDoc , pFilmElement );
+	}
+
+	{
+		tinyxml2::XMLElement* pNearPlaneElement = xmlDoc.NewElement( "NearPlane" );
+
+		pNearPlaneElement->SetText( NearPlane );
+
+		pRootElement->InsertEndChild( pNearPlaneElement );
 	}
 }

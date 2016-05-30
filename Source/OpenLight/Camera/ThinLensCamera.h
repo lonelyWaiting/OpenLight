@@ -37,9 +37,6 @@ public:
 private:
 	double LensRadius;			// Í¸¾µ°ë¾¶
 	double LensFocus;			// ½¹¾à
-
-public:
-	double NearPlane;
 };
 
 typedef std::shared_ptr<ThinLensCamera> ThinLensPtr;

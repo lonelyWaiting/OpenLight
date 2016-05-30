@@ -57,6 +57,7 @@ protected:
 	double		ViewDistance;				// 到视平面的距离
 	double		ExposureTime;				// 曝光时间
 	double		fovy;						// y方向的fov
+	double		NearPlane;
 
 protected:
 	double		Top;

@@ -28,14 +28,17 @@ Spectrum SpecularReflection::Sample_f( const Vector3f& wo , const Normal& n , Ve
 	*pdf = 1.0;
 
 	Spectrum F = fresnel->Evalute( wo * n );
-	if( RNG::Get().GetDouble() > F[0] )
+
+	double P = 0.25 + 0.5 * F[0];
+
+	if( RNG::Get().GetDouble() > /*F[0]*/P )
 	{
 		// Œﬁ∑¥…‰
 		bNoOccur = true;
 		return Spectrum( 0 );
 	}
 
-	return F * R / AbsDot( *wi , n );
+	return F / P * R / AbsDot( *wi , n );
 }
 
 double SpecularReflection::PDF( const Vector3f& wi , const Vector3f& wo , const Normal& n ) const

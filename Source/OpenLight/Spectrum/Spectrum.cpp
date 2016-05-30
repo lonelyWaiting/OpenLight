@@ -828,7 +828,7 @@ const double CIE_lambda[CIESamplesNum] =
 };
 
 template<int NSpectrumSamples>
-inline CoefficientSpectrum<NSpectrumSamples> Pow( const CoefficientSpectrum<NSpectrumSamples>& rhs , double e )
+CoefficientSpectrum<NSpectrumSamples> Pow( const CoefficientSpectrum<NSpectrumSamples>& rhs , double e )
 {
 	CoefficientSpectrum<NSpectrumSamples> result;
 

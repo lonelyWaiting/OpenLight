@@ -55,6 +55,8 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 
 		bool bNoReflectOccur = false;
 
+		Spectrum SurfaceColor = record->SurfaceColor;
+
 		// ¸ú×Ù·´Éä¹âÏß
 		Li += SpecularReflect( *ray , scene , renderer , record , pAccelerator , bsdf , bNoReflectOccur );
 
@@ -64,7 +66,7 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 			Li += SpecularTransmit( *ray , scene , renderer , record , pAccelerator , bsdf , bNoReflectOccur );
 		}
 		
-		L = L + Li;
+		L = L + Li * SurfaceColor;
 	}
 
 	SAFE_DELETE( bsdf );

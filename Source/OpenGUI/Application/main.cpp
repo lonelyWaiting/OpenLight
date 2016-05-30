@@ -196,7 +196,6 @@ bool MyApp::Init()
 		HRESULT result;
 		ID3DBlob* pVertexBlob;
 		D3DCompileFromFile( L"Shader/DebugTextureVertexShader.hlsl" , nullptr , nullptr , "main" , "vs_4_0" , 0 , 0 , &pVertexBlob , nullptr );
-		//std::vector<byte>& VSFile = LoadShader( "../Data/CSO/DebugTextureVertexShader.cso" );
 
 		result = md3dDevice->CreateVertexShader( pVertexBlob->GetBufferPointer() , pVertexBlob->GetBufferSize() , nullptr , &pVertexShader );
 		if( FAILED( result ) )
@@ -205,7 +204,6 @@ bool MyApp::Init()
 		}
 
 		ID3DBlob* pPixelBlob;
-		//std::vector<byte>& PSFile = LoadShader( "../Data/CSO/DebugTexturePixelShader.cso" );
 		D3DCompileFromFile( L"Shader/DebugTexturePixelShader.hlsl" , nullptr , nullptr , "main" , "ps_4_0" , 0 , 0 , &pPixelBlob , nullptr );
 		result = md3dDevice->CreatePixelShader( pPixelBlob->GetBufferPointer() , pPixelBlob->GetBufferSize() , nullptr , &pPixelShader );
 		if( FAILED( result ) )

@@ -18,6 +18,7 @@ Camera::Camera( const Camera& orig )
 	Target             = orig.Target;
 	uvw                = orig.uvw;
 	ExposureTime       = orig.ExposureTime;
+	NearPlane          = orig.NearPlane;
 }
 
 void Camera::SetFilm( Film* _film )
@@ -67,7 +68,7 @@ void Camera::UpdateProperty()
 
 	uvw.InitFromW(look);
 	
-	double tanfovYinv2 = tan( ToRadians( fovy / 2.0 ) );
+	double tanfovYinv2 = tan( ToRadians( fovy ) );
 
 	Top = ViewDistance * tanfovYinv2;
 	Bottom = -Top;

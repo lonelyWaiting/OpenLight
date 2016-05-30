@@ -242,7 +242,7 @@
         <LensFocus>210</LensFocus>
         <LensRadius>0.10000000000000001</LensRadius>
         <NearPlane>140</NearPlane>
-        <Fovy>30</Fovy>
+        <Fovy>15</Fovy>
     </Camera>
     <Film>
         <filename>result.ppm</filename>

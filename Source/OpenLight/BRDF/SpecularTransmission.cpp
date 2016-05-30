@@ -45,7 +45,11 @@ Spectrum SpecularTransmission::Sample_f( const Vector3f& wo , const Normal& n , 
 	// 在折射方向上pdf位1
 	*pdf = 1.0;
 
-	return ( newetaT * newetaT ) / ( newetaI * newetaI ) * T * ( Spectrum( 1.0 ) - fresnel.Evalute( Dot( wo , n ) ) ) / AbsDot( *wi , n );
+	Spectrum F = fresnel.Evalute( Dot( wo , n ) );
+
+	double P = 0.25 + 0.5 * F[0];
+
+	return ( newetaT * newetaT ) / ( newetaI * newetaI ) * T * ( Spectrum( 1.0 ) - F ) / ( AbsDot( *wi , n ) * ( 1.0 - P ) );
 }
 
 double SpecularTransmission::PDF( const Vector3f& wi , const Vector3f& wo , const Normal& n ) const

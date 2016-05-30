@@ -267,7 +267,7 @@
         <LensRadius>0.10000000000000001</LensRadius>
         <ExposureTime>0</ExposureTime>
         <ViewDistance>1</ViewDistance>
-        <Fovy>90</Fovy>
+        <Fovy>45</Fovy>
     </Camera>
     <Film>
         <filename>result.ppm</filename>
