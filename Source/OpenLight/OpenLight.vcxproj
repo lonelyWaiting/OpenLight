@@ -80,6 +80,9 @@
     <ClInclude Include="Shapes\Triangle.h" />
     <ClInclude Include="Shapes\TriangleMesh.h" />
     <ClInclude Include="Spectrum\Spectrum.h" />
+    <ClInclude Include="Texture\NoiseTexture.h" />
+    <ClInclude Include="Texture\SolidNoise.h" />
+    <ClInclude Include="Texture\Texture.h" />
     <ClInclude Include="Utilities\PCH.h" />
     <ClInclude Include="Utilities\RNG.h" />
     <ClInclude Include="Utilities\srString.h" />
@@ -150,6 +153,7 @@
     <ClCompile Include="Shapes\Triangle.cpp" />
     <ClCompile Include="Shapes\TriangleMesh.cpp" />
     <ClCompile Include="Spectrum\Spectrum.cpp" />
+    <ClCompile Include="Texture\SolidNoise.cpp" />
     <ClCompile Include="Utilities\PCH.cpp" />
     <ClCompile Include="Utilities\RNG.cpp" />
     <ClCompile Include="Utilities\srString.cpp" />
@@ -236,7 +240,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)Library\Inc\TinyXML2\;$(SolutionDir)Library\Inc\assimp\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Library\Inc\TinyXML2\;$(SolutionDir)Library\Inc\assimp\;$(SolutionDir)Library\Inc\FreeImage\</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
@@ -252,8 +256,8 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)Library\Lib\TinyXML2\$(Configuration)\;$(SolutionDir)Library\Lib\assimp\$(Configuration)\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>tinyxml2.lib;assimp.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Library\Lib\TinyXML2\$(Configuration)\;$(SolutionDir)Library\Lib\assimp\$(Configuration)\;$(SolutionDir)Library\Lib\FreeImage</AdditionalLibraryDirectories>
+      <AdditionalDependencies>tinyxml2.lib;assimp.lib;FreeImage.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
