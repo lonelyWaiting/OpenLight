@@ -60,27 +60,12 @@ void AreaLight::Deserialization( tinyxml2::XMLElement* LightRootElement )
 void AreaLight::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
 {
 	{
-		tinyxml2::XMLElement* pLeElement = xmlDoc.NewElement( "Le" );
+		char* pText = new char[27];
+		sprintf( pText , "%f,%f,%f" , Lemission[0] , Lemission[1] , Lemission[2] );
 
-		pRootElement->InsertEndChild( pLeElement );
+		pRootElement->SetAttribute( "Le" , pText );
 
-		tinyxml2::XMLElement* pRElement = xmlDoc.NewElement( "r" );
-
-		pRElement->SetText( Lemission[0] );
-
-		pLeElement->InsertEndChild( pRElement );
-
-		tinyxml2::XMLElement* pGElement = xmlDoc.NewElement( "g" );
-
-		pGElement->SetText( Lemission[1] );
-
-		pLeElement->InsertEndChild( pGElement );
-
-		tinyxml2::XMLElement* pBElement = xmlDoc.NewElement( "b" );
-
-		pBElement->SetText( Lemission[2] );
-
-		pLeElement->InsertEndChild( pBElement );
+		//SAFE_DELETE_ARRAY( pText );
 	}
 }
 

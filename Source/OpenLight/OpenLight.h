@@ -45,6 +45,6 @@
 
 Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrator*& pSurfaceIntegrator , Sampler*& pSampler );
 
-bool SerializationScene( Scene* scene , Camera* camera , SurfaceIntegrator* pSurfaceIntegrator , Sampler* pSampler , Renderer* pRenderer );
+void SerializationScene( Scene* scene , Camera* camera , SurfaceIntegrator* pSurfaceIntegrator , Sampler* pSampler , Renderer* pRenderer );
 
 bool InitRTTI();

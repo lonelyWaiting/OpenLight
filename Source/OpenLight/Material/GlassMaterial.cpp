@@ -4,10 +4,13 @@
 #include "BRDF/FresnelDielectric.h"
 #include "tinyxml2.h"
 #include "GlassMaterial.h"
+#include "Utilities/srString.h"
 
 GlassMaterial::GlassMaterial() : Material()
 {
+	R = Spectrum::FromRGB( 1.0 , 1.0 , 1.0 );
 
+	T = Spectrum::FromRGB( 1.0 , 1.0 , 1.0 );
 }
 
 GlassMaterial::GlassMaterial( Spectrum R , Spectrum T , double ior )
@@ -36,12 +39,7 @@ void GlassMaterial::Deserialization( tinyxml2::XMLElement* RootElement )
 
 	if( pReflection )
 	{
-		double r , g , b;
-		pReflection->FirstChildElement( "r" )->QueryDoubleText( &r );
-		pReflection->FirstChildElement( "g" )->QueryDoubleText( &g );
-		pReflection->FirstChildElement( "b" )->QueryDoubleText( &b );
-
-		R = Spectrum::FromRGB( r , g , b );
+		ParseVector3( pReflection->GetText() , R.GetDataPtr() );
 	}
 	else
 	{
@@ -52,13 +50,7 @@ void GlassMaterial::Deserialization( tinyxml2::XMLElement* RootElement )
 
 	if( pTransmission )
 	{
-		double r , g , b;
-
-		pTransmission->FirstChildElement( "r" )->QueryDoubleText( &r );
-		pTransmission->FirstChildElement( "g" )->QueryDoubleText( &g );
-		pTransmission->FirstChildElement( "b" )->QueryDoubleText( &b );
-
-		T = Spectrum::FromRGB( r , g , b );
+		ParseVector3( pTransmission->GetText() , T.GetDataPtr() );
 	}
 	else
 	{
@@ -73,51 +65,29 @@ void GlassMaterial::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XML
 	pRootElement->SetAttribute( "type" , GetName() );
 
 	{
+		char* pText = new char[27];
+		sprintf( pText , "%f,%f,%f" , R[0] , R[1] , R[2] );
+
 		tinyxml2::XMLElement* pReflectionElement = xmlDoc.NewElement( "Reflection" );
+
+		pReflectionElement->SetText( pText );
 
 		pRootElement->InsertEndChild( pReflectionElement );
 
-		tinyxml2::XMLElement* pRElement = xmlDoc.NewElement( "r" );
-
-		pRElement->SetText( R[0] );
-
-		pReflectionElement->InsertEndChild( pRElement );
-
-		tinyxml2::XMLElement* pGElement = xmlDoc.NewElement( "g" );
-
-		pGElement->SetText( R[1] );
-
-		pReflectionElement->InsertEndChild( pGElement );
-
-		tinyxml2::XMLElement* pBElement = xmlDoc.NewElement( "b" );
-
-		pBElement->SetText( R[2] );
-
-		pReflectionElement->InsertEndChild( pBElement );
+		//SAFE_DELETE_ARRAY( pText );
 	}
 
 	{
+		char* pText = new char[27];
+		sprintf( pText , "%f,%f,%f" , T[0] , T[1] , T[2] );
+
 		tinyxml2::XMLElement* pTransmissionElement = xmlDoc.NewElement( "Transmission" );
+
+		pTransmissionElement->SetText( pText );
 
 		pRootElement->InsertEndChild( pTransmissionElement );
 
-		tinyxml2::XMLElement* pRElement = xmlDoc.NewElement( "r" );
-
-		pRElement->SetText( T[0] );
-
-		pTransmissionElement->InsertEndChild( pRElement );
-
-		tinyxml2::XMLElement* pGElement = xmlDoc.NewElement( "g" );
-
-		pGElement->SetText( T[1] );
-
-		pTransmissionElement->InsertEndChild( pGElement );
-
-		tinyxml2::XMLElement* pBElement = xmlDoc.NewElement( "b" );
-
-		pBElement->SetText( T[2] );
-
-		pTransmissionElement->InsertEndChild( pBElement );
+		//SAFE_DELETE_ARRAY( pText );
 	}
 
 	{

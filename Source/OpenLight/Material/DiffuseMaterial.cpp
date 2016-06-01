@@ -2,10 +2,11 @@
 #include "BRDF/Lambertian.h"
 #include "tinyxml2.h"
 #include "DiffuseMaterial.h"
+#include "Utilities/srString.h"
 
 DiffuseMaterial::DiffuseMaterial() : Material()
 {
-
+	R = Spectrum::FromRGB( 1 , 1 , 1 );
 }
 
 DiffuseMaterial::DiffuseMaterial( Spectrum R )
@@ -30,12 +31,7 @@ void DiffuseMaterial::Deserialization( tinyxml2::XMLElement* RootElement )
 
 	if( pReflection )
 	{
-		double r , g , b;
-		pReflection->FirstChildElement( "r" )->QueryDoubleText( &r );
-		pReflection->FirstChildElement( "g" )->QueryDoubleText( &g );
-		pReflection->FirstChildElement( "b" )->QueryDoubleText( &b );
-
-		R = Spectrum::FromRGB( r , g , b );
+		ParseVector3( pReflection->GetText() , R.GetDataPtr() );
 	}
 	else
 	{
@@ -48,27 +44,16 @@ void DiffuseMaterial::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::X
 	pRootElement->SetAttribute( "type" , GetName() );
 
 	{
+		char* pText = new char[27];
+		sprintf( pText , "%f,%f,%f" , R[0] , R[1] , R[2] );
+
 		tinyxml2::XMLElement* pReflectionElement = xmlDoc.NewElement( "Reflection" );
+
+		pReflectionElement->SetText( pText );
 
 		pRootElement->InsertEndChild( pReflectionElement );
 
-		tinyxml2::XMLElement* pRElement = xmlDoc.NewElement( "r" );
-
-		pRElement->SetText( R[0] );
-
-		pReflectionElement->InsertEndChild( pRElement );
-
-		tinyxml2::XMLElement* pGElement = xmlDoc.NewElement( "g" );
-
-		pGElement->SetText( R[1] );
-
-		pReflectionElement->InsertEndChild( pGElement );
-
-		tinyxml2::XMLElement* pBElement = xmlDoc.NewElement( "b" );
-
-		pBElement->SetText( R[2] );
-
-		pReflectionElement->InsertEndChild( pBElement );
+		//SAFE_DELETE_ARRAY( pText );
 	}
 }
 

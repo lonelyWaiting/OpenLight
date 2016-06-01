@@ -1,6 +1,10 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
+#include "Spectrum/Spectrum.h"
+#include "Math/Vector2.h"
+#include "Math/Vector3.h"
+
 class Texture
 {
 public:

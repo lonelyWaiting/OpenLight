@@ -6,7 +6,15 @@
 
 ThinLensCamera::ThinLensCamera()
 {
+	LensRadius = 1.0;
 
+	ExposureTime = 0.0;
+
+	ViewDistance = 1.0;
+
+	fovy = 45.0;
+
+	NearPlane = 0.0;
 }
 
 ThinLensCamera::ThinLensCamera( const ThinLensCamera& rhs )
@@ -125,51 +133,29 @@ void ThinLensCamera::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XM
 	pRootElement->SetAttribute( "type" , GetName() );
 
 	{
+		char* pText = new char[27];
+		sprintf( pText , "%f,%f,%f" , Eye.x , Eye.y , Eye.z );
+
 		tinyxml2::XMLElement* pEyeElement = xmlDoc.NewElement( "Position" );
+
+		pEyeElement->SetText( pText );
 
 		pRootElement->InsertEndChild( pEyeElement );
 
-		tinyxml2::XMLElement* pXElement = xmlDoc.NewElement( "x" );
-
-		pXElement->SetText( Eye.x );
-
-		pEyeElement->InsertEndChild( pXElement );
-
-		tinyxml2::XMLElement* pYElement = xmlDoc.NewElement( "y" );
-
-		pYElement->SetText( Eye.y );
-
-		pEyeElement->InsertEndChild( pYElement );
-
-		tinyxml2::XMLElement* pZElement = xmlDoc.NewElement( "z" );
-
-		pZElement->SetText( Eye.z );
-
-		pEyeElement->InsertEndChild( pZElement );
+		//SAFE_DELETE_ARRAY( pText );
 	}
 
 	{
+		char* pText = new char[27];
+		sprintf( pText , "%f,%f,%f" , Target.x , Target.y , Target.z );
+
 		tinyxml2::XMLElement* pTargetElement = xmlDoc.NewElement( "Target" );
+
+		pTargetElement->SetText( pText );
 
 		pRootElement->InsertEndChild( pTargetElement );
 
-		tinyxml2::XMLElement* pXElement = xmlDoc.NewElement( "x" );
-
-		pXElement->SetText( Target.x );
-
-		pTargetElement->InsertEndChild( pXElement );
-
-		tinyxml2::XMLElement* pYElement = xmlDoc.NewElement( "y" );
-
-		pYElement->SetText( Target.y );
-
-		pTargetElement->InsertEndChild( pYElement );
-
-		tinyxml2::XMLElement* pZElement = xmlDoc.NewElement( "z" );
-
-		pZElement->SetText( Target.z );
-
-		pTargetElement->InsertEndChild( pZElement );
+		//SAFE_DELETE_ARRAY( pText );
 	}
 
 	{

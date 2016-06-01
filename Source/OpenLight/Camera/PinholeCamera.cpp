@@ -7,10 +7,17 @@
 #include "Camera.h"
 #include "tinyxml2.h"
 #include "PinholeCamera.h"
+#include "Utilities/srString.h"
 
 PinholeCamera::PinholeCamera()
 {
+	ExposureTime = 0.0;
 
+	ViewDistance = 1.0;
+
+	fovy = 45.0;
+
+	NearPlane = 0.0;
 }
 
 PinholeCamera::PinholeCamera( const PinholeCamera& rhs )
@@ -34,13 +41,9 @@ Ray PinholeCamera::GenerateRay( double RasterX , double RasterY , const CameraSa
 
 void PinholeCamera::Deserialization( tinyxml2::XMLElement* CameraRootElement )
 {
-	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "x" )->QueryDoubleText( &( Eye.x ) );
-	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "y" )->QueryDoubleText( &( Eye.y ) );
-	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "z" )->QueryDoubleText( &( Eye.z ) );
+	ParseVector3( CameraRootElement->FirstChildElement( "Position" )->GetText() , &Eye[0] );
 
-	CameraRootElement->FirstChildElement( "Target" )->FirstChildElement( "x" )->QueryDoubleText( &( Target.x ) );
-	CameraRootElement->FirstChildElement( "Target" )->FirstChildElement( "y" )->QueryDoubleText( &( Target.y ) );
-	CameraRootElement->FirstChildElement( "Target" )->FirstChildElement( "z" )->QueryDoubleText( &( Target.z ) );
+	ParseVector3( CameraRootElement->FirstChildElement( "Target" )->GetText() , &Target[0] );
 
 	tinyxml2::XMLElement* pElement = nullptr;
 
@@ -94,51 +97,29 @@ void PinholeCamera::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XML
 	pRootElement->SetAttribute( "type" , GetName() );
 
 	{
+		char* pText = new char[27];
+		sprintf( pText , "%f,%f,%f" , Eye.x , Eye.y , Eye.z );
+
 		tinyxml2::XMLElement* pEyeElement = xmlDoc.NewElement( "Position" );
+
+		pEyeElement->SetText( pText );
 
 		pRootElement->InsertEndChild( pEyeElement );
 
-		tinyxml2::XMLElement* pXElement = xmlDoc.NewElement( "x" );
-
-		pXElement->SetText( Eye.x );
-
-		pEyeElement->InsertEndChild( pXElement );
-
-		tinyxml2::XMLElement* pYElement = xmlDoc.NewElement( "y" );
-
-		pYElement->SetText( Eye.y );
-
-		pEyeElement->InsertEndChild( pYElement );
-
-		tinyxml2::XMLElement* pZElement = xmlDoc.NewElement( "z" );
-
-		pZElement->SetText( Eye.z );
-
-		pEyeElement->InsertEndChild( pZElement );
+		//SAFE_DELETE_ARRAY( pText );
 	}
 
 	{
+		char* pText = new char[27];
+		sprintf( pText , "%f,%f,%f" , Target.x , Target.y , Target.z );
+
 		tinyxml2::XMLElement* pTargetElement = xmlDoc.NewElement( "Target" );
+
+		pTargetElement->SetText( pText );
 
 		pRootElement->InsertEndChild( pTargetElement );
 
-		tinyxml2::XMLElement* pXElement = xmlDoc.NewElement( "x" );
-
-		pXElement->SetText( Target.x );
-
-		pTargetElement->InsertEndChild( pXElement );
-
-		tinyxml2::XMLElement* pYElement = xmlDoc.NewElement( "y" );
-
-		pYElement->SetText( Target.y );
-
-		pTargetElement->InsertEndChild( pYElement );
-
-		tinyxml2::XMLElement* pZElement = xmlDoc.NewElement( "z" );
-
-		pZElement->SetText( Target.z );
-
-		pTargetElement->InsertEndChild( pZElement );
+		//SAFE_DELETE_ARRAY( pText );
 	}
 
 	{

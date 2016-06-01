@@ -72,29 +72,14 @@ void TriangleMesh::Deserialization( tinyxml2::XMLElement* ShapeRootElement )
 	filename = new char[strlen( name )];
 	strcpy( filename , name );
 
-	tinyxml2::XMLElement* ShapeTransformElement = ShapeRootElement->FirstChildElement( "transform" );
-	const char* pos = ShapeTransformElement->Attribute( "position" );
-	ParseVector3( pos , &Pos[0] );
+	ParseVector3( ShapeRootElement->FirstChildElement( "transform" )->Attribute( "position" ) , &Pos[0] );
 
-	/*ShapeTransformElement->FirstChildElement( "position" )->FirstChildElement( "x" )->QueryDoubleText( &Pos.x );
-	ShapeTransformElement->FirstChildElement( "position" )->FirstChildElement( "y" )->QueryDoubleText( &Pos.y );
-	ShapeTransformElement->FirstChildElement( "position" )->FirstChildElement( "z" )->QueryDoubleText( &Pos.z );*/
+	ParseVector3( ShapeRootElement->FirstChildElement( "SurfaceColor" )->GetText() , SurfaceColor.GetDataPtr() );
+
+	ModelParse( filename , points , normals , triangles , VertexNum , TriangleCount );
 
 	*ObjectToWorld = Translate( Vector3f( Pos ) );
 	*WorldToObject = Inverse( *ObjectToWorld );
-
-	double r , g , b;
-
-	// read Surface Color Data
-	tinyxml2::XMLElement* ShapeSurfaceColorElement = ShapeRootElement->FirstChildElement( "SurfaceColor" );
-	ShapeSurfaceColorElement->FirstChildElement( "r" )->QueryDoubleText( &r );
-	ShapeSurfaceColorElement->FirstChildElement( "g" )->QueryDoubleText( &g );
-	ShapeSurfaceColorElement->FirstChildElement( "b" )->QueryDoubleText( &b );
-
-	SurfaceColor = Spectrum::FromRGB( r , g , b );
-
-	// ½âÎöOBJÄ£ÐÍ
-	ModelParse( filename , points , normals , triangles , VertexNum , TriangleCount );
 
 	for( int i = 0; i < TriangleCount; i++ )
 	{
@@ -112,9 +97,10 @@ void TriangleMesh::Deserialization( tinyxml2::XMLElement* ShapeRootElement )
 
 void TriangleMesh::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
 {
-	pRootElement->SetAttribute( "type" , GetName() );
-	pRootElement->SetAttribute( "bCompositeObject" , "true" );
-
+	{
+		pRootElement->SetAttribute( "type" , GetName() );
+	}
+	
 	{
 		tinyxml2::XMLElement* pFilenameElement = xmlDoc.NewElement( "filename" );
 
@@ -124,55 +110,29 @@ void TriangleMesh::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLE
 	}
 
 	{
+		char* pText = new char[27];
+		sprintf( pText , "%f,%f,%f" , Pos.x , Pos.y , Pos.z );
+
 		tinyxml2::XMLElement* pTransformElement = xmlDoc.NewElement( "transform" );
+
+		pTransformElement->SetAttribute( "position" , pText );
 
 		pRootElement->InsertEndChild( pTransformElement );
 
-		tinyxml2::XMLElement* pPositionElement = xmlDoc.NewElement( "position" );
-
-		pTransformElement->InsertEndChild( pPositionElement );
-
-		tinyxml2::XMLElement* pXElement = xmlDoc.NewElement( "x" );
-
-		pXElement->SetText( Pos.x );
-
-		pPositionElement->InsertEndChild( pXElement );
-
-		tinyxml2::XMLElement* pYElement = xmlDoc.NewElement( "y" );
-
-		pYElement->SetText( Pos.y );
-
-		pPositionElement->InsertEndChild( pYElement );
-
-		tinyxml2::XMLElement* pZElement = xmlDoc.NewElement( "z" );
-
-		pZElement->SetText( Pos.z );
-
-		pPositionElement->InsertEndChild( pZElement );
+		//SAFE_DELETE_ARRAY( pText );
 	}
 
 	{
+		char* pText = new char[27];
+		sprintf( pText , "%f,%f,%f" , SurfaceColor[0] , SurfaceColor[1] , SurfaceColor[2] );
+
 		tinyxml2::XMLElement* pSurfaceElement = xmlDoc.NewElement( "SurfaceColor" );
+
+		pSurfaceElement->SetText( pText );
 
 		pRootElement->InsertEndChild( pSurfaceElement );
 
-		tinyxml2::XMLElement* pRElement = xmlDoc.NewElement( "r" );
-
-		pRElement->SetText( SurfaceColor[0] );
-
-		pSurfaceElement->InsertEndChild( pRElement );
-
-		tinyxml2::XMLElement* pGElement = xmlDoc.NewElement( "g" );
-
-		pGElement->SetText( SurfaceColor[1] );
-
-		pSurfaceElement->InsertEndChild( pGElement );
-
-		tinyxml2::XMLElement* pBElement = xmlDoc.NewElement( "b" );
-
-		pBElement->SetText( SurfaceColor[2] );
-
-		pSurfaceElement->InsertEndChild( pBElement );
+		//SAFE_DELETE_ARRAY( pText );
 	}
 }
 

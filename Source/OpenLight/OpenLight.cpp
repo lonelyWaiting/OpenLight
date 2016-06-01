@@ -127,7 +127,7 @@ Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrat
 	return renderer;
 }
 
-bool SerializationScene( Scene* scene , Camera* camera , SurfaceIntegrator* pSurfaceIntegrator , Sampler* pSampler , Renderer* pRenderer )
+void SerializationScene( Scene* scene , Camera* camera , SurfaceIntegrator* pSurfaceIntegrator , Sampler* pSampler , Renderer* pRenderer )
 {
 	tinyxml2::XMLDocument xmlDoc;
 
@@ -169,10 +169,8 @@ bool SerializationScene( Scene* scene , Camera* camera , SurfaceIntegrator* pSur
 	}
 
 	FileSystem fs;
-	std::wstring filename = fs.GetSceneFolder() + L"Scene.xml";
-	tinyxml2::XMLError eResult = xmlDoc.SaveFile( srString::ToAscii( filename ).c_str() );
-
-	return true;
+	std::wstring filename = fs.GetSceneFolder() + L"haha.xml";
+	xmlDoc.SaveFile( srString::ToAscii( filename ).c_str() );
 }
 
 //int main( void )

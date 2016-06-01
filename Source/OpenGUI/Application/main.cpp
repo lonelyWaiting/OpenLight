@@ -38,7 +38,7 @@ public:
 	void ResizeTexture( int width , int height );
 
 public:
-	void ShowSceneGUI( int bSave );
+	void ShowSceneGUI( int& bSave );
 
 private:
 	ID3D11Buffer* ScreenVertexBuffer;
@@ -87,7 +87,6 @@ public:
 	bool bResize;
 };
 
-
 int WINAPI WinMain( HINSTANCE hInstance , HINSTANCE prevInstance , PSTR cmdLine , int showCmd )
 {
 	// Enable run-time memory check for debug builds.
@@ -102,7 +101,6 @@ int WINAPI WinMain( HINSTANCE hInstance , HINSTANCE prevInstance , PSTR cmdLine 
 
 	return theApp.Run();
 }
-
 
 MyApp::MyApp( HINSTANCE hInstance )
 	: D3DApp( hInstance )
@@ -140,7 +138,6 @@ MyApp::MyApp( HINSTANCE hInstance )
 	renderer = nullptr;
 }
 
-
 MyApp::~MyApp()
 {
 	ReleaseCOM( ScreenVertexBuffer );
@@ -158,7 +155,6 @@ MyApp::~MyApp()
 
 	SafeDelete( renderer );
 }
-
 
 bool MyApp::Init()
 {
@@ -355,12 +351,10 @@ bool MyApp::Init()
 	return true;
 }
 
-
 void MyApp::OnResize()
 {
 	D3DApp::OnResize();
 }
-
 
 void MyApp::UpdateScene( float dt )
 {
@@ -528,7 +522,7 @@ void MyApp::ResizeTexture( int width , int height )
 	HR( md3dDevice->CreateShaderResourceView( mTexture , &srv_desc , &mTextureSRV ) );
 }
 
-void MyApp::ShowSceneGUI( int bSave )
+void MyApp::ShowSceneGUI( int& bSave )
 {
 	ImGui::SliderFloat( "fov" , &fov , 0.0 , 180.0f );
 	ImGui::SliderInt( "MaxDepth" , &MaxDepth , 1 , 20 );

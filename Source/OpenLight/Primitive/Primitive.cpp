@@ -141,12 +141,14 @@ void Primitive::DeserializationAreaLight( tinyxml2::XMLElement* AreaLightRootEle
 
 void Primitive::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
 {
+	pRootElement->SetAttribute( "name" , m_Name );
+
 	for( auto& shape : m_vShapeInformations )
 	{
 		tinyxml2::XMLElement* pElement = xmlDoc.NewElement( "shape" );
 
 		shape->Serialization( xmlDoc , pElement );
-		
+
 		pRootElement->InsertEndChild( pElement );
 	}
 

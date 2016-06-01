@@ -86,8 +86,6 @@ void Sphere::Deserialization( tinyxml2::XMLElement* ShapeRootElement )
 
 	ParseVector3( std::string( ShapeRootElement->FirstChildElement( "transform" )->Attribute( "position" ) ) , &Pos[0] );
 
-	double r, g, b;
-
 	ParseVector3( ShapeRootElement->FirstChildElement( "SurfaceColor" )->GetText() , SurfaceColor.GetDataPtr() );
 
 	*ObjectToWorld = Translate( Vector3f( Pos ) );
@@ -100,67 +98,38 @@ void Sphere::Deserialization( tinyxml2::XMLElement* ShapeRootElement )
 
 void Sphere::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
 {
-	pRootElement->SetAttribute( "type" , GetName() );
-	pRootElement->SetAttribute( "bCompositeObject" , "false" );
+	{
+		pRootElement->SetAttribute( "type" , GetName() );
+	}
 
 	{
+		pRootElement->SetAttribute( "radius" , m_Radius );
+	}
+
+	{
+		char* pText = new char[50];
+		sprintf( pText , "%f,%f,%f" , Pos.x , Pos.y , Pos.z );
+
 		tinyxml2::XMLElement* pTransformElement = xmlDoc.NewElement( "transform" );
+
+		pTransformElement->SetAttribute( "position" , pText );
 
 		pRootElement->InsertEndChild( pTransformElement );
 
-		tinyxml2::XMLElement* pPositionElement = xmlDoc.NewElement( "position" );
-
-		pTransformElement->InsertEndChild( pPositionElement );
-
-		tinyxml2::XMLElement* pXElement = xmlDoc.NewElement( "x" );
-
-		pXElement->SetText( Pos.x );
-
-		pPositionElement->InsertEndChild( pXElement );
-
-		tinyxml2::XMLElement* pYElement = xmlDoc.NewElement( "y" );
-
-		pYElement->SetText( Pos.y );
-
-		pPositionElement->InsertEndChild( pYElement );
-
-		tinyxml2::XMLElement* pZElement = xmlDoc.NewElement( "z" );
-
-		pZElement->SetText( Pos.z );
-
-		pPositionElement->InsertEndChild( pZElement );
+		SAFE_DELETE( pText );
 	}
 
 	{
-		tinyxml2::XMLElement* pRadiusElement = xmlDoc.NewElement( "radius" );
+		char* pText = new char[50];
+		sprintf( pText , "%f,%f,%f" , SurfaceColor[0] , SurfaceColor[1] , SurfaceColor[2] );
 
-		pRadiusElement->SetText( m_Radius );
-
-		pRootElement->InsertEndChild( pRadiusElement );
-	}
-
-	{
 		tinyxml2::XMLElement* pSurfaceElement = xmlDoc.NewElement( "SurfaceColor" );
+
+		pSurfaceElement->SetText( pText );
 
 		pRootElement->InsertEndChild( pSurfaceElement );
 
-		tinyxml2::XMLElement* pRElement = xmlDoc.NewElement( "r" );
-
-		pRElement->SetText( SurfaceColor[0] );
-
-		pSurfaceElement->InsertEndChild( pRElement );
-
-		tinyxml2::XMLElement* pGElement = xmlDoc.NewElement( "g" );
-
-		pGElement->SetText( SurfaceColor[1] );
-
-		pSurfaceElement->InsertEndChild( pGElement );
-
-		tinyxml2::XMLElement* pBElement = xmlDoc.NewElement( "b" );
-
-		pBElement->SetText( SurfaceColor[2] );
-
-		pSurfaceElement->InsertEndChild( pBElement );
+		SAFE_DELETE( pText );
 	}
 	
 }
