@@ -1,0 +1,96 @@
+<Root>
+    <primitive name="sun">
+        <shape type="Sphere" radius="1600">
+            <transform position="3000 , 0 , 6000" />
+            <SurfaceColor>0.0,0.0,0.0</SurfaceColor>
+        </shape>
+        <material type="DiffuseMaterial" />
+        <AreaLight Le="37.44,33.696,29.952"/>
+    </primitive>
+    <primitive name="HorizonSun2">
+          <shape type="Sphere" radius="1500">
+              <transform position="3500,0,7000" />
+              <SurfaceColor>0.0,0.0,0.0</SurfaceColor>
+          </shape>
+          <material type="DiffuseMaterial" />
+          <AreaLight Le="149.76,74.88,7.488"/>
+      </primitive>
+      <primitive name="Sky">
+            <shape type="Sphere" radius="10000">
+                <transform position="50,40.8,-1060" />
+                <SurfaceColor>0.175,0.175,0.25</SurfaceColor>
+            </shape>
+            <material type="DiffuseMaterial" />
+            <AreaLight Le="0.0003064416,0.009607094,0.13883157"/>
+        </primitive>
+        <primitive name="Grnd">
+              <shape type="Sphere" radius="100000">
+                  <transform position="50,-100000,0" />
+                  <SurfaceColor>0.3,0.3,0.3</SurfaceColor>
+              </shape>
+              <material type="DiffuseMaterial" />
+          </primitive>
+          <primitive name="HorizonBrightener">
+                <shape type="Sphere" radius="110000">
+                    <transform position="50,-110048.5,0" />
+                    <SurfaceColor>0.0,0.0,0.0</SurfaceColor>
+                </shape>
+                <material type="DiffuseMaterial" />
+                <AreaLight Le="3.6,2.0,0.2"/>
+            </primitive>
+    <primitive name="Mountains">
+      <shape type="Sphere" radius="40000">
+        <transform position="50,-40030,-3000" />
+        <SurfaceColor>0.2,0.2,0.2</SurfaceColor>
+      </shape>
+      <material type="DiffuseMaterial" />
+    </primitive>
+    <primitive name="GlassSphere">
+        <shape type="Sphere" radius="13">
+            <transform position="75,13,82"/>
+            <SurfaceColor>0.9216,0.9216,0.9216</SurfaceColor>
+        </shape>
+        <material type="GlassMaterial">
+            <ior>1.5</ior>
+        </material>
+    </primitive>
+    <primitive name="GlassSphere2">
+        <shape type="Sphere" radius="22">
+            <transform position="87,22,24"/>
+            <SurfaceColor>0.576,0.576,0.576</SurfaceColor>
+        </shape>
+        <material type="GlassMaterial">
+            <ior>1.5</ior>
+        </material>
+    </primitive>
+    <primitive name="WhiteMirror">
+        <shape type="Sphere" radius="26.5">
+            <transform position="22,26.5,42"/>
+            <SurfaceColor>0.596,0.596,0.596</SurfaceColor>
+        </shape>
+        <material type="PureReflectionMaterial" />
+    </primitive>
+    <Camera type="ThinLensCamera">
+        <Position>50,52,295.6</Position>
+        <Target>50,51.957388,294.6</Target>
+        <LensFocus>210</LensFocus>
+        <LensRadius>0.10000000000000001</LensRadius>
+        <NearPlane>140</NearPlane>
+        <Fovy>15</Fovy>
+    </Camera>
+    <Film>
+        <filename>result.ppm</filename>
+        <width>1024</width>
+        <height>768</height>
+    </Film>
+    <Integrator type="PathIntegrator">
+        <MaxDepth>3</MaxDepth>
+    </Integrator>
+    <Sampler type="NRooksSampler">
+        <SampleGroupCount>81</SampleGroupCount>
+        <SampleCount>3000</SampleCount>
+    </Sampler>
+    <Renderer type="SamplerRenderer">
+        <spp>4</spp>
+    </Renderer>
+</Root>

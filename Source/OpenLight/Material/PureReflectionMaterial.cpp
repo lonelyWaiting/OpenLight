@@ -28,12 +28,19 @@ void PureReflectionMaterial::Deserialization( tinyxml2::XMLElement* RootElement 
 {
 	tinyxml2::XMLElement* pReflection = RootElement->FirstChildElement( "Reflection" );
 
-	double r , g , b;
-	pReflection->FirstChildElement( "r" )->QueryDoubleText( &r );
-	pReflection->FirstChildElement( "g" )->QueryDoubleText( &g );
-	pReflection->FirstChildElement( "b" )->QueryDoubleText( &b );
+	if( pReflection )
+	{
+		double r , g , b;
+		pReflection->FirstChildElement( "r" )->QueryDoubleText( &r );
+		pReflection->FirstChildElement( "g" )->QueryDoubleText( &g );
+		pReflection->FirstChildElement( "b" )->QueryDoubleText( &b );
 
-	R = Spectrum::FromRGB( r , g , b );
+		R = Spectrum::FromRGB( r , g , b );
+	}
+	else
+	{
+		R = Spectrum::FromRGB( 1.0 , 1.0 , 1.0 );
+	}
 }
 
 void PureReflectionMaterial::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )

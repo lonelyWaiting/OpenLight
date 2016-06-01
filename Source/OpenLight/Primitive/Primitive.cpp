@@ -65,9 +65,6 @@ void Primitive::Deserialization( tinyxml2::XMLElement* PrimitiveRootElment )
 {
 	{
 		SetName( PrimitiveRootElment->Attribute( "name" ) );
-		/*const char* name = PrimitiveRootElment->Attribute( "name" );
-		m_Name = new char[strlen( name )];
-		memcpy( ( void* )m_Name , ( void* )name , strlen( name ) );*/
 	}
 
 	tinyxml2::XMLElement* ShapeRootElement = PrimitiveRootElment->FirstChildElement( "shape" );
@@ -98,7 +95,6 @@ void Primitive::Deserialization( tinyxml2::XMLElement* PrimitiveRootElment )
 void Primitive::DeserializationShape( tinyxml2::XMLElement* ShapeRootElement )
 {
 	const char* type             = ShapeRootElement->FirstAttribute()->Value();
-	const char* bCompositeObject = ShapeRootElement->Attribute( "bCompositeObject" );
 	
 	Shape* shape                 = Shape::Create( type );
 	Assert( shape != nullptr );
@@ -108,7 +104,7 @@ void Primitive::DeserializationShape( tinyxml2::XMLElement* ShapeRootElement )
 	// 记录反序列化信息
 	m_vShapeInformations.push_back( shape );
 
-	if( !std::strcmp( bCompositeObject , "true" ) )
+	if( shape->HasSubShape() )
 	{
 		// 返回一系列的Shape对象
 		for( int i = 0; i < shape->GetChildCount(); i++ )

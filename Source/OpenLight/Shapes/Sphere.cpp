@@ -6,6 +6,7 @@
 #include "Light/Light.h"
 #include "tinyxml2.h"
 #include "Sphere.h"
+#include "Utilities/srString.h"
 
 Sphere::Sphere()
 {
@@ -81,22 +82,13 @@ bool Sphere::Intersect( Ray& r , IntersectRecord* record ) const
 
 void Sphere::Deserialization( tinyxml2::XMLElement* ShapeRootElement )
 {
-	tinyxml2::XMLElement* PrimitivePosiitonElement = ShapeRootElement->FirstChildElement( "transform" )->FirstChildElement( "position" );
+	ShapeRootElement->QueryDoubleAttribute( "radius" , &m_Radius );
 
-	PrimitivePosiitonElement->FirstChildElement( "x" )->QueryDoubleText( &( Pos.x ) );
-	PrimitivePosiitonElement->FirstChildElement( "y" )->QueryDoubleText( &( Pos.y ) );
-	PrimitivePosiitonElement->FirstChildElement( "z" )->QueryDoubleText( &( Pos.z ) );
-
-	ShapeRootElement->FirstChildElement( "radius" )->QueryDoubleText( &m_Radius );
+	ParseVector3( std::string( ShapeRootElement->FirstChildElement( "transform" )->Attribute( "position" ) ) , &Pos[0] );
 
 	double r, g, b;
 
-	// Read Surface Color
-	ShapeRootElement->FirstChildElement( "SurfaceColor" )->FirstChildElement( "r" )->QueryDoubleText( &r );
-	ShapeRootElement->FirstChildElement( "SurfaceColor" )->FirstChildElement( "g" )->QueryDoubleText( &g );
-	ShapeRootElement->FirstChildElement( "SurfaceColor" )->FirstChildElement( "b" )->QueryDoubleText( &b );
-	
-	SurfaceColor = Spectrum::FromRGB( r , g , b );
+	ParseVector3( ShapeRootElement->FirstChildElement( "SurfaceColor" )->GetText() , SurfaceColor.GetDataPtr() );
 
 	*ObjectToWorld = Translate( Vector3f( Pos ) );
 	*WorldToObject = Inverse( *ObjectToWorld );

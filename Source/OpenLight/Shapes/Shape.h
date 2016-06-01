@@ -27,7 +27,7 @@ public:
 
 	virtual bool Intersect( Ray& ray , IntersectRecord* record ) const;
 
-	bool IsCombinationShape();
+	bool HasSubShape();
 
 	virtual int GetChildCount() const;
 
@@ -53,7 +53,7 @@ public:
 	Transform*	ObjectToWorld;
 	Transform*	WorldToObject;
 	Spectrum	SurfaceColor;
-	bool		bCombination;			// 是否由其它shape组成
+	bool		bSubShape;				// 是否由其它shape组成
 	Primitive*  pPrimitive;				// 所属图元
 	Point3f		Pos;
 };

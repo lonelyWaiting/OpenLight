@@ -29,6 +29,8 @@ Spectrum SpecularReflection::Sample_f( const Vector3f& wo , const Normal& n , Ve
 
 	Spectrum F = fresnel->Evalute( wo * n );
 
+	// 经验设定
+	// 参考该问题的答案：http://www.opengpu.org/forum.php?mod=viewthread&tid=18099&extra=page%3D1
 	double P = 0.25 + 0.5 * F[0];
 
 	if( RNG::Get().GetDouble() > /*F[0]*/P )

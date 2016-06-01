@@ -49,7 +49,7 @@ bool InitRTTI()
 Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrator*& pSurfaceIntegrator , Sampler*& pSampler )
 {
 	FileSystem fs;
-	std::wstring SceneFilename = fs.GetSceneFolder() + L"box.xml";
+	std::wstring SceneFilename = fs.GetSceneFolder() + L"sun.xml";
 
 	tinyxml2::XMLDocument doc;
 	doc.LoadFile( srString::ToAscii( SceneFilename ).c_str() );

@@ -15,7 +15,7 @@ Shape::Shape(Spectrum _emmisive /*= Spectrum(0)*/)
 
 	WorldToObject = new Transform;
 
-	bCombination = false;
+	bSubShape = false;
 }
 
 Shape::Shape( const Transform* _ObjectToWorld )
@@ -39,9 +39,9 @@ bool Shape::Intersect( Ray& ray , IntersectRecord* record ) const
 	return false;
 }
 
-bool Shape::IsCombinationShape()
+bool Shape::HasSubShape()
 {
-	return bCombination;
+	return bSubShape;
 }
 
 int Shape::GetChildCount() const

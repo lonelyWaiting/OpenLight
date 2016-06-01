@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Utilities/PCH.h"
+#include <array>
 
 class srString
 {
@@ -24,3 +25,5 @@ inline std::wstring ToString( const T& value )
 
 	return stream.str();
 }
+
+void ParseVector3( const std::string s , double* v );

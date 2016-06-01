@@ -39,6 +39,7 @@ public:
 	double GetRadius();
 
 	void SetRadius( double radius );
+
 private:
 	double m_Radius;
 };

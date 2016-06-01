@@ -2,6 +2,7 @@
 #include "Sampler/Sampling.h"
 #include "tinyxml2.h"
 #include "ThinLensCamera.h"
+#include "Utilities/srString.h"
 
 ThinLensCamera::ThinLensCamera()
 {
@@ -56,13 +57,9 @@ void ThinLensCamera::Deserialization( tinyxml2::XMLElement* CameraRootElement )
 {
 	tinyxml2::XMLElement* pElement = nullptr;
 
-	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "x" )->QueryDoubleText( &( Eye.x ) );
-	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "y" )->QueryDoubleText( &( Eye.y ) );
-	CameraRootElement->FirstChildElement( "Position" )->FirstChildElement( "z" )->QueryDoubleText( &( Eye.z ) );
+	ParseVector3( CameraRootElement->FirstChildElement( "Position" )->GetText() , &Eye[0] );
 
-	CameraRootElement->FirstChildElement( "Target" )->FirstChildElement( "x" )->QueryDoubleText( &( Target.x ) );
-	CameraRootElement->FirstChildElement( "Target" )->FirstChildElement( "y" )->QueryDoubleText( &( Target.y ) );
-	CameraRootElement->FirstChildElement( "Target" )->FirstChildElement( "z" )->QueryDoubleText( &( Target.z ) );
+	ParseVector3( CameraRootElement->FirstChildElement( "Target" )->GetText() , &Target[0] );
 
 	CameraRootElement->FirstChildElement( "LensFocus" )->QueryDoubleText( &LensFocus );
 

@@ -34,20 +34,36 @@ void GlassMaterial::Deserialization( tinyxml2::XMLElement* RootElement )
 {
 	tinyxml2::XMLElement* pReflection = RootElement->FirstChildElement( "Reflection" );
 
-	double r , g , b;
-	pReflection->FirstChildElement( "r" )->QueryDoubleText( &r );
-	pReflection->FirstChildElement( "g" )->QueryDoubleText( &g );
-	pReflection->FirstChildElement( "b" )->QueryDoubleText( &b );
+	if( pReflection )
+	{
+		double r , g , b;
+		pReflection->FirstChildElement( "r" )->QueryDoubleText( &r );
+		pReflection->FirstChildElement( "g" )->QueryDoubleText( &g );
+		pReflection->FirstChildElement( "b" )->QueryDoubleText( &b );
 
-	R = Spectrum::FromRGB( r , g , b );
+		R = Spectrum::FromRGB( r , g , b );
+	}
+	else
+	{
+		R = Spectrum::FromRGB( 1.0 , 1.0 , 1.0 );
+	}
 
 	tinyxml2::XMLElement* pTransmission = RootElement->FirstChildElement( "Transmission" );
 
-	pTransmission->FirstChildElement( "r" )->QueryDoubleText( &r );
-	pTransmission->FirstChildElement( "g" )->QueryDoubleText( &g );
-	pTransmission->FirstChildElement( "b" )->QueryDoubleText( &b );
+	if( pTransmission )
+	{
+		double r , g , b;
 
-	T = Spectrum::FromRGB( r , g , b );
+		pTransmission->FirstChildElement( "r" )->QueryDoubleText( &r );
+		pTransmission->FirstChildElement( "g" )->QueryDoubleText( &g );
+		pTransmission->FirstChildElement( "b" )->QueryDoubleText( &b );
+
+		T = Spectrum::FromRGB( r , g , b );
+	}
+	else
+	{
+		R = Spectrum::FromRGB( 1.0 , 1.0 , 1.0 );
+	}
 
 	RootElement->FirstChildElement( "ior" )->QueryDoubleText( &ior );
 }

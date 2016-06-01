@@ -3,6 +3,7 @@
 #include "Primitive/Primitive.h"
 #include "tinyxml2.h"
 #include "AreaLighth.h"
+#include "Utilities/srString.h"
 
 AreaLight::AreaLight()
 {
@@ -53,12 +54,7 @@ Spectrum AreaLight::Sample_L( const Scene* scene , LightSample& _lightSample , R
 
 void AreaLight::Deserialization( tinyxml2::XMLElement* LightRootElement )
 {
-	double r , g , b;
-	LightRootElement->FirstChildElement( "Le" )->FirstChildElement( "r" )->QueryDoubleText( &r );
-	LightRootElement->FirstChildElement( "Le" )->FirstChildElement( "g" )->QueryDoubleText( &g );
-	LightRootElement->FirstChildElement( "Le" )->FirstChildElement( "b" )->QueryDoubleText( &b );
-
-	Lemission = Spectrum::FromRGB( r , g , b );
+	ParseVector3( LightRootElement->Attribute( "Le" ) , Lemission.GetDataPtr() );
 }
 
 void AreaLight::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )

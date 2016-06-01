@@ -6,6 +6,7 @@
 #include "Light/Light.h"
 #include "tinyxml2.h"
 #include "TriangleMesh.h"
+#include "Utilities/srString.h"
 
 TriangleMesh::TriangleMesh()
 {
@@ -14,7 +15,7 @@ TriangleMesh::TriangleMesh()
 	triangles     = nullptr;
 	TriangleCount = 0;
 	VertexNum     = 0;
-	bCombination  = true;
+	bSubShape = true;
 }
 
 TriangleMesh::TriangleMesh( const Transform* ObjectToWorld , Point3f* _points , Normal* _normals , Triangle* _triangles , int _VertexNum , int _TriangleCount )
@@ -72,10 +73,12 @@ void TriangleMesh::Deserialization( tinyxml2::XMLElement* ShapeRootElement )
 	strcpy( filename , name );
 
 	tinyxml2::XMLElement* ShapeTransformElement = ShapeRootElement->FirstChildElement( "transform" );
+	const char* pos = ShapeTransformElement->Attribute( "position" );
+	ParseVector3( pos , &Pos[0] );
 
-	ShapeTransformElement->FirstChildElement( "position" )->FirstChildElement( "x" )->QueryDoubleText( &Pos.x );
+	/*ShapeTransformElement->FirstChildElement( "position" )->FirstChildElement( "x" )->QueryDoubleText( &Pos.x );
 	ShapeTransformElement->FirstChildElement( "position" )->FirstChildElement( "y" )->QueryDoubleText( &Pos.y );
-	ShapeTransformElement->FirstChildElement( "position" )->FirstChildElement( "z" )->QueryDoubleText( &Pos.z );
+	ShapeTransformElement->FirstChildElement( "position" )->FirstChildElement( "z" )->QueryDoubleText( &Pos.z );*/
 
 	*ObjectToWorld = Translate( Vector3f( Pos ) );
 	*WorldToObject = Inverse( *ObjectToWorld );
