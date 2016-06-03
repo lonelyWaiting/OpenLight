@@ -6,6 +6,7 @@
 #include "TriangleMesh.h"
 #include "tinyxml2.h"
 #include "Triangle.h"
+#include "Math/Vector2.h"
 
 Triangle::Triangle()
 	: index0( 0 ) 
@@ -85,14 +86,21 @@ bool Triangle::Intersect( Ray& rayWorld , IntersectRecord* record ) const
 
 	if( t >= rayLocal.MinT && t <= rayLocal.MaxT )
 	{
+		Vector2f uv0 = pMesh->uvs[index0];
+		Vector2f uv1 = pMesh->uvs[index1];
+		Vector2f uv2 = pMesh->uvs[index2];
+
+		double alpha = 1.0 - beta - gamma;
+
 		rayWorld.MaxT         = t;
 		record->HitT          = t;
 		record->ObjectToWorld = *( pMesh->ObjectToWorld );
 		record->WorldToObject = *( pMesh->WorldToObject );
 		record->normal        = ( *ObjectToWorld )( pMesh->normals[index0] );			// 该triangle上的三个顶点
-		record->SurfaceColor  = pMesh->SurfaceColor;
 		record->HitPoint      = rayWorld( t );
 		record->primitivePtr  = pPrimitive;
+		record->uv = ( uv0 * alpha + uv1 * beta + uv2 * gamma ) * 20;
+
 		return true;
 	}
 

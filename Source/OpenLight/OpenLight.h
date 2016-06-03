@@ -43,6 +43,9 @@
 #include <Light/PointLight.h>
 #include <Light/AreaLighth.h>
 
+#include <Texture/ConstantTexture.h>
+#include <Texture/CheckboardTexture.h>
+
 Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrator*& pSurfaceIntegrator , Sampler*& pSampler );
 
 void SerializationScene( Scene* scene , Camera* camera , SurfaceIntegrator* pSurfaceIntegrator , Sampler* pSampler , Renderer* pRenderer );

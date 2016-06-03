@@ -97,7 +97,7 @@ void PinholeCamera::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XML
 	pRootElement->SetAttribute( "type" , GetName() );
 
 	{
-		char* pText = new char[27];
+		char* pText = new char[50];
 		sprintf( pText , "%f,%f,%f" , Eye.x , Eye.y , Eye.z );
 
 		tinyxml2::XMLElement* pEyeElement = xmlDoc.NewElement( "Position" );
@@ -106,11 +106,11 @@ void PinholeCamera::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XML
 
 		pRootElement->InsertEndChild( pEyeElement );
 
-		//SAFE_DELETE_ARRAY( pText );
+		SAFE_DELETE( pText );
 	}
 
 	{
-		char* pText = new char[27];
+		char* pText = new char[50];
 		sprintf( pText , "%f,%f,%f" , Target.x , Target.y , Target.z );
 
 		tinyxml2::XMLElement* pTargetElement = xmlDoc.NewElement( "Target" );
@@ -119,7 +119,7 @@ void PinholeCamera::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XML
 
 		pRootElement->InsertEndChild( pTargetElement );
 
-		//SAFE_DELETE_ARRAY( pText );
+		SAFE_DELETE( pText );
 	}
 
 	{

@@ -69,3 +69,5 @@ double ToDegree( double radian );
 void Swap( double& A , double& B );
 
 bool Quadtratic( double A , double B , double C , double* t0 , double* t1 );
+
+double clamp( double x , double _min , double _max );

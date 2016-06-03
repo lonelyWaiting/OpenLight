@@ -5,7 +5,7 @@
 
 BSDF* IntersectRecord::GetBSDF()
 {
-	return primitivePtr->GetBSDF( HitPoint , normal );
+	return primitivePtr->GetBSDF( uv , HitPoint , normal );
 }
 
 Spectrum IntersectRecord::Le( const Vector3f& wo )

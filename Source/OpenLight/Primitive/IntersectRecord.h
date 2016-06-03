@@ -5,6 +5,7 @@
 #include "Math/Point3.h"
 #include "BRDF/BSDF.h"
 #include "Math/Normal.h"
+#include "Math/Vector2.h"
 
 class Primitive;
 
@@ -25,5 +26,5 @@ struct IntersectRecord
 	double HitT;
 	Point3f HitPoint;
 	Normal normal;
-	Spectrum SurfaceColor;
+	Vector2f uv;
 };

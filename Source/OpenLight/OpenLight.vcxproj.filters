@@ -276,6 +276,18 @@
     <ClInclude Include="Integrator\PathIntegrator.h">
       <Filter>Integrator</Filter>
     </ClInclude>
+    <ClInclude Include="Texture\SolidNoise.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\Texture.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\ConstantTexture.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\CheckboardTexture.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Accelerator\Grid.cpp">
@@ -481,6 +493,18 @@
     </ClCompile>
     <ClCompile Include="Integrator\PathIntegrator.cpp">
       <Filter>Integrator</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\SolidNoise.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\Texture.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\ConstantTexture.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\CheckboardTexture.cpp">
+      <Filter>Texture</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

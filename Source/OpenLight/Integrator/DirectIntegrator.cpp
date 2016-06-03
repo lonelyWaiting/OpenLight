@@ -13,7 +13,7 @@
 
 void DirectIntegrator::Deserialization( tinyxml2::XMLElement * IntegratorRootElement )
 {
-	IntegratorRootElement->FirstChildElement( "MaxDepth" )->QueryIntText( &mMaxDepth );
+	IntegratorRootElement->QueryIntAttribute( "MaxDepth" , &mMaxDepth );
 }
 
 void DirectIntegrator::Serialization( tinyxml2::XMLDocument & xmlDoc , tinyxml2::XMLElement * pRootElement )
@@ -21,11 +21,7 @@ void DirectIntegrator::Serialization( tinyxml2::XMLDocument & xmlDoc , tinyxml2:
 	pRootElement->SetAttribute( "type" , GetName() );
 
 	{
-		tinyxml2::XMLElement* pMaxDepthElement = xmlDoc.NewElement( "MaxDepth" );
-
-		pMaxDepthElement->SetText( mMaxDepth );
-
-		pRootElement->InsertEndChild( pMaxDepthElement );
+		pRootElement->SetAttribute( "MaxDepth" , mMaxDepth );
 	}
 }
 
@@ -42,17 +38,13 @@ Spectrum DirectIntegrator::Li( const Scene* scene , const Renderer* renderer , I
 	// 自发光
 	L += record->Le( wo );
 
-	L += UniformSampleOneLight( scene , renderer , pAccelerator , bsdf , record->HitPoint , wo , record->normal ) * record->SurfaceColor;
-
-	//L *= record->SurfaceColor;
+	L += UniformSampleOneLight( scene , renderer , pAccelerator , bsdf , record->HitPoint , wo , record->normal );
 
 	if( ray->depth < mMaxDepth )
 	{
 		Spectrum Li( 0.0 );
 
 		bool bNoReflectOccur = false;
-
-		Spectrum SurfaceColor = record->SurfaceColor;
 
 		// 跟踪反射光线
 		Li += SpecularReflect( *ray , scene , renderer , record , pAccelerator , bsdf , bNoReflectOccur );
@@ -63,7 +55,7 @@ Spectrum DirectIntegrator::Li( const Scene* scene , const Renderer* renderer , I
 			Li += SpecularTransmit( *ray , scene , renderer , record , pAccelerator , bsdf , bNoReflectOccur );
 		}
 
-		L += Li * SurfaceColor;
+		L += Li;
 	}
 
 	SAFE_DELETE( bsdf );

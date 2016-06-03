@@ -4,109 +4,97 @@
 
 void ShowPropertyWindow( Scene* scene , Renderer* renderer , int index , bool& bShow )
 {
-	Shape* shape = ( scene->GetPrimitive( index ) ).GetPrimitiveObject( 0 );
+	//Shape* shape = ( scene->GetPrimitive( index ) ).GetPrimitiveObject( 0 );
 
-	ImGui::SetNextWindowSize( ImVec2( 200 , 100 ) , ImGuiSetCond_FirstUseEver );
-	ImGui::Begin( scene->GetPrimitive( index ).GetName() , &bShow );
+	//ImGui::SetNextWindowSize( ImVec2( 200 , 100 ) , ImGuiSetCond_FirstUseEver );
+	//ImGui::Begin( scene->GetPrimitive( index ).GetName() , &bShow );
 
-	// -------------------------------------------------------------------------------------
-	{
-		Point3f Pos = shape->GetPosition();
+	//// -------------------------------------------------------------------------------------
+	//{
+	//	Point3f Pos = shape->GetPosition();
 
-		float input[3] = { Pos[0] , Pos[1] , Pos[2] };
+	//	float input[3] = { Pos[0] , Pos[1] , Pos[2] };
 
-		if( ImGui::InputFloat3( "position" , &input[0] ) )
-		{
-			shape->SetPosition( &input[0] );
+	//	if( ImGui::InputFloat3( "position" , &input[0] ) )
+	//	{
+	//		shape->SetPosition( &input[0] );
 
-			renderer->GetAccelerator()->Reset();
-		}
-	}
-	
-	// -----------------------------------------------------------------------------------
-	{
-		Spectrum SurfaceColor = shape->GetSurfaceColor();
+	//		renderer->GetAccelerator()->Reset();
+	//	}
+	//}
 
-		float input[3] = { SurfaceColor[0] , SurfaceColor[1] , SurfaceColor[2] };
+	////------------------------------------------------------------------------------------
+	//{
+	//	if( !strcmp( shape->GetName() , "Sphere" ) )
+	//	{
+	//		float radius = dynamic_cast< Sphere* >( shape )->GetRadius();
 
-		if( ImGui::InputFloat3( "SurfaceColor" , input ) )
-		{
-			shape->SetSurfaceColor( input );
-		}
-	}
+	//		if( ImGui::InputFloat( "Radius" , &radius ) )
+	//		{
+	//			dynamic_cast< Sphere* >( shape )->SetRadius( radius );
+	//		}
+	//	}
+	//}
 
-	//------------------------------------------------------------------------------------
-	{
-		if( !strcmp( shape->GetName() , "Sphere" ) )
-		{
-			float radius = dynamic_cast< Sphere* >( shape )->GetRadius();
+	//// --------------------------------------------------------------------------------
+	//{
+	//	Material* pMaterial = scene->GetPrimitive( index ).GetMaterial();
 
-			if( ImGui::InputFloat( "Radius" , &radius ) )
-			{
-				dynamic_cast< Sphere* >( shape )->SetRadius( radius );
-			}
-		}
-	}
+	//	ImGui::Text( pMaterial->GetName() );
 
-	// --------------------------------------------------------------------------------
-	{
-		Material* pMaterial = scene->GetPrimitive( index ).GetMaterial();
+	//	if( !strcmp( pMaterial->GetName() , "PureReflectionMaterial" ) )
+	//	{
+	//		Spectrum R = dynamic_cast< PureReflectionMaterial* >( pMaterial )->GetReflection();
 
-		ImGui::Text( pMaterial->GetName() );
+	//		float r[3] = { R[0] , R[1] , R[2] };
 
-		if( !strcmp( pMaterial->GetName() , "PureReflectionMaterial" ) )
-		{
-			Spectrum R = dynamic_cast< PureReflectionMaterial* >( pMaterial )->GetReflection();
+	//		if( ImGui::InputFloat3( "R" , r ) )
+	//		{
+	//			dynamic_cast< PureReflectionMaterial* >( pMaterial )->SetReflection( r );
+	//		}
+	//	}
+	//	else if( !strcmp( pMaterial->GetName() , "GlassMaterial" ) )
+	//	{
+	//		GlassMaterial *pGlassMaterial = dynamic_cast< GlassMaterial* >( pMaterial );
 
-			float r[3] = { R[0] , R[1] , R[2] };
+	//		Spectrum R = pGlassMaterial->GetReflection();
 
-			if( ImGui::InputFloat3( "R" , r ) )
-			{
-				dynamic_cast< PureReflectionMaterial* >( pMaterial )->SetReflection( r );
-			}
-		}
-		else if( !strcmp( pMaterial->GetName() , "GlassMaterial" ) )
-		{
-			GlassMaterial *pGlassMaterial = dynamic_cast< GlassMaterial* >( pMaterial );
+	//		float r[3] = { R[0] , R[1] , R[2] };
 
-			Spectrum R = pGlassMaterial->GetReflection();
+	//		if( ImGui::InputFloat3( "R" , r ) )
+	//		{
+	//			pGlassMaterial->SetReflection( r );
+	//		}
 
-			float r[3] = { R[0] , R[1] , R[2] };
+	//		Spectrum T = pGlassMaterial->GetTransmission();
 
-			if( ImGui::InputFloat3( "R" , r ) )
-			{
-				pGlassMaterial->SetReflection( r );
-			}
+	//		float t[3] = { T[0] , T[1] , T[2] };
 
-			Spectrum T = pGlassMaterial->GetTransmission();
+	//		if( ImGui::InputFloat3( "T" , t ) )
+	//		{
+	//			pGlassMaterial->SetTransmission( t );
+	//		}
 
-			float t[3] = { T[0] , T[1] , T[2] };
+	//		float ior = pGlassMaterial->GetIOR();
 
-			if( ImGui::InputFloat3( "T" , t ) )
-			{
-				pGlassMaterial->SetTransmission( t );
-			}
+	//		if( ImGui::InputFloat( "IOR" , &ior ) )
+	//		{
+	//			pGlassMaterial->SetIOR( ior );
+	//		}
+	//	}
+	//	else if( !strcmp( pMaterial->GetName() , "DiffuseMaterial" ) )
+	//	{
+	//		DiffuseMaterial* pDiffuseMaterial = dynamic_cast< DiffuseMaterial* >( pMaterial );
 
-			float ior = pGlassMaterial->GetIOR();
+	//		Spectrum R = pDiffuseMaterial->GetReflection();
 
-			if( ImGui::InputFloat( "IOR" , &ior ) )
-			{
-				pGlassMaterial->SetIOR( ior );
-			}
-		}
-		else if( !strcmp( pMaterial->GetName() , "DiffuseMaterial" ) )
-		{
-			DiffuseMaterial* pDiffuseMaterial = dynamic_cast< DiffuseMaterial* >( pMaterial );
+	//		float r[3] = { R[0] , R[1] , R[2] };
 
-			Spectrum R = pDiffuseMaterial->GetReflection();
-
-			float r[3] = { R[0] , R[1] , R[2] };
-
-			if( ImGui::InputFloat3( "R" , r ) )
-			{
-				pDiffuseMaterial->SetReflection( r );
-			}
-		}
-	}
-	ImGui::End();
+	//		if( ImGui::InputFloat3( "R" , r ) )
+	//		{
+	//			pDiffuseMaterial->SetReflection( r );
+	//		}
+	//	}
+	//}
+	//ImGui::End();
 }

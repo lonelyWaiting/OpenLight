@@ -43,16 +43,11 @@ public:
 
 	virtual Point3f GetPosition();
 
-	virtual Spectrum GetSurfaceColor();
-
-	void SetSurfaceColor( float* color );
-
 	void SetPosition( float* pos );
 
 public:
 	Transform*	ObjectToWorld;
 	Transform*	WorldToObject;
-	Spectrum	SurfaceColor;
 	bool		bSubShape;				// 是否由其它shape组成
 	Primitive*  pPrimitive;				// 所属图元
 	Point3f		Pos;

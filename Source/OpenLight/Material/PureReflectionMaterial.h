@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Material/Material.h"
+#include "Texture/Texture.h"
 
 namespace tinyxml2
 {
@@ -15,7 +16,7 @@ class PureReflectionMaterial : public Material
 public:
 	PureReflectionMaterial();
 
-	BSDF* GetBSDF( const Point3f& point , const Normal& normal ) const;
+	BSDF* GetBSDF( const Vector2f& uv , const Point3f& point , const Normal& normal ) const;
 
 	PureReflectionMaterial( Spectrum R );
 
@@ -24,12 +25,6 @@ public:
 
 	void Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement );
 
-public:
-	// ------------------------------Access Information-----------------------------------------
-	Spectrum GetReflection();
-
-	void SetReflection( float* reflection );
-
 private:
-	mutable Spectrum R;
+	Texture* Kr;
 };

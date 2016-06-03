@@ -135,13 +135,6 @@ Vector4f Vector4f::operator / ( double a ) const
 	return Vector4f( x / a , y / a , z / a , w / a );
 }
 
-std::ostream& operator << ( std::ostream os , const Vector4f& rhs )
-{
-	os << "[ , " << rhs.x << " , " << rhs.y << " , " << rhs.z << " , " << rhs.w << "]";
-
-	return os;
-}
-
 double Vector4f::length() const
 {
 	return sqrt( x * x + y * y + z * z + w * w );

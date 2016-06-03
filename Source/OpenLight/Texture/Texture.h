@@ -4,10 +4,16 @@
 #include "Spectrum/Spectrum.h"
 #include "Math/Vector2.h"
 #include "Math/Vector3.h"
+#include "Core/VSerializableObject.h"
+#include "Core/VCustomRTTI.h"
 
-class Texture
+class Texture : public VSerializableObject
 {
+	DECLARE_DYNAMIC_CREATE_BASE( Texture )
+
 public:
-	virtual Spectrum GetColor( const Vector2f& uv , const Vector3f& p ) const = 0;
+	// 通用接口，根据位置和纹理坐标返回相应的纹理值
+	virtual Spectrum Evalute( const Vector2f& uv , const Point3f& p ) const = 0;
+	virtual ~Texture();
 };
 #endif

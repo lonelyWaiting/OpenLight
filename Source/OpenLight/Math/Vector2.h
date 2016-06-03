@@ -20,8 +20,6 @@ public:
 
 	Vector2f& operator = ( const Vector2f &rhs );
 
-	friend std::ostream& operator << ( std::ostream &os , const Vector2f &rhs );
-
 	Vector2f operator + ( const Vector2f& v ) const;
 
 	Vector2f& operator += ( const Vector2f& v );
@@ -51,7 +49,7 @@ public:
 	double Length() const;
 
 public:
-	friend inline Vector2f operator* ( double f , const Vector2f &v );
+	friend Vector2f operator* ( double f , const Vector2f &v );
 
 	friend inline double Dot( const Vector2f &v1 , const Vector2f &v2 );
 

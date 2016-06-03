@@ -5,59 +5,82 @@
 #include "tinyxml2.h"
 #include "GlassMaterial.h"
 #include "Utilities/srString.h"
+#include "Texture/ConstantTexture.h"
 
 GlassMaterial::GlassMaterial() : Material()
 {
-	R = Spectrum::FromRGB( 1.0 , 1.0 , 1.0 );
+	/*Kr = new ConstantTexture( Spectrum( 1.0 ) );
 
-	T = Spectrum::FromRGB( 1.0 , 1.0 , 1.0 );
+	Kt = new ConstantTexture( Spectrum( 1.0 ) );*/
 }
 
 GlassMaterial::GlassMaterial( Spectrum R , Spectrum T , double ior )
 	: Material()
-	, R( R )
-	, T( T )
-	, ior( ior )
 {
+	Kr = new ConstantTexture( R );
 
+	Kt = new ConstantTexture( T );
+
+	RefraIndex = new ConstantTexture( ior );
 }
 
-BSDF* GlassMaterial::GetBSDF( const Point3f& point , const Normal& normal ) const
+BSDF* GlassMaterial::GetBSDF( const Vector2f& uv , const Point3f& point , const Normal& normal ) const
 {
 	BSDF* bsdf = new BSDF();
 
-	bsdf->Add( new SpecularReflection( R , new FresnelDielectric( 1.0 , ior ) ) );
+	Spectrum R   = Kr->Evalute( uv , point );
 
-	bsdf->Add( new SpecularTransmission( 1.0 , ior , T ) );
+	Spectrum T   = Kt->Evalute( uv , point );
+
+	Spectrum ior = RefraIndex->Evalute( uv , point );
+
+	bsdf->Add( new SpecularReflection( R , new FresnelDielectric( 1.0 , ior[0] ) ) );
+
+	bsdf->Add( new SpecularTransmission( 1.0 , ior[0] , T ) );
 
 	return bsdf;
 }
 
 void GlassMaterial::Deserialization( tinyxml2::XMLElement* RootElement )
 {
-	tinyxml2::XMLElement* pReflection = RootElement->FirstChildElement( "Reflection" );
+	tinyxml2::XMLElement* pKrElement = RootElement->FirstChildElement( "kr" );
 
-	if( pReflection )
+	if( pKrElement )
 	{
-		ParseVector3( pReflection->GetText() , R.GetDataPtr() );
+		Kr = Texture::Create( pKrElement->Attribute( "type" ) );
+
+		Kr->Deserialization( pKrElement );
 	}
 	else
 	{
-		R = Spectrum::FromRGB( 1.0 , 1.0 , 1.0 );
+		Kr = new ConstantTexture( Spectrum( 1.0 ) );
 	}
 
-	tinyxml2::XMLElement* pTransmission = RootElement->FirstChildElement( "Transmission" );
+	tinyxml2::XMLElement* pKtElement = RootElement->FirstChildElement( "kt" );
 
-	if( pTransmission )
+	if( pKtElement )
 	{
-		ParseVector3( pTransmission->GetText() , T.GetDataPtr() );
+		Kt = Texture::Create( pKtElement->Attribute( "type" ) );
+
+		Kt->Deserialization( pKtElement );
 	}
 	else
 	{
-		R = Spectrum::FromRGB( 1.0 , 1.0 , 1.0 );
+		Kt = new ConstantTexture( Spectrum( 1.0 ) );
 	}
 
-	RootElement->FirstChildElement( "ior" )->QueryDoubleText( &ior );
+	tinyxml2::XMLElement* pRefraElement = RootElement->FirstChildElement( "RefraIndex" );
+
+	if( pRefraElement )
+	{
+		RefraIndex = Texture::Create( pRefraElement->Attribute( "type" ) );
+
+		RefraIndex->Deserialization( pRefraElement );
+	}
+	else
+	{
+		RefraIndex = new ConstantTexture( Spectrum( 1.5 ) );
+	}
 }
 
 void GlassMaterial::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
@@ -65,66 +88,26 @@ void GlassMaterial::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XML
 	pRootElement->SetAttribute( "type" , GetName() );
 
 	{
-		char* pText = new char[27];
-		sprintf( pText , "%f,%f,%f" , R[0] , R[1] , R[2] );
+		tinyxml2::XMLElement* pKrElement = xmlDoc.NewElement( "kr" );
 
-		tinyxml2::XMLElement* pReflectionElement = xmlDoc.NewElement( "Reflection" );
+		Kr->Serialization( xmlDoc , pKrElement );
 
-		pReflectionElement->SetText( pText );
-
-		pRootElement->InsertEndChild( pReflectionElement );
-
-		//SAFE_DELETE_ARRAY( pText );
+		pRootElement->InsertEndChild( pKrElement );
 	}
 
 	{
-		char* pText = new char[27];
-		sprintf( pText , "%f,%f,%f" , T[0] , T[1] , T[2] );
+		tinyxml2::XMLElement* pKrElement = xmlDoc.NewElement( "kt" );
 
-		tinyxml2::XMLElement* pTransmissionElement = xmlDoc.NewElement( "Transmission" );
+		Kr->Serialization( xmlDoc , pKrElement );
 
-		pTransmissionElement->SetText( pText );
-
-		pRootElement->InsertEndChild( pTransmissionElement );
-
-		//SAFE_DELETE_ARRAY( pText );
+		pRootElement->InsertEndChild( pKrElement );
 	}
 
 	{
-		tinyxml2::XMLElement* pIORElement = xmlDoc.NewElement( "ior" );
+		tinyxml2::XMLElement* pKrElement = xmlDoc.NewElement( "RefraIndex" );
 
-		pIORElement->SetText( ior );
+		Kr->Serialization( xmlDoc , pKrElement );
 
-		pRootElement->InsertEndChild( pIORElement );
+		pRootElement->InsertEndChild( pKrElement );
 	}
-}
-
-Spectrum GlassMaterial::GetReflection()
-{
-	return R;
-}
-
-Spectrum GlassMaterial::GetTransmission()
-{
-	return T;
-}
-
-double GlassMaterial::GetIOR()
-{
-	return ior;
-}
-
-void GlassMaterial::SetReflection( float* r )
-{
-	R = Spectrum::FromRGB( r[0] , r[1] , r[2] );
-}
-
-void GlassMaterial::SetTransmission( float* t )
-{
-	T = Spectrum::FromRGB( t[0] , t[1] , t[2] );
-}
-
-void GlassMaterial::SetIOR( float _ior )
-{
-	ior = _ior;
 }

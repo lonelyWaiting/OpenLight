@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Material/Material.h"
+#include "Texture/Texture.h"
 
 namespace tinyxml2
 {
@@ -15,7 +16,7 @@ class GlassMaterial : public Material
 public:
 	GlassMaterial();
 
-	BSDF* GetBSDF( const Point3f& point , const Normal& normal ) const;
+	BSDF* GetBSDF( const Vector2f& uv , const Point3f& point , const Normal& normal ) const;
 
 	GlassMaterial( Spectrum R , Spectrum T , double ior );
 
@@ -38,7 +39,8 @@ public:
 	void SetIOR( float _ior );
 
 private:
-	mutable Spectrum R;
-	mutable Spectrum T;
-	double ior;
+	Texture* Kr;
+	Texture* Kt;
+
+	Texture* RefraIndex;		// ’€…‰±»
 };

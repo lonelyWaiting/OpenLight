@@ -14,7 +14,7 @@ class Material : public VSerializableObject
 public:
 	Material();
 
-	virtual BSDF* GetBSDF( const Point3f& point , const Normal& normal ) const = 0;
+	virtual BSDF* GetBSDF( const Vector2f& uv , const Point3f& point , const Normal& normal ) const = 0;
 
 	virtual ~Material();
 };

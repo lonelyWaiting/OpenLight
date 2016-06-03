@@ -39,7 +39,7 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 
 		const Normal& HitNormal = Normalize( record->normal );
 
-		L += Throughout * UniformSampleOneLight( scene , renderer , pAccelerator , bsdf , HitPoint , wo , HitNormal ) * record->SurfaceColor;
+		L += Throughout * UniformSampleOneLight( scene , renderer , pAccelerator , bsdf , HitPoint , wo , HitNormal );
 
 		Vector3f wi;
 		double pdf = 0.0;
@@ -82,7 +82,7 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 
 		IsSpecular = ( ( flags & SPECULAR ) != 0 );
 
-		Throughout *= f * AbsDot( wi , HitNormal ) / pdf * record->SurfaceColor;
+		Throughout *= f * AbsDot( wi , HitNormal ) / pdf;
 
 		r = Ray( HitPoint + wi * 1e-3f , wi , *ray , EPSILON );
 
@@ -126,7 +126,7 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 
 void PathIntegrator::Deserialization( tinyxml2::XMLElement * IntegratorRootElement )
 {
-	IntegratorRootElement->FirstChildElement( "MaxDepth" )->QueryIntText( &mMaxDepth );
+	IntegratorRootElement->QueryIntAttribute( "MaxDepth" , &mMaxDepth );
 }
 
 void PathIntegrator::Serialization( tinyxml2::XMLDocument & xmlDoc , tinyxml2::XMLElement * pRootElement )
@@ -134,10 +134,6 @@ void PathIntegrator::Serialization( tinyxml2::XMLDocument & xmlDoc , tinyxml2::X
 	pRootElement->SetAttribute( "type" , GetName() );
 
 	{
-		tinyxml2::XMLElement* pMaxDepthElement = xmlDoc.NewElement( "MaxDepth" );
-
-		pMaxDepthElement->SetText( mMaxDepth );
-
-		pRootElement->InsertEndChild( pMaxDepthElement );
+		pRootElement->SetAttribute( "MaxDepth" , mMaxDepth );
 	}
 }

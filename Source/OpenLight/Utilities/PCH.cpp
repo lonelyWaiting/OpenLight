@@ -59,3 +59,8 @@ bool Quadtratic( double A , double B , double C , double* t0 , double* t1 )
 
 	return true;
 }
+
+double clamp( double x , double _min , double _max )
+{
+	return x < _min ? _min : x > _max ? _max : x;
+}

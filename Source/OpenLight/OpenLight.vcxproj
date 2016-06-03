@@ -80,6 +80,10 @@
     <ClInclude Include="Shapes\Triangle.h" />
     <ClInclude Include="Shapes\TriangleMesh.h" />
     <ClInclude Include="Spectrum\Spectrum.h" />
+    <ClInclude Include="Texture\CheckboardTexture.h" />
+    <ClInclude Include="Texture\ConstantTexture.h" />
+    <ClInclude Include="Texture\SolidNoise.h" />
+    <ClInclude Include="Texture\Texture.h" />
     <ClInclude Include="Utilities\PCH.h" />
     <ClInclude Include="Utilities\RNG.h" />
     <ClInclude Include="Utilities\srString.h" />
@@ -150,6 +154,10 @@
     <ClCompile Include="Shapes\Triangle.cpp" />
     <ClCompile Include="Shapes\TriangleMesh.cpp" />
     <ClCompile Include="Spectrum\Spectrum.cpp" />
+    <ClCompile Include="Texture\CheckboardTexture.cpp" />
+    <ClCompile Include="Texture\ConstantTexture.cpp" />
+    <ClCompile Include="Texture\SolidNoise.cpp" />
+    <ClCompile Include="Texture\Texture.cpp" />
     <ClCompile Include="Utilities\PCH.cpp" />
     <ClCompile Include="Utilities\RNG.cpp" />
     <ClCompile Include="Utilities\srString.cpp" />

@@ -45,8 +45,6 @@ public:
 
 	Vector4f operator / ( double a ) const;
 
-	friend std::ostream& operator << ( std::ostream os , const Vector4f& rhs );
-
 public:
 	double length() const;
 

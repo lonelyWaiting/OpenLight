@@ -43,13 +43,18 @@ bool InitRTTI()
 
 	IMPLEMENT_DYNAMIC_CREATE_DERIVED( PointLight )
 
+	// Texture
+	IMPLEMENT_DYNAMIC_CREATE_DERIVED( CheckerboardTexture )
+
+	IMPLEMENT_DYNAMIC_CREATE_DERIVED( ConstantTexture )
+
 	return true;
 }
 
 Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrator*& pSurfaceIntegrator , Sampler*& pSampler )
 {
 	FileSystem fs;
-	std::wstring SceneFilename = fs.GetSceneFolder() + L"sun.xml";
+	std::wstring SceneFilename = fs.GetSceneFolder() + L"box.xml";
 
 	tinyxml2::XMLDocument doc;
 	doc.LoadFile( srString::ToAscii( SceneFilename ).c_str() );
@@ -128,7 +133,7 @@ Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrat
 }
 
 void SerializationScene( Scene* scene , Camera* camera , SurfaceIntegrator* pSurfaceIntegrator , Sampler* pSampler , Renderer* pRenderer )
-{
+{ 
 	tinyxml2::XMLDocument xmlDoc;
 
 	// Create Root Node

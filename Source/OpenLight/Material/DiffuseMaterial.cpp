@@ -3,22 +3,31 @@
 #include "tinyxml2.h"
 #include "DiffuseMaterial.h"
 #include "Utilities/srString.h"
+#include "Texture/ConstantTexture.h"
 
 DiffuseMaterial::DiffuseMaterial() : Material()
 {
-	R = Spectrum::FromRGB( 1 , 1 , 1 );
+	/*Kd = new ConstantTexture( Spectrum( 1.0 ) );*/
 }
 
-DiffuseMaterial::DiffuseMaterial( Spectrum R )
+DiffuseMaterial::DiffuseMaterial( Texture* kd )
 	: Material()
-	, R( R )
+	, Kd( kd )
 {
 
 }
 
-BSDF* DiffuseMaterial::GetBSDF( const Point3f& point , const Normal& normal ) const
+void DiffuseMaterial::SetKd( Texture* kd )
+{
+	Kd = kd;
+}
+
+BSDF* DiffuseMaterial::GetBSDF( const Vector2f& uv , const Point3f& point , const Normal& normal ) const
 {
 	BSDF* bsdf = new BSDF();
+
+	// 计算出对应位置的纹理值
+	Spectrum R = Kd->Evalute( uv , point );
 
 	bsdf->Add( new Lambertian( R ) );
 
@@ -27,15 +36,17 @@ BSDF* DiffuseMaterial::GetBSDF( const Point3f& point , const Normal& normal ) co
 
 void DiffuseMaterial::Deserialization( tinyxml2::XMLElement* RootElement )
 {
-	tinyxml2::XMLElement* pReflection = RootElement->FirstChildElement( "Reflection" );
+	tinyxml2::XMLElement* pKdElement = RootElement->FirstChildElement( "kd" );
 
-	if( pReflection )
+	if( pKdElement )
 	{
-		ParseVector3( pReflection->GetText() , R.GetDataPtr() );
+		Kd = Texture::Create( pKdElement->Attribute( "type" ) );
+
+		Kd->Deserialization( pKdElement );
 	}
 	else
 	{
-		R = Spectrum::FromRGB( 1.0 , 1.0 , 1.0 );
+		Kd = new ConstantTexture( Spectrum( 1.0 ) );
 	}
 }
 
@@ -44,25 +55,10 @@ void DiffuseMaterial::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::X
 	pRootElement->SetAttribute( "type" , GetName() );
 
 	{
-		char* pText = new char[27];
-		sprintf( pText , "%f,%f,%f" , R[0] , R[1] , R[2] );
+		tinyxml2::XMLElement* pKdElement = xmlDoc.NewElement( "kd" );
 
-		tinyxml2::XMLElement* pReflectionElement = xmlDoc.NewElement( "Reflection" );
+		Kd->Serialization( xmlDoc , pKdElement );
 
-		pReflectionElement->SetText( pText );
-
-		pRootElement->InsertEndChild( pReflectionElement );
-
-		//SAFE_DELETE_ARRAY( pText );
+		pRootElement->InsertEndChild( pKdElement );
 	}
-}
-
-Spectrum DiffuseMaterial::GetReflection()
-{
-	return R;
-}
-
-void DiffuseMaterial::SetReflection( float* r )
-{
-	R = Spectrum::FromRGB( r[0] , r[1] , r[2] );
 }

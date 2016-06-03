@@ -171,9 +171,9 @@ void Primitive::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElem
 	}
 }
 
-BSDF* Primitive::GetBSDF( const Point3f& point , const Normal& normal ) const
+BSDF* Primitive::GetBSDF( const Vector2f& uv , const Point3f& point , const Normal& normal ) const
 {
-	return m_pMaterial->GetBSDF( point , normal );
+	return m_pMaterial->GetBSDF( uv , point , normal );
 }
 
 int Primitive::GetShapeCount() const

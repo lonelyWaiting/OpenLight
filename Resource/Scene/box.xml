@@ -1,262 +1,89 @@
 <Root>
   <primitive name="PureReflectSphere">
-        <shape type="Sphere" bCompositeObject="false">
-            <transform>
-                <position>
-                    <x>73</x>
-                    <y>16.5</y>
-                    <z>47</z>
-                </position>
-            </transform>
-            <radius>16.5</radius>
-            <SurfaceColor>
-                <r>0.999</r>
-                <g>0.999</g>
-                <b>0.999</b>
-            </SurfaceColor>
+        <shape type="Sphere" radius="16.5">
+            <transform position="73,16.5,47"/>
         </shape>
         <material type="PureReflectionMaterial">
-            <Reflection>
-                <r>1</r>
-                <g>1</g>
-                <b>1</b>
-            </Reflection>
+          <kr type="ConstantTexture" value="0.999,0.999,0.999" />
         </material>
     </primitive>
     <primitive name="GlassSphere">
-        <shape type="Sphere" bCompositeObject="false">
-            <transform>
-                <position>
-                    <x>27</x>
-                    <y>16.5</y>
-                    <z>78</z>
-                </position>
-            </transform>
-            <radius>16.5</radius>
-            <SurfaceColor>
-                <r>0.999</r>
-                <g>0.999</g>
-                <b>0.999</b>
-            </SurfaceColor>
+        <shape type="Sphere" radius="16.5">
+            <transform position="27,16.5,78" />
         </shape>
         <material type="GlassMaterial">
-            <Reflection>
-                <r>1</r>
-                <g>1</g>
-                <b>1</b>
-            </Reflection>
-            <Transmission>
-                <r>1.0</r>
-                <g>1.0</g>
-                <b>1.0</b>
-            </Transmission>
-            <ior>1.5</ior>
+          <kr type="ConstantTexture" value="0.999,0.999,0.999"/>
+          <kt type="ConstantTexture" value="0.999,0.999,0.999"/>
+          <RefraIndex type="ConstantTexture" value="1.5,1.5,1.5"/>
         </material>
     </primitive>
     <primitive name="BottomPlane">
-        <shape type="TriangleMesh" bCompositeObject="true">
-            <filename>BottomPlane.obj</filename>
-            <transform>
-                <position>
-                    <x>0</x>
-                    <y>0</y>
-                    <z>0</z>
-                </position>
-            </transform>
-            <SurfaceColor>
-                <r>0.75</r>
-                <g>0.75</g>
-                <b>0.75</b>
-            </SurfaceColor>
+        <shape type="TriangleMesh" filename="BottomPlane.obj">
+            <transform position="0.0,0.0,0.0" />
         </shape>
         <material type="DiffuseMaterial">
-          <Reflection>
-              <r>1.0</r>
-              <g>1.0</g>
-              <b>1.0</b>
-          </Reflection>
+          <kd type="ConstantTexture" value="0.75,0.75,0.75" />
         </material>
     </primitive>
     <primitive name="FloorPlane">
-        <shape type="TriangleMesh" bCompositeObject="true">
-            <filename>FloorPlane.obj</filename>
-            <transform>
-                <position>
-                    <x>0</x>
-                    <y>0</y>
-                    <z>0</z>
-                </position>
-            </transform>
-            <SurfaceColor>
-                <r>0.75</r>
-                <g>0.75</g>
-                <b>0.75</b>
-            </SurfaceColor>
+        <shape type="TriangleMesh" filename="FloorPlane.obj">
+            <transform position="0.0,0.0,0.0" />
         </shape>
         <material type="DiffuseMaterial">
-            <Reflection>
-                <r>1.0</r>
-                <g>1.0</g>
-                <b>1.0</b>
-            </Reflection>
+            <kd type="ConstantTexture" value="0.75,0.75,0.75" />
         </material>
-    </primitive>
-    <primitive name="LightSource">
-          <shape type="TriangleMesh" bCompositeObject="true">
-            <filename>LightSource.obj</filename>
-            <transform>
-                <position>
-                    <x>0</x>
-                    <y>0</y>
-                    <z>0</z>
-                </position>
-            </transform>
-            <SurfaceColor>
-                <r>0.0</r>
-                <g>0.0</g>
-                <b>0.0</b>
-            </SurfaceColor>
-        </shape>
-        <material type="DiffuseMaterial">
-            <Reflection>
-                <r>1.0</r>
-                <g>1.0</g>
-                <b>1.0</b>
-            </Reflection>
-        </material>
-        <AreaLight>
-            <Le>
-                <r>12</r>
-                <g>12</g>
-                <b>12</b>
-            </Le>
-        </AreaLight>
     </primitive>
     <primitive name="RightPlane">
-        <shape type="TriangleMesh" bCompositeObject="true">
-            <filename>RightPlane.obj</filename>
-            <transform>
-                <position>
-                    <x>0</x>
-                    <y>0</y>
-                    <z>0</z>
-                </position>
-            </transform>
-            <SurfaceColor>
-                <r>0.75</r>
-                <g>0.25</g>
-                <b>0.25</b>
-            </SurfaceColor>
+        <shape type="TriangleMesh" filename="RightPlane.obj">
+            <transform position="0.0,0.0,0.0" />
         </shape>
         <material type="DiffuseMaterial">
-            <Reflection>
-                <r>1</r>
-                <g>1</g>
-                <b>1</b>
-            </Reflection>
+            <kd type="CheckerboardTexture" value1="0.0,0.0,0.0" value2="1.0,1.0,1.0"/>
         </material>
     </primitive>
     <primitive name="LeftPlane">
-        <shape type="TriangleMesh" bCompositeObject="true">
-            <filename>LeftPlane.obj</filename>
-            <transform>
-                <position>
-                    <x>0</x>
-                    <y>0</y>
-                    <z>0</z>
-                </position>
-            </transform>
-            <SurfaceColor>
-                <r>0.25</r>
-                <g>0.25</g>
-                <b>0.75</b>
-            </SurfaceColor>
+        <shape type="TriangleMesh" filename="LeftPlane.obj">
+            <transform position="0.0,0.0,0.0" />
         </shape>
         <material type="DiffuseMaterial">
-            <Reflection>
-                <r>1</r>
-                <g>1</g>
-                <b>1</b>
-            </Reflection>
+            <kd type="ConstantTexture" value="0.75,0.25,0.25" />
         </material>
     </primitive>
     <primitive name="FrontPlane">
-        <shape type="TriangleMesh" bCompositeObject="true">
-            <filename>FrontPlane.obj</filename>
-            <transform>
-                <position>
-                    <x>0</x>
-                    <y>0</y>
-                    <z>0</z>
-                </position>
-            </transform>
-            <SurfaceColor>
-                <r>0</r>
-                <g>0</g>
-                <b>0</b>
-            </SurfaceColor>
+        <shape type="TriangleMesh" filename="FrontPlane.obj">
+            <transform position="0.0,0.0,0.0" />
         </shape>
         <material type="DiffuseMaterial">
-          <Reflection>
-              <r>1.0</r>
-              <g>1.0</g>
-              <b>1.0</b>
-          </Reflection>
+          <kd type="ConstantTexture" value="0.0,0.0,0.0" />
         </material>
     </primitive>
     <primitive name="BackPlane">
-        <shape type="TriangleMesh" bCompositeObject="true">
-            <filename>BackPlane.obj</filename>
-            <transform>
-                <position>
-                    <x>0</x>
-                    <y>0</y>
-                    <z>0</z>
-                </position>
-            </transform>
-            <SurfaceColor>
-                <r>0.75</r>
-                <g>0.75</g>
-                <b>0.75</b>
-            </SurfaceColor>
+        <shape type="TriangleMesh" filename="BackPlane.obj">
+            <transform position="0.0,0.0,0.0" />
         </shape>
         <material type="DiffuseMaterial">
-          <Reflection>
-              <r>1.0</r>
-              <g>1.0</g>
-              <b>1.0</b>
-          </Reflection>
+          <kd type="ConstantTexture" value="0.75,0.75,0.75" />
         </material>
     </primitive>
+    <primitive name="LightSource">
+          <shape type="TriangleMesh" filename="LightSource.obj">
+            <transform position="0.0,0.0,0.0" />
+        </shape>
+        <material type="DiffuseMaterial">
+            <kd type="ConstantTexture" value="0.0,0.0,0.0" />
+        </material>
+        <AreaLight Le="12,12,12" />
+    </primitive>
     <Camera type="ThinLensCamera">
-        <Position>
-            <x>50</x>
-            <y>52</y>
-            <z>295.6</z>
-        </Position>
-        <Target>
-            <x>50</x>
-            <y>51.957388</y>
-            <z>294.6</z>
-        </Target>
+        <Position>50,52,295.6</Position>
+        <Target>50,51.957388,294.6</Target>
         <LensFocus>210</LensFocus>
         <LensRadius>0.10000000000000001</LensRadius>
         <NearPlane>140</NearPlane>
         <Fovy>15</Fovy>
     </Camera>
-    <Film>
-        <filename>result.ppm</filename>
-        <width>1024</width>
-        <height>768</height>
-    </Film>
-    <Integrator type="PathIntegrator">
-        <MaxDepth>3</MaxDepth>
-    </Integrator>
-    <Sampler type="NRooksSampler">
-        <SampleGroupCount>81</SampleGroupCount>
-        <SampleCount>3000</SampleCount>
-    </Sampler>
-    <Renderer type="SamplerRenderer">
-        <spp>4</spp>
-    </Renderer>
+    <Film filename="result.ppm" width="1024" height="768" />
+    <Integrator type="PathIntegrator" MaxDepth="3" />
+    <Sampler type="NRooksSampler" SampleGroupCount="81" SampleCount="3000" />
+    <Renderer type="SamplerRenderer" spp="4" />
 </Root>

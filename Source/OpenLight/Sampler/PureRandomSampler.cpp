@@ -45,8 +45,8 @@ void PureRandomSampler::GenerateUnitSquareSamples()
 
 void PureRandomSampler::Deserialization( tinyxml2::XMLElement* SamplerRootElement )
 {
-	SamplerRootElement->FirstChildElement( "SampleGroupCount" )->QueryIntText( &SampleGroupCount );
-	SamplerRootElement->FirstChildElement( "SampleCount" )->QueryIntText( &SampleCount );
+	SamplerRootElement->QueryIntAttribute( "SampleGroupCount" , &SampleGroupCount );
+	SamplerRootElement->QueryIntAttribute( "SampleCount" , &SampleCount );
 
 	SetProperty( SampleCount , SampleGroupCount );
 }
@@ -56,16 +56,8 @@ void PureRandomSampler::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2:
 	pRootElement->SetAttribute( "type" , GetName() );
 
 	{
-		tinyxml2::XMLElement* pSampleGroupCountElement = xmlDoc.NewElement( "SampleGroupCount" );
+		pRootElement->SetAttribute( "SampleGroupCount" , SampleGroupCount );
 
-		pSampleGroupCountElement->SetText( SampleGroupCount );
-
-		pRootElement->InsertEndChild( pSampleGroupCountElement );
-
-		tinyxml2::XMLElement* pSampleCountElement = xmlDoc.NewElement( "SampleCount" );
-
-		pSampleCountElement->SetText( SampleCount );
-
-		pRootElement->InsertEndChild( pSampleCountElement );
+		pRootElement->SetAttribute( "SampleCount" , SampleCount );
 	}
 }

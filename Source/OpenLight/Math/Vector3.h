@@ -18,9 +18,6 @@ public:
 	explicit Vector3f( const Point3f& p );
 
 public:
-	friend std::ostream & operator << ( std::ostream & os , const Vector3f &v );
-
-public:
 	operator Normal();
 
 	Vector3f& operator = ( const Vector3f& rhs );

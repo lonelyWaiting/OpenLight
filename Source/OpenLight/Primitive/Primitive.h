@@ -34,7 +34,7 @@ public:
 
 	int GetShapeCount() const;
 
-	BSDF* GetBSDF( const Point3f& point , const Normal& normal ) const;
+	BSDF* GetBSDF( const Vector2f& uv , const Point3f& point , const Normal& normal ) const;
 
 	Material* GetMaterial() const;
 

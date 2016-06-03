@@ -109,11 +109,6 @@ Point3f Shape::GetPosition()
 	return Pos;
 }
 
-Spectrum Shape::GetSurfaceColor()
-{
-	return SurfaceColor;
-}
-
 void Shape::SetPosition( float* pos )
 {
 	Pos[0] = ( double )pos[0];
@@ -125,9 +120,4 @@ void Shape::SetPosition( float* pos )
 	*WorldToObject = Inverse( *ObjectToWorld );
 
 	BBoxWorld = ( *ObjectToWorld )( BBoxLocal );
-}
-
-void Shape::SetSurfaceColor( float* color )
-{
-	SurfaceColor = Spectrum::FromRGB( ( double )color[0] , ( double )color[1] , ( double )color[2] );
 }

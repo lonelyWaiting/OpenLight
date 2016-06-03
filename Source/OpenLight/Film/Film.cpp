@@ -74,11 +74,11 @@ Vector2f Film::GetResolution() const
 void Film::Deserialization( const tinyxml2::XMLElement* FilmRootElement )
 {
 	// ---------------------------------Film---------------------------------------------
-	Filename = new char[20];
-	strcpy_s( Filename , 20 , FilmRootElement->FirstChildElement( "filename" )->GetText() );
+	Filename = new char[30];
+	strcpy_s( Filename , 20 , FilmRootElement->Attribute( "filename" ));
 
-	FilmRootElement->FirstChildElement( "width" )->QueryIntText( &Width );
-	FilmRootElement->FirstChildElement( "height" )->QueryIntText( &Height );
+	FilmRootElement->QueryIntAttribute( "width" ,&Width);
+	FilmRootElement->QueryIntAttribute( "height" , &Height );
 
 	SAFE_DELETE( image );
 
@@ -88,19 +88,13 @@ void Film::Deserialization( const tinyxml2::XMLElement* FilmRootElement )
 void Film::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
 {
 	{
-		tinyxml2::XMLElement* pFilenameElement = xmlDoc.NewElement( "filename" );
-		pFilenameElement->SetText( Filename );
-		pRootElement->InsertEndChild( pFilenameElement );
+		pRootElement->SetAttribute( "filename" , Filename );
 	}
 
 	{
-		tinyxml2::XMLElement* pWidthElement = xmlDoc.NewElement( "width" );
-		pWidthElement->SetText( Width );
-		pRootElement->InsertEndChild( pWidthElement );
+		pRootElement->SetAttribute( "width" , Width );
 
-		tinyxml2::XMLElement* pHeightElement = xmlDoc.NewElement( "height" );
-		pHeightElement->SetText( Height );
-		pRootElement->InsertEndChild( pHeightElement );
+		pRootElement->SetAttribute( "height" , Height );
 	}
 }
 

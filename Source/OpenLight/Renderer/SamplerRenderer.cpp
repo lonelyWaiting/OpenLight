@@ -132,7 +132,7 @@ Spectrum SamplerRenderer::Li( const Scene* scene , Ray* ray , IntersectRecord* r
 
 void SamplerRenderer::Deserialization( tinyxml2::XMLElement* RendererRootElement )
 {
-	RendererRootElement->FirstChildElement( "spp" )->QueryIntText( &spp );
+	RendererRootElement->QueryIntAttribute( "spp" , &spp );
 }
 
 void SamplerRenderer::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
@@ -140,9 +140,7 @@ void SamplerRenderer::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::X
 	pRootElement->SetAttribute( "type" , GetName() );
 
 	{
-		tinyxml2::XMLElement* pElement = xmlDoc.NewElement( "spp" );
-		pElement->SetText( spp );
-		pRootElement->InsertEndChild( pElement );
+		pRootElement->SetAttribute( "spp" , spp );
 	}
 }
 

@@ -43,7 +43,7 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 
 		if( !f.IsBlack() && pVisibility->Unoccluded( scene , pAccelerator ) )
 		{
-			L += f * Li * AbsDot( wi , n ) / pdf * record->SurfaceColor;
+			L += f * Li * AbsDot( wi , n ) / pdf;
 		}
 
 		SAFE_DELETE( pVisibility );
@@ -55,8 +55,6 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 
 		bool bNoReflectOccur = false;
 
-		Spectrum SurfaceColor = record->SurfaceColor;
-
 		// ¸ú×Ù·´Éä¹âÏß
 		Li += SpecularReflect( *ray , scene , renderer , record , pAccelerator , bsdf , bNoReflectOccur );
 
@@ -66,7 +64,7 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 			Li += SpecularTransmit( *ray , scene , renderer , record , pAccelerator , bsdf , bNoReflectOccur );
 		}
 		
-		L = L + Li * SurfaceColor;
+		L = L + Li;
 	}
 
 	SAFE_DELETE( bsdf );
@@ -84,10 +82,6 @@ void WhittedIntegrator::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2:
 	pRootElement->SetAttribute( "type" , GetName() );
 
 	{
-		tinyxml2::XMLElement* pMaxDepthElement = xmlDoc.NewElement( "MaxDepth" );
-
-		pMaxDepthElement->SetText( mMaxDepth );
-
-		pRootElement->InsertEndChild( pMaxDepthElement );
+		pRootElement->SetAttribute( "MaxDepth" , mMaxDepth );
 	}
 }

@@ -1,6 +1,7 @@
 #include <Utilities/PCH.h>
 #include "Math/Point3.h"
 #include "Math/Point2.h"
+#include "Math/Vector2.h"
 #include "Math/Normal.h"
 #include "Triangle.h"
 #include "IO/FileSystem.h"
@@ -12,7 +13,7 @@
 #include <assimp/postprocess.h>
 #include "ModelParser.h"
 
-void ModelParse( const std::string& filename , Point3f*& points , Normal*& normals , Triangle*& triangles , int& VertexCount , int& FaceCount )
+void ModelParse( const std::string& filename , Point3f*& points , Normal*& normals , Vector2f*& uvs , Triangle*& triangles , int& VertexCount , int& FaceCount )
 {
 	FileSystem fs;
 	std::wstring name = fs.GetModelFolder() + srString::ToUnicode( filename );
@@ -30,7 +31,6 @@ void ModelParse( const std::string& filename , Point3f*& points , Normal*& norma
 	{
 		VertexCount = 0;
 		FaceCount = 0;
-
 		for( unsigned int i = 0; i < scene->mNumMeshes; i++ )
 		{
 			aiMesh* mesh = scene->mMeshes[i];
@@ -44,6 +44,9 @@ void ModelParse( const std::string& filename , Point3f*& points , Normal*& norma
 
 		SAFE_DELETE( normals );
 		normals = new Normal[VertexCount];
+
+		SAFE_DELETE( uvs );
+		uvs = new Vector2f[VertexCount];
 
 		SAFE_DELETE( triangles );
 		triangles = new Triangle[FaceCount];
@@ -61,6 +64,8 @@ void ModelParse( const std::string& filename , Point3f*& points , Normal*& norma
 				points[Vertexindex]  = Point3f( mesh->mVertices[j].x , mesh->mVertices[j].y , mesh->mVertices[j].z );
 
 				normals[Vertexindex] = Normal( mesh->mNormals[j].x , mesh->mNormals[j].y , mesh->mNormals[j].z );
+
+				uvs[Vertexindex] = Vector2f( mesh->mTextureCoords[0][j].x , mesh->mTextureCoords[0][j].y );
 			}
 
 			for( unsigned int j = 0; j < mesh->mNumFaces; j++ , FaceIndex++ )

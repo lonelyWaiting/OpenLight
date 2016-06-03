@@ -37,13 +37,6 @@ Ray::Ray( const Point3f& Origin , const Vector3f& Direction , const Ray& parent 
 
 }
 
-std::ostream& operator << ( std::ostream &os , const Ray &ray )
-{
-	os << "[Origin = " << ray.Origin << " , Directtion = " << ray.Direction << " , tMin = " << ray.MinT << " , tMax = " << ray.MaxT << " , time = " << ray.time << "]";
-
-	return os;
-}
-
 Ray::Ray( const Ray& ray )
 {
 	Origin = ray.Origin;

@@ -30,13 +30,6 @@ Vector3f::Vector3f( const Point3f &p )
 	z = p.z;
 }
 
-std::ostream & operator << ( std::ostream & os , const Vector3f &v )
-{
-	os << "[" << v.x << ", " << v.y << ", " << v.z << "]";
-
-	return os;
-}
-
 Vector3f::operator Normal()
 {
 	return Normal( x , y , z );

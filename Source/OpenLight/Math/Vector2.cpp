@@ -41,12 +41,6 @@ Vector2f& Vector2f::operator = ( const Vector2f &rhs )
 	return *this;
 }
 
-std::ostream& operator << ( std::ostream &os , const Vector2f &rhs )
-{
-	os << "[" << rhs.x << ", " << rhs.y << "]";
-	return os;
-}
-
 Vector2f Vector2f::operator + ( const Vector2f& v ) const
 {
 	return Vector2f( x + v.x , y + v.y );

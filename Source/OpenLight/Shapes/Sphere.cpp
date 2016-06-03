@@ -66,14 +66,31 @@ bool Sphere::Intersect( Ray& r , IntersectRecord* record ) const
 			}
 		}
 
+		Point3f HitPointInLocalSpace = ray( t );
+		if( HitPointInLocalSpace.x == 0.0 && HitPointInLocalSpace.y == 0.0 )
+		{
+			HitPointInLocalSpace.x = 1e-5f * m_Radius;
+		}
+		
+		double phi = atan2l( HitPointInLocalSpace.y , HitPointInLocalSpace.x );
+		if( phi < 0.0 )
+		{
+			phi += 2.0 * PI;
+		}
+
+		double u = phi / TWO_PI;
+		double theta = acosl( clamp( HitPointInLocalSpace.z / m_Radius , -1.0 , 1.0 ) );
+		double v = theta / PI;
+
 		r.MaxT                = t;
 		record->primitivePtr  = pPrimitive;
 		record->HitT          = t;
 		record->ObjectToWorld = *ObjectToWorld;
 		record->WorldToObject = *WorldToObject;
 		record->normal        = Normal( Normalize( r( t ) - Pos ) );
-		record->SurfaceColor  = SurfaceColor;
 		record->HitPoint      = r( t );
+		record->uv            = Vector2f( u , v );
+
 		return true;
 	}
 	
@@ -85,8 +102,6 @@ void Sphere::Deserialization( tinyxml2::XMLElement* ShapeRootElement )
 	ShapeRootElement->QueryDoubleAttribute( "radius" , &m_Radius );
 
 	ParseVector3( std::string( ShapeRootElement->FirstChildElement( "transform" )->Attribute( "position" ) ) , &Pos[0] );
-
-	ParseVector3( ShapeRootElement->FirstChildElement( "SurfaceColor" )->GetText() , SurfaceColor.GetDataPtr() );
 
 	*ObjectToWorld = Translate( Vector3f( Pos ) );
 	*WorldToObject = Inverse( *ObjectToWorld );
@@ -118,20 +133,6 @@ void Sphere::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement
 
 		SAFE_DELETE( pText );
 	}
-
-	{
-		char* pText = new char[50];
-		sprintf( pText , "%f,%f,%f" , SurfaceColor[0] , SurfaceColor[1] , SurfaceColor[2] );
-
-		tinyxml2::XMLElement* pSurfaceElement = xmlDoc.NewElement( "SurfaceColor" );
-
-		pSurfaceElement->SetText( pText );
-
-		pRootElement->InsertEndChild( pSurfaceElement );
-
-		SAFE_DELETE( pText );
-	}
-	
 }
 
 double Sphere::Area() const

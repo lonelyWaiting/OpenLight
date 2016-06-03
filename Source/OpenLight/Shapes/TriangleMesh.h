@@ -17,7 +17,7 @@ class TriangleMesh : public Shape
 public:
 	TriangleMesh();
 
-	TriangleMesh( const Transform* ObjectToWorld ,  Point3f* _points , Normal* _normals , Triangle* _triangles , int _VertexNum , int _TriangleCount );
+	TriangleMesh( const Transform* ObjectToWorld ,  Point3f* _points , Normal* _normals , Vector2f* _uvs , Triangle* _triangles , int _VertexNum , int _TriangleCount );
 
 	~TriangleMesh();
 
@@ -36,6 +36,7 @@ public:
 private:
 	Point3f * points;
 	Normal  * normals;
+	Vector2f* uvs;
 	Triangle* triangles;
 	int		  VertexNum;
 	int		  TriangleCount;

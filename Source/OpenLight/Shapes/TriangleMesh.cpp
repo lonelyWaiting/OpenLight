@@ -18,11 +18,12 @@ TriangleMesh::TriangleMesh()
 	bSubShape = true;
 }
 
-TriangleMesh::TriangleMesh( const Transform* ObjectToWorld , Point3f* _points , Normal* _normals , Triangle* _triangles , int _VertexNum , int _TriangleCount )
+TriangleMesh::TriangleMesh( const Transform* ObjectToWorld , Point3f* _points , Normal* _normals , Vector2f* _uvs , Triangle* _triangles , int _VertexNum , int _TriangleCount )
 	: Shape( ObjectToWorld )
 	, points( _points )
 	, normals( _normals )
 	, triangles( _triangles )
+	, uvs( _uvs )
 	, VertexNum( _VertexNum )
 	, TriangleCount( _TriangleCount )
 {
@@ -68,15 +69,13 @@ bool TriangleMesh::Intersect( Ray& ray , IntersectRecord* record ) const
 
 void TriangleMesh::Deserialization( tinyxml2::XMLElement* ShapeRootElement )
 {
-	const char* name = ShapeRootElement->FirstChildElement( "filename" )->GetText();
+	const char* name = ShapeRootElement->Attribute( "filename" );
 	filename = new char[strlen( name )];
 	strcpy( filename , name );
 
 	ParseVector3( ShapeRootElement->FirstChildElement( "transform" )->Attribute( "position" ) , &Pos[0] );
 
-	ParseVector3( ShapeRootElement->FirstChildElement( "SurfaceColor" )->GetText() , SurfaceColor.GetDataPtr() );
-
-	ModelParse( filename , points , normals , triangles , VertexNum , TriangleCount );
+	ModelParse( filename , points , normals , uvs , triangles , VertexNum , TriangleCount );
 
 	*ObjectToWorld = Translate( Vector3f( Pos ) );
 	*WorldToObject = Inverse( *ObjectToWorld );
@@ -110,7 +109,7 @@ void TriangleMesh::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLE
 	}
 
 	{
-		char* pText = new char[27];
+		char* pText = new char[50];
 		sprintf( pText , "%f,%f,%f" , Pos.x , Pos.y , Pos.z );
 
 		tinyxml2::XMLElement* pTransformElement = xmlDoc.NewElement( "transform" );
@@ -119,20 +118,7 @@ void TriangleMesh::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLE
 
 		pRootElement->InsertEndChild( pTransformElement );
 
-		//SAFE_DELETE_ARRAY( pText );
-	}
-
-	{
-		char* pText = new char[27];
-		sprintf( pText , "%f,%f,%f" , SurfaceColor[0] , SurfaceColor[1] , SurfaceColor[2] );
-
-		tinyxml2::XMLElement* pSurfaceElement = xmlDoc.NewElement( "SurfaceColor" );
-
-		pSurfaceElement->SetText( pText );
-
-		pRootElement->InsertEndChild( pSurfaceElement );
-
-		//SAFE_DELETE_ARRAY( pText );
+		SAFE_DELETE( pText );
 	}
 }
 

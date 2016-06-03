@@ -3,22 +3,24 @@
 #include "tinyxml2.h"
 #include "PureReflectionMaterial.h"
 #include "Utilities/srString.h"
+#include "Texture/ConstantTexture.h"
 
 PureReflectionMaterial::PureReflectionMaterial() : Material()
 {
-	R = Spectrum::FromRGB( 1.0 , 1.0 , 1.0 );
+	/*Kr = new ConstantTexture( Spectrum( 1.0 ) );*/
 }
 
 PureReflectionMaterial::PureReflectionMaterial( Spectrum R )
 	: Material()
-	, R( R )
 {
-
+	Kr = new ConstantTexture( R );
 }
 
-BSDF* PureReflectionMaterial::GetBSDF( const Point3f& point , const Normal& normal ) const
+BSDF* PureReflectionMaterial::GetBSDF( const Vector2f& uv , const Point3f& point , const Normal& normal ) const
 {
 	BSDF* bsdf = new BSDF();
+
+	Spectrum R = Kr->Evalute( uv , point );
 
 	bsdf->Add( new PureSpecularReflection( R ) );
 
@@ -27,15 +29,17 @@ BSDF* PureReflectionMaterial::GetBSDF( const Point3f& point , const Normal& norm
 
 void PureReflectionMaterial::Deserialization( tinyxml2::XMLElement* RootElement )
 {
-	tinyxml2::XMLElement* pReflection = RootElement->FirstChildElement( "Reflection" );
+	tinyxml2::XMLElement* pKrElement = RootElement->FirstChildElement( "kr" );
 
-	if( pReflection )
+	if( pKrElement )
 	{
-		ParseVector3( pReflection->GetText() , R.GetDataPtr() );
+		Kr = Texture::Create( pKrElement->Attribute( "type" ) );
+
+		Kr->Deserialization( pKrElement );
 	}
 	else
 	{
-		R = Spectrum::FromRGB( 1.0 , 1.0 , 1.0 );
+		Kr = new ConstantTexture( Spectrum( 1.0 ) );
 	}
 }
 
@@ -44,25 +48,10 @@ void PureReflectionMaterial::Serialization( tinyxml2::XMLDocument& xmlDoc , tiny
 	pRootElement->SetAttribute( "type" , GetName() );
 
 	{
-		char* pText = new char[27];
-		sprintf( pText , "%f,%f,%f" , R[0] , R[1] , R[2] );
+		tinyxml2::XMLElement* pKrElement = xmlDoc.NewElement( "kr" );
 
-		tinyxml2::XMLElement* pReflectionElement = xmlDoc.NewElement( "Reflection" );
+		Kr->Serialization( xmlDoc , pKrElement );
 
-		pReflectionElement->SetText( pText );
-
-		pRootElement->InsertEndChild( pReflectionElement );
-
-		//SAFE_DELETE_ARRAY( pText );
+		pRootElement->InsertEndChild( pKrElement );
 	}
-}
-
-Spectrum PureReflectionMaterial::GetReflection()
-{
-	return R;
-}
-
-void PureReflectionMaterial::SetReflection( float* reflection )
-{
-	R = Spectrum::FromRGB( ( double )reflection[0] , ( double )reflection[1] , ( double )reflection[2] );
 }
