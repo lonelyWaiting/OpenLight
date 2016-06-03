@@ -38,10 +38,10 @@ void CheckboardTexture::Deserialization( tinyxml2::XMLElement* RootElement )
 {
 	Spectrum value;
 
-	ParseVector3( RootElement->Attribute( "value1" ) , value.GetDataPtr() );
+	ParseVector( RootElement->Attribute( "value1" ) , value.GetDataPtr() );
 	texture1 = new ConstantTexture( value );
 
-	ParseVector3( RootElement->Attribute( "value2" ) , value.GetDataPtr() );
+	ParseVector( RootElement->Attribute( "value2" ) , value.GetDataPtr() );
 	texture2 = new ConstantTexture( value );
 }
 

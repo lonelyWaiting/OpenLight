@@ -89,7 +89,7 @@ bool Sphere::Intersect( Ray& r , IntersectRecord* record ) const
 		record->WorldToObject = *WorldToObject;
 		record->normal        = Normal( Normalize( r( t ) - Pos ) );
 		record->HitPoint      = r( t );
-		record->uv            = Vector2f( u , v );
+		record->uv            = Vector2f( u , v ) * uvscale;
 
 		return true;
 	}
@@ -101,7 +101,16 @@ void Sphere::Deserialization( tinyxml2::XMLElement* ShapeRootElement )
 {
 	ShapeRootElement->QueryDoubleAttribute( "radius" , &m_Radius );
 
-	ParseVector3( std::string( ShapeRootElement->FirstChildElement( "transform" )->Attribute( "position" ) ) , &Pos[0] );
+	if( ShapeRootElement->Attribute( "uvscale" ) )
+	{
+		ParseVector( ShapeRootElement->Attribute( "uvscale" ) , &uvscale[0] );
+	}
+	else
+	{
+		uvscale = Vector2f( 1.0 , 1.0 );
+	}
+
+	ParseVector( std::string( ShapeRootElement->FirstChildElement( "transform" )->Attribute( "position" ) ) , &Pos[0] );
 
 	*ObjectToWorld = Translate( Vector3f( Pos ) );
 	*WorldToObject = Inverse( *ObjectToWorld );
@@ -115,6 +124,14 @@ void Sphere::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement
 {
 	{
 		pRootElement->SetAttribute( "type" , GetName() );
+	}
+
+	{
+		char* pText = new char[50];
+		sprintf( pText , "%f,%f" , uvscale.x , uvscale.y );
+		pRootElement->SetAttribute( "uvscale" , pText );
+
+		SAFE_DELETE( pText );
 	}
 
 	{

@@ -20,7 +20,7 @@ Spectrum ConstantTexture::Evalute( const Vector2f& uv , const Point3f& p ) const
 
 void ConstantTexture::Deserialization( tinyxml2::XMLElement* RootElement )
 {
-	ParseVector3( RootElement->Attribute( "value" ) , value.GetDataPtr() );
+	ParseVector( RootElement->Attribute( "value" ) , value.GetDataPtr() );
 }
 
 void ConstantTexture::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )

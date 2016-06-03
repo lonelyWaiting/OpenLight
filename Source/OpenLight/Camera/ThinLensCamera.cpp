@@ -65,9 +65,9 @@ void ThinLensCamera::Deserialization( tinyxml2::XMLElement* CameraRootElement )
 {
 	tinyxml2::XMLElement* pElement = nullptr;
 
-	ParseVector3( CameraRootElement->FirstChildElement( "Position" )->GetText() , &Eye[0] );
+	ParseVector( CameraRootElement->FirstChildElement( "Position" )->GetText() , &Eye[0] );
 
-	ParseVector3( CameraRootElement->FirstChildElement( "Target" )->GetText() , &Target[0] );
+	ParseVector( CameraRootElement->FirstChildElement( "Target" )->GetText() , &Target[0] );
 
 	CameraRootElement->FirstChildElement( "LensFocus" )->QueryDoubleText( &LensFocus );
 

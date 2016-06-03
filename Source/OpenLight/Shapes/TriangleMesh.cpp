@@ -73,7 +73,16 @@ void TriangleMesh::Deserialization( tinyxml2::XMLElement* ShapeRootElement )
 	filename = new char[strlen( name )];
 	strcpy( filename , name );
 
-	ParseVector3( ShapeRootElement->FirstChildElement( "transform" )->Attribute( "position" ) , &Pos[0] );
+	if( ShapeRootElement->Attribute( "uvscale" ) )
+	{
+		ParseVector( ShapeRootElement->Attribute( "uvscale" ) , &uvscale[0] );
+	}
+	else
+	{
+		uvscale = Vector2f( 1.0 , 1.0 );
+	}
+
+	ParseVector( ShapeRootElement->FirstChildElement( "transform" )->Attribute( "position" ) , &Pos[0] );
 
 	ModelParse( filename , points , normals , uvs , triangles , VertexNum , TriangleCount );
 
@@ -98,6 +107,14 @@ void TriangleMesh::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLE
 {
 	{
 		pRootElement->SetAttribute( "type" , GetName() );
+	}
+
+	{
+		char* pText = new char[50];
+		sprintf( pText , "%f,%f" , uvscale.x , uvscale.y );
+		pRootElement->SetAttribute( "uvscale" , pText );
+
+		SAFE_DELETE( pText );
 	}
 	
 	{

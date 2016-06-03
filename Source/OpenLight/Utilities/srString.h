@@ -26,4 +26,4 @@ inline std::wstring ToString( const T& value )
 	return stream.str();
 }
 
-void ParseVector3( const std::string s , double* v );
+void ParseVector( const std::string s , double* v );

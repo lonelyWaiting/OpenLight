@@ -17,6 +17,14 @@
           <RefraIndex type="ConstantTexture" value="1.5,1.5,1.5"/>
         </material>
     </primitive>
+    <primitive name="DiffuseSphere">
+          <shape type="Sphere" radius="16.5" uvscale="10,10">
+              <transform position="63,36.5,60"/>
+          </shape>
+          <material type="DiffuseMaterial">
+            <kd type="CheckboardTexture" value1="0.25,0.75,0.25" value2="1.0,1.0,1.0"/>
+          </material>
+      </primitive>
     <primitive name="BottomPlane">
         <shape type="TriangleMesh" filename="BottomPlane.obj">
             <transform position="0.0,0.0,0.0" />
@@ -34,7 +42,7 @@
         </material>
     </primitive>
     <primitive name="RightPlane">
-        <shape type="TriangleMesh" filename="RightPlane.obj">
+        <shape type="TriangleMesh" filename="RightPlane.obj" uvscale="20,20">
             <transform position="0.0,0.0,0.0" />
         </shape>
         <material type="DiffuseMaterial">
@@ -62,7 +70,7 @@
             <transform position="0.0,0.0,0.0" />
         </shape>
         <material type="DiffuseMaterial">
-          <kd type="ConstantTexture" value="0.75,0.75,0.75" />
+          <kd type="ImageTexture" filename="test.jpg" />
         </material>
     </primitive>
     <primitive name="LightSource">

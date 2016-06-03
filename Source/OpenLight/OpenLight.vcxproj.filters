@@ -288,6 +288,15 @@
     <ClInclude Include="Texture\CheckboardTexture.h">
       <Filter>Texture</Filter>
     </ClInclude>
+    <ClInclude Include="Texture\ImageTexture.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\ImageManager.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\ImageFile.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Accelerator\Grid.cpp">
@@ -504,6 +513,15 @@
       <Filter>Texture</Filter>
     </ClCompile>
     <ClCompile Include="Texture\CheckboardTexture.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\ImageTexture.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\ImageManager.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\ImageFile.cpp">
       <Filter>Texture</Filter>
     </ClCompile>
   </ItemGroup>

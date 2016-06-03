@@ -48,6 +48,8 @@ bool InitRTTI()
 
 	IMPLEMENT_DYNAMIC_CREATE_DERIVED( ConstantTexture )
 
+	IMPLEMENT_DYNAMIC_CREATE_DERIVED( ImageTexture )
+
 	return true;
 }
 

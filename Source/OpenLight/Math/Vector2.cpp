@@ -77,6 +77,11 @@ bool Vector2f::operator != ( const Vector2f & v ) const
 	return ( x != v.x || y != v.y );
 }
 
+Vector2f Vector2f::operator* ( const Vector2f& v ) const
+{
+	return Vector2f( x * v.x , y * v.y );
+}
+
 Vector2f Vector2f::operator* ( double f ) const
 {
 	assert( !std::isnan( f ) );

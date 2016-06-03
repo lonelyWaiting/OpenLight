@@ -41,9 +41,9 @@ Ray PinholeCamera::GenerateRay( double RasterX , double RasterY , const CameraSa
 
 void PinholeCamera::Deserialization( tinyxml2::XMLElement* CameraRootElement )
 {
-	ParseVector3( CameraRootElement->FirstChildElement( "Position" )->GetText() , &Eye[0] );
+	ParseVector( CameraRootElement->FirstChildElement( "Position" )->GetText() , &Eye[0] );
 
-	ParseVector3( CameraRootElement->FirstChildElement( "Target" )->GetText() , &Target[0] );
+	ParseVector( CameraRootElement->FirstChildElement( "Target" )->GetText() , &Target[0] );
 
 	tinyxml2::XMLElement* pElement = nullptr;
 

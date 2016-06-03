@@ -99,7 +99,7 @@ bool Triangle::Intersect( Ray& rayWorld , IntersectRecord* record ) const
 		record->normal        = ( *ObjectToWorld )( pMesh->normals[index0] );			// 该triangle上的三个顶点
 		record->HitPoint      = rayWorld( t );
 		record->primitivePtr  = pPrimitive;
-		record->uv = ( uv0 * alpha + uv1 * beta + uv2 * gamma ) * 20;
+		record->uv = ( uv0 * alpha + uv1 * beta + uv2 * gamma ) * pMesh->uvscale;
 
 		return true;
 	}

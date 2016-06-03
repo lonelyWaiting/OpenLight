@@ -64,7 +64,7 @@ void PointLight::Deserialization( tinyxml2::XMLElement* LightRootElement )
 {
 	tinyxml2::XMLElement* LightTransformRootElement = LightRootElement->FirstChildElement( "transform" );
 
-	ParseVector3( LightTransformRootElement->Attribute( "position" ) , &LightPosWorld[0] );
+	ParseVector( LightTransformRootElement->Attribute( "position" ) , &LightPosWorld[0] );
 
 	LightToWorld = Translate( Vector3f( LightPosWorld ) );
 	WorldToLight = Inverse( LightToWorld );
@@ -72,7 +72,7 @@ void PointLight::Deserialization( tinyxml2::XMLElement* LightRootElement )
 	double r , g , b;
 	tinyxml2::XMLElement* IntensityRootElement = LightRootElement->FirstChildElement( "intensity" );
 
-	ParseVector3( LightRootElement->GetText() , intensity.GetDataPtr() );
+	ParseVector( LightRootElement->GetText() , intensity.GetDataPtr() );
 }
 
 void PointLight::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )

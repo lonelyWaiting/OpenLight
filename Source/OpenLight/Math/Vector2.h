@@ -32,6 +32,8 @@ public:
 
 	bool operator != ( const Vector2f & v ) const;
 
+	Vector2f operator * ( const Vector2f& v ) const;
+
 	Vector2f operator* ( double f ) const;
 
 	Vector2f& operator *= ( double f );

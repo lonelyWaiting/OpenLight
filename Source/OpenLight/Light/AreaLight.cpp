@@ -54,7 +54,7 @@ Spectrum AreaLight::Sample_L( const Scene* scene , LightSample& _lightSample , R
 
 void AreaLight::Deserialization( tinyxml2::XMLElement* LightRootElement )
 {
-	ParseVector3( LightRootElement->Attribute( "Le" ) , Lemission.GetDataPtr() );
+	ParseVector( LightRootElement->Attribute( "Le" ) , Lemission.GetDataPtr() );
 }
 
 void AreaLight::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )

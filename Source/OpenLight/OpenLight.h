@@ -45,6 +45,7 @@
 
 #include <Texture/ConstantTexture.h>
 #include <Texture/CheckboardTexture.h>
+#include <Texture/ImageTexture.h>
 
 Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrator*& pSurfaceIntegrator , Sampler*& pSampler );
 

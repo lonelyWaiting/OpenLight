@@ -6,6 +6,7 @@
 #include "Core/VIntersectable.h"
 #include "Core/VCustomRTTI.h"
 #include "Math/Point3.h"
+#include "Math/Vector2.h"
 
 struct IntersectRecord;
 class  Transform;
@@ -51,4 +52,5 @@ public:
 	bool		bSubShape;				// 是否由其它shape组成
 	Primitive*  pPrimitive;				// 所属图元
 	Point3f		Pos;
+	Vector2f	uvscale;
 };

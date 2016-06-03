@@ -82,6 +82,9 @@
     <ClInclude Include="Spectrum\Spectrum.h" />
     <ClInclude Include="Texture\CheckboardTexture.h" />
     <ClInclude Include="Texture\ConstantTexture.h" />
+    <ClInclude Include="Texture\ImageFile.h" />
+    <ClInclude Include="Texture\ImageManager.h" />
+    <ClInclude Include="Texture\ImageTexture.h" />
     <ClInclude Include="Texture\SolidNoise.h" />
     <ClInclude Include="Texture\Texture.h" />
     <ClInclude Include="Utilities\PCH.h" />
@@ -156,6 +159,9 @@
     <ClCompile Include="Spectrum\Spectrum.cpp" />
     <ClCompile Include="Texture\CheckboardTexture.cpp" />
     <ClCompile Include="Texture\ConstantTexture.cpp" />
+    <ClCompile Include="Texture\ImageFile.cpp" />
+    <ClCompile Include="Texture\ImageManager.cpp" />
+    <ClCompile Include="Texture\ImageTexture.cpp" />
     <ClCompile Include="Texture\SolidNoise.cpp" />
     <ClCompile Include="Texture\Texture.cpp" />
     <ClCompile Include="Utilities\PCH.cpp" />
@@ -217,7 +223,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)Library\Inc\TinyXML2\;$(SolutionDir)Library\Inc\assimp\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Library\Inc\TinyXML2\;$(SolutionDir)Library\Inc\assimp\;$(SolutionDir)Library\Inc\FreeImage\</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
@@ -230,8 +236,8 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Lib>
-      <AdditionalDependencies>tinyxml2.lib;assimp.lib;</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Library\Lib\assimp\$(Configuration)\;$(SolutionDir)Library\Lib\TinyXML2\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>tinyxml2.lib;assimp.lib;FreeImage.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Library\Lib\assimp\$(Configuration)\;$(SolutionDir)Library\Lib\TinyXML2\$(Configuration)\;$(SolutionDir)Library\Lib\FreeImage;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
