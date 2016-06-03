@@ -25,6 +25,9 @@ public:
 
 	void Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement );
 
+public:
+	Texture* Getkr();
+
 private:
 	Texture* Kr;
 };

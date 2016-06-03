@@ -43,3 +43,8 @@ Spectrum& ConstantTexture::GetValue()
 { 
 	return value;
 }
+
+void ConstantTexture::SetValue( Spectrum& _value )
+{
+	value = _value;
+}

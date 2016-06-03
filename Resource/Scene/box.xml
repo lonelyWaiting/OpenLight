@@ -38,7 +38,7 @@
             <transform position="0.0,0.0,0.0" />
         </shape>
         <material type="DiffuseMaterial">
-            <kd type="CheckerboardTexture" value1="0.0,0.0,0.0" value2="1.0,1.0,1.0"/>
+            <kd type="CheckboardTexture" value1="0.0,0.0,0.0" value2="1.0,1.0,1.0"/>
         </material>
     </primitive>
     <primitive name="LeftPlane">

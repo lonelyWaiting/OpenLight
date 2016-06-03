@@ -4,25 +4,25 @@
 #include "Spectrum/Spectrum.h"
 #include "Utilities/srString.h"
 
-CheckerboardTexture::CheckerboardTexture()
+CheckboardTexture::CheckboardTexture()
 {
 	/*texture1 = new ConstantTexture( Spectrum( 0.0 ) );
 	texture2 = new ConstantTexture( Spectrum( 1.0 ) );*/
 }
 
-CheckerboardTexture::CheckerboardTexture( ConstantTexture *tex1 , ConstantTexture* tex2 )
+CheckboardTexture::CheckboardTexture( ConstantTexture *tex1 , ConstantTexture* tex2 )
 {
 	texture1 = tex1;
 	texture2 = tex2;
 }
 
-CheckerboardTexture::~CheckerboardTexture()
+CheckboardTexture::~CheckboardTexture()
 {
 	SAFE_DELETE( texture1 );
 	SAFE_DELETE( texture2 );
 }
 
-Spectrum CheckerboardTexture::Evalute( const Vector2f& uv , const Point3f& p ) const
+Spectrum CheckboardTexture::Evalute( const Vector2f& uv , const Point3f& p ) const
 {
 	if( ( ( int )uv.x + ( int )uv.y ) % 2 == 0 )
 	{
@@ -34,7 +34,7 @@ Spectrum CheckerboardTexture::Evalute( const Vector2f& uv , const Point3f& p ) c
 	}
 }
 
-void CheckerboardTexture::Deserialization( tinyxml2::XMLElement* RootElement )
+void CheckboardTexture::Deserialization( tinyxml2::XMLElement* RootElement )
 {
 	Spectrum value;
 
@@ -45,7 +45,7 @@ void CheckerboardTexture::Deserialization( tinyxml2::XMLElement* RootElement )
 	texture2 = new ConstantTexture( value );
 }
 
-void CheckerboardTexture::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
+void CheckboardTexture::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
 {
 	{
 		Spectrum& value = texture1->GetValue();
@@ -63,5 +63,27 @@ void CheckerboardTexture::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml
 		sprintf( pText , "%f,%f,%f" , value[0] , value[1] , value[2] );
 
 		pRootElement->SetAttribute( "value2" , pText );
+	}
+}
+
+void CheckboardTexture::GetValue( Spectrum& value1 , Spectrum& value2 )
+{
+	value1 = texture1->GetValue();
+	value2 = texture2->GetValue();
+}
+
+void CheckboardTexture::SetValue( Spectrum& value , int index )
+{
+	if( index == 1 )
+	{
+		texture1->SetValue( value );
+	}
+	else if( index == 2 )
+	{
+		texture2->SetValue( value );
+	}
+	else
+	{
+		assert( "index invalid , please input 1 or 2" );
 	}
 }

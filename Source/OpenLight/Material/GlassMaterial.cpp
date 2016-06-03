@@ -111,3 +111,18 @@ void GlassMaterial::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XML
 		pRootElement->InsertEndChild( pKrElement );
 	}
 }
+
+Texture* GlassMaterial::GetKr()
+{
+	return Kr;
+}
+
+Texture* GlassMaterial::GetKt()
+{
+	return Kt;
+}
+
+Texture* GlassMaterial::GetRefraIndex()
+{
+	return RefraIndex;
+}

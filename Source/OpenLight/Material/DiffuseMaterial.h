@@ -31,7 +31,7 @@ public:
 
 	DiffuseMaterial( Texture* kd );
 
-	void SetKd( Texture* kd );
+	
 
 	BSDF* GetBSDF( const Vector2f& uv , const Point3f& point , const Normal& normal ) const;
 
@@ -39,6 +39,11 @@ public:
 	void Deserialization( tinyxml2::XMLElement* RootElement );
 
 	void Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement );
+
+public:
+	Texture* GetKd();
+
+	void SetKd( Texture* kd );
 
 private:
 	Texture* Kd;

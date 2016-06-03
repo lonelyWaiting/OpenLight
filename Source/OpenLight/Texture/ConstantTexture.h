@@ -20,12 +20,15 @@ public:
 
 	virtual Spectrum Evalute( const Vector2f& uv , const Point3f& p ) const;
 
-	Spectrum& GetValue();
-
 public:
 	void Deserialization( tinyxml2::XMLElement* RootElement );
 
 	void Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement );
+
+public:
+	Spectrum& GetValue();
+
+	void SetValue( Spectrum& _value );
 
 private:
 	Spectrum value;

@@ -62,3 +62,8 @@ void DiffuseMaterial::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::X
 		pRootElement->InsertEndChild( pKdElement );
 	}
 }
+
+Texture* DiffuseMaterial::GetKd()
+{
+	return Kd;
+}

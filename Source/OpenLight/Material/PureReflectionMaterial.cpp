@@ -55,3 +55,8 @@ void PureReflectionMaterial::Serialization( tinyxml2::XMLDocument& xmlDoc , tiny
 		pRootElement->InsertEndChild( pKrElement );
 	}
 }
+
+Texture* PureReflectionMaterial::Getkr()
+{
+	return Kr;
+}

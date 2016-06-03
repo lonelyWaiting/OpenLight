@@ -11,16 +11,16 @@ class ConstantTexture;
 	type为纹理class name
 	value1，value2分别为棋盘纹理的两种颜色值
 */
-class CheckerboardTexture : public Texture
+class CheckboardTexture : public Texture
 {
-	DECLARE_DYNAMIC_CREATE_DERIVED( CheckerboardTexture , Texture )
+	DECLARE_DYNAMIC_CREATE_DERIVED( CheckboardTexture , Texture )
 
 public:
-	CheckerboardTexture();
+	CheckboardTexture();
 
-	CheckerboardTexture( ConstantTexture* tex1 , ConstantTexture* tex2 );
+	CheckboardTexture( ConstantTexture* tex1 , ConstantTexture* tex2 );
 
-	~CheckerboardTexture();
+	~CheckboardTexture();
 
 	virtual Spectrum Evalute( const Vector2f& uv , const Point3f& p ) const;
 
@@ -28,6 +28,11 @@ public:
 	void Deserialization( tinyxml2::XMLElement* RootElement );
 
 	void Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement );
+
+public:
+	void GetValue( Spectrum& value1 , Spectrum& value2 );
+
+	void SetValue( Spectrum& value , int index );
 
 private:
 	ConstantTexture* texture1;
