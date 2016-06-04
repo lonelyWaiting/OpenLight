@@ -152,3 +152,8 @@ void ShowCheckboardTextureProperty( CheckboardTexture* pCheckboardTexture , cons
 		pCheckboardTexture->SetValue( Spectrum::FromRGB( ( double )r2[0] , ( double )r2[1] , ( double )r2[2] ) , 2 );
 	}
 }
+
+void ShowImageTextureProperty( ImageTexture* pImageTexture , const char* PropertyName )
+{
+
+}

@@ -18,11 +18,11 @@
         </material>
     </primitive>
     <primitive name="DiffuseSphere">
-          <shape type="Sphere" radius="16.5" uvscale="10,10">
+          <shape type="Sphere" radius="16.5" uvscale="1,1">
               <transform position="63,36.5,60"/>
           </shape>
           <material type="DiffuseMaterial">
-            <kd type="CheckboardTexture" value1="0.25,0.75,0.25" value2="1.0,1.0,1.0"/>
+            <kd type="ImageTexture" filename="earth2.jpg" />
           </material>
       </primitive>
     <primitive name="BottomPlane">
@@ -86,7 +86,7 @@
         <Position>50,52,295.6</Position>
         <Target>50,51.957388,294.6</Target>
         <LensFocus>210</LensFocus>
-        <LensRadius>0.10000000000000001</LensRadius>
+        <LensRadius>0.3000000000000001</LensRadius>
         <NearPlane>140</NearPlane>
         <Fovy>15</Fovy>
     </Camera>

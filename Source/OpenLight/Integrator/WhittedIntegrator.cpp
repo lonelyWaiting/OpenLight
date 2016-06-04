@@ -74,7 +74,7 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 
 void WhittedIntegrator::Deserialization( tinyxml2::XMLElement* IntegratorRootElement )
 {
-	IntegratorRootElement->FirstChildElement( "MaxDepth" )->QueryIntText( &mMaxDepth );
+	IntegratorRootElement->QueryIntAttribute( "MaxDepth" , &mMaxDepth );
 }
 
 void WhittedIntegrator::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )

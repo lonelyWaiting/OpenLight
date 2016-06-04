@@ -93,12 +93,26 @@ Spectrum ImageFile::Evalute( double u , double v )
 		if( u < 0.0 )	u += 1.0;
 		if( v < 0.0 )	v += 1.0;
 
-		int x = ( int )( u * m_iWidth );
-		int y = ( int )( v * m_iHeight );
+		int x = ( int )( u * ( m_iWidth - 1 ) );
+		int y = ( int )( v * ( m_iHeight - 1 ) );
+
+		int xnext = clamp( x + 1 , 0 , m_iWidth - 1 );
+		int ynext = clamp( y + 1 , 0 , m_iHeight - 1 );
+
+		u = x == xnext ? 0.0 : u;
+		v = y == ynext ? 0.0 : v;
 
 		BYTE* A = m_pBits + m_iPitch * ( m_iHeight - 1 - y ) + m_iBpp * x;
+		BYTE* B = m_pBits + m_iPitch * ( m_iHeight - 1 - y ) + m_iBpp * xnext;
+		BYTE* C = m_pBits + m_iPitch * ( m_iHeight - 1 - ynext ) + m_iBpp * x;
+		BYTE* D = m_pBits + m_iPitch * ( m_iHeight - 1 - ynext ) + m_iBpp * xnext;
+		
+		double r = ( ( double )A[2] * ( 1.0 - u ) + ( double )B[2] * u ) * ( 1.0 - v ) + ( ( double )C[2] * ( 1.0 - u ) + ( double )D[2] * u ) * v;
+		double g = ( ( double )A[1] * ( 1.0 - u ) + ( double )B[1] * u ) * ( 1.0 - v ) + ( ( double )C[1] * ( 1.0 - u ) + ( double )D[1] * u ) * v;
+		double b = ( ( double )A[0] * ( 1.0 - u ) + ( double )B[0] * u ) * ( 1.0 - v ) + ( ( double )C[0] * ( 1.0 - u ) + ( double )D[0] * u ) * v;
+		double inv = 1.0 / 255.0;
 
-		return Spectrum::FromRGB( ( double )A[2] / 255.0, ( double )A[1] / 255.0 , ( double )A[0] / 255.0 );
+		return Spectrum::FromRGB( r * inv , g * inv , b * inv );
 	}
 
 	return Spectrum::FromRGB( 0.0 , 0.0 , 0.0 );
