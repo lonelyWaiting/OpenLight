@@ -117,3 +117,14 @@ Spectrum ImageFile::Evalute( double u , double v )
 
 	return Spectrum::FromRGB( 0.0 , 0.0 , 0.0 );
 }
+
+FIBITMAP* ImageFile::GetDataPtr()
+{
+	return m_pDIB;
+}
+
+void ImageFile::GetSize( int& width , int& height )
+{
+	width  =  m_iWidth;
+	height =  m_iHeight;
+}

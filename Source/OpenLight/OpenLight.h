@@ -47,6 +47,9 @@
 #include <Texture/CheckboardTexture.h>
 #include <Texture/ImageTexture.h>
 
+#include <Texture/ConstantEnvironment.h>
+#include <Texture/HDREnvironment.h>
+
 Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrator*& pSurfaceIntegrator , Sampler*& pSampler );
 
 void SerializationScene( Scene* scene , Camera* camera , SurfaceIntegrator* pSurfaceIntegrator , Sampler* pSampler , Renderer* pRenderer );

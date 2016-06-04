@@ -107,6 +107,8 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 
 		if( !scene->Intersect( *ray , record ) )
 		{
+			L += Throughout * scene->GetEnvironmentPtr()->Evalute( *ray );
+
 			/*if( IsSpecular )
 			{
 				for( int i = 0; i < scene->GetLights().size(); i++ )

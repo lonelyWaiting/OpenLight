@@ -81,7 +81,10 @@
     <ClInclude Include="Shapes\TriangleMesh.h" />
     <ClInclude Include="Spectrum\Spectrum.h" />
     <ClInclude Include="Texture\CheckboardTexture.h" />
+    <ClInclude Include="Texture\ConstantEnvironment.h" />
     <ClInclude Include="Texture\ConstantTexture.h" />
+    <ClInclude Include="Texture\Environment.h" />
+    <ClInclude Include="Texture\HDREnvironment.h" />
     <ClInclude Include="Texture\ImageFile.h" />
     <ClInclude Include="Texture\ImageManager.h" />
     <ClInclude Include="Texture\ImageTexture.h" />
@@ -158,7 +161,9 @@
     <ClCompile Include="Shapes\TriangleMesh.cpp" />
     <ClCompile Include="Spectrum\Spectrum.cpp" />
     <ClCompile Include="Texture\CheckboardTexture.cpp" />
+    <ClCompile Include="Texture\ConstantEnvironment.cpp" />
     <ClCompile Include="Texture\ConstantTexture.cpp" />
+    <ClCompile Include="Texture\HDREnvironment.cpp" />
     <ClCompile Include="Texture\ImageFile.cpp" />
     <ClCompile Include="Texture\ImageManager.cpp" />
     <ClCompile Include="Texture\ImageTexture.cpp" />

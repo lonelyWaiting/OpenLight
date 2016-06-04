@@ -57,20 +57,20 @@
             <kd type="ConstantTexture" value="0.75,0.25,0.25" />
         </material>
     </primitive>
-    <primitive name="FrontPlane">
-        <shape type="TriangleMesh" filename="FrontPlane.obj">
-            <transform position="0.0,0.0,0.0" />
-        </shape>
-        <material type="DiffuseMaterial">
-          <kd type="ConstantTexture" value="0.0,0.0,0.0" />
-        </material>
-    </primitive>
     <primitive name="BackPlane">
         <shape type="TriangleMesh" filename="BackPlane.obj">
             <transform position="0.0,0.0,0.0" />
         </shape>
         <material type="DiffuseMaterial">
           <kd type="ImageTexture" filename="test.jpg" />
+        </material>
+    </primitive>
+    <primitive name="FrontPlane">
+        <shape type="TriangleMesh" filename="FrontPlane.obj">
+            <transform position="0.0,0.0,0.0" />
+        </shape>
+        <material type="DiffuseMaterial">
+          <kd type="ConstantTexture" value="0.0,0.0,0.0" />
         </material>
     </primitive>
     <primitive name="LightSource">
@@ -86,7 +86,7 @@
         <Position>50,52,295.6</Position>
         <Target>50,51.957388,294.6</Target>
         <LensFocus>210</LensFocus>
-        <LensRadius>0.3000000000000001</LensRadius>
+        <LensRadius>1.0000000000000001</LensRadius>
         <NearPlane>140</NearPlane>
         <Fovy>15</Fovy>
     </Camera>

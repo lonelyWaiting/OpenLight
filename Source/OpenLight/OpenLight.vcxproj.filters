@@ -297,6 +297,15 @@
     <ClInclude Include="Texture\ImageFile.h">
       <Filter>Texture</Filter>
     </ClInclude>
+    <ClInclude Include="Texture\Environment.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\ConstantEnvironment.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\HDREnvironment.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Accelerator\Grid.cpp">
@@ -522,6 +531,12 @@
       <Filter>Texture</Filter>
     </ClCompile>
     <ClCompile Include="Texture\ImageFile.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\ConstantEnvironment.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\HDREnvironment.cpp">
       <Filter>Texture</Filter>
     </ClCompile>
   </ItemGroup>

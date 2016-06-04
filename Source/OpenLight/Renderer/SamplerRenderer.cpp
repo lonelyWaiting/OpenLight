@@ -127,7 +127,7 @@ Spectrum SamplerRenderer::Li( const Scene* scene , Ray* ray , IntersectRecord* r
 		return surfaceIntegrator->Li( scene , this , record , ray , pAccelerator );
 	}
 
-	return Spectrum(0.0f);
+	return scene->GetEnvironmentPtr()->Evalute( *ray );
 }
 
 void SamplerRenderer::Deserialization( tinyxml2::XMLElement* RendererRootElement )

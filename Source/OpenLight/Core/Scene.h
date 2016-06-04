@@ -6,6 +6,7 @@
 #include "Light/Light.h"
 #include "Spectrum/Spectrum.h"
 #include "VSerializableObject.h"
+#include "Texture/Environment.h"
 
 namespace tinyxml2
 {
@@ -30,6 +31,10 @@ public:
 
 	bool Intersect( const Ray& ray , IntersectRecord* record ) const;
 
+	Environment* GetEnvironmentPtr() const;
+
+	void AddEnvironment( Environment* );
+
 public:
 	virtual void Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement );
 
@@ -42,4 +47,6 @@ protected:
 	std::vector<Primitive> Objects;
 
 	std::vector<Light*> lights;
+
+	Environment* pEnvironment;
 };

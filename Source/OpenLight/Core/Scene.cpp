@@ -1,6 +1,7 @@
 #include "Utilities/PCH.h"
 #include "tinyxml2.h"
 #include "Scene.h"
+#include "Texture/ConstantEnvironment.h"
 
 Scene::Scene()
 {
@@ -49,6 +50,17 @@ const std::vector<Light*>& Scene::GetLights() const
 
 void Scene::Deserialization( tinyxml2::XMLElement* RootElement )
 {
+	tinyxml2::XMLElement* pEnvironmentElement = RootElement->FirstChildElement( "Environment" );
+	if( pEnvironmentElement )
+	{
+		pEnvironment = Environment::Create( pEnvironmentElement->Attribute( "type" ) );
+		pEnvironment->Deserialization( pEnvironmentElement );
+	}
+	else
+	{
+		pEnvironment = new ConstantEnvironment;
+	}
+
 	tinyxml2::XMLElement* PrimitiveElement = RootElement->FirstChildElement( "primitive" );
 	while( PrimitiveElement )
 	{
@@ -63,6 +75,15 @@ void Scene::Deserialization( tinyxml2::XMLElement* RootElement )
 
 void Scene::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
 {
+	{
+		tinyxml2::XMLElement* pEnvironmentElement = xmlDoc.NewElement( "Environment" );
+		
+		pEnvironment->Serialization( xmlDoc , pEnvironmentElement );
+
+		pRootElement->InsertEndChild( pEnvironmentElement );
+	}
+	
+	
 	for( auto& object : Objects )
 	{
 		tinyxml2::XMLElement* pElement = xmlDoc.NewElement( "primitive" );
@@ -101,4 +122,14 @@ const Primitive& Scene::GetPrimitive( int index ) const
 Light* Scene::GetLight( int index ) const
 {
 	return lights[index];
+}
+
+Environment* Scene::GetEnvironmentPtr() const
+{
+	return pEnvironment;
+}
+
+void Scene::AddEnvironment( Environment* _pEnvironment )
+{
+	pEnvironment = _pEnvironment;
 }

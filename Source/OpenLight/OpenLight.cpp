@@ -50,16 +50,35 @@ bool InitRTTI()
 
 	IMPLEMENT_DYNAMIC_CREATE_DERIVED( ImageTexture )
 
+	// Environment
+	IMPLEMENT_DYNAMIC_CREATE_DERIVED( ConstantEnvironment )
+
+	IMPLEMENT_DYNAMIC_CREATE_DERIVED( HDREnvironment )
+
 	return true;
 }
 
 Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrator*& pSurfaceIntegrator , Sampler*& pSampler )
 {
 	FileSystem fs;
-	std::wstring SceneFilename = fs.GetSceneFolder() + L"box.xml";
+	std::wstring SceneFilename = fs.GetSceneFolder() + L"HDR_Grace.xml";
 
 	tinyxml2::XMLDocument doc;
 	doc.LoadFile( srString::ToAscii( SceneFilename ).c_str() );
+
+	// ----------------------------------Environment-------------------------------------------
+	tinyxml2::XMLElement* pEnvironmentElement = doc.FirstChildElement()->FirstChildElement( "Environment" );
+	if( pEnvironmentElement )
+	{
+		Environment* pEnvironment = Environment::Create( pEnvironmentElement->Attribute( "type" ) );
+		pEnvironment->Deserialization( pEnvironmentElement );
+		scene->AddEnvironment( pEnvironment );
+	}
+	else
+	{
+		Environment* pEnvironment = new ConstantEnvironment;
+		scene->AddEnvironment( pEnvironment );
+	}
 
 	// ----------------------------------Primitive---------------------------------------------
 	tinyxml2::XMLElement* PrimitiveElement = doc.FirstChildElement()->FirstChildElement( "primitive" );

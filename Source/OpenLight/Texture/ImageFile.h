@@ -16,6 +16,11 @@ public:
 
 	Spectrum Evalute( double u , double v );
 
+public:
+	FIBITMAP* GetDataPtr();
+
+	void GetSize( int& width , int& height );
+
 private:
 	std::wstring filename;
 
