@@ -1,0 +1,89 @@
+<Root>
+  <primitive name="PureReflectSphere">
+        <shape type="Sphere" radius="16.5">
+            <transform position="73,16.5,47"/>
+        </shape>
+        <material type="PureReflectionMaterial">
+          <kr type="ConstantTexture" value="0.999,0.999,0.999" />
+        </material>
+    </primitive>
+    <primitive name="GlassSphere">
+        <shape type="Sphere" radius="16.5">
+            <transform position="27,16.5,78" />
+        </shape>
+        <material type="GlassMaterial">
+          <kr type="ConstantTexture" value="0.999,0.999,0.999"/>
+          <kt type="ConstantTexture" value="0.999,0.999,0.999"/>
+          <RefraIndex type="ConstantTexture" value="1.5,1.5,1.5"/>
+        </material>
+    </primitive>
+    <primitive name="BottomPlane">
+        <shape type="TriangleMesh" filename="BottomPlane.obj">
+            <transform position="0.0,0.0,0.0" />
+        </shape>
+        <material type="DiffuseMaterial">
+          <kd type="ConstantTexture" value="0.75,0.75,0.75" />
+        </material>
+    </primitive>
+    <primitive name="FloorPlane">
+        <shape type="TriangleMesh" filename="FloorPlane.obj">
+            <transform position="0.0,0.0,0.0" />
+        </shape>
+        <material type="DiffuseMaterial">
+            <kd type="ConstantTexture" value="0.75,0.75,0.75" />
+        </material>
+    </primitive>
+    <primitive name="LeftPlane">
+        <shape type="TriangleMesh" filename="RightPlane.obj" uvscale="20,20">
+            <transform position="0.0,0.0,0.0" />
+        </shape>
+        <material type="DiffuseMaterial">
+            <kd type="ConstantTexture" value="0.75,0.25,0.25"/>
+        </material>
+    </primitive>
+    <primitive name="RightPlane">
+        <shape type="TriangleMesh" filename="LeftPlane.obj">
+            <transform position="0.0,0.0,0.0" />
+        </shape>
+        <material type="DiffuseMaterial">
+            <kd type="ConstantTexture" value="0.25,0.25,0.75" />
+        </material>
+    </primitive>
+    <primitive name="BackPlane">
+        <shape type="TriangleMesh" filename="BackPlane.obj">
+            <transform position="0.0,0.0,0.0" />
+        </shape>
+        <material type="DiffuseMaterial">
+          <kd type="ConstantTexture" value="0.75,0.75,0.75" />
+        </material>
+    </primitive>
+    <primitive name="FrontPlane">
+        <shape type="TriangleMesh" filename="FrontPlane.obj">
+            <transform position="0.0,0.0,0.0" />
+        </shape>
+        <material type="DiffuseMaterial">
+          <kd type="ConstantTexture" value="0.0,0.0,0.0" />
+        </material>
+    </primitive>
+    <primitive name="LightSource">
+          <shape type="TriangleMesh" filename="LightSource.obj">
+            <transform position="0.0,0.0,0.0" />
+        </shape>
+        <material type="DiffuseMaterial">
+            <kd type="ConstantTexture" value="0.0,0.0,0.0" />
+        </material>
+        <AreaLight Le="12,12,12" />
+    </primitive>
+    <Camera type="ThinLensCamera">
+        <Position>50,52,295.6</Position>
+        <Target>50,51.957388,294.6</Target>
+        <LensFocus>210</LensFocus>
+        <LensRadius>1.0000000000000001</LensRadius>
+        <NearPlane>140</NearPlane>
+        <Fovy>15</Fovy>
+    </Camera>
+    <Film filename="result.ppm" width="1024" height="768" />
+    <Integrator type="PathIntegrator" MaxDepth="3" />
+    <Sampler type="NRooksSampler" SampleGroupCount="81" SampleCount="3000" />
+    <Renderer type="SamplerRenderer" spp="4" />
+</Root>
