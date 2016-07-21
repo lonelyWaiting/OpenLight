@@ -5,10 +5,10 @@
 class FresnelDielectric : public Fresnel
 {
 public:
-	FresnelDielectric( double etaI , double etaT );
+	FresnelDielectric( float etaI , float etaT );
 
-	Spectrum Evalute( double cosThetaI ) const;
+	Spectrum Evalute( float cosThetaI ) const;
 private:
-	double etaI;
-	double etaT;
+	float etaI;
+	float etaT;
 };

@@ -77,7 +77,7 @@ void Sampler::ShuffleXCoordinate()
 		{
 			int target = i * SampleCount + RNG::Get().GetInt( SampleCount );
 
-			double temp = SamplePoints[i * SampleCount + j + 1]->ImageSamples.x;
+			float temp = SamplePoints[i * SampleCount + j + 1]->ImageSamples.x;
 			SamplePoints[i * SampleCount + j + 1]->ImageSamples.x = SamplePoints[target]->ImageSamples.x;
 			SamplePoints[target]->ImageSamples.x = temp;
 		}
@@ -89,7 +89,7 @@ void Sampler::ShuffleXCoordinate()
 		{
 			int target = i * SampleCount + RNG::Get().GetInt( SampleCount );
 
-			double temp = SamplePoints[i * SampleCount + j + 1]->LensSamples.x;
+			float temp = SamplePoints[i * SampleCount + j + 1]->LensSamples.x;
 			SamplePoints[i * SampleCount + j + 1]->LensSamples.x = SamplePoints[target]->LensSamples.x;
 			SamplePoints[target]->LensSamples.x = temp;
 		}
@@ -104,7 +104,7 @@ void Sampler::ShuffleYCoordinate()
 		{
 			int target = i * SampleCount + RNG::Get().GetInt( SampleCount );
 
-			double temp = SamplePoints[i * SampleCount + j + 1]->ImageSamples.y;
+			float temp = SamplePoints[i * SampleCount + j + 1]->ImageSamples.y;
 			SamplePoints[i * SampleCount + j + 1]->ImageSamples.y = SamplePoints[target]->ImageSamples.y;
 			SamplePoints[target]->ImageSamples.y = temp;
 		}
@@ -116,7 +116,7 @@ void Sampler::ShuffleYCoordinate()
 		{
 			int target = i * SampleCount + RNG::Get().GetInt( SampleCount );
 
-			double temp = SamplePoints[i * SampleCount + j + 1]->LensSamples.y;
+			float temp = SamplePoints[i * SampleCount + j + 1]->LensSamples.y;
 			SamplePoints[i * SampleCount + j + 1]->LensSamples.y = SamplePoints[target]->LensSamples.y;
 			SamplePoints[target]->LensSamples.y = temp;
 		}

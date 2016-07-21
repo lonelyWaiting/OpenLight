@@ -1,5 +1,4 @@
 #include "Utilities/PCH.h"
-#include "Math/Normal.h"
 #include "Primitive/Primitive.h"
 #include "tinyxml2.h"
 #include "AreaLighth.h"
@@ -16,12 +15,12 @@ AreaLight::AreaLight( const Transform& LightToWorld , const Spectrum& Le )
 
 }
 
-Spectrum AreaLight::Sample_L( const Point3f& p , Vector3f* wi , LightSample& _lightSample , double* pdf , VisibilityTester* pVisibility ) const
+Spectrum AreaLight::Sample_L( const Point3f& p , Vector3f* wi , LightSample& _lightSample , float* pdf , VisibilityTester* pVisibility ) const
 {
 	// 采样光源对应的图元
 	int index = ( int )( _lightSample.value[0] * ( m_pPrimitive->GetShapeCount() - 1 ) );
 
-	Normal LightSourceSampleNormal;
+	Vector3f LightSourceSampleNormal;
 	Point3f LightSourceSamplePoint = m_pPrimitive->GetShape( index )->Sample( p , _lightSample , LightSourceSampleNormal );
 
 	*wi = Normalize( LightSourceSamplePoint - p );
@@ -47,7 +46,7 @@ Spectrum AreaLight::Power( const Scene* scene ) const
 	return Lemission * m_pPrimitive->GetArea() * PI;
 }
 
-Spectrum AreaLight::Sample_L( const Scene* scene , LightSample& _lightSample , Ray* ray , Normal* NormalShading , double* pdf ) const
+Spectrum AreaLight::Sample_L( const Scene* scene , LightSample& _lightSample , Rayf* ray , Vector3f* NormalShading , float* pdf ) const
 {
 	return Spectrum( 0.0 );
 }
@@ -69,7 +68,7 @@ void AreaLight::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElem
 	}
 }
 
-Spectrum AreaLight::Le( const Point3f& p , const Normal& n , const Vector3f& wo ) const
+Spectrum AreaLight::Le( const Point3f& p , const Vector3f& n , const Vector3f& wo ) const
 {
 	// Note: 将AreaLight看作点光源的集合，因此，不作方向判断，改成直接返回Lemission
 
@@ -77,7 +76,7 @@ Spectrum AreaLight::Le( const Point3f& p , const Normal& n , const Vector3f& wo 
 	return Lemission;
 }
 
-double AreaLight::PDF( const Point3f& p , const Vector3f& wi ) const
+float AreaLight::PDF( const Point3f& p , const Vector3f& wi ) const
 {
 	return m_pPrimitive->PDF( p , wi );
 }

@@ -177,16 +177,10 @@
     <ClInclude Include="Math\Bound3.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="Math\Bounds2.h">
-      <Filter>Math</Filter>
-    </ClInclude>
     <ClInclude Include="Math\Matrix3.h">
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="Math\Matrix4.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Math\Normal.h">
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="Math\ONB.h">
@@ -199,9 +193,6 @@
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="Math\Ray.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Math\Transform.h">
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="Math\Vector2.h">
@@ -305,6 +296,15 @@
     </ClInclude>
     <ClInclude Include="Texture\HDREnvironment.h">
       <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\MathHelper.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Bound2.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Transform.h">
+      <Filter>Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -413,45 +413,6 @@
     <ClCompile Include="Material\PureReflectionMaterial.cpp">
       <Filter>Material</Filter>
     </ClCompile>
-    <ClCompile Include="Math\Bound3.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Bounds2.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Matrix3.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Matrix4.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Normal.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\ONB.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Point2.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Point3.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Ray.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Transform.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Vector2.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Vector3.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Math\Vector4.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
     <ClCompile Include="Primitive\IntersectRecord.cpp">
       <Filter>Primitive</Filter>
     </ClCompile>
@@ -539,5 +500,43 @@
     <ClCompile Include="Texture\HDREnvironment.cpp">
       <Filter>Texture</Filter>
     </ClCompile>
+    <ClCompile Include="Math\Transform.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Math\Point3.inl">
+      <Filter>Math</Filter>
+    </None>
+    <None Include="Math\Vector2.inl">
+      <Filter>Math</Filter>
+    </None>
+    <None Include="Math\Bound2.inl">
+      <Filter>Math</Filter>
+    </None>
+    <None Include="Math\Bound3.inl">
+      <Filter>Math</Filter>
+    </None>
+    <None Include="Math\Matrix3.inl">
+      <Filter>Math</Filter>
+    </None>
+    <None Include="Math\Matrix4.inl">
+      <Filter>Math</Filter>
+    </None>
+    <None Include="Math\ONB.inl">
+      <Filter>Math</Filter>
+    </None>
+    <None Include="Math\Point2.inl">
+      <Filter>Math</Filter>
+    </None>
+    <None Include="Math\Ray.inl">
+      <Filter>Math</Filter>
+    </None>
+    <None Include="Math\Vector3.inl">
+      <Filter>Math</Filter>
+    </None>
+    <None Include="Math\Vector4.inl">
+      <Filter>Math</Filter>
+    </None>
   </ItemGroup>
 </Project>

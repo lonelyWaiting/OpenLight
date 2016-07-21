@@ -14,7 +14,7 @@ GlassMaterial::GlassMaterial() : Material()
 	Kt = new ConstantTexture( Spectrum( 1.0 ) );*/
 }
 
-GlassMaterial::GlassMaterial( Spectrum R , Spectrum T , double ior )
+GlassMaterial::GlassMaterial( Spectrum R , Spectrum T , float ior )
 	: Material()
 {
 	Kr = new ConstantTexture( R );
@@ -24,7 +24,7 @@ GlassMaterial::GlassMaterial( Spectrum R , Spectrum T , double ior )
 	RefraIndex = new ConstantTexture( ior );
 }
 
-BSDF* GlassMaterial::GetBSDF( const Vector2f& uv , const Point3f& point , const Normal& normal ) const
+BSDF* GlassMaterial::GetBSDF( const Vector2f& uv , const Point3f& point , const Vector3f& normal ) const
 {
 	BSDF* bsdf = new BSDF();
 
@@ -98,7 +98,7 @@ void GlassMaterial::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XML
 	{
 		tinyxml2::XMLElement* pKrElement = xmlDoc.NewElement( "kt" );
 
-		Kr->Serialization( xmlDoc , pKrElement );
+		Kt->Serialization( xmlDoc , pKrElement );
 
 		pRootElement->InsertEndChild( pKrElement );
 	}
@@ -106,7 +106,7 @@ void GlassMaterial::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XML
 	{
 		tinyxml2::XMLElement* pKrElement = xmlDoc.NewElement( "RefraIndex" );
 
-		Kr->Serialization( xmlDoc , pKrElement );
+		RefraIndex->Serialization( xmlDoc , pKrElement );
 
 		pRootElement->InsertEndChild( pKrElement );
 	}

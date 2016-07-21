@@ -5,7 +5,7 @@ class Filter
 public:
 	virtual ~Filter();
 
-	Filter( double xWidth , double yWidth )
+	Filter( float xWidth , float yWidth )
 		: xWidth( xWidth )
 		, yWidth( yWidth )
 		, xInvWidth( 1.0f / xWidth )
@@ -14,11 +14,11 @@ public:
 
 	}
 
-	virtual double Evalute( double x , double y ) const = 0;
+	virtual float Evalute( float x , float y ) const = 0;
 
 public:
-	const double xWidth;
-	const double yWidth;
-	const double xInvWidth;
-	const double yInvWidth;
+	const float xWidth;
+	const float yWidth;
+	const float xInvWidth;
+	const float yInvWidth;
 };

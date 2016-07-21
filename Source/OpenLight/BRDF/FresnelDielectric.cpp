@@ -2,16 +2,16 @@
 #include "Spectrum/Spectrum.h"
 #include "FresnelDielectric.h"
 
-FresnelDielectric::FresnelDielectric( double etaI , double etaT )
+FresnelDielectric::FresnelDielectric( float etaI , float etaT )
 	: etaI( etaI )
 	, etaT( etaT )
 {
 
 }
 
-Spectrum FresnelDielectric::Evalute( double cosThetaI ) const
+Spectrum FresnelDielectric::Evalute( float cosThetaI ) const
 {
-	double f = FresnelDielectricIntoDielectric( cosThetaI , etaI , etaT );
+	float f = FresnelDielectricIntoDielectric( cosThetaI , etaI , etaT );
 	/*double pow = 1.0 / 2.0;
 
 	return Spectrum::FromRGB( std::pow( f , pow ) , std::pow( f , pow ) , std::pow( f , pow ) );*/

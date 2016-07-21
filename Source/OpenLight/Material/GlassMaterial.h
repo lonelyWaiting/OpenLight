@@ -16,9 +16,9 @@ class GlassMaterial : public Material
 public:
 	GlassMaterial();
 
-	BSDF* GetBSDF( const Vector2f& uv , const Point3f& point , const Normal& normal ) const;
+	BSDF* GetBSDF( const Vector2f& uv , const Point3f& point , const Vector3f& normal ) const;
 
-	GlassMaterial( Spectrum R , Spectrum T , double ior );
+	GlassMaterial( Spectrum R , Spectrum T , float ior );
 
 public:
 	void Deserialization( tinyxml2::XMLElement* RootElement );

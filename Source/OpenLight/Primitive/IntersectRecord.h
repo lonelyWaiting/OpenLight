@@ -1,11 +1,12 @@
 #pragma once
 
-#include "Math/Transform.h"
 #include "Spectrum/Spectrum.h"
 #include "Math/Point3.h"
 #include "BRDF/BSDF.h"
-#include "Math/Normal.h"
+#include "Math/MathHelper.h"
 #include "Math/Vector2.h"
+#include "Math/Vector3.h"
+#include "Math/Transform.h"
 
 class Primitive;
 
@@ -23,8 +24,8 @@ struct IntersectRecord
 	const Primitive* primitivePtr;
 	Transform WorldToObject;
 	Transform ObjectToWorld;
-	double HitT;
+	float HitT;
 	Point3f HitPoint;
-	Normal normal;
+	Vector3f normal;
 	Vector2f uv;
 };

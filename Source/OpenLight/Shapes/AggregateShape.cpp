@@ -8,7 +8,7 @@ void AggregateShape::AddShape( Shape* shape )
 	shapes.push_back( shape );
 }
 
-bool AggregateShape::Intersect( Ray& ray , IntersectRecord* record ) const
+bool AggregateShape::Intersect( Rayf& ray , IntersectRecord* record ) const
 {
 	int count = shapes.size();
 

@@ -11,7 +11,7 @@
 #include "Utilities/RNG.h"
 #include "BRDF/BxDFHelper.h"
 
-Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Ray* ray , Accelerator* pAccelerator ) const
+Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Rayf* ray , Accelerator* pAccelerator ) const
 {
 	Spectrum L( 0.0 );
 
@@ -19,7 +19,7 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 	BSDF* bsdf = record->GetBSDF();
 
 	Point3f HitPoint = record->HitPoint;
-	Normal n = Normalize( record->normal );
+	Vector3f n = Normalize( record->normal );
 
 	Vector3f wo = -ray->Direction;
 
@@ -28,10 +28,10 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 	for( unsigned int i = 0; i < scene->GetLights().size(); i++ )
 	{
 		Vector3f wi;
-		double pdf;
+		float pdf;
 		VisibilityTester* pVisibility = new VisibilityTester;
 
-		Spectrum Li = scene->GetLight( i )->Sample_L( HitPoint , &wi , LightSample( RNG::Get().GetDouble() , RNG::Get().GetDouble() ) , &pdf , pVisibility );
+		Spectrum Li = scene->GetLight( i )->Sample_L( HitPoint , &wi , LightSample( RNG::Get().GetFloat() , RNG::Get().GetFloat() ) , &pdf , pVisibility );
 
 		if( Li.IsBlack() || pdf == 0.0f )
 		{

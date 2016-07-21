@@ -41,8 +41,8 @@
             <kd type="ConstantTexture" value="0.75,0.75,0.75" />
         </material>
     </primitive>
-    <primitive name="RightPlane">
-        <shape type="TriangleMesh" filename="RightPlane.obj" uvscale="20,20">
+    <primitive name="RightPlane" uvscale="20,20">
+        <shape type="TriangleMesh" filename="RightPlane.obj">
             <transform position="0.0,0.0,0.0" />
         </shape>
         <material type="DiffuseMaterial">
@@ -62,7 +62,7 @@
             <transform position="0.0,0.0,0.0" />
         </shape>
         <material type="DiffuseMaterial">
-          <kd type="ImageTexture" filename="test.jpg" />
+          <kd type="ImageTexture" filename="tree.jpg" />
         </material>
     </primitive>
     <primitive name="FrontPlane">

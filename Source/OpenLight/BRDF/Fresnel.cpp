@@ -6,15 +6,15 @@ Fresnel::~Fresnel()
 
 }
 
-Spectrum FresnelDieletricIntoConductor( double CosThetaI , const Spectrum& etaI , const Spectrum& etaT , const Spectrum& k )
+Spectrum FresnelDieletricIntoConductor( float CosThetaI , const Spectrum& etaI , const Spectrum& etaT , const Spectrum& k )
 {
 	Clamp( CosThetaI , -1 , 1 );
 
 	Spectrum eta = etaT / etaI;
 	Spectrum etaK = k / etaI;
 
-	double cosThetaI2 = CosThetaI * CosThetaI;
-	double SinThetaI2 = 1 - cosThetaI2;
+	float cosThetaI2 = CosThetaI * CosThetaI;
+	float SinThetaI2 = 1 - cosThetaI2;
 
 	Spectrum eta2 = eta * eta;
 	Spectrum etaK2 = etaK * etaK;
@@ -33,7 +33,7 @@ Spectrum FresnelDieletricIntoConductor( double CosThetaI , const Spectrum& etaI 
 	return ( 0.5 * ( Rs + Rp ) );
 }
 
-double FresnelDielectricIntoDielectric( double CosThetaI , double etaI , double etaT )
+float FresnelDielectricIntoDielectric( float CosThetaI , float etaI , float etaT )
 {
 	Clamp( CosThetaI , -1 , 1 );
 
@@ -44,8 +44,8 @@ double FresnelDielectricIntoDielectric( double CosThetaI , double etaI , double 
 		CosThetaI = std::abs( CosThetaI );
 	}
 
-	double sinThetaI = std::sqrt( std::max( double( 0 ) , 1 - CosThetaI * CosThetaI ) );
-	double sinThetaT = etaI / etaT * sinThetaI;
+	float sinThetaI = std::sqrt( std::max( float( 0 ) , 1 - CosThetaI * CosThetaI ) );
+	float sinThetaT = etaI / etaT * sinThetaI;
 
 	// È«ÄÚ·´Éä
 	if( sinThetaT >= 1 )
@@ -53,10 +53,10 @@ double FresnelDielectricIntoDielectric( double CosThetaI , double etaI , double 
 		return 1;
 	}
 
-	double CosThetaT = std::sqrt( std::max( double( 0 ) , 1 - sinThetaT * sinThetaT ) );
+	float CosThetaT = std::sqrt( std::max( float( 0 ) , 1 - sinThetaT * sinThetaT ) );
 
-	double Rparl = ( etaT * CosThetaI - etaI * CosThetaT ) / ( etaT * CosThetaI + etaI * CosThetaT );
-	double Rperp = ( etaI * CosThetaI - etaT * CosThetaT ) / ( etaI * CosThetaI + etaT * CosThetaT );
+	float Rparl = ( etaT * CosThetaI - etaI * CosThetaT ) / ( etaT * CosThetaI + etaI * CosThetaT );
+	float Rperp = ( etaI * CosThetaI - etaT * CosThetaT ) / ( etaI * CosThetaI + etaT * CosThetaT );
 
 	return ( Rparl * Rparl + Rperp * Rperp ) / 2.0;
 }

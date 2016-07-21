@@ -8,6 +8,7 @@
 #include "Material/Material.h"
 #include "Core/VSerializableObject.h"
 #include "Core/VIntersectable.h"
+#include "Math/MathHelper.h"
 
 class AreaLight;
 class Light;
@@ -25,7 +26,7 @@ public:
 
 	virtual ~Primitive();
 
-	virtual bool Intersect( Ray& r , IntersectRecord* record ) const;
+	virtual bool Intersect( Rayf& r , IntersectRecord* record ) const;
 
 	void AddShape( Shape* _shape );
 
@@ -34,7 +35,7 @@ public:
 
 	int GetShapeCount() const;
 
-	BSDF* GetBSDF( const Vector2f& uv , const Point3f& point , const Normal& normal ) const;
+	BSDF* GetBSDF( const Vector2f& uv , const Point3f& point , const Vector3f& normal ) const;
 
 	Material* GetMaterial() const;
 
@@ -46,6 +47,8 @@ public:
 
 	// 获取物体对象，比如一个球，或者一个TriangeMesh而Triangle
 	Shape* GetPrimitiveObject( int index ) const;
+
+	Vector2f GetUVScale() const;
 
 public:
 	void Deserialization( tinyxml2::XMLElement* PrimitiveRootElment );
@@ -59,10 +62,10 @@ public:
 	void Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement );
 
 public:
-	double PDF( const Point3f& p , const Vector3f& w );
+	float PDF( const Point3f& p , const Vector3f& w );
 
 public:
-	double GetArea() const;
+	float GetArea() const;
 
 public:
 	const char* GetName() const;
@@ -73,9 +76,11 @@ protected:
 	std::vector<Shape*>				m_vShapes;
 	Material*						m_pMaterial;
 	AreaLight*						m_pAreaLight;
-	double							m_SumArea;
+	float							m_SumArea;
 
 	std::vector<Shape*>				m_vShapeInformations;
 
 	char*							m_Name;
+
+	Vector2f						mTexScale;
 };

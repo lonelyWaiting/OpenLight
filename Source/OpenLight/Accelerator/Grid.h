@@ -11,7 +11,7 @@ class Grid : public Accelerator
 public:
 	virtual void Setup( const Scene* scene );
 
-	virtual bool Intersect( Ray& ray , const Scene* scene , IntersectRecord* record );
+	virtual bool Intersect( Rayf& ray , const Scene* scene , IntersectRecord* record );
 
 	virtual void Reset();
 

@@ -30,14 +30,14 @@ SolidNoise::SolidNoise()
 
 	for( int i = 14; i >= 0; i-- )
 	{
-		int target = int( RNG::Get().GetDouble() * i );
+		int target = int( RNG::Get().GetFloat() * i );
 		int temp = phi[i + 1];
 		phi[i + 1] = phi[target];
 		phi[target] = temp;
 	}
 }
 
-double SolidNoise::omega( double t ) const
+float SolidNoise::omega( float t ) const
 {
 	t = ( t > 0.0 ) ? t : -t;
 
@@ -52,7 +52,7 @@ Vector3f SolidNoise::gamma( int i , int j , int k ) const
 	return grad[idx];
 }
 
-double SolidNoise::knot( int i , int j , int k , Vector3f& v ) const
+float SolidNoise::knot( int i , int j , int k , Vector3f& v ) const
 {
 	return omega( v[0] ) * omega( v[1] ) * omega( v[2] ) * Dot( gamma( i , j , k ) , v );
 }
@@ -65,10 +65,10 @@ int SolidNoise::intGamma( int i , int j ) const
 	return idx;
 }
 
-double SolidNoise::turbulence( const Vector3f& p , int depth ) const
+float SolidNoise::turbulence( const Vector3f& p , int depth ) const
 {
-	double sum = 0.0;
-	double weight = 1.0;
+	float sum = 0.0;
+	float weight = 1.0;
 
 	Vector3f ptemp( p );
 
@@ -88,10 +88,10 @@ double SolidNoise::turbulence( const Vector3f& p , int depth ) const
 }
 
 
-double SolidNoise::dturbulence( const Vector3f& p , int depth , double d ) const
+float SolidNoise::dturbulence( const Vector3f& p , int depth , float d ) const
 {
-	double sum = 0.0;
-	double weight = 1.0;
+	float sum = 0.0;
+	float weight = 1.0;
 	Vector3f ptemp( p );
 
 	sum += fabs( noise( ptemp ) ) / 4;
@@ -109,11 +109,11 @@ double SolidNoise::dturbulence( const Vector3f& p , int depth , double d ) const
 	return sum;
 }
 
-double SolidNoise::noise( const Vector3f& p) const
+float SolidNoise::noise( const Vector3f& p) const
 {
 	int fi , fj , fk;
 
-	double fu , fv , fw , sum;
+	float fu , fv , fw , sum;
 
 	Vector3f v;
 
@@ -121,9 +121,9 @@ double SolidNoise::noise( const Vector3f& p) const
 	fj = ( int )( floor( p.y ) );
 	fk = ( int )( floor( p.z ) );
 	
-	fu = p.x - ( double )fi;
-	fv = p.y - ( double )fj;
-	fw = p.z - ( double )fk;
+	fu = p.x - ( float )fi;
+	fv = p.y - ( float )fj;
+	fw = p.z - ( float )fk;
 
 	sum = 0.0;
 

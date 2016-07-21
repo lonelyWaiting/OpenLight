@@ -1,24 +1,24 @@
-#include "Utilities/PCH.h"
-#include "ONB.h"
-
 #define ONB_EPSILON 0.01f
 
-ONB::ONB()
+template<typename T>
+ONB<T>::ONB()
 {
 
 }
 
-ONB::ONB( const Vector3f& u , const Vector3f& v , const Vector3f& w )
+template<typename T>
+ONB<T>::ONB( const Vector3<T>& u , const Vector3<T>& v , const Vector3<T>& w )
 {
 	U = u;
 	V = v;
 	W = w;
 }
 
-void ONB::InitFromU( const Vector3f& u )
+template<typename T>
+void ONB<T>::InitFromU( const Vector3<T>& u )
 {
-	Vector3f n( 1.0f , 0.0f , 0.0f );
-	Vector3f m( 0.0f , 1.0f , 0.0f );
+	Vector3<T> n( 1.0f , 0.0f , 0.0f );
+	Vector3<T> m( 0.0f , 1.0f , 0.0f );
 
 	U = Normalize( u );
 	W = Cross( U , m );
@@ -36,10 +36,11 @@ void ONB::InitFromU( const Vector3f& u )
 	Normalize( V );
 }
 
-void ONB::InitFromV( const Vector3f& v )
+template<typename T>
+void ONB<T>::InitFromV( const Vector3<T>& v )
 {
-	Vector3f z( 0.0f , 0.0f , 1.0f );
-	Vector3f x( 1.0f , 0.0f , 0.0f );
+	Vector3<T> z( 0.0f , 0.0f , 1.0f );
+	Vector3<T> x( 1.0f , 0.0f , 0.0f );
 
 	V = Normalize( v );
 	U = Cross( V , z );
@@ -57,10 +58,11 @@ void ONB::InitFromV( const Vector3f& v )
 	Normalize( U );
 }
 
-void ONB::InitFromW( const Vector3f& w )
+template<typename T>
+void ONB<T>::InitFromW( const Vector3<T>& w )
 {
-	Vector3f x( 1.0f , 0.0f , 0.0f );
-	Vector3f y( 0.0f , 1.0f , 0.0f );
+	Vector3<T> x( 1.0f , 0.0f , 0.0f );
+	Vector3<T> y( 0.0f , 1.0f , 0.0f );
 
 	W = Normalize( w );
 	U = Cross( y , W );
@@ -79,14 +81,16 @@ void ONB::InitFromW( const Vector3f& w )
 	Normalize( V );
 }
 
-void ONB::InitFromUV( const Vector3f& u , const Vector3f& v )
+template<typename T>
+void ONB<T>::InitFromUV( const Vector3<T>& u , const Vector3<T>& v )
 {
 	U = Normalize( u );
 	W = Normalize( Cross( u , v ) );
 	V = Cross( W , U );
 }
 
-bool operator == ( const ONB& lhs , const ONB& rhs )
+template<typename T>
+bool operator == ( const ONB<T>& lhs , const ONB<T>& rhs )
 {
 	return ( lhs.U == rhs.U ) && ( lhs.V == rhs.V ) && ( lhs.W == rhs.W );
 }

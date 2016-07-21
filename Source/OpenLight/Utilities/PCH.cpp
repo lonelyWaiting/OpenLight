@@ -1,6 +1,6 @@
 #include "Utilities/PCH.h"
 
-bool isNanN( const double x )
+bool isNanN( const float x )
 {
 	return std::isnan( x );
 }
@@ -10,31 +10,31 @@ bool isNanN( const int x )
 	return false;
 }
 
-double Lerp( const double& t , const double& p1 , const double& p2 )
+float Lerp( const float& t , const float& p1 , const float& p2 )
 {
 	return ( 1 - t ) * p1 + p2 * t;
 }
 
-double ToRadians( double degree )
+float ToRadians( float degree )
 {
 	return ( ( degree / 180.0 ) * PI );
 }
 
-double ToDegree( double radian )
+float ToDegree( float radian )
 {
 	return ( ( 180.0 / PI ) * radian );
 }
 
-void Swap( double& A , double& B )
+void Swap( float& A , float& B )
 {
-	double C = A;
+	float C = A;
 	A = B;
 	B = C;
 }
 
-bool Quadtratic( double A , double B , double C , double* t0 , double* t1 )
+bool Quadtratic( float A , float B , float C , float* t0 , float* t1 )
 {
-	double delta = B * B - 4 * A * C;
+	float delta = B * B - 4 * A * C;
 
 	if( delta < 0 )
 	{
@@ -42,9 +42,9 @@ bool Quadtratic( double A , double B , double C , double* t0 , double* t1 )
 		return false;
 	}
 
-	double sqrtDelta = sqrt( delta );
+	float sqrtDelta = sqrt( delta );
 
-	double InvA = 1.0 / A;
+	float InvA = 1.0 / A;
 
 	*t0 = ( -1.0f * B - 1.0 * sqrtDelta ) * 0.5 * InvA;
 	*t1 = ( -1.0f * B + sqrtDelta ) * 0.5 * InvA;
@@ -52,7 +52,7 @@ bool Quadtratic( double A , double B , double C , double* t0 , double* t1 )
 	if( *t0 > *t1 )
 	{
 		//Swap( *t0 , *t1 );
-		double temp = *t0;
+		float temp = *t0;
 		*t0 = *t1;
 		*t1 = temp;
 	}
@@ -60,7 +60,7 @@ bool Quadtratic( double A , double B , double C , double* t0 , double* t1 )
 	return true;
 }
 
-double clamp( double x , double _min , double _max )
+float clamp( float x , float _min , float _max )
 {
 	return x < _min ? _min : x > _max ? _max : x;
 }

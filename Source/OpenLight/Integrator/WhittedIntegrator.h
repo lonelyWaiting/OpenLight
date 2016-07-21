@@ -12,7 +12,7 @@ class WhittedIntegrator : public SurfaceIntegrator
 	DECLARE_DYNAMIC_CREATE_DERIVED( WhittedIntegrator , SurfaceIntegrator )
 
 public:
-	Spectrum Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Ray* ray , Accelerator* pAccelerator ) const;
+	Spectrum Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Rayf* ray , Accelerator* pAccelerator ) const;
 
 public:
 	void Deserialization( tinyxml2::XMLElement* IntegratorRootElement );

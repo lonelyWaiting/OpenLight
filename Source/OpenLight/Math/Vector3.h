@@ -1,99 +1,120 @@
 #ifndef VECTOR3_H
 #define VECTOR3_H
 
-class Point3f;
-class Normal;
+#include "MathHelper.h"
+#include <cmath>
 
-class Vector3f
+template<typename T>
+class Point3;
+
+template<typename T>
+class Vector3
 {
 public:
-	Vector3f();
+	Vector3();
 
-	Vector3f( double value );
+	Vector3( T value );
 
-	Vector3f( double _x , double _y , double _z );
+	Vector3( T _x , T _y , T _z );
 
-	Vector3f( const Vector3f& rhs );
+	Vector3( const Vector3& rhs );
 
-	explicit Vector3f( const Point3f& p );
-
-public:
-	operator Normal();
-
-	Vector3f& operator = ( const Vector3f& rhs );
-
-	Vector3f operator + ( const Vector3f& rhs ) const;
-
-	Vector3f& operator += ( const Vector3f& rhs );
-
-	Vector3f operator - ( const Vector3f& rhs ) const;
-
-	Vector3f& operator -= ( const Vector3f& rhs );
-
-	Vector3f operator * ( double scale ) const;
-
-	Vector3f& operator *= ( double scale );
-
-	double operator * ( const Vector3f &rhs ) const;
-
-	Vector3f operator -() const;
-
-	Vector3f operator / ( double f ) const;
-
-	Vector3f& operator /= ( double f );
-
-	double& operator [] ( int index );
-
-	double operator[] ( int index ) const;
-
-	bool operator == ( const Vector3f& rhs ) const;
-
-	bool operator != ( const Vector3f& rhs ) const;
+	explicit Vector3( const Point3<T>& p );
 
 public:
-	double LengthSq() const;
+	Vector3& operator = ( const Vector3& rhs );
 
-	double Length() const;
+	Vector3 operator + ( const Vector3& rhs ) const;
+
+	Vector3& operator += ( const Vector3& rhs );
+
+	Vector3 operator - ( const Vector3& rhs ) const;
+
+	Vector3& operator -= ( const Vector3& rhs );
+
+	Vector3 operator * ( T scale ) const;
+
+	Vector3& operator *= ( T scale );
+
+	T operator * ( const Vector3 &rhs ) const;
+
+	Vector3 operator -() const;
+
+	Vector3 operator / ( T f ) const;
+
+	Vector3& operator /= ( T f );
+
+	T& operator [] ( int index );
+
+	T operator[] ( int index ) const;
+
+	bool operator == ( const Vector3& rhs ) const;
+
+	bool operator != ( const Vector3& rhs ) const;
 
 public:
-	friend Vector3f operator* ( double s , const Vector3f &v );
+	T LengthSq() const;
 
-	friend Vector3f Abs( const Vector3f &v );
+	T Length() const;
 
-	friend double Dot( const Vector3f &v1 , const Vector3f &v2 );
+public:
+	template<typename D>
+	friend Vector3<D> operator* ( D s , const Vector3<D> &v );
 
-	friend double AbsDot( const Vector3f & v1 , const Vector3f& v2 );
+	template<typename D>
+	friend Vector3<D> Abs( const Vector3<D> &v );
 
-	friend Vector3f Cross( const Vector3f &v1 , const Vector3f &v2 );
+	template<typename D>
+	friend D Dot( const Vector3<D> &v1 , const Vector3<D> &v2 );
 
-	friend Vector3f Normalize( const Vector3f& v );
+	template<typename D>
+	friend D Dot( const Vector3<D>& w , const Point3<D>& p );
 
-	friend double MinComponent( const Vector3f &v );
+	template<typename D>
+	friend D AbsDot( const Vector3<D> & v1 , const Vector3<D>& v2 );
 
-	friend double MaxCompoent( const Vector3f &v );
+	template<typename D>
+	friend Vector3<D> Cross( const Vector3<D> &v1 , const Vector3<D> &v2 );
 
-	friend Vector3f Max( const Vector3f &p1 , const Vector3f &p2 );
+	template<typename D>
+	friend Vector3<D> Normalize( const Vector3<D>& v );
 
-	friend Vector3f Min( const Vector3f &p1 , const Vector3f &p2 );
+	template<typename D>
+	friend D MinComponent( const Vector3<D> &v );
 
-	friend Vector3f Permute( const Vector3f &v , int x , int y , int z );
+	template<typename D>
+	friend D MaxCompoent( const Vector3<D> &v );
 
-	friend void CoordinateSystem( Vector3f &v1 , Vector3f *v2 , Vector3f *v3 );
+	template<typename D>
+	friend Vector3<D> Max( const Vector3<D> &p1 , const Vector3<D> &p2 );
 
-	friend int MaxLengthComponent(const Vector3f& v);
+	template<typename D>
+	friend Vector3<D> Min( const Vector3<D> &p1 , const Vector3<D> &p2 );
+
+	template<typename D>
+	friend Vector3<D> Permute( const Vector3<D> &v , int x , int y , int z );
+
+	template<typename D>
+	friend void CoordinateSystem( Vector3<D> &v1 , Vector3<D> *v2 , Vector3<D> *v3 );
+
+	template<typename D>
+	friend int MaxLengthComponent( const Vector3<D>& v );
 
 public:
 	union
 	{
 		struct
 		{
-			double x , y , z;
+			T x , y , z;
 		};
 
 		struct
 		{
-			double r , g , b;
+			T r , g , b;
 		};
 	};
 };
+
+#include "Vector3.inl"
+
 #endif

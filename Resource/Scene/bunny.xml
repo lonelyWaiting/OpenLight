@@ -1,0 +1,34 @@
+<Root>
+	<Environment type="HDREnvironment" filename="grace_probe.pfm" />
+    <primitive name="Table">
+        <shape type="TriangleMesh" filename="table.obj">
+            <transform position="0.0,0.0,0.0" />
+        </shape>
+        <material type="DiffuseMaterial">
+          <kd type="ConstantTexture" value="0.75,0.75,0.75" />
+        </material>
+        <AreaLight Le="0.25,0.25,0.25" />
+    </primitive>
+    <primitive name="GlassSphere">
+        <shape type="TriangleMesh" filename="bunny.obj">
+            <transform position="0,1.0,0" />
+        </shape>
+        <material type="GlassMaterial">
+          <kr type="ConstantTexture" value="0.999,0.999,0.999"/>
+          <kt type="ConstantTexture" value="0.999,0.999,0.999"/>
+          <RefraIndex type="ConstantTexture" value="1.5,1.5,1.5"/>
+        </material>
+    </primitive>
+    <Camera type="ThinLensCamera">
+        <Position>0,3,-3</Position>
+        <Target>0,2,-2</Target>
+        <LensFocus>2</LensFocus>
+        <LensRadius>0.0000000000000001</LensRadius>
+        <NearPlane>1</NearPlane>
+        <Fovy>45</Fovy>
+    </Camera>
+    <Film filename="result.ppm" width="1024" height="768" />
+    <Integrator type="PathIntegrator" MaxDepth="3" />
+    <Sampler type="NRooksSampler" SampleGroupCount="81" SampleCount="3000" />
+    <Renderer type="SamplerRenderer" spp="4" />
+</Root>

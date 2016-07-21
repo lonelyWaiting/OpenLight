@@ -24,13 +24,13 @@ void Grid::Setup( const Scene* scene )
 	}
 
 	// 计算scene bounding box沿着x , y , z轴的长度
-	double wx = SceneBBox.pMax.x - SceneBBox.pMin.x;
-	double wy = SceneBBox.pMax.y - SceneBBox.pMin.y;
-	double wz = SceneBBox.pMax.z - SceneBBox.pMin.z;
+	float wx = SceneBBox.pMax.x - SceneBBox.pMin.x;
+	float wy = SceneBBox.pMax.y - SceneBBox.pMin.y;
+	float wz = SceneBBox.pMax.z - SceneBBox.pMin.z;
 
-	double lambda = 2.0f;
+	float lambda = 2.0f;
 
-	double s = std::pow( wx * wy * wz / Count , 1.0f / 3.0f );
+	float s = std::pow( wx * wy * wz / Count , 1.0f / 3.0f );
 
 	nx = static_cast< int >( lambda * wx / s + 1 );
 	ny = static_cast< int >( lambda * wy / s + 1 );
@@ -132,28 +132,28 @@ void Grid::Reset()
 	Setup( pScene );
 }
 
-bool Grid::Intersect( Ray& ray , const Scene* scene , IntersectRecord* record )
+bool Grid::Intersect( Rayf& ray , const Scene* scene , IntersectRecord* record )
 {
-	double ox = ray.Origin.x;
-	double oy = ray.Origin.y;
-	double oz = ray.Origin.z;
+	float ox = ray.Origin.x;
+	float oy = ray.Origin.y;
+	float oz = ray.Origin.z;
 
-	double dx = ray.Direction.x;
-	double dy = ray.Direction.y;
-	double dz = ray.Direction.z;
+	float dx = ray.Direction.x;
+	float dy = ray.Direction.y;
+	float dz = ray.Direction.z;
 
 	Bound3f SceneBoundingBox = scene->GetWorldBoundingBox();
 
-	double x0 = SceneBoundingBox.pMin.x;
-	double y0 = SceneBoundingBox.pMin.y;
-	double z0 = SceneBoundingBox.pMin.z;
+	float x0 = SceneBoundingBox.pMin.x;
+	float y0 = SceneBoundingBox.pMin.y;
+	float z0 = SceneBoundingBox.pMin.z;
 
-	double x1 = SceneBoundingBox.pMax.x;
-	double y1 = SceneBoundingBox.pMax.y;
-	double z1 = SceneBoundingBox.pMax.z;
+	float x1 = SceneBoundingBox.pMax.x;
+	float y1 = SceneBoundingBox.pMax.y;
+	float z1 = SceneBoundingBox.pMax.z;
 
-	double txMin , tyMin , tzMin;
-	double txMax , tyMax , tzMax;
+	float txMin , tyMin , tzMin;
+	float txMax , tyMax , tzMax;
 
 	if( dx == 0.0 )
 	{
@@ -162,7 +162,7 @@ bool Grid::Intersect( Ray& ray , const Scene* scene , IntersectRecord* record )
 	}
 	else
 	{
-		double Invdx = 1.0 / dx;
+		float Invdx = 1.0 / dx;
 
 		if( Invdx > 0.0 )
 		{
@@ -183,7 +183,7 @@ bool Grid::Intersect( Ray& ray , const Scene* scene , IntersectRecord* record )
 	}
 	else
 	{
-		double Invdy = 1.0 / dy;
+		float Invdy = 1.0 / dy;
 
 		if( Invdy > 0.0 )
 		{
@@ -204,7 +204,7 @@ bool Grid::Intersect( Ray& ray , const Scene* scene , IntersectRecord* record )
 	}
 	else
 	{
-		double Invdz = 1.0 / dz;
+		float Invdz = 1.0 / dz;
 
 		if( Invdz > 0.0 )
 		{
@@ -218,7 +218,7 @@ bool Grid::Intersect( Ray& ray , const Scene* scene , IntersectRecord* record )
 		}
 	}
 	
-	double t0 = txMin , t1 = txMax;
+	float t0 = txMin , t1 = txMax;
 
 	t0 = ( t0 < tyMin ? tyMin : t0 ) < tzMin ? tzMin : ( t0 < tyMin ? tyMin : t0 );
 
@@ -254,11 +254,11 @@ bool Grid::Intersect( Ray& ray , const Scene* scene , IntersectRecord* record )
 		Clamp( iz , 0 , nz - 1 );
 	}
 
-	double dtx = ( txMax - txMin ) / nx;
-	double dty = ( tyMax - tyMin ) / ny;
-	double dtz = ( tzMax - tzMin ) / nz;
+	float dtx = ( txMax - txMin ) / nx;
+	float dty = ( tyMax - tyMin ) / ny;
+	float dtz = ( tzMax - tzMin ) / nz;
 
-	double txNext , tyNext , tzNext;
+	float txNext , tyNext , tzNext;
 	int ixStep , iyStep , izStep;
 	int ixStop , iyStop , izStop;
 
@@ -339,7 +339,7 @@ bool Grid::Intersect( Ray& ray , const Scene* scene , IntersectRecord* record )
 
 		if( txNext < tyNext && txNext < tzNext )
 		{
-			Ray r( ray.Origin , ray.Direction , ray.MinT , txNext , ray.time , ray.depth );
+			Rayf r( ray.Origin , ray.Direction , ray.MinT , txNext , ray.time , ray.depth );
 
 			if( shape )
 			{
@@ -366,7 +366,7 @@ bool Grid::Intersect( Ray& ray , const Scene* scene , IntersectRecord* record )
 		}
 		else if( tyNext < tzNext )
 		{
-			Ray r( ray.Origin , ray.Direction , ray.MinT , tyNext , ray.time , ray.depth );
+			Rayf r( ray.Origin , ray.Direction , ray.MinT , tyNext , ray.time , ray.depth );
 
 			if( shape )
 			{
@@ -393,7 +393,7 @@ bool Grid::Intersect( Ray& ray , const Scene* scene , IntersectRecord* record )
 		}
 		else
 		{
-			Ray r( ray.Origin , ray.Direction , ray.MinT , tzNext , ray.time , ray.depth );
+			Rayf r( ray.Origin , ray.Direction , ray.MinT , tzNext , ray.time , ray.depth );
 
 			if( shape )
 			{

@@ -14,7 +14,6 @@ Camera::Camera()
 Camera::Camera( const Camera& orig )
 {
 	Eye                = orig.Eye;
-	ViewDistance       = orig.ViewDistance;
 	Target             = orig.Target;
 	uvw                = orig.uvw;
 	ExposureTime       = orig.ExposureTime;
@@ -36,12 +35,7 @@ Point3f Camera::GetCameraPosition() const
 	return Eye;
 }
 
-double Camera::GetViewDistance() const
-{
-	return ViewDistance;
-}
-
-double Camera::GetExposureTime() const
+float Camera::GetExposureTime() const
 {
 	return ExposureTime;
 }
@@ -51,7 +45,7 @@ Film* Camera::GetFilm() const
 	return film;
 }
 
-void Camera::SetFovy( double fov )
+void Camera::SetFovy( float fov )
 {
 	fovy = fov;
 	UpdateProperty();
@@ -68,9 +62,9 @@ void Camera::UpdateProperty()
 
 	uvw.InitFromW(look);
 	
-	double tanfovYinv2 = tan( ToRadians( fovy ) );
+	float tanfovYinv2 = tan( ToRadians( fovy ) );
 
-	Top = ViewDistance * tanfovYinv2;
+	Top = tanfovYinv2;
 	Bottom = -Top;
 
 	Right = Top * FilmAspectRatio;

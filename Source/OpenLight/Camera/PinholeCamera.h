@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Math/MathHelper.h"
+
 namespace tinyxml2
 {
 	class XMLDocument;
@@ -15,7 +17,7 @@ public:
 	PinholeCamera( const PinholeCamera& rhs );
 
 public:
-	Ray GenerateRay( double RasterX , double RasterY , const CameraSample& SamplePoint );
+	Rayf GenerateRay( float RasterX , float RasterY , const CameraSample& SamplePoint );
 
 	void Deserialization( tinyxml2::XMLElement* CameraRootElement );
 

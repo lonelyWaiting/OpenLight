@@ -5,7 +5,6 @@
 #include "Math/Ray.h"
 #include "Math/Vector3.h"
 #include "Math/Point3.h"
-#include "Math/Normal.h"
 #include "Core/Scene.h"
 #include "Utilities/RNG.h"
 #include "Light/Light.h"
@@ -25,7 +24,7 @@ void DirectIntegrator::Serialization( tinyxml2::XMLDocument & xmlDoc , tinyxml2:
 	}
 }
 
-Spectrum DirectIntegrator::Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Ray* ray , Accelerator* pAccelerator ) const
+Spectrum DirectIntegrator::Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Rayf* ray , Accelerator* pAccelerator ) const
 {
 	Spectrum L( 0.0 );
 
@@ -33,7 +32,7 @@ Spectrum DirectIntegrator::Li( const Scene* scene , const Renderer* renderer , I
 
 	Vector3f wo = -ray->Direction;
 	Point3f HitPoint = record->HitPoint;
-	Normal nomral = record->normal;
+	Vector3f nomral = record->normal;
 
 	// ×Ô·¢¹â
 	L += record->Le( wo );

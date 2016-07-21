@@ -12,16 +12,13 @@ namespace tinyxml2
 
 class Light;
 class BSDF;
-class Point3f;
-class Vector3f;
-class Normal;
 
 class DirectIntegrator : public SurfaceIntegrator
 {
 	DECLARE_DYNAMIC_CREATE_DERIVED( DirectIntegrator , SurfaceIntegrator )
 
 public:
-	Spectrum Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Ray* ray , Accelerator* pAccelerator ) const;
+	Spectrum Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Rayf* ray , Accelerator* pAccelerator ) const;
 
 public:
 	void Deserialization( tinyxml2::XMLElement* IntegratorRootElement );

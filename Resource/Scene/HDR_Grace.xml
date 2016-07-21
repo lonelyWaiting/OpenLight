@@ -30,7 +30,7 @@
         <Position>50,52,295.6</Position>
         <Target>50,51.957388,294.6</Target>
         <LensFocus>210</LensFocus>
-        <LensRadius>1.0000000000000001</LensRadius>
+        <LensRadius>4.0000000000000001</LensRadius>
         <NearPlane>140</NearPlane>
         <Fovy>15</Fovy>
     </Camera>

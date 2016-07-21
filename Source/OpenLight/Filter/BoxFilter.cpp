@@ -1,7 +1,7 @@
 #include "Utilities/PCH.h"
 #include "BoxFilter.h"
 
-double BoxFilter::Evalute( double x , double y ) const
+float BoxFilter::Evalute( float x , float y ) const
 {
 	return 1;
 }

@@ -11,9 +11,9 @@ public:
 
 	Spectrum f( const Vector3f& wo , const Vector3f& wi ) const;
 
-	Spectrum Sample_f( const Vector3f& wo , const Normal& n , Vector3f* wi , const Point2f& samplePoint , double* pdf , bool& bNoOccur ) const;
+	Spectrum Sample_f( const Vector3f& wo , const Vector3f& n , Vector3f* wi , const Point2f& samplePoint , float* pdf , bool& bNoOccur ) const;
 
-	double PDF( const Vector3f& wi , const Vector3f& wo , const Normal& n ) const;
+	float PDF( const Vector3f& wi , const Vector3f& wo , const Vector3f& n ) const;
 
 private:
 	const Spectrum R;			// 用于缩放反射颜色

@@ -2,69 +2,74 @@
 #define MATRIX3_H
 
 #include "Vector3.h"
+#include "MathHelper.h"
 
-class Matrix3f
+template<typename T>
+class Matrix3
 {
 public:
-	Matrix3f();
+	Matrix3();
 
-	Matrix3f( const Matrix3f& Matrix );
+	Matrix3( const Matrix3& Matrix );
 
-	Matrix3f( double fM00 , double fM01 , double fM02 ,
-			  double fM10 , double fM11 , double fM12 ,
-			  double fM20 , double fM21 , double fM22 );
-
-public:
-	Matrix3f& operator = ( const Matrix3f& Matrix );
-
-	double operator[] ( int iPos ) const;
-
-	double& operator[] ( int iPos );
-
-	bool operator == ( const Matrix3f& Matrix ) const;
-
-	bool operator != ( const Matrix3f& Matrix ) const;
-
-	Matrix3f operator * ( const Matrix3f& Matrix ) const;
-
-	Matrix3f& operator *= ( const Matrix3f& rhs );
-
-	friend Vector3f operator * ( const Vector3f& v , const Matrix3f& matrix );
+	Matrix3( T fM00 , T fM01 , T fM02 ,
+			 T fM10 , T fM11 , T fM12 ,
+			 T fM20 , T fM21 , T fM22 );
 
 public:
-	void SetRow( int iRow , const Vector3f& Vector );
+	Matrix3& operator = ( const Matrix3& Matrix );
 
-	Vector3f GetRow( int iRow ) const;
+	T operator[] ( int iPos ) const;
 
-	void SetColumn( int iCol , const Vector3f& Vector );
+	T& operator[] ( int iPos );
 
-	Vector3f GetColumn( int iCol );
+	bool operator == ( const Matrix3& Matrix ) const;
+
+	bool operator != ( const Matrix3& Matrix ) const;
+
+	Matrix3 operator * ( const Matrix3& Matrix ) const;
+
+	Matrix3& operator *= ( const Matrix3& rhs );
+
+public:
+	template<typename D>
+	friend Vector3<D> operator * ( const Vector3<D>& v , const Matrix3<D>& matrix );
+
+public:
+	void SetRow( int iRow , const Vector3<T>& Vector );
+
+	Vector3<T> GetRow( int iRow ) const;
+
+	void SetColumn( int iCol , const Vector3<T>& Vector );
+
+	Vector3<T> GetColumn( int iCol );
 
 	void Orthonormalize();
 
 public:
-	static Matrix3f RotationX( double fTheta );
-	static Matrix3f RotationY( double fTheta );
-	static Matrix3f RotationZ( double fTheta );
+	static Matrix3 RotationX( T fTheta );
+	static Matrix3 RotationY( T fTheta );
+	static Matrix3 RotationZ( T fTheta );
 
-	static Matrix3f Rotation( double ThetaX , double ThetaY , double ThetaZ );
-	static Matrix3f RotateAxis( Vector3f& Axis , double fTheta );
+	static Matrix3 Rotation( T ThetaX , T ThetaY , T ThetaZ );
+	static Matrix3 RotateAxis( Vector3<T>& Axis , T fTheta );
 
-	static Matrix3f Identity();
-	static Matrix3f Tranpose( const Matrix3f& matrix );
+	static Matrix3 Identity();
+	static Matrix3 Tranpose( const Matrix3& matrix );
 
 public:
 	union
 	{
 		struct
 		{
-			double m00 , m01 , m02;
-			double m10 , m11 , m12;
-			double m20 , m21 , m22;
+			T m00 , m01 , m02;
+			T m10 , m11 , m12;
+			T m20 , m21 , m22;
 		};
 
-		double m[9];
+		T m[9];
 	};
 };
 
+#include "Matrix3.inl"
 #endif

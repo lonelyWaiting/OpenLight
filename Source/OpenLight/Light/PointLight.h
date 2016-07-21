@@ -18,13 +18,13 @@ public:
 
 	PointLight( const Transform& LightToWorld , const Spectrum & intensity );
 
-	Spectrum Sample_L( const Point3f& p , Vector3f* wi , LightSample& _lightSample , double* pdf , VisibilityTester* pVisibility ) const;
+	Spectrum Sample_L( const Point3f& p , Vector3f* wi , LightSample& _lightSample , float* pdf , VisibilityTester* pVisibility ) const;
 
 	Spectrum Power( const Scene* scene ) const;
 	
-	Spectrum Sample_L( const Scene* scene , LightSample& _lightSample , Ray* ray , Normal* NormalShading , double* pdf ) const;
+	Spectrum Sample_L( const Scene* scene , LightSample& _lightSample , Rayf* ray , Vector3f* NormalShading , float* pdf ) const;
 
-	double PDF( const Point3f& p , const Vector3f& wi ) const;
+	float PDF( const Point3f& p , const Vector3f& wi ) const;
 
 	bool IsDelta();
 

@@ -23,7 +23,7 @@ public:
 	void Render( const Scene* scene );
 
 	virtual Spectrum Li(const Scene* scene,
-						Ray* ray ,
+						 Rayf* ray ,
 						IntersectRecord* record = nullptr ) const;
 
 public:

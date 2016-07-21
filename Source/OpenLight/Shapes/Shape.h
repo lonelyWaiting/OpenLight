@@ -11,9 +11,7 @@
 struct IntersectRecord;
 class  Transform;
 class  Primitive;
-class  Ray;
 struct  LightSample;
-class  Normal;
 
 class Shape : public VSerializableObject , public VIntersectable
 {
@@ -26,7 +24,7 @@ public:
 
 	virtual ~Shape();
 
-	virtual bool Intersect( Ray& ray , IntersectRecord* record ) const;
+	virtual bool Intersect( Rayf& ray , IntersectRecord* record ) const;
 
 	bool HasSubShape();
 
@@ -36,21 +34,20 @@ public:
 
 	virtual void SetPrimitive( Primitive* _pPrimitive );
 	
-	virtual double PDF( const Point3f& p , const Vector3f& wi ) const;
+	virtual float PDF( const Point3f& p , const Vector3f& wi ) const;
 
-	virtual double Area() const;
+	virtual float Area() const;
 
-	virtual Point3f Sample( const Point3f& p , LightSample& lightSample , Normal& normalSample );
+	virtual Point3f Sample( const Point3f& p , LightSample& lightSample , Vector3f& normalSample );
 
 	virtual Point3f GetPosition();
 
 	void SetPosition( float* pos );
 
 public:
-	Transform*	ObjectToWorld;
-	Transform*	WorldToObject;
-	bool		bSubShape;				// 是否由其它shape组成
-	Primitive*  pPrimitive;				// 所属图元
-	Point3f		Pos;
-	Vector2f	uvscale;
+	Transform*	mObjectToWorld;
+	Transform*	mWorldToObject;
+	bool		mHasSubShape;				// 是否由其它shape组成
+	Primitive*  mPrimitivePtr;				// 所属图元
+	Point3f		mWorldPos;
 };

@@ -67,7 +67,7 @@ void SamplerRenderer::Render( const Scene* scene )
 	int ColTileNumber = std::ceil( Width / 40.0 );
 	int RowTileNumber = std::ceil( Height / 40.0 );
 	int CurrentTileIndex = ( iRow / 40 ) * ColTileNumber + std::ceil( ( iCol + 1 ) / 40.0 );
-	double percent = ( double )CurrentTileIndex / ( ColTileNumber * RowTileNumber );
+	float percent = ( float )CurrentTileIndex / ( ColTileNumber * RowTileNumber );
 
 	#ifndef _DEBUG
 	#pragma omp parallel for schedule(dynamic , 1) private(L)
@@ -75,7 +75,7 @@ void SamplerRenderer::Render( const Scene* scene )
 
 	for( int Row = iRow; Row < HeightBound; Row++ )
 	{
-		fprintf( stdout , "\rRendering: %1.0fspp %8.2f%%" , ( double )spp , ( percent + ( Row - iRow ) / ( 40.0 * ColTileNumber * RowTileNumber ) ) * 100 );
+		fprintf( stdout , "\rRendering: %1.0fspp %8.2f%%" , ( float )spp , ( percent + ( Row - iRow ) / ( 40.0 * ColTileNumber * RowTileNumber ) ) * 100 );
 
 		for( int Col = iCol; Col < WidthBound; Col++ )
 		{
@@ -85,14 +85,14 @@ void SamplerRenderer::Render( const Scene* scene )
 			{
 				CameraSample SamplePoint = sampler->GetSamplePoint();
 
-				Ray ray = camera->GenerateRay( Col , Row , SamplePoint );
+				Rayf ray = camera->GenerateRay( Col , Row , SamplePoint );
 
 				IntersectRecord record;
 
 				L += Li( scene , &ray , &record );
 			}
 			
-			L /= (double)spp;
+			L /= ( float )spp;
 
 			camera->GetFilm()->SetColor( Row , Col , L );
 		}
@@ -111,16 +111,15 @@ void SamplerRenderer::Render( const Scene* scene )
 	if( iRow >= Height )
 	{
 		clock_t end = clock();
-		double t = ( double )( end - start ) / CLOCKS_PER_SEC;
+		float t = ( float )( end - start ) / CLOCKS_PER_SEC;
 		printf( "\nRender time: %fs.\n" , t );
-		//Log::Get().Info( "\nRender time: %fs.\n" , t );
 
 		// 输出到文件
 		camera->GetFilm()->Display();
 	}
 }
 
-Spectrum SamplerRenderer::Li( const Scene* scene , Ray* ray , IntersectRecord* record /* = nullptr  */ ) const
+Spectrum SamplerRenderer::Li( const Scene* scene , Rayf* ray , IntersectRecord* record /* = nullptr  */ ) const
 {
 	if( pAccelerator->Intersect( *ray , scene , record ) )
 	{

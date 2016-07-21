@@ -34,9 +34,9 @@ void PureRandomSampler::GenerateUnitSquareSamples()
 		for( int j = 0; j < SampleCount; j++ )
 		{
 			CameraSample* samples = new CameraSample;
-			samples->ImageSamples = Point2f( RNG::Get().GetDouble() , RNG::Get().GetDouble() );
-			samples->LensSamples  = Point2f( RNG::Get().GetDouble() , RNG::Get().GetDouble() );
-			samples->TimeSamples  = RNG::Get().GetDouble();
+			samples->ImageSamples = Point2f( RNG::Get().GetFloat() , RNG::Get().GetFloat() );
+			samples->LensSamples  = Point2f( RNG::Get().GetFloat() , RNG::Get().GetFloat() );
+			samples->TimeSamples  = RNG::Get().GetFloat();
 
 			SamplePoints.push_back( samples );
 		}

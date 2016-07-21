@@ -1,5 +1,4 @@
 #include "Utilities/PCH.h"
-#include "Math/Normal.h"
 #include "SpecularReflection.h"
 #include "Utilities/RNG.h"
 
@@ -21,7 +20,7 @@ Spectrum SpecularReflection::f( const Vector3f& wo , const Vector3f& wi ) const
 	return Spectrum( 0.0 );
 }
 
-Spectrum SpecularReflection::Sample_f( const Vector3f& wo , const Normal& n , Vector3f* wi , const Point2f& samplePoint , double* pdf , bool& bNoOccur ) const
+Spectrum SpecularReflection::Sample_f( const Vector3f& wo , const Vector3f& n , Vector3f* wi , const Point2f& samplePoint , float* pdf , bool& bNoOccur ) const
 {
 	*wi = Normalize( 2 * Dot( wo , n ) / n.Length() * Normalize( n ) - wo );
 
@@ -31,9 +30,9 @@ Spectrum SpecularReflection::Sample_f( const Vector3f& wo , const Normal& n , Ve
 
 	// 经验设定
 	// 参考该问题的答案：http://www.opengpu.org/forum.php?mod=viewthread&tid=18099&extra=page%3D1
-	double P = 0.25 + 0.5 * F[0];
+	float P = 0.25 + 0.5 * F[0];
 
-	if( RNG::Get().GetDouble() > /*F[0]*/P )
+	if( RNG::Get().GetFloat() > /*F[0]*/P )
 	{
 		// 无反射
 		bNoOccur = true;
@@ -43,7 +42,7 @@ Spectrum SpecularReflection::Sample_f( const Vector3f& wo , const Normal& n , Ve
 	return F / P * R / AbsDot( *wi , n );
 }
 
-double SpecularReflection::PDF( const Vector3f& wi , const Vector3f& wo , const Normal& n ) const
+float SpecularReflection::PDF( const Vector3f& wi , const Vector3f& wo , const Vector3f& n ) const
 {
 	// 除了反射方向其他方向的PDF全部为0
 	return 0;

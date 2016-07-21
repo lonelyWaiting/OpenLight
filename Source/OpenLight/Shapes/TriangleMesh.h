@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Shape.h"
-#include "Math/Normal.h"
-#include "Math/Point2.h"
 #include "Triangle.h"
+#include "Math/MathHelper.h"
+#include "Math/Point3.h"
 
 namespace tinyxml2
 {
@@ -17,11 +17,11 @@ class TriangleMesh : public Shape
 public:
 	TriangleMesh();
 
-	TriangleMesh( const Transform* ObjectToWorld ,  Point3f* _points , Normal* _normals , Vector2f* _uvs , Triangle* _triangles , int _VertexNum , int _TriangleCount );
+	TriangleMesh( const Transform* ObjectToWorld ,  Point3f* _points , Vector3f* _normals , Vector2f* _uvs , Triangle* _triangles , int _VertexNum , int _TriangleCount );
 
 	~TriangleMesh();
 
-	bool Intersect( Ray& ray , IntersectRecord* record ) const;
+	bool Intersect( Rayf& ray , IntersectRecord* record ) const;
 
 public:
 	void Deserialization( tinyxml2::XMLElement* ShapeRootElement );
@@ -34,15 +34,15 @@ public:
 	Shape* GetChild( int index ) const;
 
 private:
-	Point3f * points;
-	Normal  * normals;
-	Vector2f* uvs;
-	Triangle* triangles;
-	int		  VertexNum;
-	int		  TriangleCount;
+	Point3f *	mPointList;
+	Vector3f  *	mNormalList;
+	Vector2f*	mTexcoordList;
+	Triangle*	mTriangleList;
+	int			mVertexCount;
+	int			mTriangleCount;
 
-	Point3f Pos;
-	char* filename;
+	Point3f		mWorldPos;
+	char*		mFilename;
 
 	friend class Triangle;
 };

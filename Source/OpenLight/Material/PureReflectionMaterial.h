@@ -16,7 +16,7 @@ class PureReflectionMaterial : public Material
 public:
 	PureReflectionMaterial();
 
-	BSDF* GetBSDF( const Vector2f& uv , const Point3f& point , const Normal& normal ) const;
+	BSDF* GetBSDF( const Vector2f& uv , const Point3f& point , const Vector3f& normal ) const;
 
 	PureReflectionMaterial( Spectrum R );
 

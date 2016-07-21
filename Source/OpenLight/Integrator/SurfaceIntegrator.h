@@ -7,7 +7,6 @@
 class Scene;
 class Renderer;
 struct IntersectRecord;
-class Ray;
 class Accelerator;
 namespace tinyxml2
 {
@@ -19,7 +18,7 @@ class SurfaceIntegrator : public VSerializableObject
 	DECLARE_DYNAMIC_CREATE_BASE( SurfaceIntegrator )
 
 public:
-	virtual Spectrum Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Ray* ray , Accelerator* pAccelerator ) const = 0;
+	virtual Spectrum Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Rayf* ray , Accelerator* pAccelerator ) const = 0;
 
 	virtual void Deserialization( tinyxml2::XMLElement* IntegratorRootElement ) = 0;
 

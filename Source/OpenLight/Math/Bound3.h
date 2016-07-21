@@ -1,51 +1,55 @@
-#pragma once
-
 #ifndef BOUND3_H
 #define BOUND3_H
 
+#include "Math/Point3.h"
+
+template<typename T>
 class Ray;
-class Vector3f;
 
-#include "Point3.h"
+template<typename T>
+class Vector3;
 
-class Bound3f
+template<typename T>
+class Bound3
 {
 public:
-	Bound3f();
+	Bound3();
 
-	Bound3f( const Point3f& p );
+	Bound3( const Point3<T>& p );
 
-	Bound3f( const Point3f& p1 , const Point3f& p2 );
+	Bound3( const Point3<T>& p1 , const Point3<T>& p2 );
 
-	const Point3f& operator[]( int i ) const;
+	const Point3<T>& operator[]( int i ) const;
 
-	Point3f& operator[]( int i );
+	Point3<T>& operator[]( int i );
 
-	Point3f Corner( int corner ) const;
+	Point3<T> Corner( int corner ) const;
 
 	/// \brief 对角线
-	Vector3f Diagonal() const;
+	Vector3<T> Diagonal() const;
 
 	// 包围盒的表面积
-	double SurfaceArea() const;
+	T SurfaceArea() const;
 
-	Vector3f Offset( const Point3f& p ) const;
+	Vector3<T> Offset( const Point3<T>& p ) const;
 
-	void BoundingSphere( Point3f* center , double* radius ) const;
+	void BoundingSphere( Point3<T>* center , T* radius ) const;
 
-	void ExpendToInclude( const Point3f& p );
+	void ExpendToInclude( const Point3<T>& p );
 
-	void ExpendToInclude( const Bound3f& bbox );
+	void ExpendToInclude( const Bound3& bbox );
 
-	bool IntersectP( const Ray& ray , double* hitt0 = nullptr , double* hitt1 = nullptr ) const;
+	bool IntersectP( const Ray<T>& ray , T* hitt0 = nullptr , T* hitt1 = nullptr ) const;
 
-	inline bool IntersectP( const Ray& ray , const Vector3f& invDir , const int DirectionIsNegative[3] );
-
-public:
-	friend bool Inside( const Point3f& pt , const Bound3f& b );
+	bool IntersectP( const Ray<T>& ray , const Vector3<T>& invDir , const int DirectionIsNegative[3] );
 
 public:
-	Point3f pMin , pMax;
+	template<typename D>
+	friend bool Inside( const Point3<D>& pt , const Bound3<D>& b );
+
+public:
+	Point3<T> pMin , pMax;
 };
 
+#include "Bound3.inl"
 #endif

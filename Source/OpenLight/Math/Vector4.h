@@ -1,69 +1,79 @@
 #ifndef VECTOR4_H
 #define VECTOR4_H
 
-class Vector3f;
+#include "MathHelper.h"
+#include <cmath>
 
-class Vector4f
+template<typename T>
+class Vector3;
+
+template<typename T>
+class Vector4
 {
 public:
-	Vector4f();
+	Vector4();
 
-	Vector4f( double a );
+	Vector4( T a );
 
-	Vector4f( double x , double y , double z , double w );
+	Vector4( T x , T y , T z , T w );
 
-	Vector4f( const Vector4f& v );
+	Vector4( const Vector4& v );
 
-	Vector4f( const Vector3f& v );
-
-public:
-	bool operator == ( const Vector4f& v ) const;
-
-	bool operator != ( const Vector4f& v ) const;
-
-	const Vector4f& operator = ( const Vector4f& v );
-
-	const Vector4f& operator += ( const Vector4f& v );
-
-	Vector4f operator + ( const Vector4f& v ) const;
-
-	const Vector4f& operator -= ( const Vector4f& v );
-
-	Vector4f operator - ( const Vector4f& v ) const;
-
-	Vector4f operator - () const;
-
-	const Vector4f& operator *= ( const Vector4f& v );
-
-	const Vector4f& operator *= ( double a );
-
-	const Vector4f& operator /= ( const Vector4f& v );
-
-	const Vector4f& operator /= ( double a );
-
-	Vector4f operator / ( const Vector4f& v ) const;
-
-	Vector4f operator / ( double a ) const;
+	Vector4( const Vector3<T>& v );
 
 public:
-	double length() const;
+	bool operator == ( const Vector4& v ) const;
 
-	double lengthSq() const;
+	bool operator != ( const Vector4& v ) const;
 
-	const Vector4f& normalize();
+	const Vector4& operator = ( const Vector4& v );
+
+	const Vector4& operator += ( const Vector4& v );
+
+	Vector4 operator + ( const Vector4& v ) const;
+
+	const Vector4& operator -= ( const Vector4& v );
+
+	Vector4 operator - ( const Vector4& v ) const;
+
+	Vector4 operator - () const;
+
+	const Vector4& operator *= ( const Vector4& v );
+
+	const Vector4& operator *= ( T a );
+
+	const Vector4& operator /= ( const Vector4& v );
+
+	const Vector4& operator /= ( T a );
+
+	Vector4 operator / ( const Vector4& v ) const;
+
+	Vector4 operator / ( T a ) const;
+
+public:
+	T length() const;
+
+	T lengthSq() const;
+
+	const Vector4& normalize();
 
 	static unsigned int dimension();
 
 public:
-	friend inline double Dot( const Vector4f&v1 , const Vector4f &v2 );
+	template<typename D>
+	friend D Dot( const Vector4<D>&v1 , const Vector4<D> &v2 );
 
-	friend inline double AbsDot( const Vector4f& v1 , const Vector4f& v2 );
+	template<typename D>
+	friend D AbsDot( const Vector4<D>& v1 , const Vector4<D>& v2 );
 
-	friend Vector4f Abs( const Vector4f& v );
+	template<typename D>
+	friend Vector4<D> Abs( const Vector4<D>& v );
 
-	friend Vector4f Permute( const Vector4f &v , int x , int y , int z , int w );
+	template<typename D>
+	friend Vector4<D> Permute( const Vector4<D> &v , int x , int y , int z , int w );
 
-	friend inline Vector4f Normalize( const Vector4f& v );
+	template<typename D>
+	friend Vector4<D> Normalize( const Vector4<D>& v );
 
 public:
 
@@ -71,14 +81,15 @@ public:
 	{
 		struct
 		{
-			double x , y , z , w;
+			T x , y , z , w;
 		};
 
 		struct
 		{
-			double r , g , b , a;
+			T r , g , b , a;
 		};
 	};
 };
 
+#include "Vector4.inl"
 #endif

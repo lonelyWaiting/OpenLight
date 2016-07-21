@@ -19,7 +19,7 @@ public:
 public:
 	void SetFilename( char* filename );
 
-	void SetGamma( double gamma );
+	void SetGamma( float gamma );
 
 	void SetResolution( int xResolution , int yResolution );
 
@@ -32,7 +32,7 @@ public:
 public:
 	Vector2f GetResolution() const;
 
-	double GetAspectio() const;
+	float GetAspectio() const;
 
 public:
 	void Deserialization( const tinyxml2::XMLElement* FilmRootElement );
@@ -46,8 +46,8 @@ private:
 	int Width;
 	int Height;
 
-	double Gamma;
-	double InvGamma;
+	float Gamma;
+	float InvGamma;
 
 	char* Filename;
 

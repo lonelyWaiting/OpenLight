@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Math/Bound3.h"
-#include "Math/Point3.h"
+#include "Math/MathHelper.h"
 #include "Shape.h"
 
 class TriangleMesh;
@@ -24,12 +23,12 @@ public:
 
 	void SetTriangleMesh( TriangleMesh* _pMesh );
 
-	bool Intersect( Ray& ray , IntersectRecord* record ) const;
+	bool Intersect( Rayf& ray , IntersectRecord* record ) const;
 
-	Point3f Sample( const Point3f& p , LightSample& lightSample , Normal& normalSample );
+	Point3f Sample( const Point3f& p , LightSample& lightSample , Vector3f& normalSample );
 
 public:
-	double Area() const;
+	float Area() const;
 
 public:
 	void Deserialization( tinyxml2::XMLElement* RootElement );

@@ -64,6 +64,12 @@ void ShowMaterialProperty( Material* pMaterial , const char* MaterialTypeName )
 
 			ShowConstantTextureProperty( pConstantTexture , "Kr" );
 		}
+		else if (!strcmp(pKr->GetName(), "ImageTexture"))
+		{
+			ImageTexture* pImageTexture = dynamic_cast<ImageTexture*>(pKr);
+
+			ShowImageTextureProperty(pImageTexture, "Kr");
+		}
 	}
 	else if( !strcmp( MaterialTypeName , "DiffuseMaterial" ) )
 	{
@@ -83,6 +89,12 @@ void ShowMaterialProperty( Material* pMaterial , const char* MaterialTypeName )
 
 			ShowCheckboardTextureProperty( pCheckboardTexture , "color1" , "color2" );
 		}
+		else if (!strcmp(pKd->GetName(), "ImageTexture"))
+		{
+			ImageTexture* pImageTexture = dynamic_cast<ImageTexture*>(pKd);
+
+			ShowImageTextureProperty(pImageTexture, "Kd");
+		}
 	}
 	else if( !strcmp( MaterialTypeName , "GlassMaterial" ) )
 	{
@@ -97,6 +109,12 @@ void ShowMaterialProperty( Material* pMaterial , const char* MaterialTypeName )
 
 			ShowConstantTextureProperty( pConstantTexture , "kr" );
 		}
+		else if (!strcmp(pKr->GetName(), "ImageTexture"))
+		{
+			ImageTexture* pImageTexture = dynamic_cast<ImageTexture*>(pKr);
+
+			ShowImageTextureProperty(pImageTexture, "Kr");
+		}
 
 		// ------------------------------------------------------------------------------------
 		Texture* pKt = pGlassMaterial->GetKt();
@@ -106,6 +124,12 @@ void ShowMaterialProperty( Material* pMaterial , const char* MaterialTypeName )
 			ConstantTexture* pConstantTexture = dynamic_cast< ConstantTexture* >( pKt );
 
 			ShowConstantTextureProperty( pConstantTexture , "kt" );
+		}
+		else if (!strcmp(pKt->GetName(), "ImageTexture"))
+		{
+			ImageTexture* pImageTexture = dynamic_cast<ImageTexture*>(pKr);
+
+			ShowImageTextureProperty(pImageTexture, "Kt");
 		}
 
 		// ------------------------------------------------------------------------------------
@@ -117,7 +141,12 @@ void ShowMaterialProperty( Material* pMaterial , const char* MaterialTypeName )
 
 			ShowConstantTextureProperty( pConstantTexture , "IOR" );
 		}
+		else if (!strcmp(pIOR->GetName(), "ImageTexture"))
+		{
+			ImageTexture* pImageTexture = dynamic_cast<ImageTexture*>(pIOR);
 
+			ShowImageTextureProperty(pImageTexture, "IOR");
+		}
 		// ------------------------------------------------------------------------------------
 	}
 }
@@ -130,7 +159,7 @@ void ShowConstantTextureProperty( ConstantTexture* pConstantTexture , const char
 
 	if( ImGui::InputFloat3( PropertyName , r ) )
 	{
-		pConstantTexture->SetValue( Spectrum::FromRGB( ( double )r[0] , ( double )r[1] , ( double )r[2] ) );
+		pConstantTexture->SetValue( Spectrum::FromRGB( ( float )r[0] , ( float )r[1] , ( float )r[2] ) );
 	}
 }
 
@@ -143,17 +172,22 @@ void ShowCheckboardTextureProperty( CheckboardTexture* pCheckboardTexture , cons
 
 	if( ImGui::InputFloat3( FirstPropertyName , r ) )
 	{
-		pCheckboardTexture->SetValue( Spectrum::FromRGB( ( double )r[0] , ( double )r[1] , ( double )r[2] ) , 1 );
+		pCheckboardTexture->SetValue( Spectrum::FromRGB( ( float )r[0] , ( float )r[1] , ( float )r[2] ) , 1 );
 	}
 
 	float r2[3] = { Value2[0] , Value2[1] , Value2[2] };
 	if( ImGui::InputFloat3( SecondPropertyName , r2 ) )
 	{
-		pCheckboardTexture->SetValue( Spectrum::FromRGB( ( double )r2[0] , ( double )r2[1] , ( double )r2[2] ) , 2 );
+		pCheckboardTexture->SetValue( Spectrum::FromRGB( ( float )r2[0] , ( float )r2[1] , ( float )r2[2] ) , 2 );
 	}
 }
 
 void ShowImageTextureProperty( ImageTexture* pImageTexture , const char* PropertyName )
 {
+	char* pFilename = pImageTexture->GetFilename();
 
+	if (ImGui::InputText(PropertyName, pFilename, strlen(pFilename)+1))
+	{
+		pImageTexture->SetFilename(pFilename);
+	}
 }

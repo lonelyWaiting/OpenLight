@@ -1,12 +1,10 @@
 #include "Utilities/PCH.h"
+#include "Transform.h"
 #include "Bound3.h"
 #include "Matrix4.h"
-#include "Normal.h"
 #include "Point3.h"
 #include "Ray.h"
 #include "Vector3.h"
-#include "Transform.h"
-#include "IO/Log.h"
 
 Transform::Transform()
 	:matrix()
@@ -15,7 +13,7 @@ Transform::Transform()
 
 }
 
-Transform::Transform( const double m[4][4] )
+Transform::Transform( const float m[4][4] )
 {
 	matrix = Matrix4f( m[0][0] , m[0][1] , m[0][2] , m[0][3] ,
 					   m[1][0] , m[1][1] , m[1][2] , m[1][3] ,
@@ -105,25 +103,13 @@ Bound3f Transform::operator() ( const Bound3f& bbox ) const
 	return box;
 }
 
-Ray Transform::operator() ( const Ray& r ) const
+Rayf Transform::operator() ( const Rayf& r ) const
 {
 	Point3f origin = ( *this )( r.Origin );
 
 	Vector3f dir = ( *this )( r.Direction );
 
-	return Ray( origin , dir , r.MinT , r.MaxT , r.time , r.depth );
-}
-
-
-Normal Transform::operator() ( const Normal& n ) const
-{
-	double x = n.x;
-	double y = n.y;
-	double z = n.z;
-
-	return Normal( matrix_inv.m00 *x + matrix_inv.m10 * y + matrix_inv.m20 * z ,
-				   matrix_inv.m01 * x + matrix_inv.m11 * y + matrix_inv.m21 * z ,
-				   matrix_inv.m02 * x + matrix_inv.m12 * y + matrix_inv.m22 * z );
+	return Rayf( origin , dir , r.MinT , r.MaxT , r.time , r.depth );
 }
 
 Transform Transform::operator* ( const Transform& t2 ) const
@@ -132,10 +118,10 @@ Transform Transform::operator* ( const Transform& t2 ) const
 	return Transform( matrix * t2.matrix , t2.matrix_inv * matrix_inv );
 }
 
-Transform Perspective( double fov , double aspect , double zNear , double zFar )
+Transform Perspective( float fov , float aspect , float zNear , float zFar )
 {
-	double t = 1.0f / tan( ToRadians( fov * 0.5f ) );
-	double temp = zFar / ( zFar - zNear );
+	float t = 1.0f / tan( ToRadians( fov * 0.5f ) );
+	float temp = zFar / ( zFar - zNear );
 
 	Matrix4f perspective( 1 / aspect * t , 0.0f , 0.0f , 0.0f ,
 						  0.0f , t , 0.0f , 0.0f ,
@@ -145,7 +131,7 @@ Transform Perspective( double fov , double aspect , double zNear , double zFar )
 	return Transform( perspective , Inverse( perspective ) );
 }
 
-Transform Orthographic( double zNear , double zFar )
+Transform Orthographic( float zNear , float zFar )
 {
 	// (z - zNear) / (zFar - zNear)
 	// when z = zNear , the above formula result is 0
@@ -163,11 +149,6 @@ Transform LookAt( const Point3f& eye , const Point3f& look , const Vector3f& up 
 
 	if( Cross( Normalize( up ) , zAxis ).Length() == 0 )
 	{
-		Log::Get().Error( L"\"up\" vector (%f , %f , %f) and viewing direction (%f , %f , %f)"
-						  L"passed to LookAt are pointing in the same direction , Using"
-						  L"the identity transformation."
-						  , up.x , up.y , up.z , zAxis.x , zAxis.y , zAxis.z );
-
 		return Transform();
 	}
 
@@ -197,17 +178,17 @@ Transform LookAt( const Point3f& eye , const Point3f& look , const Vector3f& up 
 	return Transform( WorldToCamera , CameraToWorld );
 }
 
-Transform Rotate( const Vector3f& axis , double theta )
+Transform Rotate( const Vector3f& axis , float theta )
 {
 	Vector3f a = Normalize( axis );
 
-	double x = a.x;
-	double y = a.y;
-	double z = a.z;
+	float x = a.x;
+	float y = a.y;
+	float z = a.z;
 
-	double cosTheta = std::cos( ToRadians( theta ) );
-	double OneSubCos = 1.0f - cosTheta;
-	double sinTheta = std::sin( ToRadians( theta ) );
+	float cosTheta = std::cos( ToRadians( theta ) );
+	float OneSubCos = 1.0f - cosTheta;
+	float sinTheta = std::sin( ToRadians( theta ) );
 
 	Matrix4f m( x * x * OneSubCos + cosTheta , x * y * OneSubCos + z * sinTheta , x * z * OneSubCos - y * sinTheta , 0.0f ,
 				x * y * OneSubCos - z * sinTheta , y * y * OneSubCos + cosTheta , y * z * OneSubCos + x * sinTheta , 0.0f ,
@@ -217,10 +198,10 @@ Transform Rotate( const Vector3f& axis , double theta )
 	return Transform( m , Transpose( m ) );
 }
 
-Transform RotateZ( double theta )
+Transform RotateZ( float theta )
 {
-	double fSin = sin( ToRadians( theta ) );
-	double fCos = cos( ToRadians( theta ) );
+	float fSin = sin( ToRadians( theta ) );
+	float fCos = cos( ToRadians( theta ) );
 
 	return Transform( Matrix4f( fCos , -fSin , 0.0f , 0.0f ,
 					  fSin , fCos , 0.0f , 0.0f ,
@@ -232,10 +213,10 @@ Transform RotateZ( double theta )
 					  0.0f , 0.0f , 0.0f , 1.0f ) );
 }
 
-Transform RotateY( double theta )
+Transform RotateY( float theta )
 {
-	double fSin = sin( ToRadians( theta ) );
-	double fCos = cos( ToRadians( theta ) );
+	float fSin = sin( ToRadians( theta ) );
+	float fCos = cos( ToRadians( theta ) );
 
 	return Transform( Matrix4f( fCos , 0.0f , fSin , 0.0f ,
 					  0.0f , 1.0f , 0.0f , 0.0f ,
@@ -247,10 +228,10 @@ Transform RotateY( double theta )
 					  0.0f , 0.0f , 0.0f , 1.0f ) );
 }
 
-Transform RotateX( double theta )
+Transform RotateX( float theta )
 {
-	double fSin = sin( ToRadians( theta ) );
-	double fCos = cos( ToRadians( theta ) );
+	float fSin = sin( ToRadians( theta ) );
+	float fCos = cos( ToRadians( theta ) );
 
 	return Transform( Matrix4f( 1.0f , 0.0f , 0.0f , 0.0f ,
 					  0.0f , fCos , -fSin , 0.0f ,
@@ -262,7 +243,7 @@ Transform RotateX( double theta )
 					  0.0f , 0.0f , 0.0f , 1.0f ) );
 }
 
-Transform Scale( double x , double y , double z )
+Transform Scale( float x , float y , float z )
 {
 	return Transform( Matrix4f( x , 0.0f , 0.0f , 0.0f , 0.0f , y , 0.0f , 0.0f , 0.0f , 0.0f , z , 0.0f , 0.0f , 0.0f , 0.0f , 1.0f ) ,
 					  Matrix4f( 1.0f / x , 0.0f , 0.0f , 0.0f , 0.0f , 1.0f / y , 0.0f , 0.0f , 0.0f , 0.0f , 1.0f / z , 0.0f , 0.0f , 0.0f , 0.0f , 1.0f ) );
@@ -281,9 +262,9 @@ Transform Translate( const Vector3f& delta )
 
 	º∆À„x , y
 */
-bool SolveLinearSystem2x2( const double A[2][2] , const double B[2] , double* x , double* y )
+bool SolveLinearSystem2x2( const float A[2][2] , const float B[2] , float* x , float* y )
 {
-	double det = A[0][0] * A[1][1] - A[0][1] * A[1][0];
+	float det = A[0][0] * A[1][1] - A[0][1] * A[1][0];
 
 	if( fabs( det ) < 1e-10f )
 	{

@@ -18,9 +18,6 @@
 #include <vector>
 #include <memory>
 #include <map>
-//#include "tinyxml2.h"
-
-//using namespace tinyxml2;
 
 using std::cout;
 using std::cerr;
@@ -42,7 +39,7 @@ using std::endl;
 #define EPSILON 1e-3
 #define EPSILON_04	1e-4
 
-#define Infinity std::numeric_limits<double>::infinity()
+#define Infinity std::numeric_limits<float>::infinity()
 
 #define Clamp(x , _min , _max)	x = (x) < _min ? _min : ((x) > _max ? _max : (x))
 
@@ -56,18 +53,18 @@ using std::endl;
 //static const double inchToMm = 25.4f;
 #define inchToMm 25.4f;
 
-bool isNanN( const double x );
+bool isNanN( const float x );
 
 bool isNanN( const int x );
 
-double Lerp( const double& t , const double& p1 , const double& p2 );
+float Lerp( const float& t , const float& p1 , const float& p2 );
 
-double ToRadians( double degree );
+float ToRadians( float degree );
 
-double ToDegree( double radian );
+float ToDegree( float radian );
 
-void Swap( double& A , double& B );
+void Swap( float& A , float& B );
 
-bool Quadtratic( double A , double B , double C , double* t0 , double* t1 );
+bool Quadtratic( float A , float B , float C , float* t0 , float* t1 );
 
-double clamp( double x , double _min , double _max );
+float clamp( float x , float _min , float _max );

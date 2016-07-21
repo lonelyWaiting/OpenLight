@@ -17,7 +17,7 @@ public:
 
 	~HDREnvironment();
 
-	Spectrum Evalute( Ray& r );
+	Spectrum Evalute( Rayf& r );
 
 public:
 	void Deserialization( tinyxml2::XMLElement* RootElement );

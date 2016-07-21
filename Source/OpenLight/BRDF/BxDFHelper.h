@@ -2,7 +2,6 @@
 
 #include <algorithm>
 #include "Math/Vector3.h"
-#include "Math/Normal.h"
 
 enum BxDFType
 {
@@ -16,12 +15,12 @@ enum BxDFType
 
 // compute refraction ray 
 // eta = etaI / etaT
-inline bool Refract( const Vector3f& w , const Normal& n , double eta , Vector3f* wt , bool entering )
+inline bool Refract( const Vector3f& w , const Vector3f& n , float eta , Vector3f* wt , bool entering )
 {
-	double CosThetaI = AbsDot( w , n );
+	float CosThetaI = AbsDot( w , n );
 
-	double SinThetaI2 = MAX( double( 0 ) , 1 - CosThetaI * CosThetaI );
-	double sinThetaT2 = eta * eta * SinThetaI2;
+	float SinThetaI2 = MAX( float( 0 ) , 1 - CosThetaI * CosThetaI );
+	float sinThetaT2 = eta * eta * SinThetaI2;
 
 	if( sinThetaT2 >= 1.0 )
 	{

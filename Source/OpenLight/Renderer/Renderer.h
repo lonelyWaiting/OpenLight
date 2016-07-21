@@ -8,7 +8,6 @@ class Scene;
 class Sampler;
 class RNG;
 struct IntersectRecord;
-class Ray;
 class Camera;
 class SurfaceIntegrator;
 class Accelerator;
@@ -33,7 +32,7 @@ public:
 	virtual void SetProperty( Sampler* _sampler , Camera* _camera , SurfaceIntegrator* _surfaceIntegrator , Accelerator* _pAccelerator ) = 0;
 
 	virtual Spectrum Li( const Scene* scene ,
-						 Ray* ray ,
+						 Rayf* ray ,
 						 IntersectRecord* record = nullptr) const = 0;
 
 	void SetSpp( int spp );

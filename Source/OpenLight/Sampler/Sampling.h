@@ -1,8 +1,6 @@
 #pragma once
 
-#include "Math/Vector3.h"
-#include "Math/Point2.h"
-#include "Math/Point3.h"
+#include "Math/MathHelper.h"
 
 Vector3f UniformSampleHemisphere( const Point2f& u );
 
@@ -10,21 +8,21 @@ Point2f ConcentricSampleDisk( const Point2f& u );
 
 Vector3f CosineSampleHemisphere( const Point2f& u );
 
-Vector3f DensitySampleHemisphere( const Point2f& u , double e );
+Vector3f DensitySampleHemisphere( const Point2f& u , float e );
 
-Vector3f UniformSampleSphere( double u1 , double u2 );
+Vector3f UniformSampleSphere( float u1 , float u2 );
 
-Vector3f UniformSampleCone( double u1 , double u2 , double cosThetaMax , const Vector3f& x , const Vector3f& y , const Vector3f& z );
+Vector3f UniformSampleCone( float u1 , float u2 , float cosThetaMax , const Vector3f& x , const Vector3f& y , const Vector3f& z );
 
 // http://lonelywaiting.github.io/Uniform-Cone-PDF/
-double UniformConePDF( double cosThetaMax );
+float UniformConePDF( float cosThetaMax );
 
-double UniformSpherePDF();
+float UniformSpherePDF();
 
-double UniformHemispherePDF();
+float UniformHemispherePDF();
 
 Point2f MapUnitSquareToUnitDisk( const Point2f& UnitSquareSamplePoint );
 
-Point3f MapUnitSquareToHemisphere( const Point2f& UnitSquareSamplePoint , double exp = 0 );
+Point3f MapUnitSquareToHemisphere( const Point2f& UnitSquareSamplePoint , float exp = 0 );
 
 Point3f MapUnitSquareToSphere( const Point2f& UnitSquareSamplePoint );

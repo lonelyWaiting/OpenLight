@@ -26,11 +26,11 @@ void Scene::AddLight( Light* light )
 	lights.push_back( light );
 }
 
-bool Scene::Intersect( const Ray& ray , IntersectRecord* record ) const
+bool Scene::Intersect( const Rayf& ray , IntersectRecord* record ) const
 {
 	bool bHit = false;
 
-	Ray r( ray.Origin , ray.Direction , ray.MinT , ray.MaxT , ray.time , ray.depth );
+	Rayf r( ray.Origin , ray.Direction , ray.MinT , ray.MaxT , ray.time , ray.depth );
 
 	for( unsigned int i = 0; i < Objects.size(); i++ )
 	{

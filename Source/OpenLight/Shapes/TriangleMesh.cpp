@@ -10,26 +10,26 @@
 
 TriangleMesh::TriangleMesh()
 {
-	points        = nullptr;
-	normals       = nullptr;
-	triangles     = nullptr;
-	TriangleCount = 0;
-	VertexNum     = 0;
-	bSubShape = true;
+	mPointList        = nullptr;
+	mNormalList       = nullptr;
+	mTriangleList     = nullptr;
+	mTriangleCount = 0;
+	mVertexCount     = 0;
+	mHasSubShape = true;
 }
 
-TriangleMesh::TriangleMesh( const Transform* ObjectToWorld , Point3f* _points , Normal* _normals , Vector2f* _uvs , Triangle* _triangles , int _VertexNum , int _TriangleCount )
+TriangleMesh::TriangleMesh( const Transform* ObjectToWorld , Point3f* _points , Vector3f* _normals , Vector2f* _uvs , Triangle* _triangles , int _VertexNum , int _TriangleCount )
 	: Shape( ObjectToWorld )
-	, points( _points )
-	, normals( _normals )
-	, triangles( _triangles )
-	, uvs( _uvs )
-	, VertexNum( _VertexNum )
-	, TriangleCount( _TriangleCount )
+	, mPointList( _points )
+	, mNormalList( _normals )
+	, mTriangleList( _triangles )
+	, mTexcoordList( _uvs )
+	, mVertexCount( _VertexNum )
+	, mTriangleCount( _TriangleCount )
 {
-	for( int i = 0; i < VertexNum; i++ )
+	for( int i = 0; i < mVertexCount; i++ )
 	{
-		BBoxLocal.ExpendToInclude( points[i] );
+		BBoxLocal.ExpendToInclude( mPointList[i] );
 	}
 
 	BBoxWorld = ( *ObjectToWorld )( BBoxLocal );
@@ -40,16 +40,16 @@ TriangleMesh::~TriangleMesh()
 
 }
 
-bool TriangleMesh::Intersect( Ray& ray , IntersectRecord* record ) const
+bool TriangleMesh::Intersect( Rayf& ray , IntersectRecord* record ) const
 {
 	// ´ÓWorld Space±ä»»µ½Object Space
-	Ray r = ( *WorldToObject )( ray );
+	Rayf r = ( *mWorldToObject )( ray );
 
 	int bHitIndex = -1;
 
-	for( int i = 0; i < TriangleCount; i++ )
+	for( int i = 0; i < mTriangleCount; i++ )
 	{
-		if( triangles[i].Intersect( r , record ) )
+		if( mTriangleList[i].Intersect( r , record ) )
 		{
 			bHitIndex = i;
 		}
@@ -58,9 +58,9 @@ bool TriangleMesh::Intersect( Ray& ray , IntersectRecord* record ) const
 	if( bHitIndex != -1 )
 	{
 		ray.MaxT = r.MaxT;
-		record->ObjectToWorld = *ObjectToWorld;
-		record->WorldToObject = *WorldToObject;
-		record->normal = normals[3 * bHitIndex];
+		record->ObjectToWorld = *mObjectToWorld;
+		record->WorldToObject = *mWorldToObject;
+		record->normal = mNormalList[3 * bHitIndex];
 		return true;
 	}
 
@@ -70,36 +70,27 @@ bool TriangleMesh::Intersect( Ray& ray , IntersectRecord* record ) const
 void TriangleMesh::Deserialization( tinyxml2::XMLElement* ShapeRootElement )
 {
 	const char* name = ShapeRootElement->Attribute( "filename" );
-	filename = new char[strlen( name )];
-	strcpy( filename , name );
+	mFilename = new char[strlen( name )];
+	strcpy( mFilename , name );
 
-	if( ShapeRootElement->Attribute( "uvscale" ) )
+	ParseVector( ShapeRootElement->FirstChildElement( "transform" )->Attribute( "position" ) , &mWorldPos[0] );
+
+	ModelParse( mFilename , mPointList , mNormalList , mTexcoordList , mTriangleList , mVertexCount , mTriangleCount );
+
+	*mObjectToWorld = Translate( Vector3f( mWorldPos ) );
+	*mWorldToObject = Inverse( *mObjectToWorld );
+
+	for( int i = 0; i < mTriangleCount; i++ )
 	{
-		ParseVector( ShapeRootElement->Attribute( "uvscale" ) , &uvscale[0] );
-	}
-	else
-	{
-		uvscale = Vector2f( 1.0 , 1.0 );
-	}
-
-	ParseVector( ShapeRootElement->FirstChildElement( "transform" )->Attribute( "position" ) , &Pos[0] );
-
-	ModelParse( filename , points , normals , uvs , triangles , VertexNum , TriangleCount );
-
-	*ObjectToWorld = Translate( Vector3f( Pos ) );
-	*WorldToObject = Inverse( *ObjectToWorld );
-
-	for( int i = 0; i < TriangleCount; i++ )
-	{
-		triangles[i].SetTriangleMesh( this );
+		mTriangleList[i].SetTriangleMesh( this );
 	}
 
-	for( int i = 0; i < VertexNum; i++ )
+	for( int i = 0; i < mVertexCount; i++ )
 	{
-		BBoxLocal.ExpendToInclude( points[i] );
+		BBoxLocal.ExpendToInclude( mPointList[i] );
 	}
 
-	BBoxWorld = ( *ObjectToWorld )( BBoxLocal );
+	BBoxWorld = ( *mObjectToWorld )( BBoxLocal );
 }
 
 
@@ -108,26 +99,14 @@ void TriangleMesh::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLE
 	{
 		pRootElement->SetAttribute( "type" , GetName() );
 	}
-
-	{
-		char* pText = new char[50];
-		sprintf( pText , "%f,%f" , uvscale.x , uvscale.y );
-		pRootElement->SetAttribute( "uvscale" , pText );
-
-		SAFE_DELETE( pText );
-	}
 	
 	{
-		tinyxml2::XMLElement* pFilenameElement = xmlDoc.NewElement( "filename" );
-
-		pFilenameElement->SetText( filename );
-
-		pRootElement->InsertEndChild( pFilenameElement );
+		pRootElement->SetAttribute("filename", mFilename);
 	}
 
 	{
 		char* pText = new char[50];
-		sprintf( pText , "%f,%f,%f" , Pos.x , Pos.y , Pos.z );
+		sprintf( pText , "%f,%f,%f" , mWorldPos.x , mWorldPos.y , mWorldPos.z );
 
 		tinyxml2::XMLElement* pTransformElement = xmlDoc.NewElement( "transform" );
 
@@ -141,10 +120,10 @@ void TriangleMesh::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLE
 
 int TriangleMesh::GetChildCount() const
 {
-	return TriangleCount;
+	return mTriangleCount;
 }
 
 Shape* TriangleMesh::GetChild( int index ) const
 {
-	return &triangles[index];
+	return &mTriangleList[index];
 }

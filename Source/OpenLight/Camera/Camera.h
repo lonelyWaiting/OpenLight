@@ -36,37 +36,34 @@ public:
 public:
 	Point3f GetCameraPosition() const;
 
-	double GetViewDistance() const;
-
-	double GetExposureTime() const;
+	float GetExposureTime() const;
 
 	Film* GetFilm() const;
 
-	void SetFovy( double fov );
+	void SetFovy( float fov );
 
 	float GetFovy() const;
 
 public:
-	virtual Ray GenerateRay( double RasterX, double RasterY , const CameraSample& SamplePoint ) = 0;
+	virtual Rayf GenerateRay( float RasterX, float RasterY , const CameraSample& SamplePoint ) = 0;
 
 	virtual void UpdateProperty();
 
 protected:
 	Point3f		Eye;						// 相机中心
 	Point3f		Target;						// 视线方向
-	double		ViewDistance;				// 到视平面的距离
-	double		ExposureTime;				// 曝光时间
-	double		fovy;						// y方向的fov
-	double		NearPlane;
+	float		ExposureTime;				// 曝光时间
+	float		fovy;						// y方向的fov
+	float		NearPlane;
 
 protected:
-	double		Top;
-	double		Bottom;
-	double		Left;
-	double		Right;
-	double		FilmAspectRatio;
+	float		Top;
+	float		Bottom;
+	float		Left;
+	float		Right;
+	float		FilmAspectRatio;
 	
-	ONB uvw;							// 坐标系
+	ONBf uvw;							// 坐标系
 
 protected:
 	Camera& operator = ( const Camera& camera );

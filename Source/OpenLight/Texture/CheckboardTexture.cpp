@@ -47,6 +47,8 @@ void CheckboardTexture::Deserialization( tinyxml2::XMLElement* RootElement )
 
 void CheckboardTexture::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
 {
+	pRootElement->SetAttribute("type",  GetName());
+
 	{
 		Spectrum& value = texture1->GetValue();
 

@@ -17,17 +17,17 @@ class Sphere : public Shape
 public:
 	Sphere();
 
-	Sphere( Point3f Center , double radius );
+	Sphere( Point3f Center , float radius );
 
 	~Sphere();
 
-	bool Intersect( Ray& ray , IntersectRecord* record ) const;
+	bool Intersect( Rayf& ray , IntersectRecord* record ) const;
 
-	double Area() const;
+	float Area() const;
 	
-	double PDF( const Point3f& p , const Vector3f& wi ) const;
+	float PDF( const Point3f& p , const Vector3f& wi ) const;
 
-	Point3f Sample( const Point3f& p , LightSample& lightSample , Normal& normalSample );
+	Point3f Sample( const Point3f& p , LightSample& lightSample , Vector3f& normalSample );
 
 public:
 	void Deserialization( tinyxml2::XMLElement* ShapeRootElement );
@@ -36,12 +36,12 @@ public:
 	
 public:
 	// -------------------------------Information-----------------------------------------
-	double GetRadius();
+	float GetRadius();
 
-	void SetRadius( double radius );
+	void SetRadius( float radius );
 
 private:
-	double m_Radius;
+	float m_Radius;
 };
 
 #endif

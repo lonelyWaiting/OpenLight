@@ -16,7 +16,7 @@ PureReflectionMaterial::PureReflectionMaterial( Spectrum R )
 	Kr = new ConstantTexture( R );
 }
 
-BSDF* PureReflectionMaterial::GetBSDF( const Vector2f& uv , const Point3f& point , const Normal& normal ) const
+BSDF* PureReflectionMaterial::GetBSDF( const Vector2f& uv , const Point3f& point , const Vector3f& normal ) const
 {
 	BSDF* bsdf = new BSDF();
 

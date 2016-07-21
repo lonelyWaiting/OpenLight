@@ -13,8 +13,6 @@ PinholeCamera::PinholeCamera()
 {
 	ExposureTime = 0.0;
 
-	ViewDistance = 1.0;
-
 	fovy = 45.0;
 
 	NearPlane = 0.0;
@@ -26,17 +24,17 @@ PinholeCamera::PinholeCamera( const PinholeCamera& rhs )
 
 }
 
-Ray PinholeCamera::GenerateRay( double RasterX , double RasterY , const CameraSample& SamplePoint )
+Rayf PinholeCamera::GenerateRay( float RasterX , float RasterY , const CameraSample& SamplePoint )
 {
 	Vector2f RasterResolution = GetFilm()->GetResolution();
 
 	// 视平面上的采样点
-	double x = ( RasterX + SamplePoint.ImageSamples.x ) / RasterResolution.x  * ( Right - Left ) + Left;
-	double y = ( 1.0 - ( RasterY + SamplePoint.ImageSamples.y ) / RasterResolution.y ) * ( Top - Bottom ) + Bottom;
+	float x = ( RasterX + SamplePoint.ImageSamples.x ) / RasterResolution.x  * ( Right - Left ) + Left;
+	float y = ( 1.0 - ( RasterY + SamplePoint.ImageSamples.y ) / RasterResolution.y ) * ( Top - Bottom ) + Bottom;
 
-	Vector3f dir = x * uvw.U + y * uvw.V + ViewDistance * uvw.W;
+	Vector3f dir = x * uvw.U + y * uvw.V + uvw.W;
 
-	return Ray( Eye + Normalize( dir ) * NearPlane , Normalize( dir ) , 1e-3f );
+	return Rayf( Eye + Normalize( dir ) * NearPlane , Normalize( dir ) , 1e-3f );
 }
 
 void PinholeCamera::Deserialization( tinyxml2::XMLElement* CameraRootElement )
@@ -50,27 +48,17 @@ void PinholeCamera::Deserialization( tinyxml2::XMLElement* CameraRootElement )
 	pElement = CameraRootElement->FirstChildElement( "ExposureTime" );
 	if( pElement )
 	{
-		pElement->QueryDoubleText( &ExposureTime );
+		pElement->QueryFloatText( &ExposureTime );
 	}
 	else
 	{
 		ExposureTime = 0.0;
 	}
-
-	pElement = CameraRootElement->FirstChildElement( "ViewDistance" );
-	if( pElement )
-	{
-		pElement->QueryDoubleText( &ViewDistance );
-	}
-	else
-	{
-		ViewDistance = 1.0;
-	}
 	
 	pElement = CameraRootElement->FirstChildElement( "Fovy" );
 	if( pElement )
 	{
-		pElement->QueryDoubleText( &fovy );
+		pElement->QueryFloatText( &fovy );
 	}
 	else
 	{
@@ -81,7 +69,7 @@ void PinholeCamera::Deserialization( tinyxml2::XMLElement* CameraRootElement )
 	pElement = CameraRootElement->FirstChildElement( "NearPlane" );
 	if( pElement )
 	{
-		pElement->QueryDoubleText( &NearPlane );
+		pElement->QueryFloatText( &NearPlane );
 	}
 	else
 	{
@@ -128,14 +116,6 @@ void PinholeCamera::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XML
 		pExposureTimeElement->SetText( ExposureTime );
 
 		pRootElement->InsertEndChild( pExposureTimeElement );
-	}
-
-	{
-		tinyxml2::XMLElement* pViewDistanceElement = xmlDoc.NewElement( "ViewDistance" );
-
-		pViewDistanceElement->SetText( ViewDistance );
-
-		pRootElement->InsertEndChild( pViewDistanceElement );
 	}
 
 	{

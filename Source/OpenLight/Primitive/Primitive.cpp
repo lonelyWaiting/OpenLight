@@ -8,6 +8,7 @@
 #include "Light/AreaLighth.h"
 #include "tinyxml2.h"
 #include "Primitive.h"
+#include "Utilities/srString.h"
 
 Primitive::Primitive()
 {
@@ -33,7 +34,7 @@ void Primitive::AddShape( Shape* _shape )
 	BBoxWorld.ExpendToInclude( _shape->GetWorldBoundingBox() );
 }
 
-bool Primitive::Intersect( Ray& r , IntersectRecord* record ) const
+bool Primitive::Intersect( Rayf& r , IntersectRecord* record ) const
 {
 	if( BBoxWorld.IntersectP( r ) )
 	{
@@ -65,6 +66,15 @@ void Primitive::Deserialization( tinyxml2::XMLElement* PrimitiveRootElment )
 {
 	{
 		SetName( PrimitiveRootElment->Attribute( "name" ) );
+	}
+
+	if( PrimitiveRootElment->Attribute( "uvscale" ) )
+	{
+		ParseVector( PrimitiveRootElment->Attribute( "uvscale" ) , &mTexScale[0] );
+	}
+	else
+	{
+		mTexScale = Vector2f( 1.0 , 1.0 );
 	}
 
 	tinyxml2::XMLElement* ShapeRootElement = PrimitiveRootElment->FirstChildElement( "shape" );
@@ -143,6 +153,12 @@ void Primitive::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElem
 {
 	pRootElement->SetAttribute( "name" , m_Name );
 
+	char* pText = new char[50];
+	sprintf(pText, "%f,%f", mTexScale[0], mTexScale[1]);
+	pRootElement->SetAttribute("uvscale", pText);
+
+	SAFE_DELETE(pText);
+
 	for( auto& shape : m_vShapeInformations )
 	{
 		tinyxml2::XMLElement* pElement = xmlDoc.NewElement( "shape" );
@@ -171,7 +187,7 @@ void Primitive::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElem
 	}
 }
 
-BSDF* Primitive::GetBSDF( const Vector2f& uv , const Point3f& point , const Normal& normal ) const
+BSDF* Primitive::GetBSDF( const Vector2f& uv , const Point3f& point , const Vector3f& normal ) const
 {
 	return m_pMaterial->GetBSDF( uv , point , normal );
 }
@@ -191,9 +207,9 @@ void Primitive::AddAreaLight( AreaLight* _pAreaLight )
 	m_pAreaLight = _pAreaLight;
 }
 
-double Primitive::PDF( const Point3f& p , const Vector3f& wi )
+float Primitive::PDF( const Point3f& p , const Vector3f& wi )
 {
-	double pdf = 0.0;
+	float pdf = 0.0;
 
 	for( unsigned int i = 0; i < m_vShapes.size(); i++ )
 	{
@@ -203,7 +219,7 @@ double Primitive::PDF( const Point3f& p , const Vector3f& wi )
 	return pdf / m_SumArea;
 }
 
-double Primitive::GetArea() const
+float Primitive::GetArea() const
 {
 	return m_SumArea;
 }
@@ -233,4 +249,9 @@ Shape* Primitive::GetPrimitiveObject( int index ) const
 Material* Primitive::GetMaterial() const
 { 
 	return m_pMaterial;
+}
+
+Vector2f Primitive::GetUVScale() const
+{
+	return mTexScale;
 }

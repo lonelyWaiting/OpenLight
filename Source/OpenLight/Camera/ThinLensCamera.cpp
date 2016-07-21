@@ -10,8 +10,6 @@ ThinLensCamera::ThinLensCamera()
 
 	ExposureTime = 0.0;
 
-	ViewDistance = 1.0;
-
 	fovy = 45.0;
 
 	NearPlane = 0.0;
@@ -24,7 +22,7 @@ ThinLensCamera::ThinLensCamera( const ThinLensCamera& rhs )
 	LensFocus = rhs.LensFocus;
 }
 
-void ThinLensCamera::SetLensRadius( double _LensRadius )
+void ThinLensCamera::SetLensRadius( float _LensRadius )
 {
 	if( LensRadius != _LensRadius )
 	{
@@ -32,7 +30,7 @@ void ThinLensCamera::SetLensRadius( double _LensRadius )
 	}
 }
 
-void ThinLensCamera::SetLensFocus( double _LensFocus )
+void ThinLensCamera::SetLensFocus( float _LensFocus )
 {
 	if( LensFocus != _LensFocus )
 	{
@@ -40,7 +38,7 @@ void ThinLensCamera::SetLensFocus( double _LensFocus )
 	}
 }
 
-Ray ThinLensCamera::GenerateRay( double RasterX , double RasterY , const CameraSample& SamplePoint )
+Rayf ThinLensCamera::GenerateRay( float RasterX , float RasterY , const CameraSample& SamplePoint )
 {
 	Vector2f RasterResolution = GetFilm()->GetResolution();
 
@@ -49,8 +47,8 @@ Ray ThinLensCamera::GenerateRay( double RasterX , double RasterY , const CameraS
 	ImageSamples.x = ( RasterX + SamplePoint.ImageSamples.x ) / RasterResolution.x * ( Right - Left ) + Left;
 	ImageSamples.y = ( 1.0f - ( RasterY + SamplePoint.ImageSamples.y ) / RasterResolution.y ) * ( Top - Bottom ) + Bottom;
 
-	double x = ImageSamples.x / ViewDistance * LensFocus;
-	double y = ImageSamples.y / ViewDistance * LensFocus;
+	float x = ImageSamples.x  * LensFocus;
+	float y = ImageSamples.y  * LensFocus;
 
 	Point2f LensSamples = MapUnitSquareToUnitDisk( SamplePoint.LensSamples );
 
@@ -58,7 +56,7 @@ Ray ThinLensCamera::GenerateRay( double RasterX , double RasterY , const CameraS
 
 	Vector3f dir = ( x - LensRadius * LensSamples.x ) * uvw.U + ( y - LensRadius * LensSamples.y ) * uvw.V + LensFocus * uvw.W;
 
-	return Ray( Orig + Normalize( dir ) * NearPlane , Normalize( dir ) , 1e-3 );
+	return Rayf( Orig + Normalize( dir ) * NearPlane , Normalize( dir ) , 1e-3 );
 }
 
 void ThinLensCamera::Deserialization( tinyxml2::XMLElement* CameraRootElement )
@@ -69,12 +67,12 @@ void ThinLensCamera::Deserialization( tinyxml2::XMLElement* CameraRootElement )
 
 	ParseVector( CameraRootElement->FirstChildElement( "Target" )->GetText() , &Target[0] );
 
-	CameraRootElement->FirstChildElement( "LensFocus" )->QueryDoubleText( &LensFocus );
+	CameraRootElement->FirstChildElement( "LensFocus" )->QueryFloatText( &LensFocus );
 
 	pElement = CameraRootElement->FirstChildElement( "LensRadius" );
 	if( pElement )
 	{
-		pElement->QueryDoubleText( &LensRadius );
+		pElement->QueryFloatText( &LensRadius );
 	}
 	else
 	{
@@ -85,29 +83,18 @@ void ThinLensCamera::Deserialization( tinyxml2::XMLElement* CameraRootElement )
 	pElement = CameraRootElement->FirstChildElement( "ExposureTime" );
 	if( pElement )
 	{
-		pElement->QueryDoubleText( &ExposureTime );
+		pElement->QueryFloatText( &ExposureTime );
 	}
 	else
 	{
 		ExposureTime = 0.0;
 	}
 
-	pElement = CameraRootElement->FirstChildElement( "ViewDistance" );
-	if( pElement )
-	{
-		pElement->QueryDoubleText( &ViewDistance );
-	}
-	else
-	{
-		ViewDistance = 1.0;
-	}
-	
-
 	pElement = CameraRootElement->FirstChildElement( "Fovy" );
 	
 	if( pElement )
 	{
-		pElement->QueryDoubleText( &fovy );
+		pElement->QueryFloatText( &fovy );
 	}
 	else
 	{
@@ -117,7 +104,7 @@ void ThinLensCamera::Deserialization( tinyxml2::XMLElement* CameraRootElement )
 
 	if( CameraRootElement->FirstChildElement( "NearPlane" ) )
 	{
-		CameraRootElement->FirstChildElement( "NearPlane" )->QueryDoubleText( &NearPlane );
+		CameraRootElement->FirstChildElement( "NearPlane" )->QueryFloatText( &NearPlane );
 	}
 	else
 	{
@@ -180,14 +167,6 @@ void ThinLensCamera::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XM
 		pExposureTimeElement->SetText( ExposureTime );
 
 		pRootElement->InsertEndChild( pExposureTimeElement );
-	}
-
-	{
-		tinyxml2::XMLElement* pViewDistanceElement = xmlDoc.NewElement( "ViewDistance" );
-
-		pViewDistanceElement->SetText( ViewDistance );
-
-		pRootElement->InsertEndChild( pViewDistanceElement );
 	}
 
 	{

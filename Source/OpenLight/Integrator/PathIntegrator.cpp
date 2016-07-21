@@ -11,7 +11,7 @@
 #include "Utilities/RNG.h"
 #include "Light/Light.h"
 
-Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Ray* ray , Accelerator* pAccelerator ) const
+Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , IntersectRecord* record , Rayf* ray , Accelerator* pAccelerator ) const
 {
 	Spectrum L( 0.0 );
 	Spectrum Throughout = 1.0;
@@ -21,7 +21,7 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 
 	IntersectRecord TempRecord;
 
-	Ray r;
+	Rayf r;
 
 	while( true )
 	{
@@ -37,17 +37,17 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 
 		const Point3f& HitPoint = record->HitPoint;
 
-		const Normal& HitNormal = Normalize( record->normal );
+		const Vector3f& HitNormal = Normalize( record->normal );
 
 		L += Throughout * UniformSampleOneLight( scene , renderer , pAccelerator , bsdf , HitPoint , wo , HitNormal );
 
 		Vector3f wi;
-		double pdf = 0.0;
+		float pdf = 0.0;
 		BxDFType flags;
 		
 		bool bReject = false;
 
-		Point2f BRDFSamplePoint = Point2f( RNG::Get().GetDouble() , RNG::Get().GetDouble() );
+		Point2f BRDFSamplePoint = Point2f( RNG::Get().GetFloat() , RNG::Get().GetFloat() );
 
 		Spectrum f = 0.0;
 
@@ -64,14 +64,6 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 		{
 			f = bsdf->Sample_f( wo , HitNormal , &wi , BRDFSamplePoint , &pdf , BxDFType( ALL_TYPE ) , bReject , &flags );
 		}
-		
-		// ¼ÆËãwiºÍpdf
-		/*Spectrum f = bsdf->Sample_f( wo , HitNormal , &wi , BRDFSamplePoint , &pdf , BxDFType( ALL_TYPE ) , bReject , &flags );
-
-		if( bReject )
-		{
-			f = bsdf->Sample_f( wo , HitNormal , &wi , BRDFSamplePoint , &pdf , BxDFType( SPECULAR | TRANSMISSION ) , bReject , &flags );
-		}*/
 
 		SAFE_DELETE( bsdf );
 
@@ -84,20 +76,13 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 
 		Throughout *= f * AbsDot( wi , HitNormal ) / pdf;
 
-		r = Ray( HitPoint + wi * 1e-3f , wi , *ray , EPSILON );
+		r = Rayf( HitPoint + wi * 1e-3f , wi , *ray , EPSILON );
 
 		ray = &r;
 
 		if( count > 3 )
 		{
-			/*double continueProbability = Throughout.y() > 0.5 ? Throughout.y() : 0.5;
 
-			if( RNG::Get().GetDouble() > continueProbability )
-			{
-				break;
-			}
-
-			Throughout /= continueProbability;*/
 		}
 
 		if( count++ >= mMaxDepth )
@@ -109,18 +94,8 @@ Spectrum PathIntegrator::Li( const Scene* scene , const Renderer* renderer , Int
 		{
 			L += Throughout * scene->GetEnvironmentPtr()->Evalute( *ray );
 
-			/*if( IsSpecular )
-			{
-				for( int i = 0; i < scene->GetLights().size(); i++ )
-				{
-					L += Throughout * scene->GetLight( i )->Le( HitPoint , HitNormal , -ray->Direction ) * record->SurfaceColor;
-				}
-			}*/
-
 			break;
 		}
-
-		//record = &TempRecord;
 	}
 
 	return L;

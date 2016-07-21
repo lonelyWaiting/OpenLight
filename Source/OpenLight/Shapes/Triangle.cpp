@@ -1,12 +1,13 @@
 #include "Utilities/PCH.h"
-#include "Math/Ray.h"
-#include "Math/Transform.h"
 #include "Primitive/IntersectRecord.h"
 #include "Light/Light.h"
 #include "TriangleMesh.h"
 #include "tinyxml2.h"
 #include "Triangle.h"
 #include "Math/Vector2.h"
+#include "Math/Ray.h"
+#include "Math/Transform.h"
+#include "Primitive/Primitive.h"
 
 Triangle::Triangle()
 	: index0( 0 ) 
@@ -32,33 +33,33 @@ void Triangle::SetTriangleMesh( TriangleMesh* _pMesh )
 {
 	pMesh = _pMesh;
 
-	const Point3f* points = pMesh->points;
+	const Point3f* points = pMesh->mPointList;
 
 	BBoxLocal.ExpendToInclude( points[index0] );
 	BBoxLocal.ExpendToInclude( points[index1] );
 	BBoxLocal.ExpendToInclude( points[index2] );
 
-	BBoxWorld = ( *( pMesh->ObjectToWorld ) )( BBoxLocal );
+	BBoxWorld = ( *( pMesh->mObjectToWorld ) )( BBoxLocal );
 }
 
-bool Triangle::Intersect( Ray& rayWorld , IntersectRecord* record ) const
+bool Triangle::Intersect( Rayf& rayWorld , IntersectRecord* record ) const
 {
 	// transform ray to local space
-	Ray rayLocal = ( *( pMesh->WorldToObject ) )( rayWorld );
+	Rayf rayLocal = ( *( pMesh->mWorldToObject ) )( rayWorld );
 
-	const Point3f* points = pMesh->points;
+	const Point3f* points = pMesh->mPointList;
 
 	Point3f p0 = points[index0];
 	Point3f p1 = points[index1];
 	Point3f p2 = points[index2];
 
-	double ei_minus_hf = ( p0.y - p2.y ) * rayLocal.Direction.z - ( p0.z - p2.z ) * rayLocal.Direction.y;
-	double gf_minus_di = ( p0.z - p2.z ) * rayLocal.Direction.x - ( p0.x - p2.x ) * rayLocal.Direction.z;
-	double dh_minus_eg = ( p0.x - p2.x ) * rayLocal.Direction.y - ( p0.y - p2.y ) * rayLocal.Direction.x;
+	float ei_minus_hf = ( p0.y - p2.y ) * rayLocal.Direction.z - ( p0.z - p2.z ) * rayLocal.Direction.y;
+	float gf_minus_di = ( p0.z - p2.z ) * rayLocal.Direction.x - ( p0.x - p2.x ) * rayLocal.Direction.z;
+	float dh_minus_eg = ( p0.x - p2.x ) * rayLocal.Direction.y - ( p0.y - p2.y ) * rayLocal.Direction.x;
 
-	double Determinant = ( p0.x - p1.x ) * ei_minus_hf + ( p0.y - p1.y ) * gf_minus_di + ( p0.z - p1.z ) * dh_minus_eg;
+	float Determinant = ( p0.x - p1.x ) * ei_minus_hf + ( p0.y - p1.y ) * gf_minus_di + ( p0.z - p1.z ) * dh_minus_eg;
 
-	double beta = ( p0.x - rayLocal.Origin.x ) * ei_minus_hf + ( p0.y - rayLocal.Origin.y ) * gf_minus_di + ( p0.z - rayLocal.Origin.z ) * dh_minus_eg;
+	float beta = ( p0.x - rayLocal.Origin.x ) * ei_minus_hf + ( p0.y - rayLocal.Origin.y ) * gf_minus_di + ( p0.z - rayLocal.Origin.z ) * dh_minus_eg;
 
 	beta /= Determinant;
 
@@ -67,11 +68,11 @@ bool Triangle::Intersect( Ray& rayWorld , IntersectRecord* record ) const
 		return false;
 	}
 
-	double ak_minus_jb = ( p0.x - p1.x ) * ( p0.y - rayLocal.Origin.y ) - ( p0.y - p1.y ) * ( p0.x - rayLocal.Origin.x );
-	double jc_minus_al = ( p0.z - p1.z ) * ( p0.x - rayLocal.Origin.x ) - ( p0.x - p1.x ) * ( p0.z - rayLocal.Origin.z );
-	double bl_minus_kc = ( p0.y - p1.y ) * ( p0.z - rayLocal.Origin.z ) - ( p0.z - p1.z ) * ( p0.y - rayLocal.Origin.y );
+	float ak_minus_jb = ( p0.x - p1.x ) * ( p0.y - rayLocal.Origin.y ) - ( p0.y - p1.y ) * ( p0.x - rayLocal.Origin.x );
+	float jc_minus_al = ( p0.z - p1.z ) * ( p0.x - rayLocal.Origin.x ) - ( p0.x - p1.x ) * ( p0.z - rayLocal.Origin.z );
+	float bl_minus_kc = ( p0.y - p1.y ) * ( p0.z - rayLocal.Origin.z ) - ( p0.z - p1.z ) * ( p0.y - rayLocal.Origin.y );
 
-	double gamma = rayLocal.Direction.z * ak_minus_jb + rayLocal.Direction.y * jc_minus_al + rayLocal.Direction.x * bl_minus_kc;
+	float gamma = rayLocal.Direction.z * ak_minus_jb + rayLocal.Direction.y * jc_minus_al + rayLocal.Direction.x * bl_minus_kc;
 
 	gamma /= Determinant;
 
@@ -80,26 +81,30 @@ bool Triangle::Intersect( Ray& rayWorld , IntersectRecord* record ) const
 		return false;
 	}
 
-	double t = -( ( p0.z - p2.z ) * ak_minus_jb + ( p0.y - p2.y ) * jc_minus_al + ( p0.x - p2.x ) * bl_minus_kc );
+	float t = -( ( p0.z - p2.z ) * ak_minus_jb + ( p0.y - p2.y ) * jc_minus_al + ( p0.x - p2.x ) * bl_minus_kc );
 
 	t /= Determinant;
 
 	if( t >= rayLocal.MinT && t <= rayLocal.MaxT )
 	{
-		Vector2f uv0 = pMesh->uvs[index0];
-		Vector2f uv1 = pMesh->uvs[index1];
-		Vector2f uv2 = pMesh->uvs[index2];
+		if (pMesh->mTexcoordList)
+		{
+			Vector2f uv0 = pMesh->mTexcoordList[index0];
+			Vector2f uv1 = pMesh->mTexcoordList[index1];
+			Vector2f uv2 = pMesh->mTexcoordList[index2];
 
-		double alpha = 1.0 - beta - gamma;
+			float alpha = 1.0 - beta - gamma;
 
+			record->uv = (uv0 * alpha + uv1 * beta + uv2 * gamma) * mPrimitivePtr->GetUVScale();
+		}
+		
 		rayWorld.MaxT         = t;
 		record->HitT          = t;
-		record->ObjectToWorld = *( pMesh->ObjectToWorld );
-		record->WorldToObject = *( pMesh->WorldToObject );
-		record->normal        = ( *ObjectToWorld )( pMesh->normals[index0] );			// 该triangle上的三个顶点
+		record->ObjectToWorld = *( pMesh->mObjectToWorld );
+		record->WorldToObject = *( pMesh->mWorldToObject );
+		record->normal        = ( *mObjectToWorld )( pMesh->mNormalList[index0] );			// 该triangle上的三个顶点
 		record->HitPoint      = rayWorld( t );
-		record->primitivePtr  = pPrimitive;
-		record->uv = ( uv0 * alpha + uv1 * beta + uv2 * gamma ) * pMesh->uvscale;
+		record->primitivePtr  = mPrimitivePtr;
 
 		return true;
 	}
@@ -107,16 +112,16 @@ bool Triangle::Intersect( Ray& rayWorld , IntersectRecord* record ) const
 	return false;
 }
 
-double Triangle::Area() const
+float Triangle::Area() const
 {
 	// |\overrightarrow{a} \times \overrightarrow{b}| = |\overrightarrow{a}| \times |\overrightarrow{b}|sin\theta
 	// so Area = \frac{|\overrightarrow{a} \times \overrightarrow{b}|}{2}
 	
 	// First construct two vector
-	Vector3f v1 = pMesh->points[index1] - pMesh->points[index0];
-	Vector3f v2 = pMesh->points[index2] - pMesh->points[index0];
+	Vector3f v1 = pMesh->mPointList[index1] - pMesh->mPointList[index0];
+	Vector3f v2 = pMesh->mPointList[index2] - pMesh->mPointList[index0];
 
-	double area = 1.0 / 2.0 * Cross( v1 , v2 ).Length();
+	float area = 1.0 / 2.0 * Cross( v1 , v2 ).Length();
 
 	return area;
 }
@@ -127,17 +132,17 @@ void Triangle::Deserialization( tinyxml2::XMLElement* RootElement )
 	return;
 }
 
-Point3f Triangle::Sample( const Point3f& p , LightSample& lightSample , Normal& SampleNormal )
+Point3f Triangle::Sample( const Point3f& p , LightSample& lightSample , Vector3f& SampleNormal )
 {
 	// 保证0.0 < u + v < 1.0
-	double u = 1.0f - sqrt( lightSample.value[0] );
-	double v = lightSample.value[1] * sqrt( lightSample.value[0] );
+	float u = 1.0f - sqrt( lightSample.value[0] );
+	float v = lightSample.value[1] * sqrt( lightSample.value[0] );
 
 	// 使用重心坐标
-	Point3f SamplePoint = pMesh->points[index0] * u + pMesh->points[index1] * v + pMesh->points[index2] * ( 1.0 - u - v );
+	Point3f SamplePoint = pMesh->mPointList[index0] * u + pMesh->mPointList[index1] * v + pMesh->mPointList[index2] * ( 1.0 - u - v );
 
 	/*SampleNormal = Normal( Cross( pMesh->points[index1] - pMesh->points[index0] , pMesh->points[index2] - pMesh->points[index0] ) );*/
-	SampleNormal = pMesh->normals[index0];
+	SampleNormal = pMesh->mNormalList[index0];
 
 	SampleNormal = Normalize( SampleNormal );
 

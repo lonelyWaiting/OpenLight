@@ -6,5 +6,5 @@ struct CameraSample
 {
 	Point2f ImageSamples;
 	Point2f LensSamples;
-	double TimeSamples;
+	float TimeSamples;
 };

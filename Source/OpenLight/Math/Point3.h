@@ -1,81 +1,90 @@
 #ifndef POINT3_H
 #define POINT3_H
 
-#include <ostream>
+#include "MathHelper.h"
+#include <cmath>
 
-class Vector3f;
+template<typename T>
+class Vector3;
 
-class Point3f
+template<typename T>
+class Point3
 {
 public:
-	Point3f();
+	Point3();
 
-	Point3f( double _x , double _y , double _z );
+	Point3( T _x , T _y , T _z );
 
-	Point3f( const Point3f &p );
+	Point3( const Point3 &p );
 
-	Point3f& operator = ( const Point3f& p );
-
-public:
-	friend std::ostream & operator<< ( std::ostream & os , const Point3f& p );
+	Point3& operator = ( const Point3& p );
 
 public:
-	Point3f operator + ( const Vector3f& v ) const;
+	Point3 operator + ( const Vector3<T>& v ) const;
 
-	Point3f operator + ( const Point3f& p ) const;
+	Point3 operator + ( const Point3& p ) const;
 
-	Point3f& operator += ( const Vector3f& v );
+	Point3& operator += ( const Vector3<T>& v );
 
-	Vector3f operator - ( const Point3f& p ) const;
+	Vector3<T> operator - ( const Point3& p ) const;
 
-	Point3f operator - ( const Vector3f& v ) const;
+	Point3 operator - ( const Vector3<T>& v ) const;
 
-	Point3f& operator -= ( const Vector3f& p );
+	Point3& operator -= ( const Vector3<T>& p );
 
-	Point3f operator* ( double f ) const;
+	Point3 operator* ( T f ) const;
 
-	Point3f& operator *= ( double f );
+	Point3& operator *= ( T f );
 
-	Point3f operator / ( double f ) const;
+	Point3 operator / ( T f ) const;
 
-	Point3f& operator /= ( double f );
+	Point3& operator /= ( T f );
 
-	double operator[] ( int index ) const;
+	T operator[] ( int index ) const;
 
-	double & operator [] ( int i );
+	T & operator [] ( int i );
 
-	bool operator == ( const Point3f& p ) const;
+	bool operator == ( const Point3& p ) const;
 
-	bool operator != ( const Point3f& p ) const;
+	bool operator != ( const Point3& p ) const;
 
 public:
-	friend inline double Distance( const Point3f &p1 , const Point3f &p2 );
+	template<typename D>
+	friend D Distance( const Point3<D> &p1 , const Point3<D> &p2 );
 
-	friend inline double DistanceSq( const Point3f &p1 , const Point3f &p2 );
+	template<typename D>
+	friend D DistanceSq( const Point3<D> &p1 , const Point3<D> &p2 );
 
-	friend inline Point3f operator*( double f , const Point3f &p );
+	template<typename D>
+	friend Point3<D> operator*( D f , const Point3<D> &p );
 
-	friend Point3f Lerp( double t , const Point3f &p0 , const Point3f& p1 );
+	template<typename D>
+	friend Point3<D> Lerp( D t , const Point3<D> &p0 , const Point3<D>& p1 );
 
-	template<typename T>
-	friend Point3f Min( const Point3f &p1 , const Point3f &p2 );
+	template<typename D>
+	friend Point3<D> Min( const Point3<D> &p1 , const Point3<D> &p2 );
 
-	template<typename T>
-	friend Point3f Max( const Point3f &p1 , const Point3f &p2 );
+	template<typename D>
+	friend Point3<D> Max( const Point3<D> &p1 , const Point3<D> &p2 );
 
-	template<typename T>
-	friend Point3f Floor( const Point3f &p );
+	template<typename D>
+	friend Point3<D> Floor( const Point3<D> &p );
 
-	template<typename T>
-	friend Point3f Ceil( const Point3f &p );
+	template<typename D>
+	friend Point3<D> Ceil( const Point3<D> &p );
 
-	template<typename T>
-	friend Point3f Abs( const Point3f& p );
+	template<typename D>
+	friend Point3<D> Abs( const Point3<D>& p );
 
-	template<typename T>
-	friend Point3f Permute( const Point3f &p , int x , int y , int z );
+	template<typename D>
+	friend Point3<D> Permute( const Point3<D> &p , int x , int y , int z );
+
+	template<typename D>
+	friend D operator* ( const Point3<D>& p , const Vector3<D>& v );
+
 public:
-	double x , y , z;
+	T x , y , z;
 };
 
+#include "Point3.inl"
 #endif

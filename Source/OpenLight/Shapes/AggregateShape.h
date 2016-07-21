@@ -2,7 +2,6 @@
 
 #include "Shape.h"
 
-class Ray;
 struct IntersectRecord;
 namespace tinyxml2
 {
@@ -14,7 +13,7 @@ class AggregateShape : public Shape
 public:
 	void AddShape( Shape* shape );
 
-	bool Intersect( Ray& ray , IntersectRecord* record ) const;
+	bool Intersect( Rayf& ray , IntersectRecord* record ) const;
 
 public:
 	void Deserialization( tinyxml2::XMLElement* RootElement );

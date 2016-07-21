@@ -22,7 +22,7 @@ void Film::SetResolution( int xResolution , int yResolution )
 	Height = yResolution;
 }
 
-void Film::SetGamma( double gamma )
+void Film::SetGamma( float gamma )
 {
 	Gamma = gamma;
 	InvGamma = 1.0f / Gamma;
@@ -56,9 +56,9 @@ void Film::SetColor( int row , int col , Spectrum color )
 	image->SetColor( row , col , color );
 }
 
-double Film::GetAspectio() const
+float Film::GetAspectio() const
 {
-	return double( Width ) / double( Height );
+	return float( Width ) / float( Height );
 }
 
 void Film::Display()

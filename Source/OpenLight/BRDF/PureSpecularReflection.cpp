@@ -1,5 +1,4 @@
 #include "Utilities/PCH.h"
-#include "Math/Normal.h"
 #include "PureSpecularReflection.h"
 
 PureSpecularReflection::PureSpecularReflection( const Spectrum& R )
@@ -19,7 +18,7 @@ Spectrum PureSpecularReflection::f( const Vector3f& wo , const Vector3f& wi ) co
 	return Spectrum( 0.0 );
 }
 
-Spectrum PureSpecularReflection::Sample_f( const Vector3f& wo , const Normal& n , Vector3f* wi , const Point2f& samplePoint , double* pdf , bool& bNoOccur ) const
+Spectrum PureSpecularReflection::Sample_f( const Vector3f& wo , const Vector3f& n , Vector3f* wi , const Point2f& samplePoint , float* pdf , bool& bNoOccur ) const
 {
 	*wi = Normalize( 2 * Dot( wo , n ) / n.Length() * Normalize( n ) - wo );
 
@@ -28,7 +27,7 @@ Spectrum PureSpecularReflection::Sample_f( const Vector3f& wo , const Normal& n 
 	return R / AbsDot( *wi , n );
 }
 
-double PureSpecularReflection::PDF( const Vector3f& wi , const Vector3f& wo , const Normal& n ) const
+float PureSpecularReflection::PDF( const Vector3f& wi , const Vector3f& wo , const Vector3f& n ) const
 {
 	// 除了反射方向其他方向的PDF全部为0
 	return 0;

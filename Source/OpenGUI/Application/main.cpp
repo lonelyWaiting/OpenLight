@@ -404,7 +404,7 @@ void MyApp::DrawScene()
 				for( int col = 0; col < Width; col++ )
 				{
 					Spectrum sourcedata = image->GetColor( row , col );
-					double rgb[3];
+					float rgb[3];
 					sourcedata.ToRGB( rgb );
 
 					pdata[4 * col + 0] = ( float )rgb[0];

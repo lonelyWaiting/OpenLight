@@ -1,9 +1,9 @@
 #include "Utilities/PCH.h"
+#include "BSDF.h"
 #include "IO/Log.h"
 #include "BxDFHelper.h"
 #include "BxDF.h"
-#include "Math/Normal.h"
-#include "BSDF.h"
+#include "Math/MathHelper.h"
 
 BSDF::BSDF()
 {
@@ -24,7 +24,7 @@ void BSDF::Add( BxDF* bxdf )
 	bxdfs[nBxDF++] = bxdf;
 }
 
-Spectrum BSDF::f( const Vector3f& wo , const Vector3f& wi , const Normal& n , const BxDFType type )
+Spectrum BSDF::f( const Vector3f& wo , const Vector3f& wi , const Vector3f& n , const BxDFType type )
 {
 	bool IsReflect = Dot( wi , n ) * Dot( wo , n ) > 0.0 ? true : false;
 
@@ -44,7 +44,7 @@ Spectrum BSDF::f( const Vector3f& wo , const Vector3f& wi , const Normal& n , co
 	return f;
 }
 
-Spectrum BSDF::Sample_f( const Vector3f&wo , const Normal& n , Vector3f* wi , const Point2f& samplePoint , double* pdf , BxDFType type , bool& bNoOccur , BxDFType* SampledBxDFType ) const
+Spectrum BSDF::Sample_f( const Vector3f&wo , const Vector3f& n , Vector3f* wi , const Point2f& samplePoint , float* pdf , BxDFType type , bool& bNoOccur , BxDFType* SampledBxDFType ) const
 {
 	// 计算匹配的bxdf
 	int MatchCount = Count( type );
@@ -61,7 +61,7 @@ Spectrum BSDF::Sample_f( const Vector3f&wo , const Normal& n , Vector3f* wi , co
 	}
 
 	// 通过采样点确定使用第几个匹配的bxdf
-	int index = std::min( ( int )std::floor( samplePoint[0] * MatchCount ) , MatchCount - 1 );
+	int index = srMath::Min( ( int )std::floor( samplePoint[0] * MatchCount ) , MatchCount - 1 );
 
 	BxDF* bxdf = nullptr;
 	for( int i = 0; i < nBxDF; i++ )
@@ -131,9 +131,9 @@ Spectrum BSDF::Sample_f( const Vector3f&wo , const Normal& n , Vector3f* wi , co
 	return f;
 }
 
-double BSDF::PDF( const Vector3f& wo , const Vector3f& wi , const Normal& n , BxDFType type ) const
+float BSDF::PDF( const Vector3f& wo , const Vector3f& wi , const Vector3f& n , BxDFType type ) const
 {
-	double pdf = 0.0;
+	float pdf = 0.0;
 	int Num    = 0;
 
 	// 计算与type匹配的bxdf的pdf和

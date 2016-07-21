@@ -2,7 +2,7 @@
 #include "Math/Point3.h"
 #include "Math/Point2.h"
 #include "Math/Vector2.h"
-#include "Math/Normal.h"
+#include "Math/Vector3.h"
 #include "Triangle.h"
 #include "IO/FileSystem.h"
 #include "IO/Log.h"
@@ -13,7 +13,7 @@
 #include <assimp/postprocess.h>
 #include "ModelParser.h"
 
-void ModelParse( const std::string& filename , Point3f*& points , Normal*& normals , Vector2f*& uvs , Triangle*& triangles , int& VertexCount , int& FaceCount )
+void ModelParse( const std::string& filename , Point3f*& points , Vector3f*& normals , Vector2f*& uvs , Triangle*& triangles , int& VertexCount , int& FaceCount )
 {
 	FileSystem fs;
 	std::wstring name = fs.GetModelFolder() + srString::ToUnicode( filename );
@@ -43,9 +43,13 @@ void ModelParse( const std::string& filename , Point3f*& points , Normal*& norma
 		points = new Point3f[VertexCount];
 
 		SAFE_DELETE( normals );
-		normals = new Normal[VertexCount];
+		normals = new Vector3f[VertexCount];
 
 		SAFE_DELETE( uvs );
+		/*if (scene->HasTextures())
+		{
+			uvs = new Vector2f[VertexCount];
+		}*/
 		uvs = new Vector2f[VertexCount];
 
 		SAFE_DELETE( triangles );
@@ -59,13 +63,22 @@ void ModelParse( const std::string& filename , Point3f*& points , Normal*& norma
 
 			int count = mesh->mNumVertices;
 
+			if (!mesh->mTextureCoords[0])
+			{
+				SAFE_DELETE_ARRAY(uvs);
+				uvs = nullptr;
+			}
+
 			for( int j = 0; j < count; j++ , Vertexindex++ )
 			{
 				points[Vertexindex]  = Point3f( mesh->mVertices[j].x , mesh->mVertices[j].y , mesh->mVertices[j].z );
 
-				normals[Vertexindex] = Normal( mesh->mNormals[j].x , mesh->mNormals[j].y , mesh->mNormals[j].z );
+				normals[Vertexindex] = Vector3f( mesh->mNormals[j].x , mesh->mNormals[j].y , mesh->mNormals[j].z );
 
-				uvs[Vertexindex] = Vector2f( mesh->mTextureCoords[0][j].x , mesh->mTextureCoords[0][j].y );
+				if (uvs)
+				{
+					uvs[Vertexindex] = Vector2f(mesh->mTextureCoords[0][j].x, mesh->mTextureCoords[0][j].y);
+				}
 			}
 
 			for( unsigned int j = 0; j < mesh->mNumFaces; j++ , FaceIndex++ )

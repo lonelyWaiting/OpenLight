@@ -6,7 +6,7 @@
 class FresnelConductor : public Fresnel
 {
 public:
-	Spectrum Evalute( double cosThetaI ) const;
+	Spectrum Evalute( float cosThetaI ) const;
 
 	FresnelConductor( const Spectrum& etaI , const Spectrum& etaT , const Spectrum& k );
 

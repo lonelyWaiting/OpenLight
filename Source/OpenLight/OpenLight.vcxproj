@@ -13,6 +13,8 @@
   <ItemGroup>
     <ClInclude Include="Accelerator\Accelerator.h" />
     <ClInclude Include="Accelerator\Grid.h" />
+    <ClInclude Include="Math\MathHelper.h" />
+    <ClInclude Include="Math\Transform.h" />
     <ClInclude Include="OpenLight.h" />
     <ClInclude Include="BRDF\BSDF.h" />
     <ClInclude Include="BRDF\BxDF.h" />
@@ -52,15 +54,13 @@
     <ClInclude Include="Material\Material.h" />
     <ClInclude Include="Material\PureReflectionMaterial.h" />
     <ClInclude Include="Math\Bound3.h" />
-    <ClInclude Include="Math\Bounds2.h" />
+    <ClInclude Include="Math\Bound2.h" />
     <ClInclude Include="Math\Matrix3.h" />
     <ClInclude Include="Math\Matrix4.h" />
-    <ClInclude Include="Math\Normal.h" />
     <ClInclude Include="Math\ONB.h" />
     <ClInclude Include="Math\Point2.h" />
     <ClInclude Include="Math\Point3.h" />
     <ClInclude Include="Math\Ray.h" />
-    <ClInclude Include="Math\Transform.h" />
     <ClInclude Include="Math\Vector2.h" />
     <ClInclude Include="Math\Vector3.h" />
     <ClInclude Include="Math\Vector4.h" />
@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Accelerator\Grid.cpp" />
+    <ClCompile Include="Math\Transform.cpp" />
     <ClCompile Include="OpenLight.cpp" />
     <ClCompile Include="BRDF\BSDF.cpp" />
     <ClCompile Include="BRDF\BxDF.cpp" />
@@ -132,19 +133,36 @@
     <ClCompile Include="Material\GlassMaterial.cpp" />
     <ClCompile Include="Material\Material.cpp" />
     <ClCompile Include="Material\PureReflectionMaterial.cpp" />
-    <ClCompile Include="Math\Bound3.cpp" />
-    <ClCompile Include="Math\Bounds2.cpp" />
-    <ClCompile Include="Math\Matrix3.cpp" />
-    <ClCompile Include="Math\Matrix4.cpp" />
-    <ClCompile Include="Math\Normal.cpp" />
-    <ClCompile Include="Math\ONB.cpp" />
-    <ClCompile Include="Math\Point2.cpp" />
-    <ClCompile Include="Math\Point3.cpp" />
-    <ClCompile Include="Math\Ray.cpp" />
-    <ClCompile Include="Math\Transform.cpp" />
-    <ClCompile Include="Math\Vector2.cpp" />
-    <ClCompile Include="Math\Vector3.cpp" />
-    <ClCompile Include="Math\Vector4.cpp" />
+    <None Include="Math\Bound3.inl">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="Math\Bound2.inl">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="Math\Matrix3.inl">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="Math\Matrix4.inl">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="Math\ONB.inl">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="Math\Point2.inl">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="Math\Ray.inl">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="Math\Vector2.inl">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="Math\Vector3.inl">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="Math\Vector4.inl">
+      <FileType>Document</FileType>
+    </None>
     <ClCompile Include="Primitive\IntersectRecord.cpp" />
     <ClCompile Include="Primitive\Primitive.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
@@ -172,6 +190,9 @@
     <ClCompile Include="Utilities\PCH.cpp" />
     <ClCompile Include="Utilities\RNG.cpp" />
     <ClCompile Include="Utilities\srString.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Math\Point3.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6AE3C859-8241-41C0-9E73-C3B5E5A2241E}</ProjectGuid>

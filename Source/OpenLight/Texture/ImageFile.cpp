@@ -83,7 +83,7 @@ bool ImageFile::LoadImage( std::wstring& filename )
 	return true;
 }
 
-Spectrum ImageFile::Evalute( double u , double v )
+Spectrum ImageFile::Evalute( float u , float v )
 {
 	if( m_pBits != nullptr )
 	{
@@ -107,10 +107,10 @@ Spectrum ImageFile::Evalute( double u , double v )
 		BYTE* C = m_pBits + m_iPitch * ( m_iHeight - 1 - ynext ) + m_iBpp * x;
 		BYTE* D = m_pBits + m_iPitch * ( m_iHeight - 1 - ynext ) + m_iBpp * xnext;
 		
-		double r = ( ( double )A[2] * ( 1.0 - u ) + ( double )B[2] * u ) * ( 1.0 - v ) + ( ( double )C[2] * ( 1.0 - u ) + ( double )D[2] * u ) * v;
-		double g = ( ( double )A[1] * ( 1.0 - u ) + ( double )B[1] * u ) * ( 1.0 - v ) + ( ( double )C[1] * ( 1.0 - u ) + ( double )D[1] * u ) * v;
-		double b = ( ( double )A[0] * ( 1.0 - u ) + ( double )B[0] * u ) * ( 1.0 - v ) + ( ( double )C[0] * ( 1.0 - u ) + ( double )D[0] * u ) * v;
-		double inv = 1.0 / 255.0;
+		float r = ( ( float )A[2] * ( 1.0 - u ) + ( float )B[2] * u ) * ( 1.0 - v ) + ( ( float )C[2] * ( 1.0 - u ) + ( float )D[2] * u ) * v;
+		float g = ( ( float )A[1] * ( 1.0 - u ) + ( float )B[1] * u ) * ( 1.0 - v ) + ( ( float )C[1] * ( 1.0 - u ) + ( float )D[1] * u ) * v;
+		float b = ( ( float )A[0] * ( 1.0 - u ) + ( float )B[0] * u ) * ( 1.0 - v ) + ( ( float )C[0] * ( 1.0 - u ) + ( float )D[0] * u ) * v;
+		float inv = 1.0 / 255.0;
 
 		return Spectrum::FromRGB( r * inv , g * inv , b * inv );
 	}

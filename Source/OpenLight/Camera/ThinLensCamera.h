@@ -22,12 +22,12 @@ public:
 
 	ThinLensCamera( const ThinLensCamera& rhs );
 
-	void SetLensRadius( double _LensRadius );
+	void SetLensRadius( float _LensRadius );
 
-	void SetLensFocus( double _LensFocus );
+	void SetLensFocus( float _LensFocus );
 
 public:
-	Ray GenerateRay( double RasterX , double RasterY , const CameraSample& SamplePoint );
+	Rayf GenerateRay( float RasterX , float RasterY , const CameraSample& SamplePoint );
 
 public:
 	void Deserialization( tinyxml2::XMLElement* CameraRootElement );
@@ -35,8 +35,8 @@ public:
 	void Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement );
 
 private:
-	double LensRadius;			// Í¸¾µ°ë¾¶
-	double LensFocus;			// ½¹¾à
+	float LensRadius;			// Í¸¾µ°ë¾¶
+	float LensFocus;			// ½¹¾à
 };
 
 typedef std::shared_ptr<ThinLensCamera> ThinLensPtr;

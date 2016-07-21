@@ -14,7 +14,7 @@ public:
 
 	bool LoadImage( std::wstring& filename );
 
-	Spectrum Evalute( double u , double v );
+	Spectrum Evalute( float u , float v );
 
 public:
 	FIBITMAP* GetDataPtr();

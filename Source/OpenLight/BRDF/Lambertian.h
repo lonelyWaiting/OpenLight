@@ -10,9 +10,9 @@ public:
 
 	Spectrum f( const Vector3f& wo , const Vector3f& wi ) const;
 
-	Spectrum rho( const Vector3f& wo , const Normal& n , int nSamples , Point2f* samples );
+	Spectrum rho( const Vector3f& wo , const Vector3f& n , int nSamples , Point2f* samples );
 
-	Spectrum rho( const Normal& n , int nSamples , Point2f* samples1 , Point2f* samples2 );
+	Spectrum rho( const Vector3f& n , int nSamples , Point2f* samples1 , Point2f* samples2 );
 
 private:
 	Spectrum R;		// ∑¥…‰¬ 

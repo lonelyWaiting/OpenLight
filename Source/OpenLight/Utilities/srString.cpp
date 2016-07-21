@@ -18,7 +18,7 @@ std::wstring srString::ToUnicode( const std::string& input )
 	return std::wstring_convert<std::codecvt_utf8<wchar_t> , wchar_t>().from_bytes( input );
 }
 
-void ParseVector( const std::string s , double* v )
+void ParseVector( const std::string s , float* v )
 {
 	std::vector<std::string> elements;
 	std::stringstream ss( s );

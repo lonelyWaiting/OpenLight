@@ -29,7 +29,7 @@ public:
 
 	Light* GetLight( int index ) const;
 
-	bool Intersect( const Ray& ray , IntersectRecord* record ) const;
+	bool Intersect( const Rayf& ray , IntersectRecord* record ) const;
 
 	Environment* GetEnvironmentPtr() const;
 

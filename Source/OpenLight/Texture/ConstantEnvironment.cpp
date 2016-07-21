@@ -15,7 +15,7 @@ ConstantEnvironment::ConstantEnvironment( Spectrum& color )
 
 }
 
-Spectrum ConstantEnvironment::Evalute( Ray& r )
+Spectrum ConstantEnvironment::Evalute( Rayf& r )
 {
 	return backgroundColor;
 }

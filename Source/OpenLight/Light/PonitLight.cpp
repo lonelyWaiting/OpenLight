@@ -2,7 +2,6 @@
 #include "Math/Vector3.h"
 #include "Sampler/Sampling.h"
 #include "Math/Ray.h"
-#include "Math/Normal.h"
 #include "tinyxml2.h"
 #include "PointLight.h"
 #include "Utilities/srString.h"
@@ -20,18 +19,18 @@ PointLight::PointLight( const Transform& LightToWorld , const Spectrum & _intens
 	intensity = _intensity;
 }
 
-Spectrum PointLight::Sample_L( const Scene* scene , LightSample& lightSample , Ray* ray , Normal* NormalShading , double* pdf ) const
+Spectrum PointLight::Sample_L( const Scene* scene , LightSample& lightSample , Rayf* ray , Vector3f* NormalShading , float* pdf ) const
 {
-	*ray = Ray( LightPosWorld , UniformSampleSphere( lightSample.value[0] , lightSample.value[1] ) , 0.0f , Infinity );
+	*ray = Rayf( LightPosWorld , UniformSampleSphere( lightSample.value[0] , lightSample.value[1] ) , 0.0f , Infinity );
 
-	*NormalShading = Normal( ray->Direction.x , ray->Direction.y , ray->Direction.z );
+	*NormalShading = Vector3f( ray->Direction.x , ray->Direction.y , ray->Direction.z );
 
 	*pdf = UniformSpherePDF();
 
 	return intensity;
 }
 
-Spectrum PointLight::Sample_L( const Point3f& p , Vector3f* wi , LightSample& _lightSample , double* pdf , VisibilityTester* pVisibility ) const
+Spectrum PointLight::Sample_L( const Point3f& p , Vector3f* wi , LightSample& _lightSample , float* pdf , VisibilityTester* pVisibility ) const
 {
 	// 计算入射光线
 	*wi = Normalize( LightPosWorld - p );
@@ -50,7 +49,7 @@ Spectrum PointLight::Power( const Scene* scene ) const
 	return 4.0f * PI * intensity;
 }
 
-double PointLight::PDF( const Point3f& p , const Vector3f& wi ) const
+float PointLight::PDF( const Point3f& p , const Vector3f& wi ) const
 {
 	return 0;
 }
@@ -69,7 +68,7 @@ void PointLight::Deserialization( tinyxml2::XMLElement* LightRootElement )
 	LightToWorld = Translate( Vector3f( LightPosWorld ) );
 	WorldToLight = Inverse( LightToWorld );
 
-	double r , g , b;
+	float r , g , b;
 	tinyxml2::XMLElement* IntensityRootElement = LightRootElement->FirstChildElement( "intensity" );
 
 	ParseVector( LightRootElement->GetText() , intensity.GetDataPtr() );

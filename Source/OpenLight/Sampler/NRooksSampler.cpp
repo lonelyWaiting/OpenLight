@@ -40,9 +40,9 @@ void NRooksSampler::GenerateUnitSquareSamples()
 		{
 			// 沿着对角线采样
 			CameraSample* samples = new CameraSample;
-			samples->ImageSamples = Point2f( ( j + RNG::Get().GetDouble() ) / ( double )SampleCount , ( j + RNG::Get().GetDouble() ) / ( double )SampleCount );
-			samples->LensSamples = Point2f( ( j + RNG::Get().GetDouble() ) / ( double )SampleCount , ( j + RNG::Get().GetDouble() ) / ( double )SampleCount );
-			samples->TimeSamples = ( j + RNG::Get().GetDouble() ) / ( double )SampleCount;
+			samples->ImageSamples = Point2f( ( j + RNG::Get().GetFloat() ) / ( float )SampleCount , ( j + RNG::Get().GetFloat() ) / ( float )SampleCount );
+			samples->LensSamples = Point2f( ( j + RNG::Get().GetFloat() ) / ( float )SampleCount , ( j + RNG::Get().GetFloat() ) / ( float )SampleCount );
+			samples->TimeSamples = ( j + RNG::Get().GetFloat() ) / ( float )SampleCount;
 
 			SamplePoints.push_back( samples );
 		}

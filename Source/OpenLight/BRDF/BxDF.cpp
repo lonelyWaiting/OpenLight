@@ -1,6 +1,5 @@
 #include "Utilities/PCH.h"
 #include "Sampler/Sampling.h"
-#include "Math/Normal.h"
 #include "BxDF.h"
 
 BxDF::BxDF( BxDFType type )
@@ -14,7 +13,7 @@ BxDF::~BxDF()
 
 }
 
-Spectrum BxDF::Sample_f( const Vector3f& wo , const Normal& n , Vector3f* wi , const Point2f& samplePoint , double* pdf , bool& bNoOccur) const
+Spectrum BxDF::Sample_f( const Vector3f& wo , const Vector3f& n , Vector3f* wi , const Point2f& samplePoint , float* pdf , bool& bNoOccur) const
 {
 	// 生成半球采样方向
 	*wi = CosineSampleHemisphere( samplePoint );
@@ -38,7 +37,7 @@ Spectrum BxDF::Sample_f( const Vector3f& wo , const Normal& n , Vector3f* wi , c
 // wi是位于物体的局部空间
 // 因此法线为(0 , 0 , 1)
 // 因此cos(theta) = (0 , 0 , 1) * wi = wi.z
-double BxDF::PDF( const Vector3f& wi , const Vector3f& wo , const Normal& n ) const
+float BxDF::PDF( const Vector3f& wi , const Vector3f& wo , const Vector3f& n ) const
 {
 	return ( Dot( wi , n ) * Dot( wo , n ) > 0.0 ) ? AbsDot( wi , n ) * INV_PI : 0.0f;
 }
@@ -53,7 +52,7 @@ bool BxDF::IsMatch( const BxDFType & flag )
 	return false;
 }
 
-Spectrum BxDF::rho( const Normal& n , int nSamples , Point2f* Samples1 , Point2f* Samples2 ) const
+Spectrum BxDF::rho( const Vector3f& n , int nSamples , Point2f* Samples1 , Point2f* Samples2 ) const
 {
 	Spectrum r = 0;
 
@@ -67,8 +66,8 @@ Spectrum BxDF::rho( const Normal& n , int nSamples , Point2f* Samples1 , Point2f
 		// 生成半球内的随机采样方向
 		wo = UniformSampleHemisphere( Samples2[i] );
 
-		double PdfOutput = INV_TWO_PI; 
-		double PdfInput = 0.0f;
+		float PdfOutput = INV_TWO_PI;
+		float PdfInput = 0.0f;
 
 		Spectrum f = Sample_f( wo , n , &wi , Samples1[i] , &PdfInput , bNoOccur );
 
@@ -83,7 +82,7 @@ Spectrum BxDF::rho( const Normal& n , int nSamples , Point2f* Samples1 , Point2f
 
 // 给定出射方向，以及一组采样点
 // 该组采样点用于生成一组入射方向
-Spectrum BxDF::rho( const Vector3f& wo , const Normal& n , int nSamples , Point2f* samples ) const
+Spectrum BxDF::rho( const Vector3f& wo , const Vector3f& n , int nSamples , Point2f* samples ) const
 { 
 	Spectrum r = 0;
 
@@ -92,7 +91,7 @@ Spectrum BxDF::rho( const Vector3f& wo , const Normal& n , int nSamples , Point2
 	for( int i = 0; i < nSamples; i++ )
 	{
 		Vector3f wi;
-		double pdf = 0.0f;
+		float pdf = 0.0f;
 
 		Spectrum f = Sample_f( wo , n , &wi , samples[i] , &pdf , bNoOccur );
 
@@ -102,5 +101,5 @@ Spectrum BxDF::rho( const Vector3f& wo , const Normal& n , int nSamples , Point2
 		}
 	}
 
-	return r / double( nSamples );
+	return r / float( nSamples );
 }

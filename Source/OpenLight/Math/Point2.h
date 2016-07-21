@@ -1,132 +1,85 @@
-#pragma once
-
 #ifndef POINT2_H
 #define POINT2_H
 
-class Vector2f;
+#include "MathHelper.h"
 
-class Point2f
+template<typename T>
+class Vector2;
+
+template<typename T>
+class Point2
 {
 public:
+	Point2();
 
-	/**
-	 \fn	Point2::Point2()
 
-	 \brief	Default constructor.
+	Point2( T _x , T _y );
 
-	 \author	liuteng
-	 \date	2016/3/13
-	 */
+	explicit Point2( const Vector2<T> &p );
 
-	Point2f();
+	Point2( const Point2 &p );
 
-	/**
-	 \fn	Point2::Point2( T _x , T _y )
-
-	 \brief	Constructor.
-
-	 \author
-	 \date	2016/3/13
-
-	 \param	_x	The x coordinate.
-	 \param	_y	The y coordinate.
-	 */
-
-	Point2f( double _x , double _y );
-	
-	/**
-	 \fn	explicit Point2::Point2( const Vector2<U> &p )
-
-	 \brief	Copy Constructor.
-
-	 \author	liuteng
-	 \date	2016/3/13
-
-	 \param	p	data source.
-	 */
-
-	explicit Point2f( const Vector2f &p );
-
-	/**
-	 \fn	Point2::Point2( const Point2f &p )
-
-	 \brief	Copy constructor.
-
-	 \author
-	 \date	2016/3/13
-
-	 \param	p	data source.
-	 */
-
-	Point2f( const Point2f &p );
-
-	/**
-	 \fn	Point2f & Point2::operator= ( const Point2f &p )
-
-	 \brief	Assignment operator.
-
-	 \author
-	 \date	2016/3/13
-
-	 \param	p	data source.
-
-	 \return	A shallow copy of this object.
-	 */
-
-	Point2f & operator = ( const Point2f &p );
+	Point2 & operator = ( const Point2 &p );
 
 public:
-	friend std::ostream & operator << ( std::ostream & os , const Point2f&p );
+	Point2 operator + ( const Vector2<T> &v ) const;
+
+	Point2 operator + ( const Point2 &p ) const;
+
+	Point2& operator += ( const Vector2<T> &v );
+
+	Vector2<T> operator - ( const Point2 & v ) const;
+
+	Point2 operator - ( const Vector2<T> &v ) const;
+
+	Point2& operator -= ( const Vector2<T> &v );
+
+	Point2 operator - () const;
+
+	Point2 operator * ( T f ) const;
+
+	Point2& operator *= ( T f );
+
+	Point2 operator / ( T f ) const;
+
+	Point2 operator /= ( T f );
+
+	T operator[] ( int index ) const;
+
+	T& operator[] ( int index );
+
+	bool operator == ( const Point2 &p ) const;
+
+	bool operator != ( const Point2 &p ) const;
 
 public:
-	Point2f operator + ( const Vector2f &v ) const;
+	template<typename D>
+	friend D Distance( Point2<D>& p1 , Point2<D>& p2 );
 
-	Point2f operator + ( const Point2f &p ) const;
+	template<typename D>
+	friend D DistanceSq( const Point2<D> &p1 , const Point2<D> &p2 );
 
-	Point2f& operator += ( const Vector2f &v );
+	template<typename D>
+	friend Point2<D> operator* ( D f , const Point2<D> &p );
 
-	Vector2f operator - ( const Point2f & v ) const;
+	template<typename D>
+	friend Point2<D> Floor( const Point2<D> &p );
 
-	Point2f operator - ( const Vector2f &v ) const;
+	template<typename D>
+	friend Point2<D> Ceil( const Point2<D> &p );
 
-	Point2f& operator -= ( const Vector2f &v );
+	template<typename D>
+	friend Point2<D> Lerp( D t , const Point2<D> &p0 , const Point2<D> &p1 );
 
-	Point2f operator - () const;
+	template<typename D>
+	friend Point2<D> Min( const Point2<D> &p0 , const Point2<D> &p1 );
 
-	Point2f operator * ( double f ) const;
-
-	Point2f& operator *= ( double f );
-
-	Point2f operator / ( double f ) const;
-
-	Point2f operator /= ( double f );
-
-	double operator[] ( int index ) const;
-
-	double& operator[] ( int index );
-
-	bool operator == ( const Point2f &p ) const;
-
-	bool operator != ( const Point2f &p ) const;
-
+	template<typename D>
+	friend Point2<D> Max( const Point2<D> &p0 , const Point2<D> &p1 );
 public:
-	friend inline double Distance( const Point2f& p1 , const Point2f &p2 );
-
-	friend inline double DistanceSq( const Point2f &p1 , const Point2f &p2 );
-
-	friend inline Point2f operator* ( double f , const Point2f &p );
-
-	friend Point2f Floor( const Point2f &p );
-
-	friend Point2f Ceil( const Point2f &p );
-
-	friend Point2f Lerp( double t , const Point2f &p0 , const Point2f &p1 );
-
-	friend Point2f Min( const Point2f &p0 , const Point2f &p1 );
-
-	friend Point2f Max( const Point2f &p0 , const Point2f &p1 );
-public:
-	double x , y;
+	T x , y;
 };
+
+#include "Point2.inl"
 
 #endif

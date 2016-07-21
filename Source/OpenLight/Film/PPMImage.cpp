@@ -56,13 +56,13 @@ void PPMImage::Display()
 	unsigned int ired , igreen , iblue;
 	unsigned char red , green , blue;
 
-	double RGB[3];
+	float RGB[3];
 
 	clock_t start = clock();
 
 	for( int row = 0; row < Height; row++ )
 	{
-		fprintf( stdout , "\rWriting Image Data: %8.2f%%" , ( double )row / ( double )( Height - 1 ) *100 );
+		fprintf( stdout , "\rWriting Image Data: %8.2f%%" , ( float )row / ( float )( Height - 1 ) *100 );
 
 		for( int col = 0; col < Width; col++ )
 		{
@@ -85,7 +85,7 @@ void PPMImage::Display()
 	}
 
 	clock_t end = clock();
-	double t = ( double )( end - start ) / CLOCKS_PER_SEC;
+	float t = ( float )( end - start ) / CLOCKS_PER_SEC;
 	printf( "\nWriting time: %fs.\n" , t );
 	Log::Get().Info( "\nWriting time: %fs.\n" , t );
 }

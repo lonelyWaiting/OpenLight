@@ -61,7 +61,7 @@ bool InitRTTI()
 Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrator*& pSurfaceIntegrator , Sampler*& pSampler )
 {
 	FileSystem fs;
-	std::wstring SceneFilename = fs.GetSceneFolder() + L"HDR_Grace.xml";
+	std::wstring SceneFilename = fs.GetSceneFolder() + L"Scene.xml";
 
 	tinyxml2::XMLDocument doc;
 	doc.LoadFile( srString::ToAscii( SceneFilename ).c_str() );
@@ -195,7 +195,7 @@ void SerializationScene( Scene* scene , Camera* camera , SurfaceIntegrator* pSur
 	}
 
 	FileSystem fs;
-	std::wstring filename = fs.GetSceneFolder() + L"haha.xml";
+	std::wstring filename = fs.GetSceneFolder() + L"SavedScene.xml";
 	xmlDoc.SaveFile( srString::ToAscii( filename ).c_str() );
 }
 

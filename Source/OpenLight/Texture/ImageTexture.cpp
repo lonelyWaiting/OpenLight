@@ -2,6 +2,7 @@
 #include "tinyxml2.h"
 #include "ImageManager.h"
 #include "ImageFile.h"
+#include <string>
 
 ImageTexture::ImageTexture()
 {
@@ -29,5 +30,19 @@ void ImageTexture::Deserialization( tinyxml2::XMLElement* RootElement )
 
 void ImageTexture::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
 {
-	pRootElement->SetAttribute( "filename" , m_Filename );
+	pRootElement->SetAttribute("type", GetName());
+
+	pRootElement->SetAttribute("filename", m_Filename);
+}
+
+char* ImageTexture::GetFilename()
+{
+	return m_Filename;
+}
+
+void ImageTexture::SetFilename(char* pFilename)
+{
+	strcpy(m_Filename, pFilename);
+
+	m_pImage = ImageManager::GetInstance()->GetImage(m_Filename);
 }

@@ -9,13 +9,13 @@ static const int NSpectralSamples = 60;
 
 static const int CIESamplesNum = 471;
 // 光谱分布函数在波长为360~830时的值
-extern const double CIE_X[CIESamplesNum];
-extern const double CIE_Y[CIESamplesNum];
-extern const double CIE_Z[CIESamplesNum];
+extern const float CIE_X[CIESamplesNum];
+extern const float CIE_Y[CIESamplesNum];
+extern const float CIE_Z[CIESamplesNum];
 
-extern const double CIE_lambda[CIESamplesNum];
+extern const float CIE_lambda[CIESamplesNum];
 
-static const double CIE_Y_Integral = 106.856895;
+static const float CIE_Y_Integral = 106.856895;
 
 enum class SpectrumType
 {
@@ -23,14 +23,14 @@ enum class SpectrumType
 	Illuminant
 };
 
-inline void XYZToRGB( const double xyz[3] , double rgb[3] )
+inline void XYZToRGB( const float xyz[3] , float rgb[3] )
 {
 	rgb[0] = 3.240479f  * xyz[0] - 1.537150f * xyz[1] - 0.498535f * xyz[2];
 	rgb[1] = -0.969256f * xyz[0] + 1.875991f * xyz[1] + 0.041556f * xyz[2];
 	rgb[2] = 0.055648f  * xyz[0] - 0.204043f * xyz[1] + 1.057311f * xyz[2];
 }
 
-inline void RGBToXYZ( const double rgb[3] , double xyz[3] )
+inline void RGBToXYZ( const float rgb[3] , float xyz[3] )
 {
 	xyz[0] = 0.412453f * rgb[0] + 0.357580f * rgb[1] + 0.180423f * rgb[2];
 	xyz[1] = 0.212671f * rgb[0] + 0.715160f * rgb[1] + 0.072169f * rgb[2];
@@ -38,21 +38,21 @@ inline void RGBToXYZ( const double rgb[3] , double xyz[3] )
 }
 
 // 判断是否是有序的
-extern bool IsOrdered( const double* lambda , int n );
+extern bool IsOrdered( const float* lambda , int n );
 
-extern bool SortSpectrumSamplePoint( double* lambda , double* values , int n );
+extern bool SortSpectrumSamplePoint( float* lambda , float* values , int n );
 
 // lambda为采样点数组，里面记录着各个采样点的波长
 // values对应于lambda，记录着各个采样点波长对应的光谱分布函数的值
 // n表示lambda的size，也是values的size
 // 当前波长
-extern double InterpolateSpectrumSamples( const double* lambda , const double* values , int n , double l );
+extern float InterpolateSpectrumSamples( const float* lambda , const float* values , int n , float l );
 
 template<int NSpectrumSamples>
 class CoefficientSpectrum
 {
 public:
-	CoefficientSpectrum( double v = 0.0f )
+	CoefficientSpectrum( float v = 0.0f )
 	{
 		for( int i = 0; i < NSpectrumSamples; i++ )
 		{
@@ -161,7 +161,7 @@ public:
 		return ( *this );
 	}
 
-	CoefficientSpectrum operator * ( double a ) const
+	CoefficientSpectrum operator * ( float a ) const
 	{
 		CoefficientSpectrum result = *this;
 
@@ -173,7 +173,7 @@ public:
 		return result;
 	}
 
-	CoefficientSpectrum& operator *= ( double a ) const
+	CoefficientSpectrum& operator *= ( float a ) const
 	{
 		Assert( !isnan( a ) );
 
@@ -199,15 +199,15 @@ public:
 		return result;
 	}
 
-	// double * CoefficientSpectrum
-	friend inline CoefficientSpectrum operator * ( double a , const CoefficientSpectrum& rhs )
+	// float * CoefficientSpectrum
+	friend inline CoefficientSpectrum operator * ( float a , const CoefficientSpectrum& rhs )
 	{
 		Assert( !isnan( a ) && !rhs.HasNAN() );
 
 		return rhs * a;
 	}
 
-	CoefficientSpectrum operator / ( double a ) const
+	CoefficientSpectrum operator / ( float a ) const
 	{
 		Assert( !isnan( a ) );
 
@@ -223,7 +223,7 @@ public:
 		return result;
 	}
 
-	CoefficientSpectrum operator /= ( double a )
+	CoefficientSpectrum operator /= ( float a )
 	{
 		Assert( !isnan( a ) );
 
@@ -287,7 +287,7 @@ public:
 	}
 
 	template< int N>
-	friend CoefficientSpectrum<N> Pow( const CoefficientSpectrum<N>& rhs , double e );
+	friend CoefficientSpectrum<N> Pow( const CoefficientSpectrum<N>& rhs , float e );
 
 	friend CoefficientSpectrum Exp( const CoefficientSpectrum& rhs )
 	{
@@ -320,7 +320,7 @@ public:
 	{
 		for( int i = 0; i < NSpectrumSamples; i++ )
 		{
-			double v;
+			float v;
 			if( fscanf( f , "%lf " , &v ) != 1 )
 			{
 				return false;
@@ -332,21 +332,21 @@ public:
 		return true;
 	}
 
-	double& operator[] ( int i )
+	float& operator[] ( int i )
 	{
 		Assert( i >= 0 && i < NSpectrumSamples );
 
 		return c[i];
 	}
 
-	double operator[]( int i ) const
+	float operator[]( int i ) const
 	{
 		Assert( i >= 0 && i < NSpectrumSamples );
 
 		return c[i];
 	}
 
-	double* GetDataPtr()
+	float* GetDataPtr()
 	{
 		return c;
 	}
@@ -355,7 +355,7 @@ public:
 
 protected:
 	// 一组基函数的值，如RGB的基函数为三个，则只记录rgb三个基函数上的取值
-	double c[NSpectrumSamples];
+	float c[NSpectrumSamples];
 };
 
 class RGBSpectrum : public CoefficientSpectrum<3>
@@ -363,7 +363,7 @@ class RGBSpectrum : public CoefficientSpectrum<3>
 	using CoefficientSpectrum<3>::c;
 
 public:
-	RGBSpectrum( double v = 0.0f )
+	RGBSpectrum( float v = 0.0f )
 		:CoefficientSpectrum<3>( v )
 	{
 
@@ -380,7 +380,7 @@ public:
 		*this = s;
 	}
 
-	static RGBSpectrum FromRGB( const double rgb[3] , SpectrumType type = SpectrumType::Reflectance )
+	static RGBSpectrum FromRGB( const float rgb[3] , SpectrumType type = SpectrumType::Reflectance )
 	{
 		RGBSpectrum s;
 		s.c[0] = rgb[0];
@@ -392,7 +392,7 @@ public:
 		return s;
 	}
 
-	static RGBSpectrum FromRGB( double r , double g , double b , SpectrumType = SpectrumType::Reflectance )
+	static RGBSpectrum FromRGB( float r , float g , float b , SpectrumType = SpectrumType::Reflectance )
 	{
 		RGBSpectrum s;
 		s.c[0] = r;
@@ -404,40 +404,40 @@ public:
 		return s;
 	}
 
-	void ToRGB( double* rgb ) const
+	void ToRGB( float* rgb ) const
 	{
 		rgb[0] = c[0];
 		rgb[1] = c[1];
 		rgb[2] = c[2];
 	}
 
-	void ToXYZ( double xyz[3] ) const
+	void ToXYZ( float xyz[3] ) const
 	{
 		RGBToXYZ( c , xyz );
 	}
 
-	static RGBSpectrum FromXYZ( const double xyz[3] , SpectrumType type = SpectrumType::Reflectance )
+	static RGBSpectrum FromXYZ( const float xyz[3] , SpectrumType type = SpectrumType::Reflectance )
 	{
 		RGBSpectrum r;
 		XYZToRGB( xyz , r.c );
 		return r;
 	}
 
-	double y() const
+	float y() const
 	{
-		const double YWeight[3] = { 0.212671f , 0.715160f , 0.072169f };
+		const float YWeight[3] = { 0.212671f , 0.715160f , 0.072169f };
 		return YWeight[0] * c[0] + YWeight[1] * c[1] + YWeight[2] * c[2];
 	}
 
-	static RGBSpectrum FromSampled( const double* lambda , const double* v , int n )
+	static RGBSpectrum FromSampled( const float* lambda , const float* v , int n )
 	{
 		// 计算三色刺激值xyz，然后将其转换到rgb空间
 		
 		if( !IsOrdered( lambda , n ) )
 		{
 			// 波长是未排序的
-			std::vector<double> slambda( &lambda[0] , &lambda[n] );
-			std::vector<double> sv( &v[0] , &v[n] );
+			std::vector<float> slambda( &lambda[0] , &lambda[n] );
+			std::vector<float> sv( &v[0] , &v[n] );
 
 			// 排序光谱采样点
 			SortSpectrumSamplePoint( &slambda[0] , &sv[0] , n );
@@ -446,15 +446,15 @@ public:
 		}
 
 		// 此时光谱采样点已经按照波长排序好
-		double xyz[3] = { 0 , 0 , 0 };
+		float xyz[3] = { 0 , 0 , 0 };
 
-		double yintergral = 0.0;
+		float yintergral = 0.0;
 
 		for( int i = 0; i < CIESamplesNum; i++ )
 		{
 			yintergral += CIE_Y[i];
 
-			double value = InterpolateSpectrumSamples( lambda , v , n , CIE_lambda[i] );
+			float value = InterpolateSpectrumSamples( lambda , v , n , CIE_lambda[i] );
 			xyz[0] += value * CIE_X[i];
 			xyz[1] += value * CIE_Y[i];
 			xyz[2] += value * CIE_Z[i];

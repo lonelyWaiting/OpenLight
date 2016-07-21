@@ -7,43 +7,44 @@
 #include "tinyxml2.h"
 #include "Sphere.h"
 #include "Utilities/srString.h"
+#include "Primitive/Primitive.h"
 
 Sphere::Sphere()
 {
 	m_Radius = 0;
 }
 
-Sphere::Sphere( Point3f Center , double radius )
+Sphere::Sphere( Point3f Center , float radius )
 	: m_Radius( radius )
 {
-	Pos = Center;
+	mWorldPos = Center;
 
-	*ObjectToWorld = Translate( Vector3f( Center ) );
+	*mObjectToWorld = Translate( Vector3f( Center ) );
 	
-	*WorldToObject = Inverse( *ObjectToWorld );
+	*mWorldToObject = Inverse( *mObjectToWorld );
 
 	BBoxLocal = Bound3f( Point3f( -m_Radius , -m_Radius , -m_Radius ) , Point3f( m_Radius , m_Radius , m_Radius ) );
 
-	BBoxWorld = ( *ObjectToWorld )( BBoxLocal );
+	BBoxWorld = ( *mObjectToWorld )( BBoxLocal );
 }
 
 Sphere::~Sphere()
 {
 }
 
-bool Sphere::Intersect( Ray& r , IntersectRecord* record ) const
+bool Sphere::Intersect( Rayf& r , IntersectRecord* record ) const
 {
 	if( BBoxWorld.IntersectP( r ) )
 	{
 		// 将光线从世界空间变换到局部空间
-		Ray ray = ( *WorldToObject )( r );
+		Rayf ray = ( *mWorldToObject )( r );
 
 		// 计算二次方程的参数
-		double A = ray.Direction.x * ray.Direction.x + ray.Direction.y * ray.Direction.y + ray.Direction.z * ray.Direction.z;
-		double B = 2 * ray.Origin.x * ray.Direction.x + 2 * ray.Origin.y * ray.Direction.y + 2 * ray.Origin.z * ray.Direction.z;
-		double C = ray.Origin.x * ray.Origin.x + ray.Origin.y * ray.Origin.y + ray.Origin.z * ray.Origin.z - m_Radius * m_Radius;
+		float A = ray.Direction.x * ray.Direction.x + ray.Direction.y * ray.Direction.y + ray.Direction.z * ray.Direction.z;
+		float B = 2 * ray.Origin.x * ray.Direction.x + 2 * ray.Origin.y * ray.Direction.y + 2 * ray.Origin.z * ray.Direction.z;
+		float C = ray.Origin.x * ray.Origin.x + ray.Origin.y * ray.Origin.y + ray.Origin.z * ray.Origin.z - m_Radius * m_Radius;
 
-		double t0 , t1;
+		float t0 , t1;
 		if( !Quadtratic( A , B , C , &t0 , &t1 ) )
 		{
 			// 没有实数根
@@ -56,7 +57,7 @@ bool Sphere::Intersect( Ray& r , IntersectRecord* record ) const
 			return false;
 		}
 
-		double t = t0;
+		float t = t0;
 		if( t0 < ray.MinT )
 		{
 			t = t1;
@@ -72,24 +73,24 @@ bool Sphere::Intersect( Ray& r , IntersectRecord* record ) const
 			HitPointInLocalSpace.x = 1e-5f * m_Radius;
 		}
 		
-		double phi = atan2l( HitPointInLocalSpace.y , HitPointInLocalSpace.x );
+		float phi = atan2l( HitPointInLocalSpace.y , HitPointInLocalSpace.x );
 		if( phi < 0.0 )
 		{
 			phi += 2.0 * PI;
 		}
 
-		double u = phi / TWO_PI;
-		double theta = acosl( clamp( HitPointInLocalSpace.z / m_Radius , -1.0 , 1.0 ) );
-		double v = theta / PI;
+		float u = phi / TWO_PI;
+		float theta = acosl( clamp( HitPointInLocalSpace.z / m_Radius , -1.0 , 1.0 ) );
+		float v = theta / PI;
 
 		r.MaxT                = t;
-		record->primitivePtr  = pPrimitive;
+		record->primitivePtr  = mPrimitivePtr;
 		record->HitT          = t;
-		record->ObjectToWorld = *ObjectToWorld;
-		record->WorldToObject = *WorldToObject;
-		record->normal        = Normal( Normalize( r( t ) - Pos ) );
+		record->ObjectToWorld = *mObjectToWorld;
+		record->WorldToObject = *mWorldToObject;
+		record->normal        = Vector3f( Normalize( r( t ) - mWorldPos ) );
 		record->HitPoint      = r( t );
-		record->uv            = Vector2f( u , v ) * uvscale;
+		record->uv            = Vector2f( u , v ) * mPrimitivePtr->GetUVScale();
 
 		return true;
 	}
@@ -99,25 +100,16 @@ bool Sphere::Intersect( Ray& r , IntersectRecord* record ) const
 
 void Sphere::Deserialization( tinyxml2::XMLElement* ShapeRootElement )
 {
-	ShapeRootElement->QueryDoubleAttribute( "radius" , &m_Radius );
+	ShapeRootElement->QueryFloatAttribute( "radius" , &m_Radius );
 
-	if( ShapeRootElement->Attribute( "uvscale" ) )
-	{
-		ParseVector( ShapeRootElement->Attribute( "uvscale" ) , &uvscale[0] );
-	}
-	else
-	{
-		uvscale = Vector2f( 1.0 , 1.0 );
-	}
+	ParseVector( std::string( ShapeRootElement->FirstChildElement( "transform" )->Attribute( "position" ) ) , &mWorldPos[0] );
 
-	ParseVector( std::string( ShapeRootElement->FirstChildElement( "transform" )->Attribute( "position" ) ) , &Pos[0] );
-
-	*ObjectToWorld = Translate( Vector3f( Pos ) );
-	*WorldToObject = Inverse( *ObjectToWorld );
+	*mObjectToWorld = Translate( Vector3f( mWorldPos ) );
+	*mWorldToObject = Inverse( *mObjectToWorld );
 
 	BBoxLocal = Bound3f( Point3f( -m_Radius , -m_Radius , -m_Radius ) , Point3f( m_Radius , m_Radius , m_Radius ) );
 
-	BBoxWorld = ( *ObjectToWorld )( BBoxLocal );
+	BBoxWorld = ( *mObjectToWorld )( BBoxLocal );
 }
 
 void Sphere::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
@@ -127,20 +119,12 @@ void Sphere::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement
 	}
 
 	{
-		char* pText = new char[50];
-		sprintf( pText , "%f,%f" , uvscale.x , uvscale.y );
-		pRootElement->SetAttribute( "uvscale" , pText );
-
-		SAFE_DELETE( pText );
-	}
-
-	{
 		pRootElement->SetAttribute( "radius" , m_Radius );
 	}
 
 	{
 		char* pText = new char[50];
-		sprintf( pText , "%f,%f,%f" , Pos.x , Pos.y , Pos.z );
+		sprintf( pText , "%f,%f,%f" , mWorldPos.x , mWorldPos.y , mWorldPos.z );
 
 		tinyxml2::XMLElement* pTransformElement = xmlDoc.NewElement( "transform" );
 
@@ -152,31 +136,31 @@ void Sphere::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement
 	}
 }
 
-double Sphere::Area() const
+float Sphere::Area() const
 {
 	return 4.0 * PI * m_Radius * m_Radius;
 }
 
-double Sphere::PDF( const Point3f& p , const Vector3f& wi ) const
+float Sphere::PDF( const Point3f& p , const Vector3f& wi ) const
 {
 	// Test whether inside sphere
-	if( ( p - Pos ).LengthSq() - m_Radius * m_Radius < 1e4f )
+	if( ( p - mWorldPos ).LengthSq() - m_Radius * m_Radius < 1e4f )
 	{
 		return Shape::PDF( p , wi );
 	}
 
-	double SinThetaMax2 = m_Radius * m_Radius / ( p - Pos ).LengthSq();
-	double CosThetaMax = sqrt( MAX( 0.0 , 1.0 - SinThetaMax2 ) );
+	float SinThetaMax2 = m_Radius * m_Radius / ( p - mWorldPos ).LengthSq();
+	float CosThetaMax = sqrt( MAX( 0.0 , 1.0 - SinThetaMax2 ) );
 
 	return UniformConePDF( CosThetaMax );
 }
 
-Point3f Sphere::Sample( const Point3f& p , LightSample& lightSample , Normal& SampleNormal )
+Point3f Sphere::Sample( const Point3f& p , LightSample& lightSample , Vector3f& SampleNormal )
 {
-	Vector3f dirZ = Normalize( Pos - p );
+	Vector3f dirZ = Normalize( mWorldPos - p );
 
 	// 在球面上采样一个点
-	if( ( p - Pos ).LengthSq() - m_Radius * m_Radius < 1e4f )
+	if( ( p - mWorldPos ).LengthSq() - m_Radius * m_Radius < 1e4f )
 	{
 		// 使用默认的采样
 		Vector3f SampleDir = UniformSampleHemisphere( Point2f( lightSample.value[0] , lightSample.value[1] ) );
@@ -186,10 +170,10 @@ Point3f Sphere::Sample( const Point3f& p , LightSample& lightSample , Normal& Sa
 			SampleDir *= -1.0;
 		}
 
-		Point3f SamplePoint = Pos + Normalize( dirZ ) * m_Radius;
+		Point3f SamplePoint = mWorldPos + Normalize( dirZ ) * m_Radius;
 
 		// Compute Normal Dir
-		SampleNormal = Normalize( Normal( SamplePoint - Pos ) );
+		SampleNormal = Normalize( Vector3f( SamplePoint - mWorldPos ) );
 		
 		return SamplePoint;
 	}
@@ -199,19 +183,19 @@ Point3f Sphere::Sample( const Point3f& p , LightSample& lightSample , Normal& Sa
 	CoordinateSystem( dirZ , &dirX , &dirY );
 
 	// 均匀采样cone
-	double sinThetaMax2 = m_Radius * m_Radius / ( p - Pos ).LengthSq();
-	double cosThetaMax = sqrt( MAX( 0.0 , 1.0 - sinThetaMax2 ) );
+	float sinThetaMax2 = m_Radius * m_Radius / ( p - mWorldPos ).LengthSq();
+	float cosThetaMax = sqrt( MAX( 0.0 , 1.0 - sinThetaMax2 ) );
 
-	Ray r( p , UniformSampleCone( lightSample.value[0] , lightSample.value[1] , cosThetaMax , dirX , dirY , dirZ ) );
+	Rayf r( p , UniformSampleCone( lightSample.value[0] , lightSample.value[1] , cosThetaMax , dirX , dirY , dirZ ) );
 
 	// Test whether intersect
-	double t;
+	float t;
 	IntersectRecord record;
 	Point3f SamplePoint;
 	if( !Intersect( r , &record ) )
 	{
 		// 必定是切线但被判定为无交点
-		t = Dot( Pos - p , r.Direction );
+		t = Dot( mWorldPos - p , r.Direction );
 		SamplePoint = r( t );
 	}
 	else
@@ -219,21 +203,21 @@ Point3f Sphere::Sample( const Point3f& p , LightSample& lightSample , Normal& Sa
 		SamplePoint = record.HitPoint;
 	}
 	
-	SampleNormal = Normalize( SamplePoint - Pos );
+	SampleNormal = Normalize( SamplePoint - mWorldPos );
 
 	return SamplePoint;
 }
 
-double Sphere::GetRadius()
+float Sphere::GetRadius()
 {
 	return m_Radius;
 }
 
-void Sphere::SetRadius( double radius )
+void Sphere::SetRadius( float radius )
 {
 	m_Radius = radius;
 
 	BBoxLocal = Bound3f( Point3f( -m_Radius , -m_Radius , -m_Radius ) , Point3f( m_Radius , m_Radius , m_Radius ) );
 
-	BBoxWorld = ( *ObjectToWorld )( BBoxLocal );
+	BBoxWorld = ( *mObjectToWorld )( BBoxLocal );
 }

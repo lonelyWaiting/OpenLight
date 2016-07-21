@@ -1,67 +1,79 @@
 #ifndef VECTOR2_H
 #define VECTOR2_H
 
-class Point2f;
+#include "MathHelper.h"
 
-class Point3f;
+template<typename T>
+class Point2;
 
-class Vector2f
+template<typename T>
+class Point3;
+
+template<typename T>
+class Vector2
 {
 public:
-	Vector2f();
+	Vector2();
 
-	Vector2f( double _x , double _y );
+	Vector2( T _x , T _y );
 
-	explicit Vector2f( const Point2f &p );
+	explicit Vector2( const Point2<T> &p );
 
-	explicit Vector2f( const Point3f &p );
+	explicit Vector2( const Point3<T> &p );
 
-	Vector2f( const Vector2f &rhs );
+	Vector2( const Vector2 &rhs );
 
-	Vector2f& operator = ( const Vector2f &rhs );
+	Vector2& operator = ( const Vector2 &rhs );
 
-	Vector2f operator + ( const Vector2f& v ) const;
+	Vector2 operator + ( const Vector2& v ) const;
 
-	Vector2f& operator += ( const Vector2f& v );
+	Vector2& operator += ( const Vector2& v );
 
-	Vector2f operator - ( const Vector2f &v ) const;
+	Vector2 operator - ( const Vector2 &v ) const;
 
-	Vector2f& operator -= ( const Vector2f &v );
+	Vector2& operator -= ( const Vector2 &v );
 
-	bool operator == ( const Vector2f &v ) const;
+	bool operator == ( const Vector2 &v ) const;
 
-	bool operator != ( const Vector2f & v ) const;
+	bool operator != ( const Vector2 & v ) const;
 
-	Vector2f operator * ( const Vector2f& v ) const;
+	Vector2 operator * ( const Vector2& v ) const;
 
-	Vector2f operator* ( double f ) const;
+	Vector2 operator* ( T f ) const;
 
-	Vector2f& operator *= ( double f );
+	Vector2& operator *= ( T f );
 
-	Vector2f operator / ( double f ) const;
+	Vector2 operator / ( T f ) const;
 
-	Vector2f& operator /= ( double f );
+	Vector2& operator /= ( T f );
 
-	Vector2f operator - () const;
+	Vector2 operator - () const;
 
-	double& operator [] ( int index );
+	T& operator [] ( int index );
 
-	double LengthSq() const;
+	T LengthSq() const;
 
-	double Length() const;
-
-public:
-	friend Vector2f operator* ( double f , const Vector2f &v );
-
-	friend inline double Dot( const Vector2f &v1 , const Vector2f &v2 );
-
-	friend inline double AbsDot( const Vector2f &v1 , const Vector2f &v2 );
-
-	friend inline Vector2f Normalize( const Vector2f &v );
-
-	friend Vector2f Abs( const Vector2f &v );
+	T Length() const;
 
 public:
-	double x , y;
+	template<typename D>
+	friend Vector2<D> operator* ( D f , const Vector2<D> &v );
+
+	template<typename D>
+	friend D Dot( const Vector2<D> &v1 , const Vector2<D> &v2 );
+
+	template<typename D>
+	friend D AbsDot( const Vector2<D> &v1 , const Vector2<D> &v2 );
+
+	template<typename D>
+	friend Vector2<D> Normalize( const Vector2<D> &v );
+
+	template<typename D>
+	friend Vector2<D> Abs( const Vector2<D> &v );
+
+public:
+	T x , y;
 };
+
+#include "Vector2.inl"
 #endif

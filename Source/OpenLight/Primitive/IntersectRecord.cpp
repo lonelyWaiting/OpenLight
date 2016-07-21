@@ -2,6 +2,8 @@
 #include "Primitive/Primitive.h"
 #include "Light/Light.h"
 #include "IntersectRecord.h"
+#include "Math/Vector2.h"
+#include "Math/Transform.h"
 
 BSDF* IntersectRecord::GetBSDF()
 {

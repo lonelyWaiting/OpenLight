@@ -1,28 +1,31 @@
 #include "Utilities/PCH.h"
-#include "Math/Vector2.h"
 #include "Sampling.h"
+#include "Math/Vector2.h"
+#include "Math/Vector3.h"
+#include "Math/Point2.h"
+#include "Math/Point3.h"
 
 Vector3f UniformSampleHemisphere( const Point2f& u )
 {
-	double z = u[0];
+	float z = u[0];
 
-	double r = std::sqrt( std::max( ( double )9 , ( double )1 - z * z ) );
+	float r = std::sqrt( srMath::Max( ( float )9 , ( float )1 - z * z ) );
 
-	double phi = 2 * PI * u[1];
+	float phi = 2 * PI * u[1];
 
 	return Vector3f( r * std::cos( phi ) , r * std::sin( phi ) , z );
 }
 
 Point2f ConcentricSampleDisk( const Point2f& u )
 {
-	Point2f SamplePoint = 2 * u - Vector2f( 1.0f , 1.0f );
+	Point2f SamplePoint = 2.0f * u - Vector2f( 1.0f , 1.0f );
 
 	if( SamplePoint.x == 0 && SamplePoint.y == 0 )
 	{
 		return Point2f( 0.0f , 0.0f );
 	}
 
-	double r , phi;
+	float r , phi;
 
 	if( SamplePoint.x > -SamplePoint.y )
 	{
@@ -61,59 +64,59 @@ Vector3f CosineSampleHemisphere( const Point2f& u )
 {
 	Point2f SamplePoint = ConcentricSampleDisk( u );
 
-	double z = std::sqrt( std::max( double( 0 ) , 1 - SamplePoint.x * SamplePoint.x - SamplePoint.y * SamplePoint.y ) );
+	float z = std::sqrt( srMath::Max( float( 0 ) , 1 - SamplePoint.x * SamplePoint.x - SamplePoint.y * SamplePoint.y ) );
 
 	return Vector3f( SamplePoint.x , SamplePoint.y , z );
 }
 
-Vector3f DensitySampleHemisphere( const Point2f& u , double e )
+Vector3f DensitySampleHemisphere( const Point2f& u , float e )
 {
-	double CosPhi = std::cos( 2.0f * PI * u.x );
+	float CosPhi = std::cos( 2.0f * PI * u.x );
 
-	double SinPhi = std::sin( 2.0f * PI * u.x );
+	float SinPhi = std::sin( 2.0f * PI * u.x );
 
-	double CosTheta = pow( ( 1.0f - u.y ) , 1.0f / ( e + 1 ) );
+	float CosTheta = pow( ( 1.0f - u.y ) , 1.0f / ( e + 1 ) );
 
-	double SinTheta = sqrt( 1.0f - CosTheta * CosTheta );
+	float SinTheta = sqrt( 1.0f - CosTheta * CosTheta );
 
 	return Vector3f( SinTheta * CosPhi , SinTheta * SinPhi , CosTheta );
 }
 
-Vector3f UniformSampleSphere( double u1 , double u2 )
+Vector3f UniformSampleSphere( float u1 , float u2 )
 {
-	double z = 1.0f - 2.0f * u1;
+	float z = 1.0f - 2.0f * u1;
 
-	double r = sqrt( MAX( 0.0f , 1.0f - z * z ) );
+	float r = sqrt( MAX( 0.0f , 1.0f - z * z ) );
 
-	double phi = 2.0f * PI * u2;
+	float phi = 2.0f * PI * u2;
 
-	double x = r * cos( phi );
+	float x = r * cos( phi );
 
-	double y = r * sin( phi );
+	float y = r * sin( phi );
 
 	return Vector3f( x , y , z );
 }
 
-Vector3f UniformSampleCone( double u1 , double u2 , double cosThetaMax , const Vector3f& x , const Vector3f& y , const Vector3f& z )
+Vector3f UniformSampleCone( float u1 , float u2 , float cosThetaMax , const Vector3f& x , const Vector3f& y , const Vector3f& z )
 {
-	double CosTheta = Lerp( u1 , cosThetaMax , 1.0f );
-	double SinTheta = sqrt( 1.0f - CosTheta *CosTheta );
-	double Phi = u2 * 2.0f * PI;
+	float CosTheta = Lerp( u1 , cosThetaMax , 1.0f );
+	float SinTheta = sqrt( 1.0f - CosTheta *CosTheta );
+	float Phi = u2 * 2.0f * PI;
 
 	return cos( Phi ) * SinTheta * x + sin( Phi ) * SinTheta * y + CosTheta * z;
 }
 
-double UniformConePDF( double cosThetaMax )
+float UniformConePDF( float cosThetaMax )
 {
 	return 1.0f / ( 2.0f * PI * ( 1.0f - cosThetaMax ) );
 }
 
-double UniformSpherePDF()
+float UniformSpherePDF()
 {
 	return 1.0f / ( 4.0f * PI );
 }
 
-double UniformHemisphere()
+float UniformHemisphere()
 {
 	return 1.0f / ( 2.0f * PI );
 }
@@ -125,7 +128,7 @@ Point2f MapUnitSquareToUnitDisk( const Point2f& UnitSquareSamplePoint )
 	UnitDiskSamplePoint.x = 2.0f * UnitSquareSamplePoint.x - 1.0f;
 	UnitDiskSamplePoint.y = 2.0f * UnitSquareSamplePoint.y - 1.0f;
 
-	double r , phi;
+	float r , phi;
 
 	if( UnitDiskSamplePoint.x > -UnitDiskSamplePoint.y )
 	{
@@ -163,15 +166,15 @@ Point2f MapUnitSquareToUnitDisk( const Point2f& UnitSquareSamplePoint )
 	return UnitDiskSamplePoint;
 }
 
-Point3f MapUnitSquareToHemisphere( const Point2f& UnitSquareSamplePoint , double exp /*= 0*/ )
+Point3f MapUnitSquareToHemisphere( const Point2f& UnitSquareSamplePoint , float exp /*= 0*/ )
 {
 	Point3f HemisphereSamplePoint;
 
-	double CosPhi            = cos( TWO_PI * UnitSquareSamplePoint.x );
-	double SinPhi            = sin( TWO_PI * UnitSquareSamplePoint.x );
+	float CosPhi            = cos( TWO_PI * UnitSquareSamplePoint.x );
+	float SinPhi            = sin( TWO_PI * UnitSquareSamplePoint.x );
 
-	double CosTheta          = pow( 1.0f - UnitSquareSamplePoint.y , 1.0f / ( exp + 1.0f ) );
-	double SinTheta          = sqrt( 1.0f - CosTheta * CosTheta );
+	float CosTheta          = pow( 1.0f - UnitSquareSamplePoint.y , 1.0f / ( exp + 1.0f ) );
+	float SinTheta          = sqrt( 1.0f - CosTheta * CosTheta );
 
 	HemisphereSamplePoint.x = SinTheta * CosPhi;
 	HemisphereSamplePoint.y = SinTheta * SinPhi;
@@ -184,12 +187,12 @@ Point3f MapUnitSquareToSphere( const Point2f& UnitSquareSamplePoint )
 {
 	Point3f SphereSamplePoint;
 
-	double r1 = UnitSquareSamplePoint.x;
-	double r2 = UnitSquareSamplePoint.y;
+	float r1 = UnitSquareSamplePoint.x;
+	float r2 = UnitSquareSamplePoint.y;
 
 	SphereSamplePoint.z = 1.0f - 2.0f * r1;			// z的范围为-1 ， 1
-	double r = sqrt( 1.0f - SphereSamplePoint.z * SphereSamplePoint.z );
-	double phi = TWO_PI * r2;						// phi的范围为0 ， 1
+	float r = sqrt( 1.0f - SphereSamplePoint.z * SphereSamplePoint.z );
+	float phi = TWO_PI * r2;						// phi的范围为0 ， 1
 
 	SphereSamplePoint.x = r * cos( phi );
 	SphereSamplePoint.y = r * sin( phi );

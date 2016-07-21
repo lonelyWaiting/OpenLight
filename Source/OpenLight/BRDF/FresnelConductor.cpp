@@ -9,9 +9,9 @@ FresnelConductor::FresnelConductor( const Spectrum& etaI , const Spectrum& etaT 
 
 }
 
-Spectrum FresnelConductor::Evalute( double cosThetaI ) const
+Spectrum FresnelConductor::Evalute( float cosThetaI ) const
 {
-	double AbsCosThetaI = std::abs( cosThetaI );
+	float AbsCosThetaI = std::abs( cosThetaI );
 
 	return FresnelDieletricIntoConductor( AbsCosThetaI , etaI , etaT , k );
 }

@@ -22,7 +22,7 @@ void DiffuseMaterial::SetKd( Texture* kd )
 	Kd = kd;
 }
 
-BSDF* DiffuseMaterial::GetBSDF( const Vector2f& uv , const Point3f& point , const Normal& normal ) const
+BSDF* DiffuseMaterial::GetBSDF( const Vector2f& uv , const Point3f& point , const Vector3f& normal ) const
 {
 	BSDF* bsdf = new BSDF();
 

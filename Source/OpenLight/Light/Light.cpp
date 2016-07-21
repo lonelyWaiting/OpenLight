@@ -19,7 +19,7 @@ Light::Light( const Transform& _LightToWorld , int _nSamples )
 
 }
 
-Spectrum Light::Le( const Point3f& p , const Normal& n , const Vector3f& wo ) const
+Spectrum Light::Le( const Point3f& p , const Vector3f& n , const Vector3f& wo ) const
 {
 	return Spectrum( 0 );
 }
