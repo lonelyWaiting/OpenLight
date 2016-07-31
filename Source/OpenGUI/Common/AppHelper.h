@@ -1,7 +1,6 @@
 #ifndef D3DUTIL_H
 #define D3DUTIL_H
 
-
 #if defined(DEBUG) || defined(_DEBUG)
 #define _CRTDBG_MAP_ALLOC
 #include <crtdbg.h>
@@ -63,8 +62,6 @@
 	#define HR(x) (x)
 	#endif
 #endif 
-
-
 
 #define ReleaseCOM(x)	{ if(x) { x->Release(); x = 0; } }
 

@@ -99,19 +99,19 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Application\GUI.cpp" />
-    <ClCompile Include="Application\imgui_impl_dx11.cpp" />
-    <ClCompile Include="Application\imgui_impl_dx9.cpp" />
+    <ClCompile Include="Application\App.cpp" />
     <ClCompile Include="Application\main.cpp" />
-    <ClCompile Include="Common\d3dApp.cpp" />
-    <ClCompile Include="Common\d3dUtil.cpp" />
+    <ClCompile Include="Application\VShaderHelper.cpp" />
+    <ClCompile Include="Common\BaseApp.cpp" />
+    <ClCompile Include="Editor.cpp" />
+    <ClCompile Include="ImModule.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application\GUI.h" />
-    <ClInclude Include="Application\imgui_impl_dx11.h" />
-    <ClInclude Include="Application\imgui_impl_dx9.h" />
-    <ClInclude Include="Common\d3dApp.h" />
-    <ClInclude Include="Common\d3dUtil.h" />
+    <ClInclude Include="Application\App.h" />
+    <ClInclude Include="Common\BaseApp.h" />
+    <ClInclude Include="Common\AppHelper.h" />
+    <ClInclude Include="Editor.h" />
+    <ClInclude Include="ImModule.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\DebugTexturePixelShader.hlsl">

@@ -10,42 +10,45 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{e55e0009-2893-44c9-84bd-e4e0c4dcb169}</UniqueIdentifier>
     </Filter>
+    <Filter Include="imgui">
+      <UniqueIdentifier>{476041ab-e3c6-4a9a-b8de-0d05fde667cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Application\imgui_impl_dx9.cpp">
-      <Filter>Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\imgui_impl_dx11.cpp">
-      <Filter>Application</Filter>
-    </ClCompile>
     <ClCompile Include="Application\main.cpp">
       <Filter>Application</Filter>
     </ClCompile>
-    <ClCompile Include="Common\d3dApp.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\d3dUtil.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\GUI.cpp">
+    <ClCompile Include="Application\App.cpp">
       <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\VShaderHelper.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\BaseApp.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="ImModule.cpp">
+      <Filter>imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application\imgui_impl_dx9.h">
+    <ClInclude Include="Application\App.h">
       <Filter>Application</Filter>
     </ClInclude>
-    <ClInclude Include="Application\imgui_impl_dx11.h">
-      <Filter>Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\d3dApp.h">
+    <ClInclude Include="Common\BaseApp.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Common\d3dUtil.h">
+    <ClInclude Include="Common\AppHelper.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Application\GUI.h">
+    <ClInclude Include="Editor.h">
       <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="ImModule.h">
+      <Filter>imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
