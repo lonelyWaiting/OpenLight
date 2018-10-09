@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -14,20 +14,20 @@
     <ProjectGuid>{6DE0D16E-EEC2-4BBC-85B6-B44E5742EF6E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>OpenGUI</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -52,7 +52,7 @@
     <LinkIncremental>false</LinkIncremental>
     <CustomBuildAfterTargets>Run</CustomBuildAfterTargets>
     <IncludePath>$(ProjectDir);$(IncludePath)</IncludePath>
-    <OutDir>$(SolutionDir)Bin\$(Configuration)</OutDir>
+    <OutDir>$(SolutionDir)Bin\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -68,11 +68,14 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)Library\Lib\DirectXTK\$(Configuration)\;$(SolutionDir)Library\Lib\ImGui\$(Configuration)\;$(SolutionDir)Bin\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OpenLight.lib;DirectXTK.lib;ImGui.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;d3d9.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OpenLight.lib;DirectXTK.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;d3d9.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
       <ObjectFileOutput>$(SolutionDir)Resource\CSO\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
+    <PostBuildEvent>
+      <Command>xcopy $(SolutionDir)Library\Lib\FreeImage\FreeImage.dll $(SolutionDir)Bin\$(Configuration)\ /y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -91,34 +94,55 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OpenLight.lib;DirectXTK.lib;ImGui.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;d3d9.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Library\Lib\DirectXTK\$(Configuration)\;$(SolutionDir)Library\Lib\ImGui\$(Configuration)\;$(SolutionDir)Bin\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OpenLight.lib;DirectXTK.lib;d3d11.lib;d3dcompiler.lib;dxgi.lib;d3d9.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Library\Lib\DirectXTK\$(Configuration)\;$(SolutionDir)Bin\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <FxCompile>
       <ObjectFileOutput>$(SolutionDir)Resource\CSO\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
+    <PostBuildEvent>
+      <Command>xcopy $(SolutionDir)Library\Lib\FreeImage\FreeImage.dll $(SolutionDir)Bin\$(Configuration)\ /y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Library\Inc\ImGui\imgui.cpp" />
+    <ClCompile Include="..\..\Library\Inc\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="..\..\Library\Inc\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="..\..\Library\Inc\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="Application\App.cpp" />
     <ClCompile Include="Application\main.cpp" />
     <ClCompile Include="Application\VShaderHelper.cpp" />
     <ClCompile Include="CameraEditor.cpp" />
     <ClCompile Include="Common\BaseApp.cpp" />
     <ClCompile Include="Editor.cpp" />
+    <ClCompile Include="imguiDx11.cpp" />
+    <ClCompile Include="imguiWin32.cpp" />
     <ClCompile Include="ImModule.cpp" />
     <ClCompile Include="MaterialEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Library\Inc\ImGui\imconfig.h" />
+    <ClInclude Include="..\..\Library\Inc\ImGui\imgui.h" />
+    <ClInclude Include="..\..\Library\Inc\ImGui\imgui_internal.h" />
+    <ClInclude Include="..\..\Library\Inc\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="..\..\Library\Inc\ImGui\imstb_textedit.h" />
+    <ClInclude Include="..\..\Library\Inc\ImGui\imstb_truetype.h" />
+    <ClInclude Include="..\..\Library\Inc\ImGui\stb_rect_pack.h" />
+    <ClInclude Include="..\..\Library\Inc\ImGui\stb_textedit.h" />
+    <ClInclude Include="..\..\Library\Inc\ImGui\stb_truetype.h" />
     <ClInclude Include="Application\App.h" />
     <ClInclude Include="CameraEditor.h" />
     <ClInclude Include="Common\AssetViewer.h" />
     <ClInclude Include="Common\BaseApp.h" />
     <ClInclude Include="Common\AppHelper.h" />
     <ClInclude Include="Editor.h" />
+    <ClInclude Include="imguiDx11.h" />
+    <ClInclude Include="imguiWin32.h" />
     <ClInclude Include="ImModule.h" />
     <ClInclude Include="MaterialEditor.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Library\Inc\ImGui\.travis.yml" />
     <None Include="Shader\DebugTexturePixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
@@ -138,6 +162,9 @@
     <ProjectReference Include="..\OpenLight\OpenLight.vcxproj">
       <Project>{6ae3c859-8241-41c0-9e73-c3b5e5a2241e}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\..\Library\Inc\ImGui\misc\natvis\imgui.natvis" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

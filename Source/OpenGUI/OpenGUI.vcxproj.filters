@@ -42,6 +42,12 @@
     <ClCompile Include="CameraEditor.cpp">
       <Filter>Editor</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Library\Inc\ImGui\imgui.cpp" />
+    <ClCompile Include="..\..\Library\Inc\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="..\..\Library\Inc\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="..\..\Library\Inc\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="imguiDx11.cpp" />
+    <ClCompile Include="imguiWin32.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\App.h">
@@ -68,6 +74,17 @@
     <ClInclude Include="Common\AssetViewer.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Library\Inc\ImGui\imconfig.h" />
+    <ClInclude Include="..\..\Library\Inc\ImGui\imgui.h" />
+    <ClInclude Include="..\..\Library\Inc\ImGui\imgui_internal.h" />
+    <ClInclude Include="..\..\Library\Inc\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="..\..\Library\Inc\ImGui\imstb_textedit.h" />
+    <ClInclude Include="..\..\Library\Inc\ImGui\imstb_truetype.h" />
+    <ClInclude Include="..\..\Library\Inc\ImGui\stb_rect_pack.h" />
+    <ClInclude Include="..\..\Library\Inc\ImGui\stb_textedit.h" />
+    <ClInclude Include="..\..\Library\Inc\ImGui\stb_truetype.h" />
+    <ClInclude Include="imguiDx11.h" />
+    <ClInclude Include="imguiWin32.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\DebugTextureVertexShader.hlsl">
@@ -76,5 +93,9 @@
     <None Include="Shader\DebugTexturePixelShader.hlsl">
       <Filter>Shader</Filter>
     </None>
+    <None Include="..\..\Library\Inc\ImGui\.travis.yml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\..\Library\Inc\ImGui\misc\natvis\imgui.natvis" />
   </ItemGroup>
 </Project>

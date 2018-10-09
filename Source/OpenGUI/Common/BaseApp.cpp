@@ -102,6 +102,8 @@ int BaseApp::Run()
 			ImNewFrame();
 			Update( 0 );
 			Render();
+			ImRenderDrawData();
+			mSwapChain->Present(1, 0);
 		}
 	}
 
@@ -202,11 +204,7 @@ HRESULT BaseApp::MsgProc( HWND hwnd , UINT msg , WPARAM wParam , LPARAM lParam )
 					}
 					else
 					{
-						ImInvalidateDeviceObjects();
-
 						OnResize();
-
-						ImCreateDeviceObjects();
 					}
 				}
 			}

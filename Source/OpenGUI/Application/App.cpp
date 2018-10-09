@@ -143,8 +143,6 @@ void MyApp::Render()
 	RenderToQuad( &mRTSRV );
 
 	ImGui::Render();
-
-	HR( mSwapChain->Present( 0 , 0 ) );
 }
 
 void MyApp::RenderToQuad( ID3D11ShaderResourceView* const * srv )
