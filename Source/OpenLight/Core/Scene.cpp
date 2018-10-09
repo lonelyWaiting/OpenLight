@@ -2,18 +2,29 @@
 #include "tinyxml2.h"
 #include "Scene.h"
 #include "Texture/ConstantEnvironment.h"
+#include "Renderer/Renderer.h"
 
 Scene::Scene()
 {
+	mCameraPtr = nullptr;
 
+	mRendererPtr = nullptr;
+
+	mSurfaceIntegratorPtr = nullptr;
+
+	mSamplerPtr = nullptr;
+
+	mEnvironmentPtr = nullptr;
+
+	InitRTTI();
 }
 
-void Scene::AddObject( Primitive& prim )
+void Scene::AddEntity( Primitive* prim )
 {
-	Objects.push_back( prim );
+	mEntityList.push_back( prim );
 
-	BBoxLocal.ExpendToInclude( prim.GetObjectBoundingBox() );
-	BBoxWorld.ExpendToInclude( prim.GetWorldBoundingBox() );
+	BBoxLocal.ExpendToInclude( prim->GetObjectBoundingBox() );
+	BBoxWorld.ExpendToInclude( prim->GetWorldBoundingBox() );
 }
 
 void Scene::AddLight( Light* light )
@@ -23,7 +34,42 @@ void Scene::AddLight( Light* light )
 		return;
 	}
 
-	lights.push_back( light );
+	mLightList.push_back( light );
+}
+
+void Scene::AddEnvironment( Environment* pEnvironment )
+{
+	mEnvironmentPtr = pEnvironment;
+}
+
+SurfaceIntegrator* Scene::GetSurfaceIntegrator() const
+{
+	return mSurfaceIntegratorPtr;
+}
+
+Camera* Scene::GetCamera() const
+{
+	return mCameraPtr;
+}
+
+Renderer* Scene::GetRenderer() const
+{
+	return mRendererPtr;
+}
+
+Environment* Scene::GetEnvironmentPtr() const
+{
+	return mEnvironmentPtr;
+}
+
+Light* Scene::GetLight( unsigned int index ) const
+{
+	return mLightList[index];
+}
+
+Primitive* Scene::GetEntity( unsigned int index ) const
+{
+	return mEntityList[index];
 }
 
 bool Scene::Intersect( const Rayf& ray , IntersectRecord* record ) const
@@ -32,9 +78,9 @@ bool Scene::Intersect( const Rayf& ray , IntersectRecord* record ) const
 
 	Rayf r( ray.Origin , ray.Direction , ray.MinT , ray.MaxT , ray.time , ray.depth );
 
-	for( unsigned int i = 0; i < Objects.size(); i++ )
+	for( unsigned int i = 0; i < mEntityList.size(); i++ )
 	{
-		if( Objects[i].Intersect( r , record ) )
+		if( mEntityList[i]->Intersect( r , record ) )
 		{
 			bHit = true;
 		}
@@ -43,93 +89,83 @@ bool Scene::Intersect( const Rayf& ray , IntersectRecord* record ) const
 	return bHit;
 }
 
-const std::vector<Light*>& Scene::GetLights() const
+void Scene::RemoveScene()
 {
-	return lights;
-}
+	// ------------------------Environment----------------------------------
+	SAFE_DELETE( mEnvironmentPtr );
 
-void Scene::Deserialization( tinyxml2::XMLElement* RootElement )
-{
-	tinyxml2::XMLElement* pEnvironmentElement = RootElement->FirstChildElement( "Environment" );
-	if( pEnvironmentElement )
+	// -------------------------Primitive-----------------------------------
 	{
-		pEnvironment = Environment::Create( pEnvironmentElement->Attribute( "type" ) );
-		pEnvironment->Deserialization( pEnvironmentElement );
-	}
-	else
-	{
-		pEnvironment = new ConstantEnvironment;
-	}
+		auto it = mEntityList.begin();
 
-	tinyxml2::XMLElement* PrimitiveElement = RootElement->FirstChildElement( "primitive" );
-	while( PrimitiveElement )
-	{
-		Primitive* primitive = new Primitive;
-		Assert( primitive != nullptr );
-		primitive->Deserialization( PrimitiveElement );
-		AddObject( *primitive );
-		AddLight( primitive->GetAreaLight() );
-		PrimitiveElement = PrimitiveElement->NextSiblingElement( "primitive" );
-	}
-}
-
-void Scene::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement )
-{
-	{
-		tinyxml2::XMLElement* pEnvironmentElement = xmlDoc.NewElement( "Environment" );
-		
-		pEnvironment->Serialization( xmlDoc , pEnvironmentElement );
-
-		pRootElement->InsertEndChild( pEnvironmentElement );
-	}
-	
-	
-	for( auto& object : Objects )
-	{
-		tinyxml2::XMLElement* pElement = xmlDoc.NewElement( "primitive" );
-
-		pRootElement->InsertEndChild( pElement );
-
-		object.Serialization( xmlDoc , pElement );
-	}
-
-	for( auto& light : lights )
-	{
-		if( !strcmp( light->GetName() , "AreaLight" ) )
+		while( it != mEntityList.end() )
 		{
-			// AreaLight只会挂接在Primitive下，由Primitive序列化
-			continue;
+			SAFE_DELETE( *it );
+			it = mEntityList.erase( it );
 		}
+	}
 
-		tinyxml2::XMLElement* pElement = xmlDoc.NewElement( "light" );
+	// -------------------------Light---------------------------------------
+	{
+		auto it = mLightList.begin();
 
-		pRootElement->InsertEndChild( pElement );
+		while( it != mLightList.end() )
+		{
+			SAFE_DELETE( *it );
+			it = mLightList.erase( it );
+		}
+	}
 
-		light->Serialization( xmlDoc , pElement );
+	// ------------------------Camera--------------------------------------
+	{
+		SAFE_DELETE( mCameraPtr );
+	}
+
+	// -------------------------Integrator-------------------------------
+	{
+		SAFE_DELETE( mSurfaceIntegratorPtr );
+	}
+
+	// --------------------------Renderer-------------------------------
+	{
+		SAFE_DELETE( mRendererPtr );
+	}
+
+	// --------------------------Sampler-------------------------------
+	{
+		SAFE_DELETE( mSamplerPtr );
 	}
 }
 
-int Scene::GetObjectCount() const
+int Scene::GetEntityCount() const
 {
-	return Objects.size();
+	return mEntityList.size();
 }
 
-const Primitive& Scene::GetPrimitive( int index ) const
+int Scene::GetLightCount() const
 {
-	return Objects[index];
+	return mLightList.size();
 }
 
-Light* Scene::GetLight( int index ) const
+bool Scene::Render()
 {
-	return lights[index];
+	return mRendererPtr ? mRendererPtr->Render(this) : false;
 }
 
-Environment* Scene::GetEnvironmentPtr() const
-{
-	return pEnvironment;
-}
+#include "Camera/Camera.h"
+#include "Film/Film.h"
 
-void Scene::AddEnvironment( Environment* _pEnvironment )
+const void* Scene::GetFilmData(Vector2f& size)
 {
-	pEnvironment = _pEnvironment;
+	if (!mCameraPtr)	return nullptr;
+
+	Film* film = mCameraPtr->GetFilm();
+	if (!film)	return nullptr;
+
+	Image* image = film->GetImage();
+	if (!image)	return nullptr;
+
+	size = film->GetResolution();
+
+	return image->GetData();
 }

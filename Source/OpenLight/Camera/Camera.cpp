@@ -35,6 +35,11 @@ Point3f Camera::GetCameraPosition() const
 	return Eye;
 }
 
+Vector3f Camera::GetViewDir() const
+{
+	return Target - Eye;
+}
+
 float Camera::GetExposureTime() const
 {
 	return ExposureTime;

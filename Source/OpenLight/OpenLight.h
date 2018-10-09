@@ -1,4 +1,6 @@
-#pragma once
+#ifndef OPEN_LIGHT_H
+#define OPEN_LIGHT_H
+
 #include <Core/Scene.h>
 
 #include <Math/Transform.h>
@@ -50,8 +52,9 @@
 #include <Texture/ConstantEnvironment.h>
 #include <Texture/HDREnvironment.h>
 
-Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrator*& pSurfaceIntegrator , Sampler*& pSampler );
+namespace OpenLight
+{
+	extern Scene scene;
+};
 
-void SerializationScene( Scene* scene , Camera* camera , SurfaceIntegrator* pSurfaceIntegrator , Sampler* pSampler , Renderer* pRenderer );
-
-bool InitRTTI();
+#endif

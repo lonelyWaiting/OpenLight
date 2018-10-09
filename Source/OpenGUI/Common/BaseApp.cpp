@@ -14,6 +14,7 @@
 #include "fcntl.h"
 
 #include "ImModule.h"
+#include "AssetViewer.h"
 
 namespace
 {
@@ -246,6 +247,26 @@ HRESULT BaseApp::MsgProc( HWND hwnd , UINT msg , WPARAM wParam , LPARAM lParam )
 			( ( MINMAXINFO* )lParam )->ptMinTrackSize.y = 200;
 			return 0;
 		}
+
+		case WM_DROPFILES:
+		{
+			HDROP hDrop = ( HDROP )( wParam );
+			TCHAR lpszFile[MAX_PATH];
+
+			UINT nCount = DragQueryFile( hDrop , 0xFFFFFFFF , NULL , 0 );
+
+			for( UINT i = 0; i < nCount; i++ )
+			{
+				if( DragQueryFile( hDrop , i , lpszFile , MAX_PATH ) > 0 )
+				{
+					AssetViewer::LoadAsset( lpszFile );
+				}
+			}
+
+			DragFinish( hDrop );
+
+			return 0;
+		}
 	}
 
 	return DefWindowProc( hwnd , msg , wParam , lParam );
@@ -263,7 +284,7 @@ bool BaseApp::InitMainWindow()
 	wc.hCursor = LoadCursor( 0 , IDC_ARROW );
 	wc.hbrBackground = ( HBRUSH )GetStockObject( NULL_BRUSH );
 	wc.lpszMenuName = 0;
-	wc.lpszClassName = TEXT( "D3DWndClassName" );
+	wc.lpszClassName = TEXT( "OpenLight" );
 
 	if( !RegisterClass( &wc ) )
 	{
@@ -271,14 +292,15 @@ bool BaseApp::InitMainWindow()
 		return false;
 	}
 
-	mhMainWnd = CreateWindow( TEXT( "D3DWndClassName" ) ,
-							  mMainWndCaption.c_str() ,
-							  WS_OVERLAPPEDWINDOW ,
-							  CW_USEDEFAULT , CW_USEDEFAULT ,
-							  mClientWidth , mClientHeight ,
-							  0 , 0 ,
-							  mhAppInst ,
-							  0 );
+	mhMainWnd = CreateWindowEx( WS_EX_ACCEPTFILES ,
+								_T( "OpenLight" ) ,
+								mMainWndCaption.c_str() ,
+								WS_OVERLAPPEDWINDOW ,
+								CW_USEDEFAULT , CW_USEDEFAULT ,
+								mClientWidth , mClientHeight ,
+								0 , 0 ,
+								mhAppInst ,
+								0 );
 	if( !mhMainWnd )
 	{
 		MessageBox( NULL , TEXT( "Create Window Failed." ) , TEXT( "ERROR" ) , MB_OK );

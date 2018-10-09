@@ -1,5 +1,9 @@
 ﻿#include "Editor.h"
 #include "imgui.h"
+#include <windows.h>
+#include <commdlg.h>
+#include <string>
+#include "OpenLight.h"
 
 EditorStyle s = ES_MATERIAL;
 
@@ -89,9 +93,63 @@ void SetupImStyle( bool bStyleDark , float alpha )
 	}
 }
 
+std::string OpenFile( LPCSTR lpStrFilter )
+{
+	char filename[MAX_PATH] = "";
+
+	OPENFILENAMEA ofn;
+	ZeroMemory( &ofn , sizeof( ofn ) );
+	ofn.lStructSize = sizeof( ofn );
+	ofn.hwndOwner = NULL;
+	ofn.lpstrFile = filename;
+	ofn.nMaxFile = MAX_PATH;
+	ofn.lpstrFilter = lpStrFilter;
+	ofn.nFilterIndex = 1;
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+	std::string fileNameStr;
+
+	if( GetOpenFileNameA( &ofn ) )
+	{
+		fileNameStr = filename;
+	}
+
+	return fileNameStr;
+}
+
+std::string SaveFile(LPCSTR lpStrFilter)
+{
+	char filename[MAX_PATH] = "";
+
+	OPENFILENAMEA ofn;
+	ZeroMemory(&ofn, sizeof(ofn));
+	ofn.lStructSize  = sizeof(ofn);
+	ofn.hwndOwner    = NULL;
+	ofn.lpstrFile    = filename;
+	ofn.nMaxFile     = MAX_PATH;
+	ofn.lpstrFilter  = lpStrFilter;
+	ofn.nFilterIndex = 1;
+	ofn.Flags        = OFN_PATHMUSTEXIST;
+
+	return GetSaveFileNameA(&ofn) ? filename : "";
+}
+
 void Editor()
 {
 	ImGui::Begin( "Editor" );
+
+	if( ImGui::Button( "Save" ) )
+	{
+		std::string Path = SaveFile( "Scene File\0*.xml;*.scene\0" );
+		OpenLight::scene.Serialization( Path.c_str() );
+	}
+
+	ImGui::SameLine();
+	if (ImGui::Button("Open"))
+	{
+		std::string Path = OpenFile("Scene File\0*.xml;*.scene\0");
+		OpenLight::scene.Deserialization(Path.c_str());
+	}
 
 	if( ImGui::RadioButton( "Material" , s == ES_MATERIAL ? true : false ) )
 	{

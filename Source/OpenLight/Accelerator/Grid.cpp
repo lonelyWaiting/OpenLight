@@ -11,16 +11,16 @@ void Grid::Setup( const Scene* scene )
 
 	Bound3f SceneBBox = scene->GetWorldBoundingBox();
 
-	int ObjectCount = scene->GetObjectCount();
+	int ObjectCount = scene->GetEntityCount();
 
 	int Count = 0;
 
 	// 目前不支持组合形状下挂接组合形状
 	for( int i = 0; i < ObjectCount; i++ )
 	{
-		Primitive primitive = scene->GetPrimitive( i );
+		Primitive* primitive = scene->GetEntity( i );
 
-		Count += primitive.GetShapeCount();
+		Count += primitive->GetShapeCount();
 	}
 
 	// 计算scene bounding box沿着x , y , z轴的长度
@@ -57,11 +57,11 @@ void Grid::Setup( const Scene* scene )
 
 	for( int i = 0; i < ObjectCount; i++ )
 	{
-		Primitive primitive = scene->GetPrimitive( i );
+		Primitive* primitive = scene->GetEntity( i );
 
-		for( int j = 0; j < primitive.GetShapeCount(); j++ )
+		for( int j = 0; j < primitive->GetShapeCount(); j++ )
 		{
-			Shape* shape = primitive.GetShape( j );
+			Shape* shape = primitive->GetShape( j );
 
 			BBox = shape->GetWorldBoundingBox();
 

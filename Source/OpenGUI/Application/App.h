@@ -23,7 +23,7 @@ private:
 
 	bool InitShader();
 public:
-	void ResizeRT( int width , int height );
+	void ResizeRT(int width, int height, const float* data);
 
 private:
 	ID3D11Buffer* ScreenVertexBuffer;

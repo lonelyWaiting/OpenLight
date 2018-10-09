@@ -7,8 +7,6 @@ class PPMImage : public Image
 public:
 	PPMImage( char* filename , int width , int height );
 
-	~PPMImage();
-
 public:
 	virtual void SetColor( int row , int col , Spectrum spectrum );
 
@@ -20,7 +18,4 @@ public:
 
 protected:
 	PPMImage();
-
-private:
-	Spectrum* data;
 };

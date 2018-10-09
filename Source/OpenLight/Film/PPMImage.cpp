@@ -5,12 +5,6 @@
 PPMImage::PPMImage( char* filename , int width , int height )
 	:Image( filename , width , height )
 {
-	data = new Spectrum[Width * height];
-}
-
-PPMImage::~PPMImage()
-{
-	SAFE_DELETE_ARRAY( data );
 }
 
 void PPMImage::SetColor( int row , int col , Spectrum spectrum )
@@ -86,6 +80,7 @@ void PPMImage::Display()
 
 	clock_t end = clock();
 	float t = ( float )( end - start ) / CLOCKS_PER_SEC;
+	printf("\nOutput Render Result: %s", Filename);
 	printf( "\nWriting time: %fs.\n" , t );
 	Log::Get().Info( "\nWriting time: %fs.\n" , t );
 }

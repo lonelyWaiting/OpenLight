@@ -10,6 +10,7 @@
 #include <imgui.h>
 
 #include "Editor.h"
+#include "OpenLight.h"
 
 struct Vertex
 {
@@ -51,9 +52,11 @@ bool MyApp::Init()
 
 	if( !InitShader() )	return false;
 
-	ResizeRT( mClientWidth , mClientHeight );
+	ResizeRT(mClientWidth, mClientHeight, nullptr);
 
 	SetupImStyle( true , 0.5f );
+
+	OpenLight::scene.InitRTTI();
 
 	return true;
 }
@@ -115,32 +118,6 @@ void MyApp::OnResize()
 
 void MyApp::Update( float dt )
 {
-	D3D11_MAPPED_SUBRESOURCE MapData;
-	if( FAILED( md3dImmediateContext->Map( mRTResource , 0 , D3D11_MAP_WRITE_DISCARD , 0 , &MapData ) ) )
-	{
-		return;
-	}
-
-	float* pData = reinterpret_cast< float* >( MapData.pData );
-
-	int RowPitch = MapData.RowPitch;
-
-	D3D11_TEXTURE2D_DESC desc;
-	mRTResource->GetDesc( &desc );
-
-	for( int irow = 0; irow < desc.Height; irow++ )
-	{
-		for( int icol = 0; icol < desc.Width; icol++ )
-		{
-			pData[icol * 4 + 0] = 1.0f;
-			pData[icol * 4 + 1] = 1.0f;
-			pData[icol * 4 + 2] = ( float )rand() / RAND_MAX;
-			pData[icol * 4 + 3] = 0.5f;
-		}
-
-		pData += RowPitch / sizeof( float );
-	}
-	md3dImmediateContext->Unmap( mRTResource , 0 );
 }
 
 void MyApp::Render()
@@ -154,6 +131,14 @@ void MyApp::Render()
 	md3dImmediateContext->RSSetState( mNoCullRS );
 
 	md3dImmediateContext->OMSetDepthStencilState( mLessEqual , 0 );
+	
+	bool renderFinish = OpenLight::scene.Render();
+	if (renderFinish)
+	{
+		Vector2f renderResolution;
+		const void* renderResult = OpenLight::scene.GetFilmData(renderResolution);
+		ResizeRT((int)renderResolution.x, (int)renderResolution.y, (const float*)renderResult);
+	}
 
 	RenderToQuad( &mRTSRV );
 
@@ -308,53 +293,71 @@ bool MyApp::InitShader()
 	return true;
 }
 
-void MyApp::ResizeRT( int width , int height )
+void MyApp::ResizeRT(int width, int height, const float* data)
 {
-	ReleaseCOM( mRTSRV );
+	ReleaseCOM(mRTSRV);
 	ReleaseCOM( mRTResource );
-
-	mRTResource = nullptr;
 
 	D3D11_TEXTURE2D_DESC tex_desc;
 	ZeroMemory( &tex_desc , sizeof( tex_desc ) );
-	tex_desc.Width = width;
-	tex_desc.Height = height;
-	tex_desc.MipLevels = 1;
-	tex_desc.ArraySize = 1;
-	tex_desc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	tex_desc.SampleDesc.Count = 1;
+	tex_desc.Width              = width;
+	tex_desc.Height             = height;
+	tex_desc.MipLevels          = 1;
+	tex_desc.ArraySize          = 1;
+	tex_desc.Format             = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	tex_desc.SampleDesc.Count   = 1;
 	tex_desc.SampleDesc.Quality = 0;
-	tex_desc.Usage = D3D11_USAGE_DYNAMIC;				// can be modify
-	tex_desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-	tex_desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	tex_desc.MiscFlags = 0;
+	tex_desc.Usage              = D3D11_USAGE_DYNAMIC;				// can be modify
+	tex_desc.BindFlags          = D3D11_BIND_SHADER_RESOURCE;
+	tex_desc.CPUAccessFlags     = D3D11_CPU_ACCESS_WRITE;
+	tex_desc.MiscFlags          = 0;
 
 	// Init Texture Data
 	float* pData = new float[width * height * 4];
-	for( int irow = 0; irow < height; irow++ )
+	if (data)
 	{
-		for( int icol = 0; icol < width; icol++ )
+		for (int irow = 0; irow < height; irow++)
 		{
-			for( int k = 0; k < 4; k++ )
+			for (int icol = 0; icol < width; icol++)
 			{
-				pData[irow * 4 * width + icol * 4 + k] = ( 255 / ( k + 1 ) ) / 255.0f;
+				for (int k = 0; k < 3; k++)
+				{
+					pData[irow * 4 * width + icol * 4 + k] = clamp(data[irow * 3 * width + icol * 3 + k], 0.0f, 1.0f);
+				}
+
+				pData[irow * 4 * width + icol * 4 + 3] = 1.0f;
+			}
+		}
+	}
+	else
+	{
+		for (int irow = 0; irow < height; irow++)
+		{
+			for (int icol = 0; icol < width; icol++)
+			{
+				for (int k = 0; k < 4; k++)
+				{
+					pData[irow * 4 * width + icol * 4 + k] = (255 / (k + 1)) / 255.0f;
+				}
 			}
 		}
 	}
 	D3D11_SUBRESOURCE_DATA InitData;
 	ZeroMemory( &InitData , sizeof( D3D11_SUBRESOURCE_DATA ) );
-	InitData.pSysMem = pData;
+	InitData.pSysMem     = pData;
 	InitData.SysMemPitch = sizeof( float ) * width * 4;
 
 	HR( md3dDevice->CreateTexture2D( &tex_desc , &InitData, &mRTResource ) );
 
+	SAFE_DELETE_ARRAY(pData);
+
 	//Create the resource view
 	D3D11_SHADER_RESOURCE_VIEW_DESC srv_desc;
-	ZeroMemory( &srv_desc , sizeof( srv_desc ) );
-	srv_desc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	srv_desc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-	srv_desc.Texture2D.MipLevels = 1;
+	ZeroMemory(&srv_desc, sizeof(srv_desc));
+	srv_desc.Format                    = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	srv_desc.ViewDimension             = D3D11_SRV_DIMENSION_TEXTURE2D;
+	srv_desc.Texture2D.MipLevels       = 1;
 	srv_desc.Texture2D.MostDetailedMip = 0;
 
-	HR( md3dDevice->CreateShaderResourceView( mRTResource , &srv_desc , &mRTSRV ) );
+	HR(md3dDevice->CreateShaderResourceView(mRTResource, &srv_desc, &mRTSRV));
 }

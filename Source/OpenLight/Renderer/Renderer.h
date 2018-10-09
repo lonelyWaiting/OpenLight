@@ -27,7 +27,7 @@ public:
 
 	Renderer( int spp );
 
-	virtual void Render( const Scene* scene ) = 0;
+	virtual bool Render( const Scene* scene ) = 0;
 
 	virtual void SetProperty( Sampler* _sampler , Camera* _camera , SurfaceIntegrator* _surfaceIntegrator , Accelerator* _pAccelerator ) = 0;
 

@@ -15,7 +15,7 @@ extern const float CIE_Z[CIESamplesNum];
 
 extern const float CIE_lambda[CIESamplesNum];
 
-static const float CIE_Y_Integral = 106.856895;
+static const float CIE_Y_Integral = 106.856895f;
 
 enum class SpectrumType
 {

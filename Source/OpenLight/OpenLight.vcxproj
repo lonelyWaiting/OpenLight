@@ -90,7 +90,7 @@
     <ClInclude Include="Texture\ImageTexture.h" />
     <ClInclude Include="Texture\SolidNoise.h" />
     <ClInclude Include="Texture\Texture.h" />
-    <ClInclude Include="Utilities\PCH.h" />
+    <None Include="Utilities\PCH.h" />
     <ClInclude Include="Utilities\RNG.h" />
     <ClInclude Include="Utilities\srString.h" />
   </ItemGroup>
@@ -233,6 +233,7 @@
     <ExecutablePath>$(VC_ExecutablePath_x86);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH)</ExecutablePath>
     <IncludePath>$(ProjectDir);$(IncludePath)</IncludePath>
     <TargetName>$(ProjectName)</TargetName>
+    <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -246,7 +247,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;OPENLIGHT_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(SolutionDir)Library\Inc\TinyXML2\;$(SolutionDir)Library\Inc\assimp\;$(SolutionDir)Library\Inc\FreeImage\</AdditionalIncludeDirectories>
@@ -255,8 +256,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Library\TinyXML2\Lib\Debug;$(SolutionDir)Library\assimp\Lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>tinyxml2.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Library\Lib\TinyXML2\$(Configuration)\;$(SolutionDir)Library\Lib\assimp\$(Configuration)\;$(SolutionDir)Library\Lib\FreeImage;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>tinyxml2.lib;assimp.lib;FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>

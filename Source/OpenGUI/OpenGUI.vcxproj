@@ -102,16 +102,21 @@
     <ClCompile Include="Application\App.cpp" />
     <ClCompile Include="Application\main.cpp" />
     <ClCompile Include="Application\VShaderHelper.cpp" />
+    <ClCompile Include="CameraEditor.cpp" />
     <ClCompile Include="Common\BaseApp.cpp" />
     <ClCompile Include="Editor.cpp" />
     <ClCompile Include="ImModule.cpp" />
+    <ClCompile Include="MaterialEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\App.h" />
+    <ClInclude Include="CameraEditor.h" />
+    <ClInclude Include="Common\AssetViewer.h" />
     <ClInclude Include="Common\BaseApp.h" />
     <ClInclude Include="Common\AppHelper.h" />
     <ClInclude Include="Editor.h" />
     <ClInclude Include="ImModule.h" />
+    <ClInclude Include="MaterialEditor.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\DebugTexturePixelShader.hlsl">

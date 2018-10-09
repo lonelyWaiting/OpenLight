@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Utilities/PCH.h"
 #include "Accelerator.h"
 #include <Math/Ray.h>
 #include <vector>

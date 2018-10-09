@@ -20,7 +20,7 @@ public:
 
 	virtual ~SamplerRenderer();
 
-	void Render( const Scene* scene );
+	bool Render( const Scene* scene );
 
 	virtual Spectrum Li(const Scene* scene,
 						 Rayf* ray ,

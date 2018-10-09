@@ -33,7 +33,10 @@ SamplerRenderer::SamplerRenderer( Sampler* _sampler , Camera* _camera , SurfaceI
 
 SamplerRenderer::~SamplerRenderer()
 {
-
+	SAFE_DELETE(sampler);
+	SAFE_DELETE(camera);
+	SAFE_DELETE(surfaceIntegrator);
+	SAFE_DELETE(pAccelerator);
 }
 
 void SamplerRenderer::SetProperty( Sampler* _sampler , Camera* _camera , SurfaceIntegrator* _surfaceIntegrator , Accelerator* _pAccelerator )
@@ -44,7 +47,7 @@ void SamplerRenderer::SetProperty( Sampler* _sampler , Camera* _camera , Surface
 	pAccelerator      = _pAccelerator;
 }
 
-void SamplerRenderer::Render( const Scene* scene )
+bool SamplerRenderer::Render( const Scene* scene )
 {
 	Vector2f Resolution = camera->GetFilm()->GetResolution();
 	
@@ -55,7 +58,7 @@ void SamplerRenderer::Render( const Scene* scene )
 
 	if( iRow >= Height || iCol >= Width )
 	{
-		return;
+		return false;
 	}
 	else if( iRow == 0 && iCol == 0 )
 	{
@@ -117,6 +120,8 @@ void SamplerRenderer::Render( const Scene* scene )
 		// 输出到文件
 		camera->GetFilm()->Display();
 	}
+
+	return true;
 }
 
 Spectrum SamplerRenderer::Li( const Scene* scene , Rayf* ray , IntersectRecord* record /* = nullptr  */ ) const

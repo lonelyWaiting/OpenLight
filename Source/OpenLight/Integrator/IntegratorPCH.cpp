@@ -93,7 +93,7 @@ float PowerHeuristic( int nf , float fPdf , int ng , float gPdf )
 Spectrum UniformSampleOneLight( const Scene* scene , const Renderer* renderer , Accelerator* pAccelerator , BSDF* bsdf , const Point3f& point , const Vector3f& wo , const Vector3f& n )
 {
 	// 随机选择一个光源
-	int LightCount = ( int )( scene->GetLights().size() );
+	int LightCount = scene->GetLightCount();
 
 	if( LightCount == 0 )
 	{

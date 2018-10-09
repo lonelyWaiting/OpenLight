@@ -13,6 +13,9 @@
     <Filter Include="imgui">
       <UniqueIdentifier>{476041ab-e3c6-4a9a-b8de-0d05fde667cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Editor">
+      <UniqueIdentifier>{b6674402-1485-4b23-bfc8-d280bbd529f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\main.cpp">
@@ -27,11 +30,17 @@
     <ClCompile Include="Common\BaseApp.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="Editor.cpp">
-      <Filter>Application</Filter>
-    </ClCompile>
     <ClCompile Include="ImModule.cpp">
       <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialEditor.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraEditor.cpp">
+      <Filter>Editor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -44,11 +53,20 @@
     <ClInclude Include="Common\AppHelper.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Editor.h">
-      <Filter>Application</Filter>
-    </ClInclude>
     <ClInclude Include="ImModule.h">
       <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialEditor.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraEditor.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\AssetViewer.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

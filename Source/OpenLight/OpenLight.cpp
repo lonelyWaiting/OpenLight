@@ -2,7 +2,9 @@
 #include "tinyxml2.h"
 #include "OpenLight.h"
 
-bool InitRTTI()
+#include "Core/Scene.h"
+
+void Scene::InitRTTI()
 {
 	// Shape
 	IMPLEMENT_DYNAMIC_CREATE_DERIVED( Sphere )
@@ -54,175 +56,188 @@ bool InitRTTI()
 	IMPLEMENT_DYNAMIC_CREATE_DERIVED( ConstantEnvironment )
 
 	IMPLEMENT_DYNAMIC_CREATE_DERIVED( HDREnvironment )
-
-	return true;
 }
 
-Renderer* DeserializationScene( Scene* scene , Camera*& camera , SurfaceIntegrator*& pSurfaceIntegrator , Sampler*& pSampler )
+
+void Scene::Deserialization( const char* filename /* = nullptr */ )
 {
-	FileSystem fs;
-	std::wstring SceneFilename = fs.GetSceneFolder() + L"Scene.xml";
+	SAFE_DELETE(mRendererPtr);
+
+	mFilename = filename;
 
 	tinyxml2::XMLDocument doc;
-	doc.LoadFile( srString::ToAscii( SceneFilename ).c_str() );
+	doc.LoadFile( filename );
 
-	// ----------------------------------Environment-------------------------------------------
-	tinyxml2::XMLElement* pEnvironmentElement = doc.FirstChildElement()->FirstChildElement( "Environment" );
+	tinyxml2::XMLElement* pRootElement = doc.FirstChildElement();
+
+	// ---------------------------------------Environment--------------------------------------------
+	tinyxml2::XMLElement* pEnvironmentElement = pRootElement->FirstChildElement( "Environment" );
 	if( pEnvironmentElement )
 	{
+		const char* str = pEnvironmentElement->Attribute( "type" );
+
 		Environment* pEnvironment = Environment::Create( pEnvironmentElement->Attribute( "type" ) );
 		pEnvironment->Deserialization( pEnvironmentElement );
-		scene->AddEnvironment( pEnvironment );
+		AddEnvironment( pEnvironment );
 	}
 	else
 	{
 		Environment* pEnvironment = new ConstantEnvironment;
-		scene->AddEnvironment( pEnvironment );
+		AddEnvironment( pEnvironment );
 	}
 
-	// ----------------------------------Primitive---------------------------------------------
-	tinyxml2::XMLElement* PrimitiveElement = doc.FirstChildElement()->FirstChildElement( "primitive" );
-	while( PrimitiveElement )
+	// -------------------------------------Primitive-------------------------------------------------
+	tinyxml2::XMLElement* pPrimitiveElement = pRootElement->FirstChildElement( "primitive" );
+	while( pPrimitiveElement )
 	{
-		Primitive* primitive = new Primitive;
-		Assert( primitive != nullptr );
-		primitive->Deserialization( PrimitiveElement );
-		scene->AddObject( *primitive );
-		scene->AddLight( primitive->GetAreaLight() );
-		PrimitiveElement = PrimitiveElement->NextSiblingElement( "primitive" );
+		Primitive* pPrimitive = new Primitive;
+		pPrimitive->Deserialization( pPrimitiveElement );
+		AddEntity( pPrimitive );
+		AddLight( pPrimitive->GetAreaLight() );
+		pPrimitiveElement = pPrimitiveElement->NextSiblingElement( "primitive" );
 	}
-	
-	// -----------------------------------Light---------------------------------------------
-	tinyxml2::XMLElement* LightRootElement = doc.FirstChildElement()->FirstChildElement( "light" );
-	while( LightRootElement )
+
+	// ---------------------------------------Light--------------------------------------------------
+	tinyxml2::XMLElement* pLightElement = pRootElement->FirstChildElement( "light" );
+	while( pLightElement )
 	{
-		const char* LightType = LightRootElement->FirstAttribute()->Value();
+		const char* LightType = pLightElement->Attribute( "type" );
 
 		Light* light = Light::Create( LightType );
-		Assert( light != nullptr );
-		light->Deserialization( LightRootElement );
-		scene->AddLight( light );
+		light->Deserialization( pLightElement );
+		AddLight( light );
 
-		LightRootElement = LightRootElement->NextSiblingElement( "light" );
+		pLightElement = pLightElement->NextSiblingElement( "light" );
 	}
 
-	// ---------------------------------Film---------------------------------------------
-	Film* film = new Film();
-	Assert( film != nullptr );
-	tinyxml2::XMLElement* FilmElement = doc.FirstChildElement()->FirstChildElement( "Film" );
-	film->Deserialization( FilmElement );
+	// --------------------------------------Film-----------------------------------------------------
+	Film* film = new Film;
+	tinyxml2::XMLElement* pFilmElement = pRootElement->FirstChildElement( "Film" );
+	film->Deserialization( pFilmElement );
 
-	// ---------------------------------Camera---------------------------------------------
-	tinyxml2::XMLElement* CameraElement = doc.FirstChildElement()->FirstChildElement( "Camera" );
-	const char* CameraType = CameraElement->FirstAttribute()->Value();
-	SAFE_DELETE( camera );
+	// --------------------------------------Camera--------------------------------------------------
+	tinyxml2::XMLElement* pCameraElement = pRootElement->FirstChildElement( "Camera" );
+	const char* CameraType = pCameraElement->Attribute( "type" );
 
-	camera = Camera::Create( CameraType );
-	Assert( camera != nullptr );
-	camera->SetFilm( film );
-	camera->Deserialization( CameraElement );
+	mCameraPtr = Camera::Create( CameraType );
+	mCameraPtr->SetFilm( film );
+	mCameraPtr->Deserialization( pCameraElement );
 
-	// -----------------------------Integrator--------------------------------------
-	tinyxml2::XMLElement* IntegratorRootElement = doc.FirstChildElement()->FirstChildElement( "Integrator" );
-	const char* IntegratorType = IntegratorRootElement->FirstAttribute()->Value();
+	// --------------------------------------Integrator---------------------------------------------
+	tinyxml2::XMLElement* pIntegratorRootElement = pRootElement->FirstChildElement( "Integrator" );
+	const char* IntegratorType = pIntegratorRootElement->Attribute( "type" );
 
-	pSurfaceIntegrator = SurfaceIntegrator::Create( IntegratorType );
-	Assert( pSurfaceIntegrator != nullptr );
-	pSurfaceIntegrator->Deserialization( IntegratorRootElement );
+	mSurfaceIntegratorPtr = SurfaceIntegrator::Create( IntegratorType );
+	mSurfaceIntegratorPtr->Deserialization( pIntegratorRootElement );
 
-	// --------------------------Sampler--------------------------------------------
-	tinyxml2::XMLElement* SamplerRootElement = doc.FirstChildElement()->FirstChildElement( "Sampler" );
-	const char* SamplerType = SamplerRootElement->FirstAttribute()->Value();
+	// --------------------------------------Sampler--------------------------------------------------
+	tinyxml2::XMLElement* pSamplerRootElement = pRootElement->FirstChildElement( "Sampler" );
+	const char* SamplerType = pSamplerRootElement->Attribute( "type" );
 
-	pSampler = Sampler::Create( SamplerType );
-	Assert( pSampler != nullptr );
-	pSampler->Deserialization( SamplerRootElement );
-	
-	// -------------------------Build Accelerator Structure-----------------------------
+	mSamplerPtr = Sampler::Create( SamplerType );
+	mSamplerPtr->Deserialization( pSamplerRootElement );
+
+	// --------------------------------------Renderer---------------------------------------------------
+	tinyxml2::XMLElement* pRendererRootElement = pRootElement->FirstChildElement( "Renderer" );
+	const char* RendererType = pRendererRootElement->Attribute( "type" );
+
+	mRendererPtr = Renderer::Create( RendererType );
+	mRendererPtr->Deserialization( pRendererRootElement );
+
+	// -------------------------------------Build Acceleration Structure---------------------------------
 	Grid* pGrid = new Grid;
-	pGrid->Setup( scene );
+	pGrid->Setup( this );
 
-	// ----------------------Renderer----------------------------------------
-	tinyxml2::XMLElement* RendererRootElement = doc.FirstChildElement()->FirstChildElement( "Renderer" );
-	const char* RendererType = RendererRootElement->FirstAttribute()->Value();
-
-	Renderer* renderer = Renderer::Create( RendererType );
-	Assert( renderer != nullptr );
-	renderer->SetProperty( pSampler , camera , pSurfaceIntegrator , pGrid );
-	renderer->Deserialization( RendererRootElement );
-	return renderer;
+	mRendererPtr->SetProperty( mSamplerPtr , mCameraPtr , mSurfaceIntegratorPtr , pGrid );
 }
 
-void SerializationScene( Scene* scene , Camera* camera , SurfaceIntegrator* pSurfaceIntegrator , Sampler* pSampler , Renderer* pRenderer )
-{ 
+void Scene::Serialization( const char* filename /*= nullptr*/ )
+{
+	if (filename == nullptr || strcmp(filename, "") == 0)	return;
+
 	tinyxml2::XMLDocument xmlDoc;
 
-	// Create Root Node
 	tinyxml2::XMLElement* pRoot = xmlDoc.NewElement( "Root" );
 
 	// Attach it to the XMLDocument
 	xmlDoc.InsertFirstChild( pRoot );
 
-	// -----------------------------------Serialization Scene-------------------------------------------
-	scene->Serialization( xmlDoc , pRoot );
-
-	// ---------------------------------Serialization Camera-----------------------------------------------
+	// -----------------------------------------Scene-------------------------------------------------
 	{
-		tinyxml2::XMLElement* pElement = xmlDoc.NewElement( "Camera" );
-		pRoot->InsertEndChild( pElement );
-		camera->Serialization( xmlDoc , pElement );
+		tinyxml2::XMLElement* pEnvironmentElement = xmlDoc.NewElement( "Environment" );
+
+		mEnvironmentPtr->Serialization( xmlDoc , pEnvironmentElement );
+
+		pRoot->InsertEndChild( pEnvironmentElement );
 	}
 
-	// ---------------------------------Serialization Integrator-------------------------------------------
 	{
-		tinyxml2::XMLElement* pElement = xmlDoc.NewElement( "Integrator" );
-		pRoot->InsertEndChild( pElement );
-		pSurfaceIntegrator->Serialization( xmlDoc , pElement );
+		for( auto& entity : mEntityList )
+		{
+			tinyxml2::XMLElement* pEntityElement = xmlDoc.NewElement( "primitive" );
+
+			pRoot->InsertEndChild( pEntityElement );
+
+			entity->Serialization( xmlDoc , pEntityElement );
+		}
 	}
 
-	// ---------------------------------Serialization Sampler--------------------------------------
 	{
-		tinyxml2::XMLElement* pElement = xmlDoc.NewElement( "Sampler" );
-		pRoot->InsertEndChild( pElement );
-		pSampler->Serialization( xmlDoc , pElement );
+		for( auto& light : mLightList )
+		{
+			if( !strcmp( light->GetName() , "AreaLight" ) )
+			{
+				// AreaLight just attach to primitive node
+				// AreaLight will serializ through primitive's serialization function
+				continue;
+			}
+
+			tinyxml2::XMLElement* pLightElement = xmlDoc.NewElement( "Light" );
+
+			pRoot->InsertEndChild( pLightElement );
+
+			light->Serialization( xmlDoc , pLightElement );
+		}
 	}
 
-	// -------------------------------Serialzation Renderer------------------------------------------
 	{
-		tinyxml2::XMLElement* pElement = xmlDoc.NewElement( "Renderer" );
-		pRoot->InsertEndChild( pElement );
-		pRenderer->Serialization( xmlDoc , pElement );
+		tinyxml2::XMLElement* pCameraElement = xmlDoc.NewElement( "Camera" );
+
+		pRoot->InsertEndChild( pCameraElement );
+
+		mCameraPtr->Serialization( xmlDoc , pCameraElement );
 	}
 
-	FileSystem fs;
-	std::wstring filename = fs.GetSceneFolder() + L"SavedScene.xml";
-	xmlDoc.SaveFile( srString::ToAscii( filename ).c_str() );
+	{
+		tinyxml2::XMLElement* pIntegratorElement = xmlDoc.NewElement( "Integrator" );
+
+		pRoot->InsertEndChild( pIntegratorElement );
+
+		mSurfaceIntegratorPtr->Deserialization( pIntegratorElement );
+	}
+
+
+	{
+		tinyxml2::XMLElement* pSamplerElement = xmlDoc.NewElement( "Sampler" );
+
+		pRoot->InsertEndChild( pSamplerElement );
+
+		mSamplerPtr->Serialization( xmlDoc , pSamplerElement );
+	}
+
+	{
+		tinyxml2::XMLElement* pRendererElement = xmlDoc.NewElement( "Renderer" );
+
+		pRoot->InsertEndChild( pRendererElement );
+
+		mRendererPtr->Serialization( xmlDoc , pRendererElement );
+	}
+
+	// save to disk
+	xmlDoc.SaveFile( filename );
 }
 
-//int main( void )
-//{	
-//	InitRTTI();
-//
-//	srand( ( unsigned int )time( NULL ) );
-//
-//	Scene* scene = new Scene;
-//
-//	Camera* camera = nullptr;
-//
-//	SurfaceIntegrator* pSurfaceIntegrator = nullptr;
-//
-//	Sampler* pSampler = nullptr;
-//
-//	Renderer* renderer = DeserializationScene( scene , camera , pSurfaceIntegrator , pSampler);
-//
-//	if( renderer != nullptr )
-//	{
-//		renderer->Render( scene );
-//	}
-//
-//	/*system( "pause" );*/
-//
-//	SerializationScene( scene , camera , pSurfaceIntegrator , pSampler , renderer );
-//
-//	return 0;
-//}
+namespace OpenLight
+{
+	Scene scene;
+};

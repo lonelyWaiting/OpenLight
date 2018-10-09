@@ -20,13 +20,6 @@ class Camera : public VSerializableObject
 	DECLARE_DYNAMIC_CREATE_BASE( Camera )
 
 public:
-	enum FitMode
-	{
-		FILL ,
-		OverScan
-	};
-
-public:
 	Camera();
 
 	Camera( const Camera& orig );
@@ -35,6 +28,8 @@ public:
 	
 public:
 	Point3f GetCameraPosition() const;
+
+	Vector3f GetViewDir() const;
 
 	float GetExposureTime() const;
 
@@ -70,6 +65,6 @@ protected:
 
 private:
 	Film * film;
-};
 
-typedef std::shared_ptr<Camera> CameraPtr;
+	static Camera* pInst;
+};

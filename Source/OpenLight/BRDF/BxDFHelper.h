@@ -28,7 +28,7 @@ inline bool Refract( const Vector3f& w , const Vector3f& n , float eta , Vector3
 		return false;
 	}
 
-	float Flip = entering ? 1.0 : -1.0;
+	float Flip = entering ? 1.0f : -1.0f;
 
 	*wt = Normalize( eta * -w + Flip * n * ( eta * CosThetaI - std::sqrt( 1 - sinThetaT2 ) ) );
 

@@ -14,39 +14,66 @@ namespace tinyxml2
 	class XMLElement;
 }
 
+class Renderer;
+class SurfaceIntegrator;
+class Sampler;
+class Camera;
+class Environment;
+
 class Scene : public VSerializableObject , public VIntersectable
 {
 public:
 	Scene();
 
-	void AddObject( Primitive& prim );
+	void AddEntity( Primitive* prim );
 	
 	void AddLight( Light* light );
-
-	const Primitive& GetPrimitive( int index ) const;
-
-	const std::vector<Light*>& GetLights() const;
-
-	Light* GetLight( int index ) const;
-
-	bool Intersect( const Rayf& ray , IntersectRecord* record ) const;
-
-	Environment* GetEnvironmentPtr() const;
 
 	void AddEnvironment( Environment* );
 
 public:
-	virtual void Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement* pRootElement );
+	void InitRTTI();
 
-	virtual void Deserialization( tinyxml2::XMLElement* RootElement );
+	bool Render();
 
 public:
-	int GetObjectCount() const;
+	SurfaceIntegrator*	GetSurfaceIntegrator() const;
+	
+	Camera*				GetCamera() const;
+	
+	Renderer*			GetRenderer() const;
+	
+	Environment*		GetEnvironmentPtr() const;
+	
+	Light* GetLight( unsigned int index ) const;
+
+	Primitive* GetEntity( unsigned int index ) const;
+
+	const void* GetFilmData(Vector2f& size);
+
+public:
+	bool Intersect( const Rayf& ray , IntersectRecord* record ) const;
+
+public:
+	void RemoveScene();
+
+public:
+	virtual void Serialization( const char* filename = nullptr );
+
+	virtual void Deserialization( const char* filename = nullptr );
+
+public:
+	int GetEntityCount() const;
+
+	int GetLightCount() const;
 
 protected:
-	std::vector<Primitive> Objects;
-
-	std::vector<Light*> lights;
-
-	Environment* pEnvironment;
+	std::vector<Primitive*>	mEntityList;
+	std::vector<Light*>		mLightList;
+	SurfaceIntegrator*		mSurfaceIntegratorPtr;
+	Environment*			mEnvironmentPtr;
+	Renderer*				mRendererPtr;
+	Sampler*				mSamplerPtr;
+	Camera*					mCameraPtr;
+	std::string				mFilename;
 };

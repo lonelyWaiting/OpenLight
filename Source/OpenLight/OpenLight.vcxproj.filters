@@ -252,9 +252,6 @@
     <ClInclude Include="Spectrum\Spectrum.h">
       <Filter>Spectrum</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities\PCH.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="Utilities\srString.h">
       <Filter>Utilities</Filter>
     </ClInclude>
@@ -537,6 +534,9 @@
     </None>
     <None Include="Math\Vector4.inl">
       <Filter>Math</Filter>
+    </None>
+    <None Include="Utilities\PCH.h">
+      <Filter>Utilities</Filter>
     </None>
   </ItemGroup>
 </Project>
