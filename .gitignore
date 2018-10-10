@@ -69,6 +69,7 @@ artifacts/
 *.db
 *.VC
 *.ppm
+
 # Chutzpah Test files
 _Chutzpah*
 

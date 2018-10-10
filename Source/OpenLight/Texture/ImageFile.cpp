@@ -96,26 +96,26 @@ Spectrum ImageFile::Evalute( float u , float v )
 		int x = ( int )( u * ( m_iWidth - 1 ) );
 		int y = ( int )( v * ( m_iHeight - 1 ) );
 
-		int xnext = clamp( x + 1 , 0 , m_iWidth - 1 );
-		int ynext = clamp( y + 1 , 0 , m_iHeight - 1 );
+		int xnext = (int)clamp( (float)(x + 1) , 0.0f , (float)(m_iWidth - 1) );
+		int ynext = (int)clamp( (float)(y + 1) , 0.0f , (float)(m_iHeight - 1) );
 
-		u = x == xnext ? 0.0 : u;
-		v = y == ynext ? 0.0 : v;
+		u = x == xnext ? 0.0f : u;
+		v = y == ynext ? 0.0f : v;
 
 		BYTE* A = m_pBits + m_iPitch * ( m_iHeight - 1 - y ) + m_iBpp * x;
 		BYTE* B = m_pBits + m_iPitch * ( m_iHeight - 1 - y ) + m_iBpp * xnext;
 		BYTE* C = m_pBits + m_iPitch * ( m_iHeight - 1 - ynext ) + m_iBpp * x;
 		BYTE* D = m_pBits + m_iPitch * ( m_iHeight - 1 - ynext ) + m_iBpp * xnext;
 		
-		float r = ( ( float )A[2] * ( 1.0 - u ) + ( float )B[2] * u ) * ( 1.0 - v ) + ( ( float )C[2] * ( 1.0 - u ) + ( float )D[2] * u ) * v;
-		float g = ( ( float )A[1] * ( 1.0 - u ) + ( float )B[1] * u ) * ( 1.0 - v ) + ( ( float )C[1] * ( 1.0 - u ) + ( float )D[1] * u ) * v;
-		float b = ( ( float )A[0] * ( 1.0 - u ) + ( float )B[0] * u ) * ( 1.0 - v ) + ( ( float )C[0] * ( 1.0 - u ) + ( float )D[0] * u ) * v;
-		float inv = 1.0 / 255.0;
+		float r = ( ( float )A[2] * ( 1.0f - u ) + ( float )B[2] * u ) * ( 1.0f - v ) + ( ( float )C[2] * ( 1.0f - u ) + ( float )D[2] * u ) * v;
+		float g = ( ( float )A[1] * ( 1.0f - u ) + ( float )B[1] * u ) * ( 1.0f - v ) + ( ( float )C[1] * ( 1.0f - u ) + ( float )D[1] * u ) * v;
+		float b = ( ( float )A[0] * ( 1.0f - u ) + ( float )B[0] * u ) * ( 1.0f - v ) + ( ( float )C[0] * ( 1.0f - u ) + ( float )D[0] * u ) * v;
+		float inv = 1.0f / 255.0f;
 
 		return Spectrum::FromRGB( r * inv , g * inv , b * inv );
 	}
 
-	return Spectrum::FromRGB( 0.0 , 0.0 , 0.0 );
+	return Spectrum::FromRGB( 0.0f , 0.0f , 0.0f );
 }
 
 FIBITMAP* ImageFile::GetDataPtr()

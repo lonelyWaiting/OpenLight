@@ -93,7 +93,7 @@ bool Triangle::Intersect( Rayf& rayWorld , IntersectRecord* record ) const
 			Vector2f uv1 = pMesh->mTexcoordList[index1];
 			Vector2f uv2 = pMesh->mTexcoordList[index2];
 
-			float alpha = 1.0 - beta - gamma;
+			float alpha = 1.0f - beta - gamma;
 
 			record->uv = (uv0 * alpha + uv1 * beta + uv2 * gamma) * mPrimitivePtr->GetUVScale();
 		}
@@ -121,7 +121,7 @@ float Triangle::Area() const
 	Vector3f v1 = pMesh->mPointList[index1] - pMesh->mPointList[index0];
 	Vector3f v2 = pMesh->mPointList[index2] - pMesh->mPointList[index0];
 
-	float area = 1.0 / 2.0 * Cross( v1 , v2 ).Length();
+	float area = 1.0f / 2.0f * Cross( v1 , v2 ).Length();
 
 	return area;
 }
@@ -139,7 +139,7 @@ Point3f Triangle::Sample( const Point3f& p , LightSample& lightSample , Vector3f
 	float v = lightSample.value[1] * sqrt( lightSample.value[0] );
 
 	// 使用重心坐标
-	Point3f SamplePoint = pMesh->mPointList[index0] * u + pMesh->mPointList[index1] * v + pMesh->mPointList[index2] * ( 1.0 - u - v );
+	Point3f SamplePoint = pMesh->mPointList[index0] * u + pMesh->mPointList[index1] * v + pMesh->mPointList[index2] * ( 1.0f - u - v );
 
 	/*SampleNormal = Normal( Cross( pMesh->points[index1] - pMesh->points[index0] , pMesh->points[index2] - pMesh->points[index0] ) );*/
 	SampleNormal = pMesh->mNormalList[index0];

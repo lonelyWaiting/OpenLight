@@ -252,6 +252,7 @@
       <PrecompiledHeaderFile>PCH.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(SolutionDir)Library\Inc\TinyXML2\;$(SolutionDir)Library\Inc\assimp\;$(SolutionDir)Library\Inc\FreeImage\</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

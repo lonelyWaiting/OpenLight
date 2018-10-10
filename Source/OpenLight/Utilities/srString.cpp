@@ -31,8 +31,8 @@ void ParseVector( const std::string s , float* v )
 
 	//assert( elements.size() >= 1 && elements.size() <= 3 );
 
-	for( int i = 0; i < elements.size(); i++ )
+	for( int i = 0; i < (int)elements.size(); i++ )
 	{
-		v[i] = atof( elements[i].c_str() );
+		v[i] = (float)atof( elements[i].c_str() );
 	}
 }

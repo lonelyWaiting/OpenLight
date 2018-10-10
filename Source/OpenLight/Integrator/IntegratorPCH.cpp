@@ -67,15 +67,15 @@ Spectrum SpecularTransmit( const Rayf& ray , const Scene* scene , const Renderer
 
 	Spectrum f = pBSDF->Sample_f( wo , normal , &wi , SamplePoint , &pdf , BxDFType( TRANSMISSION | SPECULAR ) , bNoOccur );
 
-	Spectrum L = 0.0;
+	Spectrum L = 0.0f;
 
-	if( pdf > 0.0 && !f.IsBlack() && AbsDot( wi , normal ) != 0.0 )
+	if( pdf > 0.0f && !f.IsBlack() && AbsDot( wi , normal ) != 0.0f )
 	{
 		// 沿着法线方向的偏移量
-		Vector3f bias = Vector3f( wi.x * 0.01 , wi.y * 0.01 , wi.z * 0.01 );
+		Vector3f bias = Vector3f( wi.x * 0.01f , wi.y * 0.01f , wi.z * 0.01f );
 
 		// 将光线沿着法线方向偏移
-		Rayf r( record->HitPoint + bias , wi , ray , 1e-3 );
+		Rayf r( record->HitPoint + bias , wi , ray , 1e-3f );
 
 		Spectrum Li = renderer->Li( scene , &r , record );
 

@@ -73,14 +73,14 @@ bool Sphere::Intersect( Rayf& r , IntersectRecord* record ) const
 			HitPointInLocalSpace.x = 1e-5f * m_Radius;
 		}
 		
-		float phi = atan2l( HitPointInLocalSpace.y , HitPointInLocalSpace.x );
+		float phi = atan2f( HitPointInLocalSpace.y , HitPointInLocalSpace.x );
 		if( phi < 0.0 )
 		{
-			phi += 2.0 * PI;
+			phi += 2.0f * PI;
 		}
 
 		float u = phi / TWO_PI;
-		float theta = acosl( clamp( HitPointInLocalSpace.z / m_Radius , -1.0 , 1.0 ) );
+		float theta = acosf( clamp( HitPointInLocalSpace.z / m_Radius , -1.0f , 1.0f ) );
 		float v = theta / PI;
 
 		r.MaxT                = t;
@@ -138,7 +138,7 @@ void Sphere::Serialization( tinyxml2::XMLDocument& xmlDoc , tinyxml2::XMLElement
 
 float Sphere::Area() const
 {
-	return 4.0 * PI * m_Radius * m_Radius;
+	return 4.0f * PI * m_Radius * m_Radius;
 }
 
 float Sphere::PDF( const Point3f& p , const Vector3f& wi ) const
@@ -150,7 +150,7 @@ float Sphere::PDF( const Point3f& p , const Vector3f& wi ) const
 	}
 
 	float SinThetaMax2 = m_Radius * m_Radius / ( p - mWorldPos ).LengthSq();
-	float CosThetaMax = sqrt( MAX( 0.0 , 1.0 - SinThetaMax2 ) );
+	float CosThetaMax = sqrt( MAX( 0.0f , 1.0f - SinThetaMax2 ) );
 
 	return UniformConePDF( CosThetaMax );
 }
@@ -184,7 +184,7 @@ Point3f Sphere::Sample( const Point3f& p , LightSample& lightSample , Vector3f& 
 
 	// ¾ùÔÈ²ÉÑùcone
 	float sinThetaMax2 = m_Radius * m_Radius / ( p - mWorldPos ).LengthSq();
-	float cosThetaMax = sqrt( MAX( 0.0 , 1.0 - sinThetaMax2 ) );
+	float cosThetaMax = sqrt( MAX( 0.0f , 1.0f - sinThetaMax2 ) );
 
 	Rayf r( p , UniformSampleCone( lightSample.value[0] , lightSample.value[1] , cosThetaMax , dirX , dirY , dirZ ) );
 

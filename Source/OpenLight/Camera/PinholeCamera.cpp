@@ -30,7 +30,7 @@ Rayf PinholeCamera::GenerateRay( float RasterX , float RasterY , const CameraSam
 
 	// 视平面上的采样点
 	float x = ( RasterX + SamplePoint.ImageSamples.x ) / RasterResolution.x  * ( Right - Left ) + Left;
-	float y = ( 1.0 - ( RasterY + SamplePoint.ImageSamples.y ) / RasterResolution.y ) * ( Top - Bottom ) + Bottom;
+	float y = ( 1.0f - ( RasterY + SamplePoint.ImageSamples.y ) / RasterResolution.y ) * ( Top - Bottom ) + Bottom;
 
 	Vector3f dir = x * uvw.U + y * uvw.V + uvw.W;
 

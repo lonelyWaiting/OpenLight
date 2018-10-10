@@ -38,7 +38,7 @@ Spectrum PointLight::Sample_L( const Point3f& p , Vector3f* wi , LightSample& _l
 	*pdf = 1.0f;
 	
 	// 创建线段
-	pVisibility->SetSegment( p , EPSILON , LightPosWorld , 0 );
+	pVisibility->SetSegment( p , EPSILON , LightPosWorld , 0.0f );
 
 	// 计算在p点处的强度
 	return intensity / ( LightPosWorld - p ).Length();
@@ -68,7 +68,6 @@ void PointLight::Deserialization( tinyxml2::XMLElement* LightRootElement )
 	LightToWorld = Translate( Vector3f( LightPosWorld ) );
 	WorldToLight = Inverse( LightToWorld );
 
-	float r , g , b;
 	tinyxml2::XMLElement* IntensityRootElement = LightRootElement->FirstChildElement( "intensity" );
 
 	ParseVector( LightRootElement->GetText() , intensity.GetDataPtr() );

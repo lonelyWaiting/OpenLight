@@ -25,7 +25,7 @@ Spectrum WhittedIntegrator::Li( const Scene* scene , const Renderer* renderer , 
 
 	L += record->Le( wo );
 
-	for( unsigned int i = 0; i < scene->GetLightCount(); i++ )
+	for( unsigned int i = 0; i < (unsigned int)scene->GetLightCount(); i++ )
 	{
 		Vector3f wi;
 		float pdf;

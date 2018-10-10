@@ -21,9 +21,9 @@ Spectrum HDREnvironment::Evalute( Rayf& ray )
 	Vector3f Dir = ray.Direction;
 	Dir = Normalize( Dir );
 
-	float r = 0.159154943*acos( Dir[2] ) / sqrt( Dir[0] * Dir[0] + Dir[1] * Dir[1] );
-	float u = 0.5 + -Dir[0] * r;
-	float v = 0.5 + Dir[1] * r;
+	float r = 0.159154943f*acos( Dir[2] ) / sqrt( Dir[0] * Dir[0] + Dir[1] * Dir[1] );
+	float u = 0.5f + -Dir[0] * r;
+	float v = 0.5f + Dir[1] * r;
 
 	int Width , Height;
 	m_pImage->GetSize( Width , Height );

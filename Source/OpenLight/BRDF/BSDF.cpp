@@ -146,7 +146,7 @@ float BSDF::PDF( const Vector3f& wo , const Vector3f& wi , const Vector3f& n , B
 		}
 	}
 
-	return Num > 0 ? pdf / Num : 0.0;
+	return Num > 0 ? pdf / Num : 0.0f;
 }
 
 int BSDF::Count() const

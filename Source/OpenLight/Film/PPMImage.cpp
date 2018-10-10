@@ -89,6 +89,6 @@ void PPMImage::GammaCorrect( int row , int col )
 { 
 	for( int i = 0; i < 3; i++ )
 	{
-		data[row * Width + col][i] = std::pow( clamp( data[row * Width + col][i] , 0.0 , 1.0 ) , 1.0 / 2.2 );
+		data[row * Width + col][i] = std::pow( clamp( data[row * Width + col][i] , 0.0f , 1.0f ) , 1.0f / 2.2f );
 	}
 }

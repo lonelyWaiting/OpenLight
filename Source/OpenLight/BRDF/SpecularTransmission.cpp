@@ -46,9 +46,9 @@ Spectrum SpecularTransmission::Sample_f( const Vector3f& wo , const Vector3f& n 
 
 	Spectrum F = fresnel.Evalute( Dot( wo , n ) );
 
-	float P = 0.25 + 0.5 * F[0];
+	float P = 0.25f + 0.5f * F[0];
 
-	return ( newetaT * newetaT ) / ( newetaI * newetaI ) * T * ( Spectrum( 1.0 ) - F ) / ( AbsDot( *wi , n ) * ( 1.0 - P ) );
+	return ( newetaT * newetaT ) / ( newetaI * newetaI ) * T * ( Spectrum( 1.0f ) - F ) / ( AbsDot( *wi , n ) * ( 1.0f - P ) );
 }
 
 float SpecularTransmission::PDF( const Vector3f& wi , const Vector3f& wo , const Vector3f& n ) const

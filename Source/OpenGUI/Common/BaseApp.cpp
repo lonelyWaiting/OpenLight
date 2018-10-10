@@ -307,7 +307,8 @@ bool BaseApp::InitMainWindow()
 
 	AllocConsole();
 	SetConsoleTitle( _T( "Debug Output" ) );
-	freopen( "CONOUT$" , "w" , stdout );
+	FILE* stream;
+	freopen_s(&stream, "CONOUT$", "w", stdout);
 
 	return true;
 }

@@ -3,6 +3,9 @@
 #include "Scene.h"
 #include "Texture/ConstantEnvironment.h"
 #include "Renderer/Renderer.h"
+#include "Camera/Camera.h"
+#include "Sampler/Sampler.h"
+#include "Integrator/SurfaceIntegrator.h"
 
 Scene::Scene()
 {

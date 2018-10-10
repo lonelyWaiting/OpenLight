@@ -56,7 +56,7 @@ Rayf ThinLensCamera::GenerateRay( float RasterX , float RasterY , const CameraSa
 
 	Vector3f dir = ( x - LensRadius * LensSamples.x ) * uvw.U + ( y - LensRadius * LensSamples.y ) * uvw.V + LensFocus * uvw.W;
 
-	return Rayf( Orig + Normalize( dir ) * NearPlane , Normalize( dir ) , 1e-3 );
+	return Rayf( Orig + Normalize( dir ) * NearPlane , Normalize( dir ) , 1e-3f );
 }
 
 void ThinLensCamera::Deserialization( tinyxml2::XMLElement* CameraRootElement )

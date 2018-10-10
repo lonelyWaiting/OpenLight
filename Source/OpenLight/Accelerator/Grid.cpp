@@ -119,7 +119,7 @@ void Grid::Setup( const Scene* scene )
 
 void Grid::Reset()
 {
-	for( int i = 0; i < cells.size(); i++ )
+	for( int i = 0; i < (int)cells.size(); i++ )
 	{
 		if( cells[i] != nullptr && ( typeid( *( cells[i] ) ) == typeid( AggregateShape ) ) )
 		{
@@ -162,7 +162,7 @@ bool Grid::Intersect( Rayf& ray , const Scene* scene , IntersectRecord* record )
 	}
 	else
 	{
-		float Invdx = 1.0 / dx;
+		float Invdx = 1.0f / dx;
 
 		if( Invdx > 0.0 )
 		{
@@ -183,7 +183,7 @@ bool Grid::Intersect( Rayf& ray , const Scene* scene , IntersectRecord* record )
 	}
 	else
 	{
-		float Invdy = 1.0 / dy;
+		float Invdy = 1.0f / dy;
 
 		if( Invdy > 0.0 )
 		{
@@ -204,7 +204,7 @@ bool Grid::Intersect( Rayf& ray , const Scene* scene , IntersectRecord* record )
 	}
 	else
 	{
-		float Invdz = 1.0 / dz;
+		float Invdz = 1.0f / dz;
 
 		if( Invdz > 0.0 )
 		{

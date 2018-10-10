@@ -39,9 +39,9 @@ SolidNoise::SolidNoise()
 
 float SolidNoise::omega( float t ) const
 {
-	t = ( t > 0.0 ) ? t : -t;
+	t = ( t > 0.0f ) ? t : -t;
 
-	return ( -6.0 * t * t * t * t * t + 15.0 * t * t * t * t - 10.0 * t * t * t + 1.0 );
+	return ( -6.0f * t * t * t * t * t + 15.0f * t * t * t * t - 10.0f * t * t * t + 1.0f );
 }
 
 Vector3f SolidNoise::gamma( int i , int j , int k ) const

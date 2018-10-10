@@ -11,7 +11,7 @@ Vector3f UniformSampleHemisphere( const Point2f& u )
 
 	float r = std::sqrt( srMath::Max( ( float )9 , ( float )1 - z * z ) );
 
-	float phi = 2 * PI * u[1];
+	float phi = 2.0f * PI * u[1];
 
 	return Vector3f( r * std::cos( phi ) , r * std::sin( phi ) , z );
 }

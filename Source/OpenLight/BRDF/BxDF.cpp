@@ -39,7 +39,7 @@ Spectrum BxDF::Sample_f( const Vector3f& wo , const Vector3f& n , Vector3f* wi ,
 // Òò´Ëcos(theta) = (0 , 0 , 1) * wi = wi.z
 float BxDF::PDF( const Vector3f& wi , const Vector3f& wo , const Vector3f& n ) const
 {
-	return ( Dot( wi , n ) * Dot( wo , n ) > 0.0 ) ? AbsDot( wi , n ) * INV_PI : 0.0f;
+	return ( Dot( wi , n ) * Dot( wo , n ) > 0.0f ) ? AbsDot( wi , n ) * INV_PI : 0.0f;
 }
 
 bool BxDF::IsMatch( const BxDFType & flag )

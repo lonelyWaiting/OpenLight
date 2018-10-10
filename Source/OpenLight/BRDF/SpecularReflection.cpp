@@ -30,7 +30,7 @@ Spectrum SpecularReflection::Sample_f( const Vector3f& wo , const Vector3f& n , 
 
 	// 经验设定
 	// 参考该问题的答案：http://www.opengpu.org/forum.php?mod=viewthread&tid=18099&extra=page%3D1
-	float P = 0.25 + 0.5 * F[0];
+	float P = 0.25f + 0.5f * F[0];
 
 	if( RNG::Get().GetFloat() > /*F[0]*/P )
 	{

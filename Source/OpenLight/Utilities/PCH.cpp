@@ -17,12 +17,12 @@ float Lerp( const float& t , const float& p1 , const float& p2 )
 
 float ToRadians( float degree )
 {
-	return ( ( degree / 180.0 ) * PI );
+	return ( ( degree / 180.0f ) * PI );
 }
 
 float ToDegree( float radian )
 {
-	return ( ( 180.0 / PI ) * radian );
+	return ( ( 180.0f / PI ) * radian );
 }
 
 void Swap( float& A , float& B )
@@ -44,10 +44,10 @@ bool Quadtratic( float A , float B , float C , float* t0 , float* t1 )
 
 	float sqrtDelta = sqrt( delta );
 
-	float InvA = 1.0 / A;
+	float InvA = 1.0f / A;
 
-	*t0 = ( -1.0f * B - 1.0 * sqrtDelta ) * 0.5 * InvA;
-	*t1 = ( -1.0f * B + sqrtDelta ) * 0.5 * InvA;
+	*t0 = ( -1.0f * B - 1.0f * sqrtDelta ) * 0.5f * InvA;
+	*t1 = ( -1.0f * B + sqrtDelta ) * 0.5f * InvA;
 
 	if( *t0 > *t1 )
 	{

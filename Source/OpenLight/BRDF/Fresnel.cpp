@@ -58,5 +58,5 @@ float FresnelDielectricIntoDielectric( float CosThetaI , float etaI , float etaT
 	float Rparl = ( etaT * CosThetaI - etaI * CosThetaT ) / ( etaT * CosThetaI + etaI * CosThetaT );
 	float Rperp = ( etaI * CosThetaI - etaT * CosThetaT ) / ( etaI * CosThetaI + etaT * CosThetaT );
 
-	return ( Rparl * Rparl + Rperp * Rperp ) / 2.0;
+	return ( Rparl * Rparl + Rperp * Rperp ) / 2.0f;
 }

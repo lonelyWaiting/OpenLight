@@ -30,14 +30,14 @@ using std::endl;
 #define MIN(x , y)	(x) > (y) ? (y) : (x)
 #define MAX(x , y)	(x) > (y) ? (x) : (y)
 
-#define PI	3.1415926535897932384
-#define TWO_PI 6.2831853071795864769
-#define PI_ON_180 0.0174532925199432957
-#define INV_PI	0.3183098861837906715
-#define INV_TWO_PI	0.1591549430918953358
+#define PI	3.1415926535897932384f
+#define TWO_PI 6.2831853071795864769f
+#define PI_ON_180 0.0174532925199432957f
+#define INV_PI	0.3183098861837906715f
+#define INV_TWO_PI	0.1591549430918953358f
 
-#define EPSILON 1e-3
-#define EPSILON_04	1e-4
+#define EPSILON 1e-3f
+#define EPSILON_04	1e-4f
 
 #define Infinity std::numeric_limits<float>::infinity()
 

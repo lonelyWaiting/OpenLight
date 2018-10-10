@@ -8,7 +8,7 @@ Film::Film()
 	Width = 800;
 	Height = 600;
 
-	Gamma = 2.4;
+	Gamma = 2.4f;
 	InvGamma = 1.0f / Gamma;
 
 	Filename = "result.ppm";
@@ -68,7 +68,7 @@ void Film::Display()
 
 Vector2f Film::GetResolution() const
 {
-	return Vector2f( Width , Height );
+	return Vector2f( (float)Width , (float)Height );
 }
 
 void Film::Deserialization( const tinyxml2::XMLElement* FilmRootElement )

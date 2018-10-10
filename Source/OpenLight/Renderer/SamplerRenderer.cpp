@@ -67,9 +67,9 @@ bool SamplerRenderer::Render( const Scene* scene )
 	int HeightBound = MIN( iRow + 40 , Height );
 	int WidthBound = MIN( iCol + 40 , Width );
 	
-	int ColTileNumber = std::ceil( Width / 40.0 );
-	int RowTileNumber = std::ceil( Height / 40.0 );
-	int CurrentTileIndex = ( iRow / 40 ) * ColTileNumber + std::ceil( ( iCol + 1 ) / 40.0 );
+	int ColTileNumber = (int)std::ceil( Width / 40.0f );
+	int RowTileNumber = (int)std::ceil( Height / 40.0f );
+	int CurrentTileIndex = ( iRow / 40 ) * ColTileNumber + (int)std::ceil( ( iCol + 1 ) / 40.0f );
 	float percent = ( float )CurrentTileIndex / ( ColTileNumber * RowTileNumber );
 
 	#ifndef _DEBUG
@@ -88,7 +88,7 @@ bool SamplerRenderer::Render( const Scene* scene )
 			{
 				CameraSample SamplePoint = sampler->GetSamplePoint();
 
-				Rayf ray = camera->GenerateRay( Col , Row , SamplePoint );
+				Rayf ray = camera->GenerateRay( (float)Col , (float)Row , SamplePoint );
 
 				IntersectRecord record;
 
